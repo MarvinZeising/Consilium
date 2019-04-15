@@ -12,6 +12,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "material-design-icons-iconfont": "^3.0.3",
+    "moment": "^2.24.0",
     "roboto-fontface": "*",
     "vue": "^2.6.6",
     "vue-class-component": "^6.0.0",
