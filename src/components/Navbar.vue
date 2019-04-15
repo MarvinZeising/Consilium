@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-toolbar app>
+    <v-toolbar app flat>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Consilium</v-toolbar-title>
     </v-toolbar>
