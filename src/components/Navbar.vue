@@ -32,6 +32,7 @@
           v-for="(project, i) in projects"
           :key="i"
           prepend-icon="extension"
+          value="true"
         >
           <template v-slot:activator>
             <v-list-tile>

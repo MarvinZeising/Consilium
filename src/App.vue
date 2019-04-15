@@ -4,16 +4,18 @@
     <v-content>
       <router-view/>
     </v-content>
+    <Footer />
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 
 export default Vue.extend({
   name: 'ConsiliumApp',
-  components: { Navbar },
+  components: { Navbar, Footer },
   data() {
     return {
     };
