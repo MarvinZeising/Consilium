@@ -112,7 +112,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from 'vue'
 export default Vue.extend({
   data() {
     return {
@@ -144,7 +144,7 @@ export default Vue.extend({
         ['Notifications', 'notifications', '/profile/notifications'],
         ['Configure Projects', 'settings', '/profile/projects']
       ]
-    };
+    }
   }
-});
+})
 </script>

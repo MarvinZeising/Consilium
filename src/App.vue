@@ -9,16 +9,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Navbar from '@/components/Navbar.vue';
-import Footer from '@/components/Footer.vue';
+import Vue from 'vue'
+import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
 
 export default Vue.extend({
   name: 'ConsiliumApp',
   components: { Navbar, Footer },
   data() {
     return {
-    };
+    }
   }
-});
+})
 </script>
