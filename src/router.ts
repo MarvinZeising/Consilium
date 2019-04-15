@@ -14,9 +14,24 @@ export default new Router({
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('./views/About.vue')
+      path: '/terms-of-use',
+      name: 'termsOfUse',
+      component: () => import('./views/TermsOfUse.vue')
     },
+    {
+      path: '/privacy-policy',
+      name: 'privacyPolicy',
+      component: () => import('./views/PrivacyPolicy.vue')
+    },
+    {
+      path: '/project/:projectId/calendar',
+      name: 'calendar',
+      component: () => import('./views/Calendar.vue')
+    },
+    {
+      path: '/project/:projectId/knowledge-base',
+      name: 'knowledgeBase',
+      component: () => import('./views/KnowledgeBase.vue')
+    }
   ],
 });

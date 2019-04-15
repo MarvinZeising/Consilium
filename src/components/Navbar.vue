@@ -121,7 +121,7 @@ export default Vue.extend({
         name: 'Wuppertrolley',
         actions: [
           ['Knowledge Base', 'subject', '/knowledge-base'],
-          ['Shifts', 'today', '/shifts']
+          ['Calendar', 'today', '/calendar']
         ],
         adminActions: [
           ['Settings', 'settings', '/settings'],
@@ -136,9 +136,10 @@ export default Vue.extend({
         ]
       }],
       profileActions: [
-        ['Account', 'account_circle', '/profile/account'],
-        ['Security', 'lock', '/profile/security'],
+        ['Personal', 'account_circle', '/profile/personal'],
+        ['Spiritual', 'assignment_turned_in', '/profile/spritual'],
         ['Availability', 'event_available', '/profile/availability'],
+        ['Account', 'lock', '/profile/account'],
         ['Notifications', 'notifications', '/profile/notifications'],
         ['Configure Projects', 'settings', '/profile/projects']
       ]
