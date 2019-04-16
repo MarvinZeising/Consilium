@@ -99,7 +99,7 @@
 
         <!-- Sign out -->
         <v-list-tile
-          href="/sign-out"
+          href="/sign-up"
         >
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>

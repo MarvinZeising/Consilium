@@ -12,26 +12,29 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
-    },
-    {
+    }, {
       path: '/terms-of-use',
       name: 'termsOfUse',
       component: () => import('./views/TermsOfUse.vue')
-    },
-    {
+    }, {
       path: '/privacy-policy',
       name: 'privacyPolicy',
       component: () => import('./views/PrivacyPolicy.vue')
-    },
-    {
+    }, {
       path: '/project/:projectId/calendar',
       name: 'calendar',
       component: () => import('./views/Calendar.vue')
-    },
-    {
+    }, {
       path: '/project/:projectId/knowledge-base',
       name: 'knowledgeBase',
       component: () => import('./views/KnowledgeBase.vue')
+    }, {
+      path: '/sign-up',
+      name: 'signUp',
+      component: () => import('./views/SignUp.vue')
+    }, {
+      path: '*',
+      redirect: '/'
     }
   ],
 })
