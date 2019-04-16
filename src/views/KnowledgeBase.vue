@@ -1,30 +1,31 @@
 <template>
   <div class="knowledge-base">
     <v-tabs
+      v-model="tabsModel"
       color="grey lighten-4"
       align-with-title
     >
       <v-tabs-slider color="primary" />
 
       <v-tab
-        v-for="tab in tabs"
-        :key="tab.name + ': Header'"
+        v-for="(tab, i) in tabs"
+        :key="i"
       >
-        {{ tab.name }}
+        {{tab.name}}
       </v-tab>
-    </v-tabs>
 
-    <v-tabs-items>
+      <NewTabDialog />
+
       <v-tab-item
-        v-for="tab in tabs"
-        :key="tab.name + ': Content'"
+        v-for="(tab, i) in tabs"
+        :key="i"
       >
         <div class="ma-3">
           <v-expansion-panel
             :expand=true
           >
             <v-expansion-panel-content
-              v-for="item in tab.items"
+              v-for="(item, itemPosition) in tab.items"
               :key="tab.name + ': ' + item.title"
             >
               <template v-slot:header>
@@ -37,11 +38,19 @@
                 />
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn flat color="secondary">
+                  <v-btn
+                    v-if="itemPosition != 0"
+                    flat
+                    color="secondary"
+                  >
                     <v-icon class="mr-2">arrow_upward</v-icon>
                     Move up
                   </v-btn>
-                  <v-btn flat color="secondary">
+                  <v-btn
+                    v-if="itemPosition != tab.items.length - 1"
+                    flat
+                    color="secondary"
+                  >
                     <v-icon class="mr-2">arrow_downward</v-icon>
                     Move down
                   </v-btn>
@@ -54,25 +63,24 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
 
-          <div class="text-xs-center mt-3">
-            <v-btn>
-              <v-icon left>add</v-icon>
-              Add new item
-            </v-btn>
-          </div>
+          <NewTabItemDialog />
         </div>
       </v-tab-item>
-    </v-tabs-items>
+    </v-tabs>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import NewTabDialog from '@/components/NewTabDialog.vue'
+import NewTabItemDialog from '@/components/NewTabItemDialog.vue'
 export default Vue.extend({
-  data () {
+  components: { NewTabDialog, NewTabItemDialog },
+  data() {
     return {
-      tab: null,
-      panel: null,
+      newTabDialog: null,
+      newTabItemDialog: null,
+      tabsModel: null,
       tabs: [{
         name: 'FAQs',
         items: [{
@@ -102,6 +110,9 @@ export default Vue.extend({
         items: [{
           title: 'Laborum irure do exercitation et quis',
           text: 'Aute velit irure aliqua fugiat ut dolore elit officia in exercitation dolor.'
+        }, {
+          title: 'Lorem non anim proident aliquip in dolore',
+          text: 'Laboris cillum sunt nisi irure commodo sunt exercitation reprehenderit.'
         }, {
           title: 'Id nostrud aliquip irure aliquip voluptate',
           text: 'Cupidatat pariatur laboris do occaecat veniam officia qui sunt laboris dolor amet ut non.'
