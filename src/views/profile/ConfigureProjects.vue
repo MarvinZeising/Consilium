@@ -176,13 +176,8 @@ export default Vue.extend({
 
       axios.get('/projects')
         .then((result) => {
-          const fetchedProjects = result.data
           this.loadingProjects = false
-          this.projects = fetchedProjects.map((project : any) => {
-            return {
-              name: project.text
-            }
-          })
+          this.projects = result.data
         })
         .catch((err) => {
           this.loadingProjects = false

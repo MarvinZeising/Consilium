@@ -171,25 +171,22 @@ export default Vue.extend({
           const fetchedProjects = result.data
           this.loadingProjects = false
           this.projects = fetchedProjects.map((project : any) => {
-            return {
-              id: project.id,
-              name: project.text,
-              actions: [
-                ['Knowledge Base', 'subject', '/knowledge-base'],
-                ['Calendar', 'today', '/calendar']
-              ],
-              adminActions: [
-                ['Settings', 'settings', '/settings'],
-                ['User Management', 'group', '/users'],
-                ['Categories', 'label', '/users'],
-                ['Teams', 'supervisor_account', '/users'],
-                ['Meeting Points', 'location_on', '/users'],
-                ['Notifications', 'notifications', '/users'],
-                ['Reports', 'message', '/users'],
-                ['Statistics', 'show_chart', '/users'],
-                ['Notes', 'edit', '/users']
-              ]
-            }
+            project.actions = [
+              ['Knowledge Base', 'subject', '/knowledge-base'],
+              ['Calendar', 'today', '/calendar']
+            ]
+            project.adminActions = [
+              ['Settings', 'settings', '/settings'],
+              ['User Management', 'group', '/users'],
+              ['Categories', 'label', '/users'],
+              ['Teams', 'supervisor_account', '/users'],
+              ['Meeting Points', 'location_on', '/users'],
+              ['Notifications', 'notifications', '/users'],
+              ['Reports', 'message', '/users'],
+              ['Statistics', 'show_chart', '/users'],
+              ['Notes', 'edit', '/users']
+            ]
+            return project
           })
         })
         .catch((err) => {
