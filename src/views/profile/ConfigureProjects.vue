@@ -26,7 +26,7 @@
       <!-- Data -->
       <v-flex
         v-for="(project, i) in projects"
-        :key="i"
+        :key="'project' + i"
         xs12 sm8 md6 lg4
         class="mb-5 pa-2"
       >
@@ -79,7 +79,7 @@
       <!-- Data -->
       <v-flex
         v-for="(project, i) in invitations"
-        :key="i"
+        :key="'invitation' + i"
         xs12 sm8 md6 lg4
         class="mb-5 pa-2"
       >
