@@ -157,7 +157,7 @@ export default Vue.extend({
         ['Availability', 'event_available', '/profile/availability'],
         ['Account', 'lock', '/profile/account'],
         ['Notifications', 'notifications', '/profile/notifications'],
-        ['Configure Projects', 'settings', '/profile/projects']
+        ['Configure Projects', 'settings', '/profile/configure-projects']
       ]
     }
   },

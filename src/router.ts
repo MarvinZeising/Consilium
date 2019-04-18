@@ -29,6 +29,10 @@ export default new Router({
       name: 'knowledgeBase',
       component: () => import('./views/Project/KnowledgeBase.vue')
     }, {
+      path: '/profile/configure-projects',
+      name: 'configureProjects',
+      component: () => import('./views/Profile/ConfigureProjects.vue')
+    }, {
       path: '/sign-up',
       name: 'signUp',
       component: () => import('./views/SignUp.vue')
