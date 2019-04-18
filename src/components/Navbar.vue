@@ -33,10 +33,11 @@
             <v-progress-circular
               indeterminate
               color="primary"
-            ></v-progress-circular>
+            />
           </v-list-tile-action>
           <v-list-tile-title>Loading Projects...</v-list-tile-title>
         </v-list-tile>
+
         <!-- Projects -->
         <v-list-group
           v-for="(project, i) in projects"
@@ -122,8 +123,8 @@
     <v-snackbar
       v-model="projectLoadingError"
       color="error"
-      multi-line="true"
-      timeout=10000
+      :multi-line="true"
+      :timeout="10000"
     >
       Couldn't reach the server.<br>Are you connected to the internet?
       <v-btn
@@ -139,7 +140,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { axiosInstance as axios } from '@/tools/axios'
+import axios from '@/tools/axios'
 export default Vue.extend({
   created () {
     this.fetchProjects()
