@@ -72,8 +72,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import NewTabDialog from '@/components/NewTabDialog.vue'
-import NewTabItemDialog from '@/components/NewTabItemDialog.vue'
+import NewTabDialog from '@/components/dialogs/NewTabDialog.vue'
+import NewTabItemDialog from '@/components/dialogs/NewTabItemDialog.vue'
 export default Vue.extend({
   components: { NewTabDialog, NewTabItemDialog },
   data() {
