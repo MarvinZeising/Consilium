@@ -142,6 +142,7 @@
         </p>
         <v-btn
           v-model="createProject"
+          href="create-project"
           color="warning">
           Create a new Project
         </v-btn>

@@ -36,6 +36,10 @@ export default new Router({
     name: 'configureProjects',
     component: () => import('./views/profile/ConfigureProjects.vue')
   }, {
+    path: '/profile/create-project',
+    name: 'createProject',
+    component: () => import('./views/profile/CreateProject.vue')
+  }, {
     path: '/sign-up',
     name: 'signUp',
     component: () => import('./views/SignUp.vue')
