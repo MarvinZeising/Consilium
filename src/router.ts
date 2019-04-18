@@ -22,19 +22,19 @@ export default new Router({
   }, {
     path: '/project/:projectId/calendar',
     name: 'calendar',
-    component: () => import('./views/Project/Calendar.vue')
+    component: () => import('./views/project/Calendar.vue')
   }, {
     path: '/project/:projectId/knowledge-base',
     name: 'knowledgeBase',
-    component: () => import('./views/Project/KnowledgeBase.vue')
+    component: () => import('./views/project/KnowledgeBase.vue')
   }, {
     path: '/project/:projectId/settings',
     name: 'settings',
-    component: () => import('./views/Project/Settings.vue')
+    component: () => import('./views/project/Settings.vue')
   }, {
     path: '/profile/configure-projects',
     name: 'configureProjects',
-    component: () => import('./views/Profile/ConfigureProjects.vue')
+    component: () => import('./views/profile/ConfigureProjects.vue')
   }, {
     path: '/sign-up',
     name: 'signUp',
