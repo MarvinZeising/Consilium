@@ -8,7 +8,7 @@
     <v-navigation-drawer app v-model='drawer'>
       <v-list>
 
-        <!-- Avatar -->
+        <!--//* Avatar -->
         <v-list-tile avatar>
           <v-list-tile-avatar>
             <img src="https://randomuser.me/api/portraits/men/85.jpg">
@@ -18,7 +18,7 @@
           </v-list-tile-content>
         </v-list-tile>
 
-        <!-- Home -->
+        <!--//* Home -->
         <v-list-tile href="/"
         >
           <v-list-tile-action>
@@ -27,7 +27,7 @@
           <v-list-tile-title>Home</v-list-tile-title>
         </v-list-tile>
 
-        <!-- Project loader -->
+        <!--//* Project loader -->
         <v-list-tile v-if="loadingProjects">
           <v-list-tile-action>
             <v-progress-circular
@@ -38,7 +38,7 @@
           <v-list-tile-title>Loading Projects...</v-list-tile-title>
         </v-list-tile>
 
-        <!-- Projects -->
+        <!--//* Projects -->
         <v-list-group
           v-for="(project, i) in projects"
           :key="i"
@@ -86,7 +86,7 @@
 
         </v-list-group>
 
-        <!-- Profile -->
+        <!--//* Profile -->
         <v-list-group
           prepend-icon="person"
         >
@@ -108,7 +108,7 @@
           </v-list-tile>
         </v-list-group>
 
-        <!-- Sign out -->
+        <!--//* Sign out -->
         <v-list-tile
           href="/sign-up"
         >

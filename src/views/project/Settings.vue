@@ -2,12 +2,12 @@
   <v-container fluid>
     <v-layout wrap>
 
-      <!-- Main Heading -->
+      <!--//* Main Heading -->
       <v-flex xs12>
         <h2 class="headline mb-3">General</h2>
       </v-flex>
 
-      <!-- Project Loading -->
+      <!--//* Project Loading -->
       <v-flex
         v-if="false && loadingProject"
         class="mb-5"
@@ -18,7 +18,7 @@
         />
       </v-flex>
 
-      <!-- Main Settings -->
+      <!--//* Main Settings -->
       <v-flex
         xs12 sm8 md6 lg4
         class="mb-5 pa-2"
@@ -49,12 +49,12 @@
         </v-card>
       </v-flex>
 
-      <!-- News Heading -->
+      <!--//* News Heading -->
       <v-flex xs12>
         <h2 class="headline mb-3">News</h2>
       </v-flex>
 
-      <!-- News Settings -->
+      <!--//* News Settings -->
       <v-flex
         xs12 sm8 md6 lg4
         class="mb-5 pa-2"
@@ -80,12 +80,12 @@
         </v-card>
       </v-flex>
 
-      <!-- Vessel Heading -->
+      <!--//* Vessel Heading -->
       <v-flex xs12>
         <h2 class="headline mb-3">Vessels</h2>
       </v-flex>
 
-      <!-- Vessel Settings -->
+      <!--//* Vessel Settings -->
       <v-flex
         xs12 sm8 md6 lg4
         class="mb-5 pa-2"
@@ -103,7 +103,7 @@
         </v-card>
       </v-flex>
 
-      <!-- Critical Heading -->
+      <!--//* Critical Heading -->
       <v-flex xs12>
         <h2 class="headline mb-3 error--text">Critical area</h2>
       </v-flex>

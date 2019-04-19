@@ -4,7 +4,7 @@
     class="pt-3"
   >
 
-    <!-- Arrow Left -->
+    <!--//* Arrow Left -->
     <v-flex
       sm4 xs12
       class="text-sm-left text-xs-center"
@@ -15,7 +15,7 @@
       </v-btn>
     </v-flex>
 
-    <!-- Type chooser -->
+    <!--//* Type chooser -->
     <v-flex
       sm4 xs12
       class="text-xs-center"
@@ -27,7 +27,7 @@
       />
     </v-flex>
 
-    <!-- Arrow Right -->
+    <!--//* Arrow Right -->
     <v-flex
       sm4 xs12
       class="text-sm-right text-xs-center"
@@ -38,7 +38,7 @@
       </v-btn>
     </v-flex>
 
-    <!-- Calendar -->
+    <!--//* Calendar -->
     <v-flex xs12>
       <v-sheet>
         <v-calendar
