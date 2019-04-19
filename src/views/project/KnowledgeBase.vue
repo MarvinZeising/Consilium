@@ -12,6 +12,7 @@
         :key="i"
       >
         {{tab.name}}
+        <!-- // TODO: add popup for when there a too many tabs -->
       </v-tab>
 
       <NewTabDialog />
@@ -20,51 +21,8 @@
         v-for="(tab, i) in tabs"
         :key="i"
       >
-        <div class="ma-3">
-          <v-expansion-panel
-            :expand=true
-          >
-            <v-expansion-panel-content
-              v-for="(item, itemPosition) in tab.items"
-              :key="tab.name + ': ' + item.title"
-            >
-              <template v-slot:header>
-                <div v-text="item.title" />
-              </template>
-              <v-card>
-                <v-card-text
-                  v-text="item.text"
-                  class="grey lighten-4"
-                />
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    v-if="itemPosition != 0"
-                    flat
-                    color="secondary"
-                  >
-                    <v-icon class="mr-2">arrow_upward</v-icon>
-                    Move up
-                  </v-btn>
-                  <v-btn
-                    v-if="itemPosition != tab.items.length - 1"
-                    flat
-                    color="secondary"
-                  >
-                    <v-icon class="mr-2">arrow_downward</v-icon>
-                    Move down
-                  </v-btn>
-                  <v-btn flat color="primary">
-                    <v-icon class="mr-2">edit</v-icon>
-                    Edit
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-
-          <NewTabItemDialog />
-        </div>
+        <TabItems v-bind:items="tab.items" />
+        <NewTabItemDialog />
       </v-tab-item>
     </v-tabs>
   </div>
@@ -72,10 +30,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import TabItems from '@/components/TabItems.vue'
 import NewTabDialog from '@/components/dialogs/NewTabDialog.vue'
 import NewTabItemDialog from '@/components/dialogs/NewTabItemDialog.vue'
 export default Vue.extend({
-  components: { NewTabDialog, NewTabItemDialog },
+  components: { TabItems, NewTabDialog, NewTabItemDialog },
   data() {
     return {
       newTabDialog: null,
