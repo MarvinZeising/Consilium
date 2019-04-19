@@ -1,57 +1,9 @@
 <template>
   <v-container fluid>
+
     <MyProjects />
 
-    <!--//* Project invitations -->
-    <v-flex xs12>
-      <h2 class="headline mb-3">Pending Project invitations</h2>
-    </v-flex>
-
-    <!--//* Project invitations loading -->
-    <v-flex
-      v-if="loadingInvitations"
-      class="mb-5"
-    >
-      <v-progress-circular
-        indeterminate
-        color="primary"
-      />
-    </v-flex>
-
-    <!--//* No Project invitations existing -->
-    <v-flex v-if="!loadingInvitations && invitations == []">
-      <i>You don't have any pending Project invitations.</i>
-    </v-flex>
-
-    <!--//* Data -->
-    <v-flex
-      v-for="(project, i) in invitations"
-      :key="'invitation' + i"
-      xs12 sm8 md6 lg4
-      class="mb-5 pa-2"
-    >
-      <v-card>
-        <v-card-title primary-title>
-          <h3 class="title mb-0 ml-2">Dummy Project</h3>
-        </v-card-title>
-
-        <v-card-actions>
-          <v-btn
-            flat
-            color="primary"
-          >
-            Accept
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-            flat
-            color="error"
-          >
-            Decline
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
+    <MyProjectInvitations />
 
     <!--//* Join Project -->
     <v-flex xs12>
@@ -101,12 +53,11 @@
 import Vue from 'vue'
 import axios from '@/tools/axios'
 import MyProjects from '@/components/MyProjects.vue'
+import MyProjectInvitations from '@/components/MyProjectInvitations.vue'
 export default Vue.extend({
-  components: { MyProjects },
+  components: { MyProjects, MyProjectInvitations },
   data () {
     return {
-      loadingInvitations: false,
-      invitations: [],
       accessToken: '',
       createProject: null
     }
