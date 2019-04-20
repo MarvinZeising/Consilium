@@ -32,6 +32,10 @@ export default new Router({
     name: 'settings',
     component: () => import('./views/project/Settings.vue')
   }, {
+    path: '/project/:projectId/settings/update-general',
+    name: 'updateGeneral',
+    component: () => import('./views/project/UpdateGeneral.vue')
+  }, {
     path: '/profile/configure-projects',
     name: 'configureProjects',
     component: () => import('./views/profile/ConfigureProjects.vue')

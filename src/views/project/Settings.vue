@@ -9,7 +9,7 @@
 
       <!--//* Project Loading -->
       <v-flex
-        v-if="false && loadingProject"
+        v-if="loadingProject"
         class="mb-5"
       >
         <v-progress-circular
@@ -42,7 +42,10 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat>
+            <v-btn
+              flat
+              href="settings/update-general"
+            >
               Edit
             </v-btn>
           </v-card-actions>
@@ -70,13 +73,6 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, et, fuga eveniet nesciunt atque magnam, sunt non natus alias nobis culpa. Natus repudiandae, necessitatibus nam doloribus excepturi voluptatibus consectetur ad?
             </p>
           </v-card-text>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn flat>
-              Edit
-            </v-btn>
-          </v-card-actions>
         </v-card>
       </v-flex>
 
