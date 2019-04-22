@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <Navbar />
+    <Navbar v-if="isSignedIn" />
     <v-content>
       <router-view/>
     </v-content>
-    <Footer />
+    <Footer v-if="isSignedIn" />
   </v-app>
 </template>
 
@@ -18,6 +18,7 @@ export default Vue.extend({
   components: { Navbar, Footer },
   data() {
     return {
+      isSignedIn: true
     }
   }
 })

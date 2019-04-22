@@ -92,8 +92,24 @@ export default Vue.extend({
       const form : VueForm = this.$refs.form
 
       if (this.$refs.form.validate()) {
-        // TODO: save, actually
-        this.$router.back()
+        axios.get(`/projects/${projectId}`)
+          .then((result) => {
+            this.loading = false
+
+            if (result.data.case == 'Some') {
+              this.name = result.data.fields[0].name
+              this.email = result.data.fields[0].email
+            } else {
+              alert('Couldn\'t find the project.')
+            }
+          })
+          .catch((err) => {
+            this.loading = false
+            alert('Couldn\'t reach the server. Please see the console for more details.')
+            console.error(err.toString())
+          })
+
+        //! this.$router.back()
       }
     },
     fetchProject () {
