@@ -76,7 +76,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from '@/tools/axios'
+import axios from 'axios'
 export default Vue.extend({
   data() {
     return {

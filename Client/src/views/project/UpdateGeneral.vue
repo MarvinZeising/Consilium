@@ -65,7 +65,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from '@/tools/axios'
+import axios from 'axios'
 import { VForm } from 'vuetify/lib'
 export default Vue.extend({
   data() {
