@@ -21,7 +21,7 @@
         Then you can create a new Project and invite all the Publishers to it.
       </p>
       <v-btn
-        href="create-project"
+        :to="{ name: 'createProject' }"
         color="warning">
         Create a new Project
       </v-btn>

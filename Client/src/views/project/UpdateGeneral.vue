@@ -46,7 +46,7 @@
         />
 
         <div class="mt-4">
-          <v-btn href="settings">
+          <v-btn :to="{ name: 'settings' }">
             Cancel
           </v-btn>
 
@@ -66,9 +66,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from '@/tools/axios'
-import { VForm } from 'vuetify/lib';
+import { VForm } from 'vuetify/lib'
 export default Vue.extend({
-  data () {
+  data() {
     return {
       loading: false,
       name: '',
@@ -84,7 +84,7 @@ export default Vue.extend({
       ]
     }
   },
-  created () {
+  created() {
     this.fetchProject()
   },
   methods: {
@@ -105,14 +105,14 @@ export default Vue.extend({
           })
           .catch((err) => {
             this.loading = false
-            alert('Couldn\'t reach the server. Please see the console for more details.')
             console.error(err.toString())
+            alert('Couldn\'t reach the server. Please see the console for more details.')
           })
 
         //! this.$router.back()
       }
     },
-    fetchProject () {
+    fetchProject() {
       this.loading = true
       const projectId = this.$route.params.projectId
 
@@ -129,8 +129,8 @@ export default Vue.extend({
         })
         .catch((err) => {
           this.loading = false
-          alert('Couldn\'t reach the server. Please see the console for more details.')
           console.error(err.toString())
+          alert('Couldn\'t reach the server. Please see the console for more details.')
         })
     }
   }

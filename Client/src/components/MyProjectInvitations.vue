@@ -7,7 +7,7 @@
 
     <!--//* Project invitations loading -->
     <v-flex
-      v-if="loadingInvitations"
+      v-if="loading"
       class="mb-5"
     >
       <v-progress-circular
@@ -17,7 +17,7 @@
     </v-flex>
 
     <!--//* No Project invitations existing -->
-    <v-flex v-if="!loadingInvitations && invitations == []">
+    <v-flex v-if="!loading && invitations == []">
       <i>You don't have any pending Project invitations.</i>
     </v-flex>
 
@@ -59,7 +59,7 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-  data () {
+  data() {
     return {
       loading: false,
       invitations: [{

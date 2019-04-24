@@ -57,14 +57,14 @@
 import Vue from 'vue'
 import axios from '@/tools/axios'
 export default Vue.extend({
-  data () {
+  data() {
     return {
       deleteProjectDialog: false,
       projectName: ''
     }
   },
   methods: {
-    deleteProject () {
+    deleteProject() {
       const projectId = this.$route.params.projectId
 
       // TODO: check for correct project name

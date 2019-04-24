@@ -44,7 +44,7 @@
             <v-spacer></v-spacer>
             <v-btn
               flat
-              href="settings/update-general"
+              :to="{ name: 'updateGeneral' }"
             >
               Edit
             </v-btn>

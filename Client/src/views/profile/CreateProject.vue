@@ -78,7 +78,7 @@
 import Vue from 'vue'
 import axios from '@/tools/axios'
 export default Vue.extend({
-  data () {
+  data() {
     return {
       e6: 1,
       projectName: '',
@@ -86,7 +86,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    createProject () {
+    createProject() {
       axios
         .post('/projects', {
           name: this.projectName,

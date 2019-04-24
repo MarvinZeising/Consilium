@@ -19,8 +19,7 @@
         </v-list-tile>
 
         <!--//* Home -->
-        <v-list-tile href="/"
-        >
+        <v-list-tile :to="{ name: 'home' }">
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
@@ -54,7 +53,7 @@
           <v-list-tile
             v-for="(action, j) in project.actions"
             :key="j"
-            :href="'/project/' + project.id + action[2]"
+            :to="{ name: action[2], params: { projectId: project.id }}"
           >
             <v-list-tile-action>
               <v-icon v-text="action[1]"></v-icon>
@@ -75,7 +74,7 @@
             <v-list-tile
               v-for="(action, j) in project.adminActions"
               :key="j"
-              :href="'/project/' + project.id + action[2]"
+              :to="{ name: action[2], params: { projectId: project.id }}"
             >
               <v-list-tile-action>
                 <v-icon v-text="action[1]"></v-icon>
@@ -99,7 +98,7 @@
           <v-list-tile
             v-for="(action, i) in profileActions"
             :key="i"
-            :href="action[2]"
+            :to="{ name: action[2] }"
           >
             <v-list-tile-action>
               <v-icon v-text="action[1]"></v-icon>
@@ -109,9 +108,7 @@
         </v-list-group>
 
         <!--//* Sign out -->
-        <v-list-tile
-          href="/sign-up"
-        >
+        <v-list-tile to="signUp">
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
@@ -142,7 +139,7 @@
 import Vue from 'vue'
 import axios from '@/tools/axios'
 export default Vue.extend({
-  created () {
+  created() {
     this.fetchProjects()
   },
   data() {
@@ -152,17 +149,17 @@ export default Vue.extend({
       projectLoadingError: false,
       projects: null,
       profileActions: [
-        ['Personal', 'account_circle', '/profile/personal'],
-        ['Spiritual', 'assignment_turned_in', '/profile/spritual'],
-        ['Availability', 'event_available', '/profile/availability'],
-        ['Account', 'lock', '/profile/account'],
-        ['Notifications', 'notifications', '/profile/notifications'],
-        ['Configure Projects', 'settings', '/profile/configure-projects']
+        ['Personal', 'account_circle', 'configureProjects'],
+        ['Spiritual', 'assignment_turned_in', 'configureProjects'],
+        ['Availability', 'event_available', 'configureProjects'],
+        ['Account', 'lock', 'configureProjects'],
+        ['Notifications', 'notifications', 'configureProjects'],
+        ['Configure Projects', 'settings', 'configureProjects']
       ]
     }
   },
   methods: {
-    fetchProjects () {
+    fetchProjects() {
       this.loadingProjects = true
       this.projects = null
 
@@ -170,21 +167,21 @@ export default Vue.extend({
         .then((result) => {
           const fetchedProjects = result.data
           this.loadingProjects = false
-          this.projects = fetchedProjects.map((project : any) => {
+          this.projects = fetchedProjects.map((project: any) => {
             project.actions = [
-              ['Knowledge Base', 'subject', '/knowledge-base'],
-              ['Calendar', 'today', '/calendar']
+              ['Knowledge Base', 'subject', 'knowledgeBase'],
+              ['Calendar', 'today', 'calendar']
             ]
             project.adminActions = [
-              ['Settings', 'settings', '/settings'],
-              ['User Management', 'group', '/users'],
-              ['Categories', 'label', '/users'],
-              ['Teams', 'supervisor_account', '/users'],
-              ['Meeting Points', 'location_on', '/users'],
-              ['Notifications', 'notifications', '/users'],
-              ['Reports', 'message', '/users'],
-              ['Statistics', 'show_chart', '/users'],
-              ['Notes', 'edit', '/users']
+              ['Settings', 'settings', 'settings'],
+              ['User Management', 'group', 'settings'],
+              ['Categories', 'label', 'settings'],
+              ['Teams', 'supervisor_account', 'settings'],
+              ['Meeting Points', 'location_on', 'settings'],
+              ['Notifications', 'notifications', 'settings'],
+              ['Reports', 'message', 'settings'],
+              ['Statistics', 'show_chart', 'settings'],
+              ['Notes', 'edit', 'settings']
             ]
             return project
           })

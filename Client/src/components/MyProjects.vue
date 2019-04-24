@@ -62,17 +62,17 @@ import Vue from 'vue'
 import axios from '@/tools/axios'
 export default Vue.extend({
   name: 'MyProjects',
-  data () {
+  data() {
     return {
       loading: false,
       projects: []
     }
   },
-  created () {
+  created() {
     this.fetchProjects()
   },
   methods: {
-    fetchProjects () {
+    fetchProjects() {
       this.loading = true
       this.projects = []
 
