@@ -6,16 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="wwwroot\index.html" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Projects/Models.fs" />
     <Compile Include="Projects/Controller.fs" />
     <Compile Include="Projects/Database.fs" />
     <Compile Include="Program.fs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Giraffe" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.8.0" />
   </ItemGroup>
-
 </Project>
