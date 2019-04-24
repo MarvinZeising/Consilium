@@ -25,3 +25,4 @@ yarn-error.log*
 
 Server/bin/
 Server/obj/
+Server/app
