@@ -6,8 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="wwwroot\index.html" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Include="Projects/Models.fs" />
     <Compile Include="Projects/Controller.fs" />
