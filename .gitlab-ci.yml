@@ -5,12 +5,12 @@ services:
   - docker:dind
 
 before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_TOKEN" $CI_REGISTRY
+  - docker login -u _json_key --password-stdin $REGISTRY < "$KEYFILE"
 
 build:
   stage: build
   script:
-    - docker build --pull -t $CI_REGISTRY_IMAGE .
-    - docker push $CI_REGISTRY_IMAGE
+    - docker build --pull -t $REGISTRY_IMAGE .
+    - docker push $REGISTRY_IMAGE
   only:
     - master
