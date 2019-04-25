@@ -5,7 +5,8 @@ services:
   - docker:dind
 
 before_script:
-  - docker login -u _json_key --password-stdin $REGISTRY < "$KEYFILE"
+  - echo "$KEYFILE" >> "$HOME/keyfile.json"
+  - docker login -u _json_key --password-stdin $REGISTRY < "$HOME/keyfile.json"
 
 build:
   stage: build
