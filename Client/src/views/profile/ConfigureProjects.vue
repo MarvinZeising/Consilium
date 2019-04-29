@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios'
+import axios from '@/tools/axios'
 import MyProjects from '@/components/MyProjects.vue'
 import MyProjectInvitations from '@/components/MyProjectInvitations.vue'
 import JoinProject from '@/components/JoinProject.vue'
