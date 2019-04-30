@@ -26,17 +26,6 @@
           <v-list-tile-title>Home</v-list-tile-title>
         </v-list-tile>
 
-        <!--//* Project loader -->
-        <v-list-tile v-if="loadingProjects">
-          <v-list-tile-action>
-            <v-progress-circular
-              indeterminate
-              color="primary"
-            />
-          </v-list-tile-action>
-          <v-list-tile-title>Loading Projects...</v-list-tile-title>
-        </v-list-tile>
-
         <!--//* Projects -->
         <v-list-group
           v-for="(project, i) in myProjects"
@@ -117,21 +106,6 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-snackbar
-      v-model="projectLoadingError"
-      color="error"
-      :multi-line="true"
-      :timeout="10000"
-    >
-      Couldn't reach the server.<br>Are you connected to the internet?
-      <v-btn
-        dark
-        flat
-        @click="projectLoadingError = false"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
   </nav>
 </template>
 
@@ -149,18 +123,6 @@ import Component from 'vue-class-component'
     drawer: {
       type: Boolean,
       default: true
-    },
-    loadingProjects: {
-      type: Boolean,
-      default: false
-    },
-    projectLoadingError: {
-      type: Boolean,
-      default: false
-    },
-    projects: {
-      type: Array,
-      default: () => []
     },
     profileActions: {
       type: Array,
