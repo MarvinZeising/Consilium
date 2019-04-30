@@ -25,8 +25,6 @@
     "roboto-fontface": "*",
     "tslib": "^1.9.3",
     "vue": "^2.6.6",
-    "vue-class-component": "^6.0.0",
-    "vue-property-decorator": "^8.0.0",
     "vue-router": "^3.0.1",
     "vuetify": "^1.5.5",
     "vuex": "^3.1.0"
@@ -41,7 +39,9 @@
     "typescript": "^3.2.1",
     "vue-cli-plugin-vuetify": "^0.5.0",
     "vue-template-compiler": "^2.5.21",
-    "vuex-module-decorators": "^0.9.8"
+    "vuex-module-decorators": "^0.9.8",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^8.0.0"
   },
   "optionalDependencies": {
     "@vue/cli-plugin-e2e-cypress": "^3.3.0"
