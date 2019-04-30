@@ -58,6 +58,7 @@ import { VForm } from 'vuetify/lib'
 import Component from 'vue-class-component';
 import ProjectModule from '@/store/modules/projects';
 import { getModule } from 'vuex-module-decorators';
+import { ProjectEntity } from '@/models/definitions';
 
 @Component
 export default class UpdateGeneral extends Vue {
@@ -75,29 +76,25 @@ export default class UpdateGeneral extends Vue {
     (v: string) => /.+@.+/.test(v) || 'Email must be valid'
   ]
 
-  created() {
+  private created() {
     const projectId = this.$route.params.projectId
     const project = this.projectModule.myProjects.filter((x: ProjectEntity) => x.id === projectId)[0]
     this.name = project.name
     this.email = project.email
   }
 
-  save() {
+  private async save() {
     const form: any = this.$refs.form
     const projectId = this.$route.params.projectId
 
     if (form.validate()) {
-      axios.put(`/projects/${projectId}`, {
+      await this.projectModule.updateProjectGeneral({
+        id: projectId,
         name: this.name,
         email: this.email
       })
-        .then((result) => {
-          this.$router.back()
-          // TODO: toast for successful save
-        })
-        .catch((err) => {
-          alert('Couldn\'t reach the server.')
-        })
+
+      this.$router.back()
     }
   }
 }
