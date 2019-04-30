@@ -129,7 +129,7 @@ export default class Settings extends Vue {
   private name: string = ''
   private email: string = ''
 
-  created() {
+  private created() {
     const projectId = this.$route.params.projectId
     const project = this.projectModule.myProjects.filter((x: ProjectEntity) => x.id === projectId)[0]
     this.name = project.name
