@@ -16,33 +16,20 @@ export default class ProjectModule extends VuexModule {
     return { projects: response.data }
   }
 
-  @Action
+  @Action({ commit: 'setNameAndEmail' })
   public async updateProjectGeneral(project: ProjectEntity) {
     await axios.put(`/projects/${project.id}`, {
       name: project.name,
       email: project.email
     })
-
-    this.context.commit('setName', {
-      id: project.id,
-      name: project.name
-    })
+    return project
   }
 
   @Mutation
-  public setName(project: ProjectEntity) {
+  public setNameAndEmail(project: ProjectEntity) {
     this.projects = this.projects.map((x: ProjectEntity) => {
       if (x.id === project.id) {
         x.name = project.name
-      }
-      return x
-    })
-  }
-
-  @Mutation
-  public setEmail(project: ProjectEntity) {
-    this.projects = this.projects.map((x: ProjectEntity) => {
-      if (x.id === project.id) {
         x.email = project.email
       }
       return x
