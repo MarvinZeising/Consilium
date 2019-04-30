@@ -1,19 +1,7 @@
 <template>
   <v-container fluid>
 
-    <v-form
-      v-if="!loading"
-      ref="form"
-    >
-      <v-flex
-        v-if="loading"
-        class="mb-5"
-      >
-        <v-progress-circular
-          indeterminate
-          color="primary"
-        />
-      </v-flex>
+    <v-form ref="form">
 
       <v-flex xs12>
         <h1 class="headline">Update General Information</h1>
@@ -67,67 +55,50 @@
 import Vue from 'vue'
 import axios from '@/tools/axios'
 import { VForm } from 'vuetify/lib'
-export default Vue.extend({
-  data() {
-    return {
-      loading: false,
-      name: '',
-      nameRules: [
-        (v: string) => !!v || 'Name is required',
-        (v: string) => v.length <= 40 || 'Name must be less than 40 characters',
-        (v: string) => v.length >= 3 || 'Name must be more than 3 characters'
-      ],
-      email: '',
-      emailRules: [
-        (v: string) => !!v || 'Email is required',
-        (v: string) => /.+@.+/.test(v) || 'Email must be valid'
-      ]
-    }
-  },
+import Component from 'vue-class-component';
+import ProjectModule from '@/store/modules/projects';
+import { getModule } from 'vuex-module-decorators';
+
+@Component
+export default class UpdateGeneral extends Vue {
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+
+  private name: string = ''
+  private nameRules: any[] = [
+    (v: string) => !!v || 'Name is required',
+    (v: string) => v.length <= 40 || 'Name must be less than 40 characters',
+    (v: string) => v.length >= 3 || 'Name must be more than 3 characters'
+  ]
+  private email: string = ''
+  private emailRules: any[] = [
+    (v: string) => !!v || 'Email is required',
+    (v: string) => /.+@.+/.test(v) || 'Email must be valid'
+  ]
+
   created() {
-    this.fetchProject()
-  },
-  methods: {
-    save() {
-      const form: any = this.$refs.form
-      const projectId = this.$route.params.projectId
+    const projectId = this.$route.params.projectId
+    const project = this.projectModule.myProjects.filter((x: ProjectEntity) => x.id === projectId)[0]
+    this.name = project.name
+    this.email = project.email
+  }
 
-      if (form.validate()) {
-        axios.put(`/projects/${projectId}`, {
-          name: this.name,
-          email: this.email
-        })
-          .then((result) => {
-            this.loading = false
-            this.$router.back()
-            // TODO: toast for successful save
-          })
-          .catch((err) => {
-            this.loading = false
-            alert('Couldn\'t reach the server.')
-          })
-      }
-    },
-    fetchProject() {
-      this.loading = true
-      const projectId = this.$route.params.projectId
+  save() {
+    const form: any = this.$refs.form
+    const projectId = this.$route.params.projectId
 
-      axios.get(`/projects/${projectId}`)
+    if (form.validate()) {
+      axios.put(`/projects/${projectId}`, {
+        name: this.name,
+        email: this.email
+      })
         .then((result) => {
-          this.loading = false
-
-          if (result.data.case === 'Some') {
-            this.name = result.data.fields[0].name
-            this.email = result.data.fields[0].email
-          } else {
-            alert('Couldn\'t find the project.')
-          }
+          this.$router.back()
+          // TODO: toast for successful save
         })
         .catch((err) => {
-          this.loading = false
           alert('Couldn\'t reach the server.')
         })
     }
   }
-})
+}
 </script>
