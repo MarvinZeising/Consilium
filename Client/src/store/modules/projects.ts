@@ -6,7 +6,7 @@ import { ProjectEntity } from '@/models/definitions'
 export default class ProjectModule extends VuexModule {
   public projects: ProjectEntity[] = []
 
-  public get myProjects(): any[] {
+  public get myProjects(): ProjectEntity[] {
     return this.projects
   }
 
