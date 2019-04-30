@@ -8,7 +8,7 @@ export default new Router({
   mode: 'hash',
   base: process.env.BASE_URL,
   routes: [{
-    path: '/',
+    path: '/home',
     name: 'home',
     component: Home
   }, {
@@ -49,6 +49,6 @@ export default new Router({
     component: () => import('./views/SignUp.vue')
   }, {
     path: '*',
-    redirect: '/'
+    redirect: '/home'
   }],
 })
