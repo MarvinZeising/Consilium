@@ -76,7 +76,6 @@ export default Vue.extend({
         })
         .catch((err) => {
           this.deleteProjectDialog = false
-          console.error(err.toString())
         })
     }
   }

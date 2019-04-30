@@ -96,9 +96,6 @@ export default Vue.extend({
           const projectId = result.data.id
           this.$router.push(`/project/${projectId}/calendar`)
         })
-        .catch((err) => {
-          console.error(err.toString())
-        })
     }
   }
 })

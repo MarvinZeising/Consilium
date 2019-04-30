@@ -83,7 +83,6 @@ export default Vue.extend({
         })
         .catch((err) => {
           this.loading = false
-          console.error(err.toString())
         })
     },
   }

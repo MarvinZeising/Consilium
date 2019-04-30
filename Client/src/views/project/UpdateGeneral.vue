@@ -104,8 +104,7 @@ export default Vue.extend({
           })
           .catch((err) => {
             this.loading = false
-            console.error(err.toString())
-            alert('Couldn\'t reach the server. Please see the console for more details.')
+            alert('Couldn\'t reach the server.')
           })
       }
     },
@@ -117,7 +116,7 @@ export default Vue.extend({
         .then((result) => {
           this.loading = false
 
-          if (result.data.case == 'Some') {
+          if (result.data.case === 'Some') {
             this.name = result.data.fields[0].name
             this.email = result.data.fields[0].email
           } else {
@@ -126,8 +125,7 @@ export default Vue.extend({
         })
         .catch((err) => {
           this.loading = false
-          console.error(err.toString())
-          alert('Couldn\'t reach the server. Please see the console for more details.')
+          alert('Couldn\'t reach the server.')
         })
     }
   }
