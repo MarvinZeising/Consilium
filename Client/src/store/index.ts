@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import projects from './modules/projects'
+import ProjectModule from './modules/projects'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    projects
+    ProjectModule
   }
 })
 

@@ -1,6 +1,6 @@
 class ProjectEntity {
-  id: String = ''
-  name: String = ''
+  public id: string = ''
+  public name: string = ''
 }
 
 export {
