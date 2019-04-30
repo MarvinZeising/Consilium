@@ -18,14 +18,14 @@
               Name
             </p>
             <p class="subheading">
-              {{ projectName }}
+              {{ name }}
             </p>
 
             <p class="caption mb-0 grey--text">
               Email
             </p>
             <p class="subheading mb-0">
-              {{ projectEmail }}
+              {{ email }}
             </p>
           </v-card-text>
 
@@ -126,14 +126,14 @@ import { ProjectEntity } from '@/models/definitions'
 export default class Settings extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
-  private projectName: string = ''
-  private projectEmail: string = ''
+  private name: string = ''
+  private email: string = ''
 
   created() {
     const projectId = this.$route.params.projectId
     const project = this.projectModule.myProjects.filter((x: ProjectEntity) => x.id === projectId)[0]
-    this.projectName = project.name
-    this.projectEmail = project.email
+    this.name = project.name
+    this.email = project.email
   }
 }
 </script>
