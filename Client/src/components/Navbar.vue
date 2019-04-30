@@ -39,7 +39,7 @@
 
         <!--//* Projects -->
         <v-list-group
-          v-for="(project, i) in projects"
+          v-for="(project, i) in myProjects"
           :key="i"
           prepend-icon="extension"
           value="true"
@@ -138,17 +138,33 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from '@/tools/axios'
-export default Vue.extend({
-  created() {
-    this.fetchProjects()
-  },
-  data() {
-    return {
-      drawer: true,
-      loadingProjects: false,
-      projectLoadingError: false,
-      projects: null,
-      profileActions: [
+import { mapGetters, mapActions } from 'vuex'
+import { ProjectEntity } from '@/models/definitions'
+import { getModule } from 'vuex-module-decorators'
+import ProjectModule from '@/store/modules/projects'
+import Component from 'vue-class-component'
+
+@Component({
+  props: {
+    drawer: {
+      type: Boolean,
+      default: true
+    },
+    loadingProjects: {
+      type: Boolean,
+      default: false
+    },
+    projectLoadingError: {
+      type: Boolean,
+      default: false
+    },
+    projects: {
+      type: Array,
+      default: () => []
+    },
+    profileActions: {
+      type: Array,
+      default: () => [
         ['Personal', 'account_circle', 'configureProjects'],
         ['Spiritual', 'assignment_turned_in', 'configureProjects'],
         ['Availability', 'event_available', 'configureProjects'],
@@ -157,41 +173,35 @@ export default Vue.extend({
         ['Configure Projects', 'settings', 'configureProjects']
       ]
     }
-  },
-  methods: {
-    fetchProjects() {
-      this.loadingProjects = true
-      this.projects = null
-
-      axios.get('/projects')
-        .then((result) => {
-          const fetchedProjects = result.data
-          this.loadingProjects = false
-          this.projects = fetchedProjects.map((project: any) => {
-            project.actions = [
-              ['Knowledge Base', 'subject', 'knowledgeBase'],
-              ['Calendar', 'today', 'calendar']
-            ]
-            project.adminActions = [
-              ['Settings', 'settings', 'settings'],
-              ['User Management', 'group', 'settings'],
-              ['Categories', 'label', 'settings'],
-              ['Teams', 'supervisor_account', 'settings'],
-              ['Meeting Points', 'location_on', 'settings'],
-              ['Notifications', 'notifications', 'settings'],
-              ['Reports', 'message', 'settings'],
-              ['Statistics', 'show_chart', 'settings'],
-              ['Notes', 'edit', 'settings']
-            ]
-            return project
-          })
-        })
-        .catch((err) => {
-          this.loadingProjects = false
-          this.projectLoadingError = true
-          console.error(err.toString())
-        })
-    }
   }
 })
+export default class Navbar extends Vue {
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+
+  private async created() {
+    // TODO: defer this to after sign-in
+    await this.projectModule.fetchProjects()
+  }
+
+  private get myProjects(): ProjectEntity[] {
+    return this.projectModule.myProjects.map((project: any) => {
+      project.actions = [
+        ['Knowledge Base', 'subject', 'knowledgeBase'],
+        ['Calendar', 'today', 'calendar']
+      ]
+      project.adminActions = [
+        ['Settings', 'settings', 'settings'],
+        ['User Management', 'group', 'settings'],
+        ['Categories', 'label', 'settings'],
+        ['Teams', 'supervisor_account', 'settings'],
+        ['Meeting Points', 'location_on', 'settings'],
+        ['Notifications', 'notifications', 'settings'],
+        ['Reports', 'message', 'settings'],
+        ['Statistics', 'show_chart', 'settings'],
+        ['Notes', 'edit', 'settings']
+      ]
+      return project
+    })
+  }
+}
 </script>
