@@ -7,17 +7,6 @@
         <h2 class="headline mb-3">General</h2>
       </v-flex>
 
-      <!--//* Project Loading -->
-      <v-flex
-        v-if="loadingProject"
-        class="mb-5"
-      >
-        <v-progress-circular
-          indeterminate
-          color="primary"
-        />
-      </v-flex>
-
       <!--//* Main Settings -->
       <v-flex
         xs12 sm8 md6 lg4
@@ -29,14 +18,14 @@
               Name
             </p>
             <p class="subheading">
-              Wuppertrolley
+              {{ projectName }}
             </p>
 
             <p class="caption mb-0 grey--text">
               Email
             </p>
             <p class="subheading mb-0">
-              help@wuppertrolley.de
+              {{ projectEmail }}
             </p>
           </v-card-text>
 
@@ -126,7 +115,25 @@
 <script lang="ts">
 import Vue from 'vue'
 import DeleteProjectDialog from '@/components/dialogs/DeleteProjectDialog.vue'
-export default Vue.extend({
+import Component from 'vue-class-component'
+import ProjectModule from '@/store/modules/projects'
+import { getModule } from 'vuex-module-decorators'
+import { ProjectEntity } from '@/models/definitions'
+
+@Component({
   components: { DeleteProjectDialog }
 })
+export default class Settings extends Vue {
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+
+  private projectName: string = ''
+  private projectEmail: string = ''
+
+  created() {
+    const projectId = this.$route.params.projectId
+    const project = this.projectModule.myProjects.filter((x: ProjectEntity) => x.id === projectId)[0]
+    this.projectName = project.name
+    this.projectEmail = project.email
+  }
+}
 </script>
