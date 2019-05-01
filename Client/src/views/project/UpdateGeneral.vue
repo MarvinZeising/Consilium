@@ -10,7 +10,7 @@
       <v-flex
         xs12 sm8 md6 lg4
       >
-        <p class="caption mt-4 grey--text">
+        <p class="mt-4 grey--text text--darken-1">
           The name of this Project. The Name has to be unique accross all Projects.
         </p>
         <v-text-field
@@ -22,7 +22,7 @@
           required
         />
 
-        <p class="caption mt-4 grey--text">
+        <p class="mt-4 grey--text text--darken-1">
           We'll use this Email address as reply-to in all Emails that we send on behalf of this Project.
           <br>
           You can create an Email account specifically for the project, or just use your own Email address.
