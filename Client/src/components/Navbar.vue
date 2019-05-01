@@ -6,7 +6,7 @@
     </v-toolbar>
 
     <v-navigation-drawer app v-model='drawer'>
-      <v-list expand="true">
+      <v-list :expand="true">
 
         <!--//* Avatar -->
         <v-list-tile avatar>
