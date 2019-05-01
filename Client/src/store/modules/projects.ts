@@ -34,6 +34,12 @@ export default class ProjectModule extends VuexModule {
     return response.data
   }
 
+  @Action({ commit: 'removeProject' })
+  public async deleteProject(projectId: string) {
+    await axios.delete(`/projects/${projectId}`)
+    return projectId
+  }
+
   @Mutation
   public setNameAndEmail(project: ProjectEntity) {
     this.projects = this.projects.map((x: ProjectEntity) => {
@@ -48,6 +54,11 @@ export default class ProjectModule extends VuexModule {
   @Mutation
   public insertProject(project: ProjectEntity) {
     this.projects.push(project)
+  }
+
+  @Mutation
+  public removeProject(projectId: string) {
+    this.projects = this.projects.filter((x: ProjectEntity) => x.id !== projectId)
   }
 
 }

@@ -21,7 +21,7 @@
             Enter the Project name to continue
           </p>
           <v-text-field
-            v-model="projectName"
+            v-model="enteredName"
             label="Project name"
             box
             required
@@ -40,7 +40,7 @@
             Cancel
           </v-btn>
           <v-btn
-            :disabled="projectName == ''"
+            :disabled="enteredName == ''"
             flat
             color="error"
             @click="deleteProject"
@@ -56,28 +56,37 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from '@/tools/axios'
-export default Vue.extend({
-  data() {
-    return {
-      deleteProjectDialog: false,
-      projectName: ''
-    }
-  },
-  methods: {
-    deleteProject() {
-      const projectId = this.$route.params.projectId
+import Component from 'vue-class-component';
+import ProjectModule from '@/store/modules/projects';
+import { getModule } from 'vuex-module-decorators';
+import { ProjectEntity } from '../../models/definitions';
 
-      // TODO: check for correct project name
+@Component({})
+export default class DeleteProjectDialog extends Vue {
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
-      axios.delete(`/projects/${projectId}`)
-        .then((result) => {
-          this.deleteProjectDialog = false
-          this.$router.push('/home')
-        })
-        .catch((err) => {
-          this.deleteProjectDialog = false
-        })
+  private deleteProjectDialog: boolean = false
+  private projectName: string = ''
+  private enteredName: string = ''
+
+  private created() {
+    const projectId = this.$route.params.projectId
+    const project = this.projectModule.myProjects.filter((x: ProjectEntity) => x.id === projectId)[0]
+    this.projectName = project.name
+  }
+
+  private async deleteProject() {
+    const projectId = this.$route.params.projectId
+
+    if (this.projectName === this.enteredName) {
+      await this.projectModule.deleteProject(projectId)
+
+      this.deleteProjectDialog = false
+      this.$router.push({ name: 'home' })
+    } else {
+      alert('Wrong project name!')
     }
   }
-})
+
+}
 </script>
