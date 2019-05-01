@@ -1,18 +1,21 @@
-﻿open System
+open System
+open System.IO
+open MongoDB.Driver
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Cors.Infrastructure
 open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.Logging
 open Giraffe
 open Projects
 open Projects.ProjectCollection
-open MongoDB.Driver
-open Microsoft.Extensions.Logging
-open System.IO
+open Users
+open Users.UserCollection
 
 let routes =
     choose [
         ProjectController.routes
+        UserController.routes
     ]
 
 let errorHandler (ex : Exception) (logger : ILogger) =
@@ -42,6 +45,7 @@ let configureServices (services : IServiceCollection) =
     services.AddCors() |> ignore
     services.AddGiraffe() |> ignore
     services.AddProjectCollection(db.GetCollection<Project>("projects")) |> ignore
+    services.AddUserCollection(db.GetCollection<User>("users")) |> ignore
 
 let configureLogging (builder : ILoggingBuilder) =
     let filter (l : LogLevel) = l.Equals LogLevel.Error

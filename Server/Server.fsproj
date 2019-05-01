@@ -11,8 +11,11 @@
 
   <ItemGroup>
     <Compile Include="Projects/Models.fs" />
+    <Compile Include="Users/Models.fs" />
     <Compile Include="Projects/Controller.fs" />
+    <Compile Include="Users/Controller.fs" />
     <Compile Include="Projects/Database.fs" />
+    <Compile Include="Users/Database.fs" />
     <Compile Include="Program.fs" />
     <PackageReference Include="Giraffe" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />

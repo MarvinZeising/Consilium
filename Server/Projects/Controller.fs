@@ -2,7 +2,6 @@ namespace Projects
 
 open Giraffe
 open Microsoft.AspNetCore.Http
-open Projects
 open FSharp.Control.Tasks.V2
 open System
 
