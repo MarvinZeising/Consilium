@@ -25,6 +25,15 @@ export default class ProjectModule extends VuexModule {
     return project
   }
 
+  @Action({ commit: 'insertProject' })
+  public async createProject(project: ProjectEntity): Promise<ProjectEntity> {
+    const response = await axios.post(`/projects`, {
+      name: project.name,
+      email: project.email
+    })
+    return response.data
+  }
+
   @Mutation
   public setNameAndEmail(project: ProjectEntity) {
     this.projects = this.projects.map((x: ProjectEntity) => {
@@ -34,6 +43,11 @@ export default class ProjectModule extends VuexModule {
       }
       return x
     })
+  }
+
+  @Mutation
+  public insertProject(project: ProjectEntity) {
+    this.projects.push(project)
   }
 
 }
