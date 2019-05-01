@@ -6,19 +6,8 @@
       <h2 class="headline mb-3">Your Projects</h2>
     </v-flex>
 
-    <!--//* Projects loading -->
-    <v-flex
-      v-if="loading"
-      class="mb-5"
-    >
-      <v-progress-circular
-        indeterminate
-        color="primary"
-      />
-    </v-flex>
-
     <!--//* No Projects existing -->
-    <v-flex v-if="!loading && projects == []">
+    <v-flex v-if="projects == []">
       <i>You don't have access to any Projects, yet.</i>
     </v-flex>
 
@@ -60,31 +49,20 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from '@/tools/axios'
-export default Vue.extend({
-  name: 'MyProjects',
-  data() {
-    return {
-      loading: false,
-      projects: []
-    }
-  },
-  created() {
-    this.fetchProjects()
-  },
-  methods: {
-    fetchProjects() {
-      this.loading = true
-      this.projects = []
+import Component from 'vue-class-component'
+import ProjectModule from '@/store/modules/projects';
+import { getModule } from 'vuex-module-decorators'
+import { ProjectEntity } from '@/models/definitions'
 
-      axios.get('/projects')
-        .then((result) => {
-          this.loading = false
-          this.projects = result.data
-        })
-        .catch((err) => {
-          this.loading = false
-        })
-    },
+@Component
+export default class MyProjects extends Vue {
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+
+  private projects: ProjectEntity[] = []
+
+  private created() {
+    this.projects = this.projectModule.myProjects
   }
-})
+
+}
 </script>
