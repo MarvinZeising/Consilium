@@ -19,13 +19,28 @@
           <v-window v-model="step">
             <v-window-item :value="1">
               <v-card-text>
-                <v-text-field
-                  v-model="email"
-                  label="Email"
-                />
-                <span class="caption grey--text text--darken-1">
-                  This is the email you will use to login to your Consilium account
+
+                <v-form
+                  ref="usernameForm"
+                  v-model="usernameFormValid"
+                >
+                  <p class="grey--text text--darken-1">
+                    This is the username you will use to login to your Consilium account
+                  </p>
+                  <v-text-field
+                    v-model="username"
+                    label="Username"
+                    :rules="usernameRules"
+                    box
+                  />
+                </v-form>
+                <span
+                  class="red--text"
+                  v-if="usernameAlreadyExists"
+                >
+                  Sorry, this username already exists. Please choose another one.
                 </span>
+
               </v-card-text>
             </v-window-item>
 
@@ -71,12 +86,18 @@
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn
-              :disabled="step === 3"
+              :disabled="!usernameFormValid || nextLoading"
               color="primary"
-              depressed
               @click="next"
             >
-              Next
+              <span v-if="!nextLoading">
+                Next
+              </span>
+              <v-progress-circular
+                v-if="nextLoading"
+                indeterminate
+                color="primary"
+              />
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -87,13 +108,22 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios'
+import axios from '@/tools/axios'
 import Component from 'vue-class-component';
+import colors from 'vuetify/es5/util/colors'
 
 @Component
 export default class SignUp extends Vue {
   private step: number = 1
-  private email: string = ''
+  private nextLoading: boolean = false
+
+  private username: string = ''
+  private usernameFormValid: boolean = false
+  private usernameAlreadyExists: boolean = false
+  private usernameRules: any[] = [
+    (v: string) => !!v || 'Username is required',
+    (v: string) => v.length >= 3 || 'Username must be more than 3 characters'
+  ]
 
   private get currentTitle() {
     switch (this.step) {
@@ -103,15 +133,20 @@ export default class SignUp extends Vue {
     }
   }
 
-  private next() {
+  private async next() {
     switch (this.step) {
       case 1: {
-        axios.get(`/api/user?email=${this.email}`)
+        this.nextLoading = true
+
+        await axios.get(`/users`)
           .then((response) => {
-            alert(response)
-          })
-          .catch((error) => {
-            alert(error)
+            this.nextLoading = false
+
+            if (response.data.length > 0) {
+              this.usernameAlreadyExists = true
+            } else {
+              this.usernameAlreadyExists = false
+            }
           })
       }
     }
