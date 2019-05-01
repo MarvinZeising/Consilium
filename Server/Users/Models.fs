@@ -13,3 +13,5 @@ type UserCriteria =
     | All
 
 type UserFind = UserCriteria -> User[]
+
+type UserFindByUsername = string -> User option
