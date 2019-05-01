@@ -35,7 +35,14 @@ import axios from '@/tools/axios'
 import MyProjects from '@/components/MyProjects.vue'
 import MyProjectInvitations from '@/components/MyProjectInvitations.vue'
 import JoinProject from '@/components/JoinProject.vue'
-export default Vue.extend({
-  components: { MyProjects, MyProjectInvitations, JoinProject }
+import Component from 'vue-class-component'
+
+@Component({
+  components: {
+    MyProjects,
+    MyProjectInvitations,
+    JoinProject
+  }
 })
+export default class ConfigureProjects extends Vue {}
 </script>

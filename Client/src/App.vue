@@ -12,14 +12,15 @@
 import Vue from 'vue'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
+import Component from 'vue-class-component'
 
-export default Vue.extend({
-  name: 'ConsiliumApp',
-  components: { Navbar, Footer },
-  data() {
-    return {
-      isSignedIn: true
-    }
+@Component({
+  components: {
+    Navbar,
+    Footer
   }
 })
+export default class App extends Vue {
+  private isSignedIn: boolean = true
+}
 </script>

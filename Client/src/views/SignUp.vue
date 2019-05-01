@@ -88,36 +88,34 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios'
-export default Vue.extend({
-  data: () => ({
-    step: 1,
-    email: null
-  }),
+import Component from 'vue-class-component';
 
-  computed: {
-    currentTitle() {
-      switch (this.step) {
-        case 1: return 'Sign-up'
-        case 2: return 'Create a password'
-        default: return 'Account created'
-      }
+@Component
+export default class SignUp extends Vue {
+  private step: number = 1
+  private email: string = ''
+
+  private get currentTitle() {
+    switch (this.step) {
+      case 1: return 'Sign-up'
+      case 2: return 'Create a password'
+      default: return 'Account created'
     }
-  },
+  }
 
-  methods: {
-    next() {
-      switch (this.step) {
-        case 1: {
-          axios.get(`/api/user?email=${this.email}`)
-            .then((response) => {
-              alert(response)
-            })
-            .catch((error) => {
-              alert(error)
-            })
-        }
+  private next() {
+    switch (this.step) {
+      case 1: {
+        axios.get(`/api/user?email=${this.email}`)
+          .then((response) => {
+            alert(response)
+          })
+          .catch((error) => {
+            alert(error)
+          })
       }
     }
   }
-})
+
+}
 </script>

@@ -57,15 +57,16 @@
 <script lang="ts">
 import Vue from 'vue'
 import moment from 'moment'
-export default Vue.extend({
-  data: () => ({
-    type: 'month',
-    start: moment().format('yyyy-mm-dd'),
-    weekdays: [1, 2, 3, 4, 5, 6, 0],
-    typeOptions: [
-      { text: 'Week', value: 'week' },
-      { text: 'Month', value: 'month' }
-    ]
-  })
-})
+import Component from 'vue-class-component';
+
+@Component
+export default class Calendar extends Vue {
+  private type: string = 'month'
+  private start: string = moment().format('yyyy-mm-dd')
+  private weekdays: number[] = [1, 2, 3, 4, 5, 6, 0]
+  private typeOptions: any[] = [
+    { text: 'Week', value: 'week' },
+    { text: 'Month', value: 'month' }
+  ]
+}
 </script>
