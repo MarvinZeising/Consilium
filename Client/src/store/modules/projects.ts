@@ -41,7 +41,7 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public setNameAndEmail(project: Project) {
+  protected setNameAndEmail(project: Project) {
     this.projects = this.projects.map((x: Project) => {
       if (x.id === project.id) {
         x.name = project.name
@@ -52,12 +52,12 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public insertProject(project: Project) {
+  protected insertProject(project: Project) {
     this.projects.push(project)
   }
 
   @Mutation
-  public removeProject(projectId: string) {
+  protected removeProject(projectId: string) {
     this.projects = this.projects.filter((x: Project) => x.id !== projectId)
   }
 
