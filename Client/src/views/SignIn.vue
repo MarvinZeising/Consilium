@@ -61,14 +61,21 @@ import Vue from 'vue'
 import axios from '@/tools/axios'
 import Component from 'vue-class-component';
 import colors from 'vuetify/es5/util/colors'
+import UserModule from '@/store/modules/users';
+import { getModule } from 'vuex-module-decorators';
 
 @Component
-export default class SignUp extends Vue {
+export default class SignIn extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
 
+  private valid: boolean = false
   private authInProgress: boolean = false
+  private username: string = ''
+  private password: string = ''
   private passwordShow: boolean = false
 
-
+  async created() {
+    await this.userModule.signIn('username', 'password')
+  }
 }
 </script>
