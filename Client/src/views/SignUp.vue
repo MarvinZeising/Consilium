@@ -57,10 +57,13 @@
                   <v-text-field
                     v-model="password"
                     label="Password"
-                    type="password"
+                    :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
+                    :type="passwordShow ? 'text' : 'password'"
                     :rules="passwordRules"
+                    hint="Has to have at least 8 characters"
                     box
                     required
+                    @click:append="passwordShow = !passwordShow"
                   ></v-text-field>
                   <p class="grey--text text--darken-1">
                     Just to be sure, please confirm your password one more time
@@ -68,10 +71,12 @@
                   <v-text-field
                     v-model="passwordRepeat"
                     label="Confirm Password"
-                    type="password"
+                    :append-icon="passwordRepeatShow ? 'visibility' : 'visibility_off'"
+                    :type="passwordRepeatShow ? 'text' : 'password'"
                     :rules="passwordRepeatRules"
                     box
                     required
+                    @click:append="passwordRepeatShow = !passwordRepeatShow"
                   ></v-text-field>
                 </v-form>
 
@@ -144,6 +149,7 @@ export default class SignUp extends Vue {
   ]
 
   private password: string = ''
+  private passwordShow: boolean = false
   private passwordValid: boolean = false
   private passwordRules: any[] = [
     (v: string) => !!v || 'Password is required',
@@ -151,6 +157,7 @@ export default class SignUp extends Vue {
   ]
 
   private passwordRepeat: string = ''
+  private passwordRepeatShow: boolean = false
   private get passwordRepeatRules() {
     return [
       (v: string) => !!v || 'Confirm password is required',
