@@ -59,7 +59,7 @@ import axios from '@/tools/axios'
 import Component from 'vue-class-component';
 import ProjectModule from '@/store/modules/projects';
 import { getModule } from 'vuex-module-decorators';
-import { ProjectEntity } from '../../models/definitions';
+import { Project } from '../../models/definitions';
 
 @Component({})
 export default class DeleteProjectDialog extends Vue {
@@ -71,7 +71,7 @@ export default class DeleteProjectDialog extends Vue {
 
   private created() {
     const projectId = this.$route.params.projectId
-    const project = this.projectModule.myProjects.filter((x: ProjectEntity) => x.id === projectId)[0]
+    const project = this.projectModule.myProjects.filter((x: Project) => x.id === projectId)[0]
     this.projectName = project.name
   }
 

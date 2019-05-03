@@ -113,7 +113,7 @@
 import Vue from 'vue'
 import axios from '@/tools/axios'
 import { mapGetters, mapActions } from 'vuex'
-import { ProjectEntity } from '@/models/definitions'
+import { Project } from '@/models/definitions'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '@/store/modules/projects'
 import Component from 'vue-class-component'
@@ -145,7 +145,7 @@ export default class Navbar extends Vue {
     await this.projectModule.fetchProjects()
   }
 
-  private get myProjects(): ProjectEntity[] {
+  private get myProjects(): Project[] {
     return this.projectModule.myProjects.map((project: any) => {
       project.actions = [
         ['Knowledge Base', 'subject', 'knowledgeBase'],

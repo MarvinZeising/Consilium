@@ -52,13 +52,13 @@ import axios from '@/tools/axios'
 import Component from 'vue-class-component'
 import ProjectModule from '@/store/modules/projects';
 import { getModule } from 'vuex-module-decorators'
-import { ProjectEntity } from '@/models/definitions'
+import { Project } from '@/models/definitions'
 
 @Component
 export default class MyProjects extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
-  private projects: ProjectEntity[] = []
+  private projects: Project[] = []
 
   private created() {
     this.projects = this.projectModule.myProjects

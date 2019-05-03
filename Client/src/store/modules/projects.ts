@@ -1,12 +1,12 @@
 import axios from '@/tools/axios'
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
-import { ProjectEntity } from '@/models/definitions'
+import { Project } from '@/models/definitions'
 
 @Module({ name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
-  public projects: ProjectEntity[] = []
+  public projects: Project[] = []
 
-  public get myProjects(): ProjectEntity[] {
+  public get myProjects(): Project[] {
     return this.projects
   }
 
@@ -17,7 +17,7 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Action({ commit: 'setNameAndEmail' })
-  public async updateProjectGeneral(project: ProjectEntity) {
+  public async updateProjectGeneral(project: Project) {
     await axios.put(`/projects/${project.id}`, {
       name: project.name,
       email: project.email
@@ -26,7 +26,7 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Action({ commit: 'insertProject' })
-  public async createProject(project: ProjectEntity): Promise<ProjectEntity> {
+  public async createProject(project: Project): Promise<Project> {
     const response = await axios.post(`/projects`, {
       name: project.name,
       email: project.email
@@ -41,8 +41,8 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public setNameAndEmail(project: ProjectEntity) {
-    this.projects = this.projects.map((x: ProjectEntity) => {
+  public setNameAndEmail(project: Project) {
+    this.projects = this.projects.map((x: Project) => {
       if (x.id === project.id) {
         x.name = project.name
         x.email = project.email
@@ -52,13 +52,13 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public insertProject(project: ProjectEntity) {
+  public insertProject(project: Project) {
     this.projects.push(project)
   }
 
   @Mutation
   public removeProject(projectId: string) {
-    this.projects = this.projects.filter((x: ProjectEntity) => x.id !== projectId)
+    this.projects = this.projects.filter((x: Project) => x.id !== projectId)
   }
 
 }
