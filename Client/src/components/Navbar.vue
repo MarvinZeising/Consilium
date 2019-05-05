@@ -118,27 +118,20 @@ import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '@/store/modules/projects'
 import Component from 'vue-class-component'
 
-@Component({
-  props: {
-    drawer: {
-      type: Boolean,
-      default: true
-    },
-    profileActions: {
-      type: Array,
-      default: () => [
-        ['Personal', 'account_circle', 'configureProjects'],
-        ['Spiritual', 'assignment_turned_in', 'configureProjects'],
-        ['Availability', 'event_available', 'configureProjects'],
-        ['Account', 'lock', 'configureProjects'],
-        ['Notifications', 'notifications', 'configureProjects'],
-        ['Configure Projects', 'settings', 'configureProjects']
-      ]
-    }
-  }
-})
+@Component
 export default class Navbar extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+
+  private drawer: boolean = false
+
+  private profileActions: any[] = [
+    ['Personal', 'account_circle', 'configureProjects'],
+    ['Spiritual', 'assignment_turned_in', 'configureProjects'],
+    ['Availability', 'event_available', 'configureProjects'],
+    ['Account', 'lock', 'configureProjects'],
+    ['Notifications', 'notifications', 'configureProjects'],
+    ['Configure Projects', 'settings', 'configureProjects']
+  ]
 
   private async created() {
     // TODO: defer this to after sign-in
