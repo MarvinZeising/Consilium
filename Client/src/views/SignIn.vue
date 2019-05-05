@@ -84,6 +84,12 @@ export default class SignIn extends Vue {
     (v: string) => !!v || 'Password is required'
   ]
 
+  private created() {
+    if (this.userModule.isSignedIn) {
+      this.$router.replace({ name: 'home' })
+    }
+  }
+
   private async signIn() {
     this.authInProgress = true
 
