@@ -130,13 +130,6 @@ export default class NavbarSignedIn extends Vue {
     return this.userModule.isSignedIn
   }
 
-  private async created() {
-    // TODO: defer this to after sign-in
-    if (this.isSignedIn) {
-      await this.projectModule.fetchProjects()
-    }
-  }
-
   private get myProjects(): Project[] {
     return this.projectModule.myProjects.map((project: any) => {
       project.actions = [

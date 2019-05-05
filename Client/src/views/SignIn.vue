@@ -65,10 +65,12 @@ import Component from 'vue-class-component';
 import colors from 'vuetify/es5/util/colors'
 import UserModule from '@/store/modules/users';
 import { getModule } from 'vuex-module-decorators';
+import ProjectModule from '@/store/modules/projects';
 
 @Component
 export default class SignIn extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private valid: boolean = false
   private authInProgress: boolean = false
@@ -96,7 +98,10 @@ export default class SignIn extends Vue {
     const form: any = this.$refs.form
 
     if (form.validate()) {
+      // TODO: handle unsuccessful sign in
       await this.userModule.signIn(this.username, this.password)
+
+      await this.projectModule.fetchProjects()
 
       const afterSignIn: any = this.$router.currentRoute.query.afterSignIn
 
