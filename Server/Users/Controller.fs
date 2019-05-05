@@ -26,9 +26,9 @@ module UserController =
                     let users =
                         match username with
                         | None ->
-                            find UserCriteria.All
+                            find All
                         | Some username ->
-                            find(UserCriteria.Username username)
+                            find(Username username)
                     json users next context
 
         ]
