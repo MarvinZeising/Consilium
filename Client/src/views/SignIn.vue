@@ -97,6 +97,23 @@ export default class SignIn extends Vue {
 
     if (form.validate()) {
       await this.userModule.signIn(this.username, this.password)
+
+      const afterSignIn: any = this.$router.currentRoute.query.afterSignIn
+
+      if (afterSignIn !== null) {
+        const location = this.$router.resolve(afterSignIn)
+
+        if (location !== undefined) {
+          this.$router.push({
+            name: location.resolved.name,
+            params: location.resolved.params,
+            query: location.resolved.query
+          })
+
+          return
+        }
+      }
+
       this.$router.push({ name: 'home' })
     }
 
