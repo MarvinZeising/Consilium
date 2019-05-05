@@ -85,11 +85,11 @@
 
             <v-window-item :value="3">
               <div class="pa-3 text-xs-center">
-                <h2 class="headline">Welcome to Consilium</h2>
+                <h2 class="headline">Welcome to Consilium!</h2>
                 <p>You successfully created an account.</p>
                 <!--// TODO: add link here -->
                 <p>If you want some tips and tricks on how to get started, you can have a look at our wiki (link here)</p>
-                <p>Otherwise, just go ahead and start planning</p>
+                <p>Otherwise, you can now sign in for the first time.</p>
               </div>
             </v-window-item>
           </v-window>
@@ -205,7 +205,7 @@ export default class SignUp extends Vue {
         break
       }
       case 3: {
-        this.$router.push({ name: 'home' })
+        this.$router.push({ name: 'signIn' })
         break
       }
     }
