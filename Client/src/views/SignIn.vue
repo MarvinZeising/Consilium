@@ -18,6 +18,7 @@
               <v-text-field
                 v-model="username"
                 label="Username"
+                :rules="usernameRules"
                 prepend-inner-icon="person"
                 box
                 required
@@ -27,6 +28,7 @@
                 label="Password"
                 :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
                 :type="passwordShow ? 'text' : 'password'"
+                :rules="passwordRules"
                 prepend-inner-icon="lock"
                 box
                 required
@@ -40,7 +42,7 @@
             <v-btn
               color="primary"
             >
-              <span>
+              <span @click="signIn">
                 Sign in
               </span>
               <v-progress-circular
@@ -70,12 +72,29 @@ export default class SignIn extends Vue {
 
   private valid: boolean = false
   private authInProgress: boolean = false
+
   private username: string = ''
+  private usernameRules: any[] = [
+    (v: string) => !!v || 'Username is required'
+  ]
+
   private password: string = ''
   private passwordShow: boolean = false
+  private passwordRules: any[] = [
+    (v: string) => !!v || 'Password is required'
+  ]
 
-  async created() {
-    await this.userModule.signIn('username', 'password')
+  private async signIn() {
+    this.authInProgress = true
+
+    const form: any = this.$refs.form
+
+    if (form.validate()) {
+      await this.userModule.signIn(this.username, this.password)
+      this.$router.push({ name: 'home' })
+    }
+
+    this.authInProgress = false
   }
 }
 </script>
