@@ -97,7 +97,7 @@
         </v-list-group>
 
         <!--//* Sign out -->
-        <v-list-tile :to="{ name: 'signIn' }">
+        <v-list-tile :to="{ name: 'signOut' }">
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
