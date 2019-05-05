@@ -57,10 +57,10 @@
 import Vue from 'vue'
 import axios from '@/tools/axios'
 import { VForm } from 'vuetify/lib'
-import Component from 'vue-class-component';
-import ProjectModule from '@/store/modules/projects';
-import { getModule } from 'vuex-module-decorators';
-import { Project } from '@/models/definitions';
+import Component from 'vue-class-component'
+import ProjectModule from '@/store/modules/projects'
+import { getModule } from 'vuex-module-decorators'
+import { Project } from '@/models/definitions'
 
 @Component
 export default class UpdateGeneral extends Vue {

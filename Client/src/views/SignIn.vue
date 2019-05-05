@@ -61,11 +61,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from '@/tools/axios'
-import Component from 'vue-class-component';
+import Component from 'vue-class-component'
 import colors from 'vuetify/es5/util/colors'
-import UserModule from '@/store/modules/users';
-import { getModule } from 'vuex-module-decorators';
-import ProjectModule from '@/store/modules/projects';
+import UserModule from '@/store/modules/users'
+import { getModule } from 'vuex-module-decorators'
+import ProjectModule from '@/store/modules/projects'
 
 @Component
 export default class SignIn extends Vue {
@@ -112,7 +112,7 @@ export default class SignIn extends Vue {
           this.$router.push({
             name: location.resolved.name,
             params: location.resolved.params,
-            query: location.resolved.query
+            query: location.resolved.query,
           })
 
           return

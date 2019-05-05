@@ -132,7 +132,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from '@/tools/axios'
-import Component from 'vue-class-component';
+import Component from 'vue-class-component'
 import colors from 'vuetify/es5/util/colors'
 
 @Component

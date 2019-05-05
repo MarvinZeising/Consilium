@@ -107,7 +107,7 @@ import { mapGetters, mapActions } from 'vuex'
 import { Project } from '@/models/definitions'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '@/store/modules/projects'
-import UserModule from '@/store/modules/users';
+import UserModule from '@/store/modules/users'
 import Component from 'vue-class-component'
 
 @Component
