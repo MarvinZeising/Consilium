@@ -105,7 +105,7 @@ export default class SignIn extends Vue {
 
       const afterSignIn: any = this.$router.currentRoute.query.afterSignIn
 
-      if (afterSignIn !== null) {
+      if (afterSignIn) {
         const location = this.$router.resolve(afterSignIn)
 
         if (location !== undefined) {
