@@ -178,11 +178,11 @@ export default class SignUp extends Vue {
       case 1: {
         this.nextLoading = true
 
-        await axios.get(`/users/${this.username}`)
+        await axios.get(`/users?username=${this.username}`)
           .then((response) => {
             this.nextLoading = false
 
-            if (response.data == null) {
+            if (response.data.length === 0) {
               this.usernameAlreadyExists = false
               this.step++
             } else {
