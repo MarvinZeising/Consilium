@@ -31,4 +31,12 @@ module UserController =
                             find (Username username)
                     json users next context
 
+            POST >=> route "/authenticate" >=>
+                fun next context ->
+                    task {
+                        let authenticate = context.GetService<UserAuthenticate>()
+                        let! credentials = context.BindJsonAsync<Credentials>()
+                        return! json (authenticate credentials) next context
+                    }
+
         ]

@@ -30,7 +30,15 @@ let save (collection : IMongoCollection<User>) (user : User) : User =
 
     user
 
+let authenticate (collection : IMongoCollection<User>) (credentials : Credentials) : User option =
+    let usernameFilter = Builders<User>.Filter.Eq((fun x -> x.Username), credentials.Username)
+    let passwordFilter = Builders<User>.Filter.Eq((fun x -> x.Password), credentials.Password)
+    let filter = Builders.Filter.And [| usernameFilter; passwordFilter |]
+
+    collection.Find(filter).ToEnumerable() |> Seq.tryLast
+
 type IServiceCollection with
     member this.AddUserCollection (collection : IMongoCollection<User>) =
         this.AddSingleton<UserFind>(find collection) |> ignore
         this.AddSingleton<UserSave>(save collection) |> ignore
+        this.AddSingleton<UserAuthenticate>(authenticate collection) |> ignore

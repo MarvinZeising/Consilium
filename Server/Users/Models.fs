@@ -7,6 +7,12 @@ type User =
         Password: string
     }
 
+type Credentials =
+     {
+         Username: string
+         Password: string
+     }
+
 type UserSave = User -> User
 
 type UserCriteria =
@@ -14,3 +20,5 @@ type UserCriteria =
     | All
 
 type UserFind = UserCriteria -> User[]
+
+type UserAuthenticate = Credentials -> User option
