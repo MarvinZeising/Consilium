@@ -5,20 +5,14 @@ open MongoDB.Driver
 open Microsoft.Extensions.DependencyInjection
 
 let find (collection : IMongoCollection<User>) (criteria : UserCriteria) : User[] =
-    match criteria with
-    | UserCriteria.All -> collection.Find(Builders.Filter.Empty).ToEnumerable() |> Seq.toArray
-
-let find2 (collection : IMongoCollection<User>) (criteria : UserCriteria) : User[] =
     let filter =
         match criteria with
-        | UserCriteria.Username -> Builders<User>.Filter.Eq((fun x -> x.Username), username)
-        | UserCriteria.All -> Builders.Filter.Empty
-    collection.Find(result).ToEnumerable()  |> Seq.toArray
+        | All ->
+            Builders.Filter.Empty
+        | Username username ->
+            Builders.Filter.Eq((fun x -> x.Username), username)
 
-
-let findByUsername (collection : IMongoCollection<User>) (username : string) : User option =
-    let filter = Builders<User>.Filter.Eq((fun x -> x.Username), username)
-    collection.Find(filter).ToEnumerable() |> Seq.tryLast
+    collection.Find(filter).ToEnumerable() |> Seq.toArray
 
 let save (collection : IMongoCollection<User>) (user : User) : User =
     let users = collection.Find(fun x -> x.Id = user.Id).ToEnumerable()
@@ -39,5 +33,4 @@ let save (collection : IMongoCollection<User>) (user : User) : User =
 type IServiceCollection with
     member this.AddUserCollection (collection : IMongoCollection<User>) =
         this.AddSingleton<UserFind>(find collection) |> ignore
-        this.AddSingleton<UserFindByUsername>(findByUsername collection) |> ignore
         this.AddSingleton<UserSave>(save collection) |> ignore

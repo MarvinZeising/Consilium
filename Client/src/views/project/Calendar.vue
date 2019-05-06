@@ -57,7 +57,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import moment from 'moment'
-import Component from 'vue-class-component';
+import Component from 'vue-class-component'
 
 @Component
 export default class Calendar extends Vue {

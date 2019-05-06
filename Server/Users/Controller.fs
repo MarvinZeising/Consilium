@@ -9,6 +9,7 @@ module UserController =
 
     let routes : HttpFunc -> HttpContext -> HttpFuncResult =
         choose [
+
             POST >=> route "/users" >=>
                 fun next context ->
                     task {
@@ -21,12 +22,13 @@ module UserController =
             GET >=> route "/users" >=>
                 fun next context ->
                     let find = context.GetService<UserFind>()
-                    let users = find UserCriteria.All
+                    let username = context.TryGetQueryStringValue "username"
+                    let users =
+                        match username with
+                        | None ->
+                            find All
+                        | Some username ->
+                            find(Username username)
                     json users next context
 
-            GET >=> routef "/users/%s" (fun username ->
-                fun next context ->
-                    let findByUsername = context.GetService<UserFindByUsername>()
-                    let user = findByUsername username
-                    json user next context)
         ]

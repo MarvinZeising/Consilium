@@ -10,9 +10,7 @@ type User =
 type UserSave = User -> User
 
 type UserCriteria =
-    | Username of username:string
+    | Username of string
     | All
 
 type UserFind = UserCriteria -> User[]
-
-type UserFindByUsername = string -> User option

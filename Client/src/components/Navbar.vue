@@ -5,104 +5,16 @@
       <v-toolbar-title>Consilium</v-toolbar-title>
     </v-toolbar>
 
-    <v-navigation-drawer app v-model='drawer'>
+    <v-navigation-drawer
+      app
+      v-model='drawer'
+    >
       <v-list :expand="true">
 
-        <!--//* Avatar -->
-        <v-list-tile avatar>
-          <v-list-tile-avatar>
-            <img src="https://randomuser.me/api/portraits/men/85.jpg">
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title>Marvin Zeising</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+        <NavbarSignedIn v-if="isSignedIn" />
 
-        <!--//* Home -->
-        <v-list-tile :to="{ name: 'home' }">
-          <v-list-tile-action>
-            <v-icon>home</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Home</v-list-tile-title>
-        </v-list-tile>
+        <NavbarSignedOut v-if="!isSignedIn" />
 
-        <!--//* Projects -->
-        <v-list-group
-          v-for="(project, i) in myProjects"
-          :key="i"
-          prepend-icon="extension"
-          value="true"
-        >
-          <template v-slot:activator>
-            <v-list-tile>
-              <v-list-tile-title v-text="project.name"></v-list-tile-title>
-            </v-list-tile>
-          </template>
-
-          <v-list-tile
-            v-for="(action, j) in project.actions"
-            :key="j"
-            :to="{ name: action[2], params: { projectId: project.id }}"
-          >
-            <v-list-tile-action>
-              <v-icon v-text="action[1]"></v-icon>
-            </v-list-tile-action>
-            <v-list-tile-title v-text="action[0]"></v-list-tile-title>
-          </v-list-tile>
-
-          <v-list-group
-            no-action
-            sub-group
-          >
-            <template v-slot:activator>
-              <v-list-tile>
-                <v-list-tile-title>Administration</v-list-tile-title>
-              </v-list-tile>
-            </template>
-
-            <v-list-tile
-              v-for="(action, j) in project.adminActions"
-              :key="j"
-              :to="{ name: action[2], params: { projectId: project.id }}"
-            >
-              <v-list-tile-action>
-                <v-icon v-text="action[1]"></v-icon>
-              </v-list-tile-action>
-              <v-list-tile-title v-text="action[0]"></v-list-tile-title>
-            </v-list-tile>
-          </v-list-group>
-
-        </v-list-group>
-
-        <!--//* Profile -->
-        <v-list-group
-          prepend-icon="person"
-        >
-          <template v-slot:activator>
-            <v-list-tile>
-              <v-list-tile-title>Profile</v-list-tile-title>
-            </v-list-tile>
-          </template>
-
-          <v-list-tile
-            v-for="(action, i) in profileActions"
-            :key="i"
-            :to="{ name: action[2] }"
-          >
-            <v-list-tile-action>
-              <v-icon v-text="action[1]"></v-icon>
-            </v-list-tile-action>
-            <v-list-tile-title v-text="action[0]"></v-list-tile-title>
-          </v-list-tile>
-        </v-list-group>
-
-        <!--//* Sign out -->
-        <v-list-tile :to="{ name: 'signIn' }">
-          <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Sign out</v-list-tile-title>
-        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
 
@@ -116,54 +28,41 @@ import { mapGetters, mapActions } from 'vuex'
 import { Project } from '@/models/definitions'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '@/store/modules/projects'
+import UserModule from '@/store/modules/users'
 import Component from 'vue-class-component'
+import NavbarSignedIn from './NavbarSignedIn.vue'
+import NavbarSignedOut from './NavbarSignedOut.vue'
 
 @Component({
-  props: {
-    drawer: {
-      type: Boolean,
-      default: true
-    },
-    profileActions: {
-      type: Array,
-      default: () => [
-        ['Personal', 'account_circle', 'configureProjects'],
-        ['Spiritual', 'assignment_turned_in', 'configureProjects'],
-        ['Availability', 'event_available', 'configureProjects'],
-        ['Account', 'lock', 'configureProjects'],
-        ['Notifications', 'notifications', 'configureProjects'],
-        ['Configure Projects', 'settings', 'configureProjects']
-      ]
-    }
+  components: {
+    NavbarSignedIn,
+    NavbarSignedOut
   }
 })
 export default class Navbar extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private userModule: UserModule = getModule(UserModule, this.$store)
+
+  private drawer: boolean = true
 
   private async created() {
-    // TODO: defer this to after sign-in
-    await this.projectModule.fetchProjects()
-  }
+    this.$router.onReady(() => {
+      if (!this.isSignedIn) {
+        const currentRoute = this.$router.currentRoute
+        const authUnawareRoutes: string[] = [
+          'signIn',
+          'signUp'
+        ]
 
-  private get myProjects(): Project[] {
-    return this.projectModule.myProjects.map((project: any) => {
-      project.actions = [
-        ['Knowledge Base', 'subject', 'knowledgeBase'],
-        ['Calendar', 'today', 'calendar']
-      ]
-      project.adminActions = [
-        ['Settings', 'settings', 'settings'],
-        ['User Management', 'group', 'settings'],
-        ['Categories', 'label', 'settings'],
-        ['Teams', 'supervisor_account', 'settings'],
-        ['Meeting Points', 'location_on', 'settings'],
-        ['Notifications', 'notifications', 'settings'],
-        ['Reports', 'message', 'settings'],
-        ['Statistics', 'show_chart', 'settings'],
-        ['Notes', 'edit', 'settings']
-      ]
-      return project
+        if (!authUnawareRoutes.includes(currentRoute.name || '')) {
+          this.$router.replace({ name: 'signIn', query: { afterSignIn: currentRoute.fullPath } })
+        }
+      }
     })
   }
+
+  private get isSignedIn(): boolean {
+    return this.userModule.isSignedIn
+  }
+
 }
 </script>

@@ -18,6 +18,7 @@
               <v-text-field
                 v-model="username"
                 label="Username"
+                :rules="usernameRules"
                 prepend-inner-icon="person"
                 box
                 required
@@ -27,6 +28,7 @@
                 label="Password"
                 :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
                 :type="passwordShow ? 'text' : 'password'"
+                :rules="passwordRules"
                 prepend-inner-icon="lock"
                 box
                 required
@@ -40,7 +42,7 @@
             <v-btn
               color="primary"
             >
-              <span>
+              <span @click="signIn">
                 Sign in
               </span>
               <v-progress-circular
@@ -59,23 +61,68 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from '@/tools/axios'
-import Component from 'vue-class-component';
+import Component from 'vue-class-component'
 import colors from 'vuetify/es5/util/colors'
-import UserModule from '@/store/modules/users';
-import { getModule } from 'vuex-module-decorators';
+import UserModule from '@/store/modules/users'
+import { getModule } from 'vuex-module-decorators'
+import ProjectModule from '@/store/modules/projects'
 
 @Component
 export default class SignIn extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private valid: boolean = false
   private authInProgress: boolean = false
+
   private username: string = ''
+  private usernameRules: any[] = [
+    (v: string) => !!v || 'Username is required'
+  ]
+
   private password: string = ''
   private passwordShow: boolean = false
+  private passwordRules: any[] = [
+    (v: string) => !!v || 'Password is required'
+  ]
 
-  async created() {
-    await this.userModule.signIn('username', 'password')
+  private created() {
+    if (this.userModule.isSignedIn) {
+      this.$router.replace({ name: 'home' })
+    }
+  }
+
+  private async signIn() {
+    this.authInProgress = true
+
+    const form: any = this.$refs.form
+
+    if (form.validate()) {
+      // TODO: handle unsuccessful sign in
+      await this.userModule.signIn(this.username, this.password)
+
+      await this.projectModule.fetchProjects()
+
+      const afterSignIn: any = this.$router.currentRoute.query.afterSignIn
+
+      if (afterSignIn) {
+        const location = this.$router.resolve(afterSignIn)
+
+        if (location !== undefined) {
+          this.$router.push({
+            name: location.resolved.name,
+            params: location.resolved.params,
+            query: location.resolved.query,
+          })
+
+          return
+        }
+      }
+
+      this.$router.push({ name: 'home' })
+    }
+
+    this.authInProgress = false
   }
 }
 </script>

@@ -24,7 +24,7 @@ let errorHandler (ex : Exception) (logger : ILogger) =
     >=> ServerErrors.INTERNAL_ERROR ex.Message
 
 let configureCors (builder : CorsPolicyBuilder) =
-    builder.WithOrigins("http://localhost:80")
+    builder.WithOrigins("http://localhost:8080")
            .AllowAnyMethod()
            .AllowAnyHeader()
            |> ignore

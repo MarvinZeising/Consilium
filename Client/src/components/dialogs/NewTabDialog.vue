@@ -47,7 +47,7 @@ export default Vue.extend({
   data() {
     return {
       newTabDialog: null,
-      tabName: ''
+      tabName: '',
     }
   }
 })

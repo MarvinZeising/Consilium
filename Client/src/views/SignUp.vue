@@ -85,11 +85,11 @@
 
             <v-window-item :value="3">
               <div class="pa-3 text-xs-center">
-                <h2 class="headline">Welcome to Consilium</h2>
+                <h2 class="headline">Welcome to Consilium!</h2>
                 <p>You successfully created an account.</p>
                 <!--// TODO: add link here -->
                 <p>If you want some tips and tricks on how to get started, you can have a look at our wiki (link here)</p>
-                <p>Otherwise, just go ahead and start planning</p>
+                <p>Otherwise, you can now sign in for the first time.</p>
               </div>
             </v-window-item>
           </v-window>
@@ -132,7 +132,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from '@/tools/axios'
-import Component from 'vue-class-component';
+import Component from 'vue-class-component'
 import colors from 'vuetify/es5/util/colors'
 
 @Component
@@ -178,11 +178,11 @@ export default class SignUp extends Vue {
       case 1: {
         this.nextLoading = true
 
-        await axios.get(`/users/${this.username}`)
+        await axios.get(`/users?username=${this.username}`)
           .then((response) => {
             this.nextLoading = false
 
-            if (response.data == null) {
+            if (response.data.length === 0) {
               this.usernameAlreadyExists = false
               this.step++
             } else {
@@ -205,7 +205,7 @@ export default class SignUp extends Vue {
         break
       }
       case 3: {
-        this.$router.push({ name: 'home' })
+        this.$router.push({ name: 'signIn' })
         break
       }
     }
