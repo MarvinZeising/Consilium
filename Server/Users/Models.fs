@@ -10,6 +10,7 @@ type User =
 type UserSave = User -> User
 
 type UserCriteria =
+    | Username of username:string
     | All
 
 type UserFind = UserCriteria -> User[]

@@ -8,6 +8,14 @@ let find (collection : IMongoCollection<User>) (criteria : UserCriteria) : User[
     match criteria with
     | UserCriteria.All -> collection.Find(Builders.Filter.Empty).ToEnumerable() |> Seq.toArray
 
+let find2 (collection : IMongoCollection<User>) (criteria : UserCriteria) : User[] =
+    let filter =
+        match criteria with
+        | UserCriteria.Username -> Builders<User>.Filter.Eq((fun x -> x.Username), username)
+        | UserCriteria.All -> Builders.Filter.Empty
+    collection.Find(result).ToEnumerable()  |> Seq.toArray
+
+
 let findByUsername (collection : IMongoCollection<User>) (username : string) : User option =
     let filter = Builders<User>.Filter.Eq((fun x -> x.Username), username)
     collection.Find(filter).ToEnumerable() |> Seq.tryLast
