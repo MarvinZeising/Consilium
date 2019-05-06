@@ -15,18 +15,17 @@ export default class UserModule extends VuexModule {
   }
 
   @MutationAction({ mutate: ['user'] })
-  public async signIn(username: string, password: string) {
-    // const response = await axios.post('/authenticate', {
-    //   username: username,
-    //   password: password,
-    // })
-    // return { user: response.data }
-    return {
-      user: {
-        username: 'asdf',
-        password: 'pw'
-      }
+  public async signIn(credentials: { username: string, password: string }) {
+    const response = await axios.post('/authenticate', {
+      username: credentials.username,
+      password: credentials.password,
+    })
+
+    if (response.data !== null) {
+      return { user: response.data.fields[0] }
     }
+
+    return { user: null }
   }
 
   @MutationAction({ mutate: ['user'] })

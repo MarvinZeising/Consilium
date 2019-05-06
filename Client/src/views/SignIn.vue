@@ -35,20 +35,31 @@
                 @click:append="passwordShow = !passwordShow"
               ></v-text-field>
             </v-form>
+
+            <span
+              class="red--text"
+              v-if="authFailed"
+            >
+              We couldn't find an account with these credentials.
+              <br>
+              Is your capslock activated, maybe?
+            </span>
           </v-card-text>
 
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
               color="primary"
+              @click="signIn"
             >
-              <span @click="signIn">
+              <span>
                 Sign in
               </span>
               <v-progress-circular
                 v-if="authInProgress"
                 indeterminate
-                color="primary"
+                color="white"
+                class="ml-3"
               />
             </v-btn>
           </v-card-actions>
@@ -74,6 +85,7 @@ export default class SignIn extends Vue {
 
   private valid: boolean = false
   private authInProgress: boolean = false
+  private authFailed: boolean = false
 
   private username: string = ''
   private usernameRules: any[] = [
@@ -94,32 +106,39 @@ export default class SignIn extends Vue {
 
   private async signIn() {
     this.authInProgress = true
+    this.authFailed = false
 
     const form: any = this.$refs.form
 
     if (form.validate()) {
-      // TODO: handle unsuccessful sign in
-      await this.userModule.signIn(this.username, this.password)
+      await this.userModule.signIn({
+        username: this.username,
+        password: this.password
+      })
 
-      await this.projectModule.fetchProjects()
+      if (await this.userModule.myUser) {
+        await this.projectModule.fetchProjects()
 
-      const afterSignIn: any = this.$router.currentRoute.query.afterSignIn
+        const afterSignIn: any = this.$router.currentRoute.query.afterSignIn
 
-      if (afterSignIn) {
-        const location = this.$router.resolve(afterSignIn)
+        if (afterSignIn) {
+          const location = this.$router.resolve(afterSignIn)
 
-        if (location !== undefined) {
-          this.$router.push({
-            name: location.resolved.name,
-            params: location.resolved.params,
-            query: location.resolved.query,
-          })
+          if (location !== undefined) {
+            this.$router.push({
+              name: location.resolved.name,
+              params: location.resolved.params,
+              query: location.resolved.query,
+            })
 
-          return
+            return
+          }
         }
-      }
 
-      this.$router.push({ name: 'home' })
+        this.$router.push({ name: 'home' })
+      } else {
+        this.authFailed = true
+      }
     }
 
     this.authInProgress = false
