@@ -6,7 +6,7 @@ open Microsoft.Extensions.DependencyInjection
 
 let find (collection : IMongoCollection<Project>) (criteria : ProjectCriteria) : Project[] =
     match criteria with
-    | ProjectCriteria.All -> collection.Find(Builders.Filter.Empty).ToEnumerable() |> Seq.toArray
+    | All -> collection.Find(Builders.Filter.Empty).ToEnumerable() |> Seq.toArray
 
 let findOne (collection : IMongoCollection<Project>) (id : string) : Project option =
     let filter = Builders<Project>.Filter.Eq((fun x -> x.Id), id)
@@ -18,9 +18,9 @@ let save (collection : IMongoCollection<Project>) (project : Project) : Project 
     match Seq.isEmpty projects with
     | true -> collection.InsertOne project
     | false ->
-        let filter = Builders<Project>.Filter.Eq((fun x -> x.Id), project.Id)
+        let filter = Builders.Filter.Eq((fun x -> x.Id), project.Id)
         let update =
-            Builders<Project>.Update
+            Builders.Update
                 .Set((fun x -> x.Name), project.Name)
                 .Set((fun x -> x.Email), project.Email)
 
@@ -29,7 +29,7 @@ let save (collection : IMongoCollection<Project>) (project : Project) : Project 
     project
 
 let delete (collection : IMongoCollection<Project>) (id : string) : bool =
-    collection.DeleteOne(Builders<Project>.Filter.Eq((fun x -> x.Id), id)).DeletedCount > 0L
+    collection.DeleteOne(Builders.Filter.Eq((fun x -> x.Id), id)).DeletedCount > 0L
 
 type IServiceCollection with
     member this.AddProjectCollection (collection : IMongoCollection<Project>) =

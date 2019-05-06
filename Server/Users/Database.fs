@@ -10,7 +10,7 @@ let find (collection : IMongoCollection<User>) (criteria : UserCriteria) : User[
         | All ->
             Builders.Filter.Empty
         | Username username ->
-            Builders.Filter.Eq((fun x -> x.Username), username)
+            Builders.Filter.Eq((fun (x : User) -> x.Username), username)
 
     collection.Find(filter).ToEnumerable() |> Seq.toArray
 

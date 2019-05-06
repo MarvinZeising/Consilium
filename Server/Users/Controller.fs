@@ -28,7 +28,7 @@ module UserController =
                         | None ->
                             find All
                         | Some username ->
-                            find(Username username)
+                            find (Username username)
                     json users next context
 
         ]

@@ -21,7 +21,7 @@ module ProjectController =
             GET >=> route "/projects" >=>
                 fun next context ->
                     let find = context.GetService<ProjectFind>()
-                    let projects = find ProjectCriteria.All
+                    let projects = find All
                     json projects next context
 
             GET >=> routef "/projects/%s" (fun id ->

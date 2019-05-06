@@ -27,7 +27,7 @@ export default class ProjectModule extends VuexModule {
 
   @Action({ commit: 'insertProject' })
   public async createProject(project: Project): Promise<Project> {
-    const response = await axios.post(`/projects`, {
+    const response = await axios.post('/projects', {
       name: project.name,
       email: project.email
     })
