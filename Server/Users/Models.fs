@@ -13,14 +13,10 @@ type Credentials =
          Password: string
      }
 
-type UserSave = User -> User
-
-type UserCriteria =
-    | Username of string
-    | All
-
 type EmailAvailable = string -> bool
 
-type UserFind = UserCriteria -> User[]
+type UserFind = string -> User[]
 
-type Authenticate = Credentials -> User option
+type SignUp = Credentials -> bool
+
+type SignIn = Credentials -> bool // TODO: return JWT token
