@@ -19,6 +19,7 @@
     "axios": "^0.18.0",
     "babel-plugin-transform-decorators": "^6.24.1",
     "core-js": "^2.6.5",
+    "crypto-js": "^3.1.9-1",
     "marked": "^0.6.2",
     "material-design-icons-iconfont": "^3.0.3",
     "moment": "^2.24.0",
@@ -31,17 +32,18 @@
   },
   "devDependencies": {
     "@types/chai": "^4.1.0",
+    "@types/crypto-js": "^3.1.43",
     "@types/mocha": "^5.2.4",
     "chai": "^4.1.2",
     "fibers": "^3.1.1",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
     "typescript": "^3.2.1",
-    "vue-cli-plugin-vuetify": "^0.5.0",
-    "vue-template-compiler": "^2.5.21",
-    "vuex-module-decorators": "^0.9.8",
     "vue-class-component": "^6.0.0",
-    "vue-property-decorator": "^8.0.0"
+    "vue-cli-plugin-vuetify": "^0.5.0",
+    "vue-property-decorator": "^8.0.0",
+    "vue-template-compiler": "^2.5.21",
+    "vuex-module-decorators": "^0.9.8"
   },
   "optionalDependencies": {
     "@vue/cli-plugin-e2e-cypress": "^3.3.0"

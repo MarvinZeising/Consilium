@@ -1,6 +1,8 @@
 import axios from '@/tools/axios'
 import { Module, VuexModule, MutationAction } from 'vuex-module-decorators'
 import { User } from '@/models/definitions'
+import SHA512 from 'crypto-js/sha512'
+import { WordArray } from 'crypto-js';
 
 @Module({ name: 'UserModule' })
 export default class UserModule extends VuexModule {
@@ -16,9 +18,11 @@ export default class UserModule extends VuexModule {
 
   @MutationAction({ mutate: ['user'] })
   public async signIn(credentials: { username: string, password: string }) {
-    const response = await axios.post('/authenticate', {
+    const hash: WordArray = SHA512(credentials.password + 'consilium')
+
+    const response = await axios.post  ('/authenticate', {
       username: credentials.username,
-      password: credentials.password,
+      password: hash,
     })
 
     if (response.data !== null) {
