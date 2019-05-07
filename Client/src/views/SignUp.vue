@@ -36,24 +36,24 @@
               <v-card-text>
 
                 <v-form
-                  ref="usernameForm"
-                  v-model="usernameValid"
+                  ref="emailForm"
+                  v-model="emailValid"
                 >
                   <p class="grey--text text--darken-1">
-                    This is the username you will use to sign in to your Consilium account
+                    This is the email you will use to sign in to your Consilium account
                   </p>
                   <v-text-field
-                    v-model="username"
-                    label="Username"
-                    :rules="usernameRules"
+                    v-model="email"
+                    label="Email"
+                    :rules="emailRules"
                     box
                   />
                 </v-form>
                 <span
                   class="red--text"
-                  v-if="usernameAlreadyExists"
+                  v-if="emailAlreadyExists"
                 >
-                  Sorry, this username already exists. Please choose another one.
+                  Sorry, this email already exists. Please choose another one.
                 </span>
 
               </v-card-text>
@@ -128,7 +128,7 @@
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn
-              :disabled="(step === 1 && (!usernameValid || nextLoading)) || (step === 2 && !passwordValid)"
+              :disabled="(step === 1 && (!emailValid || nextLoading)) || (step === 2 && !passwordValid)"
               color="primary"
               @click="next"
             >
@@ -169,12 +169,12 @@ export default class SignUp extends Vue {
   private step: number = 0
   private nextLoading: boolean = false
 
-  private username: string = ''
-  private usernameValid: boolean = false
-  private usernameAlreadyExists: boolean = false
-  private usernameRules: any[] = [
-    (v: string) => !!v || 'Username is required',
-    (v: string) => v.length >= 3 || 'Username must be more than 3 characters'
+  private email: string = ''
+  private emailValid: boolean = false
+  private emailAlreadyExists: boolean = false
+  private emailRules: any[] = [
+    (v: string) => !!v || 'Email is required',
+    (v: string) => /.+@.+/.test(v) || 'Email must be valid'
   ]
 
   private password: string = ''
@@ -197,8 +197,8 @@ export default class SignUp extends Vue {
   private get currentTitle() {
     switch (this.step) {
       case 0: return ''
-      case 1: return 'Choose your username'
-      case 2: return 'Create a password'
+      case 1: return 'Enter your Email Address'
+      case 2: return 'Choose a password'
       default: return ''
     }
   }
@@ -211,14 +211,14 @@ export default class SignUp extends Vue {
       }
       case 1: {
         this.nextLoading = true
-        const isUsernameAvailable = await this.userModule.isUsernameAvailable(this.username)
+        const isEmailAvailable = await this.userModule.isEmailAvailable(this.email)
         this.nextLoading = false
 
-        if (isUsernameAvailable) {
-          this.usernameAlreadyExists = false
+        if (isEmailAvailable) {
+          this.emailAlreadyExists = false
           this.step++
         } else {
-          this.usernameAlreadyExists = true
+          this.emailAlreadyExists = true
         }
 
         break
@@ -228,7 +228,7 @@ export default class SignUp extends Vue {
 
         if (form.validate()) {
           await axios.post('/users', {
-            username: this.username,
+            email: this.email,
             password: this.password
           })
           this.step++

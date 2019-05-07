@@ -31,10 +31,10 @@ module UserController =
                             find (Username username)
                     json users next context
 
-            GET >=> routef "/users/username-available/%s" (fun username ->
+            GET >=> routef "/users/email-available/%s" (fun email ->
                 fun next context ->
-                    let usernameAvailable = context.GetService<UsernameAvailable>()
-                    let available = usernameAvailable username
+                    let emailAvailable = context.GetService<EmailAvailable>()
+                    let available = emailAvailable email
                     json available next context)
 
             POST >=> route "/authenticate" >=>

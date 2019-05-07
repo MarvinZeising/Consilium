@@ -16,9 +16,9 @@
               v-model="valid"
             >
               <v-text-field
-                v-model="username"
-                label="Username"
-                :rules="usernameRules"
+                v-model="email"
+                label="Email"
+                :rules="emailRules"
                 prepend-inner-icon="person"
                 box
                 required
@@ -87,9 +87,10 @@ export default class SignIn extends Vue {
   private authInProgress: boolean = false
   private authFailed: boolean = false
 
-  private username: string = ''
-  private usernameRules: any[] = [
-    (v: string) => !!v || 'Username is required'
+  private email: string = ''
+  private emailRules: any[] = [
+    (v: string) => !!v || 'Email is required',
+    (v: string) => /.+@.+/.test(v) || 'Email must be valid'
   ]
 
   private password: string = ''
@@ -112,7 +113,7 @@ export default class SignIn extends Vue {
 
     if (form.validate()) {
       await this.userModule.signIn({
-        username: this.username,
+        email: this.email,
         password: this.password
       })
 

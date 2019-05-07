@@ -11,12 +11,10 @@ class Project {
 
 class User {
   public id?: string
-  public username: string
-  public password: string
+  public email: string
 
-  constructor(username: string, password: string) {
-    this.username = username
-    this.password = password
+  constructor(email: string) {
+    this.email = email
   }
 }
 

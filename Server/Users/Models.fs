@@ -3,13 +3,13 @@ namespace Users
 type User =
     {
         Id: string
-        Username: string
+        Email: string
         Password: string
     }
 
 type Credentials =
      {
-         Username: string
+         Email: string
          Password: string
      }
 
@@ -19,7 +19,7 @@ type UserCriteria =
     | Username of string
     | All
 
-type UsernameAvailable = string -> bool
+type EmailAvailable = string -> bool
 
 type UserFind = UserCriteria -> User[]
 
