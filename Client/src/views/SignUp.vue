@@ -44,6 +44,7 @@
                   </p>
                   <v-text-field
                     v-model="email"
+                    type="email"
                     label="Email"
                     :rules="emailRules"
                     box
@@ -100,18 +101,22 @@
 
             <v-window-item :value="3">
               <div class="pa-3 text-xs-center">
-                <h2 class="headline">Welcome to Consilium!</h2>
-                <p>You successfully created an account.</p>
+                <h2 class="headline">Success!</h2>
                 <!--// TODO: add link here -->
-                <p>If you want some tips and tricks on how to get started, you can have a look at our wiki (link here)</p>
-                <p>Otherwise, you can now sign in for the first time.</p>
+                <p>
+                  We sent you an email with a verfication link.
+                  <br>
+                  Use that link to activate your account.
+                  <br>
+                  Please also check your spam folder if you can't find it.
+                </p>
               </div>
             </v-window-item>
           </v-window>
 
           <v-divider></v-divider>
 
-          <v-card-actions>
+          <v-card-actions v-if="step < 3">
             <v-btn
               v-if="step === 0"
               flat
@@ -137,9 +142,6 @@
               </span>
               <span v-if="!nextLoading && step > 0 && step < 3">
                 Next
-              </span>
-              <span v-if="step === 3">
-                Let's go!
               </span>
               <v-progress-circular
                 v-if="nextLoading"
@@ -227,7 +229,7 @@ export default class SignUp extends Vue {
         const form: any = this.$refs.passwordForm
 
         if (form.validate()) {
-          await axios.post('/users', {
+          await this.userModule.signUp({
             email: this.email,
             password: this.password
           })

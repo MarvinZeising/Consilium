@@ -27,13 +27,14 @@ export default class UserModule extends VuexModule {
     const hash: WordArray = SHA512(credentials.password + 'consilium')
 
     // TODO: response should contain JWT Token
-    const response = await axios.post  ('/authenticate', {
+    const response = await axios.post('/authenticate', {
       email: credentials.email,
       password: hash,
     })
 
     if (response.data !== null) {
-      return { user: response.data.fields[0] }
+      const user = this.fetchUser(credentials.email)
+      return { user }
     }
 
     return { user: null }
@@ -43,6 +44,17 @@ export default class UserModule extends VuexModule {
   public async isEmailAvailable(email: string) {
     const response = await axios.get(`/users/email-available/${email}`)
     return response.data
+  }
+
+  @Action
+  public async signUp(credentials: { email: string, password: string }) {
+    const hash: WordArray = SHA512(credentials.password + 'consilium')
+
+    await axios.post('/users', {
+      email: credentials.email,
+      password: hash.toString(),
+    })
+    return true
   }
 
   @MutationAction({ mutate: ['user'] })
