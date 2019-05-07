@@ -32,6 +32,12 @@ export default class UserModule extends VuexModule {
     return { user: null }
   }
 
+  @Action
+  public async isUsernameAvailable(username: string) {
+    const response = await axios.get(`/users/username-available/${username}`)
+    return response.data
+  }
+
   @MutationAction({ mutate: ['user'] })
   public async signOut() {
     // const response = await axios.get('/authenticate')
