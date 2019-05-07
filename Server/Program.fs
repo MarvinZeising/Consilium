@@ -11,11 +11,14 @@ open Projects
 open Projects.ProjectCollection
 open Users
 open Users.UserCollection
+open Wiki
+open WikiCollection
 
 let routes =
     choose [
         ProjectController.routes
         UserController.routes
+        WikiController.routes
     ]
 
 let errorHandler (ex : Exception) (logger : ILogger) =
@@ -46,6 +49,7 @@ let configureServices (services : IServiceCollection) =
     services.AddGiraffe() |> ignore
     services.AddProjectCollection(db.GetCollection<Project>("projects")) |> ignore
     services.AddUserCollection(db.GetCollection<User>("users")) |> ignore
+    services.AddTabCollection(db.GetCollection<Tab>("wiki")) |> ignore
 
 let configureLogging (builder : ILoggingBuilder) =
     let filter (l : LogLevel) = l.Equals LogLevel.Error
