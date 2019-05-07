@@ -13,10 +13,25 @@
               class="subheading white--text"
               size="24"
               v-text="step"
+              v-if="step > 0 && step < 3"
             ></v-avatar>
           </v-card-title>
 
           <v-window v-model="step">
+            <v-window-item :value="0">
+              <div class="pa-3 text-xs-center">
+                <h2 class="headline">Welcome to Consilium!</h2>
+                <p>You want to create an account?</p>
+                <p>Perfect! Just click Start.</p>
+                <p>
+                  You'll be asked to enter your Email Address and choose a password.
+                  <br>
+                  We'll then send you a verification email to activate your account.
+                </p>
+                <p>If you already have an account, you can sign in instead.</p>
+              </div>
+            </v-window-item>
+
             <v-window-item :value="1">
               <v-card-text>
 
@@ -98,7 +113,14 @@
 
           <v-card-actions>
             <v-btn
-              :disabled="step === 1"
+              v-if="step === 0"
+              flat
+              :to="{ name: 'signIn' }"
+            >
+              I have an account
+            </v-btn>
+            <v-btn
+              v-if="step !== 0"
               flat
               @click="step--"
             >
@@ -110,7 +132,10 @@
               color="primary"
               @click="next"
             >
-              <span v-if="!nextLoading && step < 3">
+              <span v-if="step === 0">
+                Start
+              </span>
+              <span v-if="!nextLoading && step > 0 && step < 3">
                 Next
               </span>
               <span v-if="step === 3">
@@ -141,7 +166,7 @@ import { getModule } from 'vuex-module-decorators'
 export default class SignUp extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
 
-  private step: number = 1
+  private step: number = 0
   private nextLoading: boolean = false
 
   private username: string = ''
@@ -171,7 +196,8 @@ export default class SignUp extends Vue {
 
   private get currentTitle() {
     switch (this.step) {
-      case 1: return 'Sign-up'
+      case 0: return ''
+      case 1: return 'Choose your username'
       case 2: return 'Create a password'
       default: return ''
     }
@@ -179,6 +205,10 @@ export default class SignUp extends Vue {
 
   private async next() {
     switch (this.step) {
+      case 0: {
+        this.step++
+        break
+      }
       case 1: {
         this.nextLoading = true
         const isUsernameAvailable = await this.userModule.isUsernameAvailable(this.username)
