@@ -1,5 +1,5 @@
 import axios from '@/tools/axios'
-import { Module, VuexModule, MutationAction } from 'vuex-module-decorators'
+import { Module, VuexModule, MutationAction, Action } from 'vuex-module-decorators'
 import { User } from '@/models/definitions'
 import SHA512 from 'crypto-js/sha512'
 import { WordArray } from 'crypto-js';
