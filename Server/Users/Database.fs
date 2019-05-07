@@ -3,6 +3,7 @@ module Users.UserCollection
 open Users
 open MongoDB.Driver
 open Microsoft.Extensions.DependencyInjection
+open System.Linq
 
 let find (collection : IMongoCollection<User>) (criteria : UserCriteria) : User[] =
     let filter =
@@ -13,6 +14,10 @@ let find (collection : IMongoCollection<User>) (criteria : UserCriteria) : User[
             Builders.Filter.Eq((fun (x : User) -> x.Username), username)
 
     collection.Find(filter).ToEnumerable() |> Seq.toArray
+
+let usernameAvailable (collection : IMongoCollection<User>) (username : string) : bool =
+    let filter = Builders.Filter.Eq((fun (x : User) -> x.Username), username)
+    collection.Find(filter).ToEnumerable().ToArray() |> Array.isEmpty
 
 let save (collection : IMongoCollection<User>) (user : User) : User =
     let users = collection.Find(fun x -> x.Id = user.Id).ToEnumerable()
@@ -40,5 +45,6 @@ let authenticate (collection : IMongoCollection<User>) (credentials : Credential
 type IServiceCollection with
     member this.AddUserCollection (collection : IMongoCollection<User>) =
         this.AddSingleton<UserFind>(find collection) |> ignore
+        this.AddSingleton<UsernameAvailable>(usernameAvailable collection) |> ignore
         this.AddSingleton<UserSave>(save collection) |> ignore
         this.AddSingleton<UserAuthenticate>(authenticate collection) |> ignore

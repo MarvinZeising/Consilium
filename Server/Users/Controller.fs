@@ -31,6 +31,12 @@ module UserController =
                             find (Username username)
                     json users next context
 
+            GET >=> routef "/users/username-available/%s" (fun username ->
+                fun next context ->
+                    let usernameAvailable = context.GetService<UsernameAvailable>()
+                    let available = usernameAvailable username
+                    json available next context)
+
             POST >=> route "/authenticate" >=>
                 fun next context ->
                     task {

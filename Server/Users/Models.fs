@@ -19,6 +19,8 @@ type UserCriteria =
     | Username of string
     | All
 
+type UsernameAvailable = string -> bool
+
 type UserFind = UserCriteria -> User[]
 
 type UserAuthenticate = Credentials -> User option

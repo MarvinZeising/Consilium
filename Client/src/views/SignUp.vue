@@ -134,9 +134,13 @@ import Vue from 'vue'
 import axios from '@/tools/axios'
 import Component from 'vue-class-component'
 import colors from 'vuetify/es5/util/colors'
+import UserModule from '../store/modules/users'
+import { getModule } from 'vuex-module-decorators'
 
 @Component
 export default class SignUp extends Vue {
+  private userModule: UserModule = getModule(UserModule, this.$store)
+
   private step: number = 1
   private nextLoading: boolean = false
 
@@ -177,18 +181,15 @@ export default class SignUp extends Vue {
     switch (this.step) {
       case 1: {
         this.nextLoading = true
+        const isUsernameAvailable = await this.userModule.isUsernameAvailable(this.username)
+        this.nextLoading = false
 
-        await axios.get(`/users?username=${this.username}`)
-          .then((response) => {
-            this.nextLoading = false
-
-            if (response.data.length === 0) {
-              this.usernameAlreadyExists = false
-              this.step++
-            } else {
-              this.usernameAlreadyExists = true
-            }
-          })
+        if (isUsernameAvailable) {
+          this.usernameAlreadyExists = false
+          this.step++
+        } else {
+          this.usernameAlreadyExists = true
+        }
 
         break
       }
