@@ -47,4 +47,4 @@ type IServiceCollection with
         this.AddSingleton<UserFind>(find collection) |> ignore
         this.AddSingleton<UsernameAvailable>(usernameAvailable collection) |> ignore
         this.AddSingleton<UserSave>(save collection) |> ignore
-        this.AddSingleton<UserAuthenticate>(authenticate collection) |> ignore
+        this.AddSingleton<Authenticate>(authenticate collection) |> ignore

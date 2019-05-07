@@ -23,4 +23,4 @@ type UsernameAvailable = string -> bool
 
 type UserFind = UserCriteria -> User[]
 
-type UserAuthenticate = Credentials -> User option
+type Authenticate = Credentials -> bool

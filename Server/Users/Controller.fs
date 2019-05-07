@@ -40,7 +40,7 @@ module UserController =
             POST >=> route "/authenticate" >=>
                 fun next context ->
                     task {
-                        let authenticate = context.GetService<UserAuthenticate>()
+                        let authenticate = context.GetService<Authenticate>()
                         let! credentials = context.BindJsonAsync<Credentials>()
                         return! json (authenticate credentials) next context
                     }
