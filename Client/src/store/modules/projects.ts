@@ -1,4 +1,4 @@
-import axios from '@/tools/axios'
+import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
 

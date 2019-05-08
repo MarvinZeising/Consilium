@@ -33,7 +33,7 @@ import Vue from 'vue'
 import TabItems from '@/components/TabItems.vue'
 import NewTabDialog from '@/components/dialogs/NewTabDialog.vue'
 import NewTabItemDialog from '@/components/dialogs/NewTabItemDialog.vue'
-import axios from '@/tools/axios'
+import axios from 'axios'
 export default Vue.extend({
   components: { TabItems, NewTabDialog, NewTabItemDialog },
   data() {
@@ -43,10 +43,10 @@ export default Vue.extend({
       tabs: null
       };
   },
-  mounted(){
+  mounted() {
     axios.get(`/wiki`)
-      .then(response => this.tabs = response.data )
-      .catch( err => this.tabs = null);
+      .then((response) => this.tabs = response.data )
+      .catch((err) => this.tabs = null);
   }
 })
 </script>
