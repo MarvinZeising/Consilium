@@ -35,7 +35,7 @@ let signIn (collection : IMongoCollection<User>) (credentials : Credentials) : s
     match user with
     | Some user ->
         if verify credentials.Password user.Password then
-            Some "jwt token"
+            credentials.Email |> generateToken |> Some
         else
             None
     | None ->

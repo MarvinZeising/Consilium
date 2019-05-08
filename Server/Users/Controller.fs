@@ -3,6 +3,7 @@ namespace Users
 open Giraffe
 open Microsoft.AspNetCore.Http
 open FSharp.Control.Tasks.V2
+open Authentication
 
 module UserController =
 
@@ -17,7 +18,7 @@ module UserController =
                         return! json (signUp credentials) next context
                     }
 
-            GET >=> route "/users" >=>
+            GET >=> route "/users" >=> authorize >=>
                 fun next context ->
                     let find = context.GetService<UserFind>()
                     let users = find ""

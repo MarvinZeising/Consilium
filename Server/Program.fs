@@ -13,6 +13,10 @@ open Users
 open Users.UserCollection
 open Wiki
 open WikiCollection
+open Microsoft.AspNetCore.Authentication.JwtBearer
+open Microsoft.IdentityModel.Tokens
+open System.Text
+open Authentication
 
 let routes =
     choose [
@@ -37,7 +41,7 @@ let configureApp (app : IApplicationBuilder) =
        .UseCors(configureCors)
        .UseDefaultFiles()
        .UseStaticFiles()
-       //.UseAuthentication()
+       .UseAuthentication()
        //.UseResponseCaching()
        .UseGiraffe routes
 
@@ -45,6 +49,17 @@ let configureServices (services : IServiceCollection) =
     let mongo = MongoClient ("mongodb://root:abc123@ds123624.mlab.com:23624/consiliumdb")
     let db = mongo.GetDatabase "consiliumdb"
 
+    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(fun options ->
+            options.TokenValidationParameters <- TokenValidationParameters(
+                ValidateActor = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = "consiliumapp.org",
+                ValidAudience = "consiliumapp.org",
+                IssuerSigningKey = SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)))
+        ) |> ignore
     services.AddCors() |> ignore
     services.AddGiraffe() |> ignore
     services.AddProjectCollection(db.GetCollection<Project>("projects")) |> ignore
@@ -57,8 +72,7 @@ let configureLogging (builder : ILoggingBuilder) =
     builder.AddFilter(filter)
            .AddConsole()
            .AddDebug()
-    // Add additional loggers if wanted...
-    |> ignore
+           |> ignore
 
 [<EntryPoint>]
 let main _ =
