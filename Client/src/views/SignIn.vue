@@ -112,14 +112,12 @@ export default class SignIn extends Vue {
     const form: any = this.$refs.form
 
     if (form.validate()) {
-      await this.userModule.signIn({
+      const signInSuccessful = await this.userModule.signIn({
         email: this.email,
         password: this.password
       })
 
-      if (await this.userModule.myUser) {
-        await this.projectModule.fetchProjects()
-
+      if (signInSuccessful) {
         const afterSignIn: any = this.$router.currentRoute.query.afterSignIn
 
         if (afterSignIn) {

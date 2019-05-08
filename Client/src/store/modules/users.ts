@@ -2,7 +2,7 @@ import axios from '@/tools/axios'
 import { Module, VuexModule, MutationAction, Action } from 'vuex-module-decorators'
 import { User } from '@/models/definitions'
 import SHA512 from 'crypto-js/sha512'
-import { WordArray } from 'crypto-js';
+import { WordArray } from 'crypto-js'
 
 @Module({ name: 'UserModule' })
 export default class UserModule extends VuexModule {
@@ -18,26 +18,30 @@ export default class UserModule extends VuexModule {
 
   @MutationAction({ mutate: ['user'] })
   public async fetchUser(email: string) {
-    const response = await axios.get('/users?email=')
+    const response = await axios.get(`/users?email=${email}`)
     return { user: response.data }
   }
 
-  @MutationAction({ mutate: ['user'] })
+  @Action
   public async signIn(credentials: { email: string, password: string }) {
     const hash: WordArray = SHA512(credentials.password + 'consilium')
 
-    // TODO: response should contain JWT Token
     const response = await axios.post('/authenticate', {
       email: credentials.email,
-      password: hash,
+      password: hash.toString(),
     })
 
     if (response.data !== null) {
-      const user = this.fetchUser(credentials.email)
-      return { user }
+      const jwtToken = response.data.fields[0]
+      // TODO: put jwtToken into authentication header
+
+      await this.context.dispatch('fetchUser', credentials.email)
+      await this.context.dispatch('fetchProjects')
+
+      return true
     }
 
-    return { user: null }
+    return false
   }
 
   @Action
