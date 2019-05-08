@@ -19,4 +19,4 @@ type UserFind = string -> User[]
 
 type SignUp = Credentials -> bool
 
-type SignIn = Credentials -> bool // TODO: return JWT token
+type SignIn = Credentials -> string option

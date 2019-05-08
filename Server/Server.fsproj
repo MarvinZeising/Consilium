@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Crypto.fs" />
     <Compile Include="Projects/Models.fs" />
     <Compile Include="Users/Models.fs" />
     <Compile Include="Wiki/Models.fs" />
@@ -20,6 +21,7 @@
     <Compile Include="Users/Database.fs" />
     <Compile Include="Wiki/MockUpDatabase.fs" />
     <Compile Include="Program.fs" />
+    <PackageReference Include="CryptSharpOfficial" Version="2.1.0" />
     <PackageReference Include="Giraffe" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
