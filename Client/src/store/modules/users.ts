@@ -1,8 +1,8 @@
-import axios from '@/tools/axios'
+import axios from 'axios'
 import { Module, VuexModule, MutationAction, Action } from 'vuex-module-decorators'
-import { User } from '@/models/definitions'
-import SHA512 from 'crypto-js/sha512'
 import { WordArray } from 'crypto-js'
+import SHA512 from 'crypto-js/sha512'
+import { User } from '@/models/definitions'
 
 @Module({ name: 'UserModule' })
 export default class UserModule extends VuexModule {
@@ -33,7 +33,11 @@ export default class UserModule extends VuexModule {
 
     if (response.data !== null) {
       const jwtToken = response.data.fields[0]
-      // TODO: put jwtToken into authentication header
+      localStorage.setItem('user', JSON.stringify({
+        token: jwtToken,
+        email: credentials.email
+      }));
+      axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`;
 
       await this.context.dispatch('fetchUser', credentials.email)
       await this.context.dispatch('fetchProjects')
@@ -63,7 +67,8 @@ export default class UserModule extends VuexModule {
 
   @MutationAction({ mutate: ['user'] })
   public async signOut() {
-    // const response = await axios.get('/authenticate')
+    localStorage.removeItem('user')
+    // TODO: clear project store and everything fetched
     return { user: null }
   }
 

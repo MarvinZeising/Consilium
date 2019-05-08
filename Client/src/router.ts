@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import Router, { Route } from 'vue-router'
 import Home from '@/views/Home.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'hash',
   base: process.env.BASE_URL,
   routes: [{
@@ -60,3 +60,20 @@ export default new Router({
     redirect: '/home'
   }],
 })
+
+router.beforeEach((to: Route, from: Route, next) => {
+  const publicPages: any[] = [
+    'signIn',
+    'signUp'
+  ]
+  const authRequird: boolean = !publicPages.includes(to.name)
+  const loggedIn = localStorage.getItem('user')
+
+  if (authRequird && !loggedIn) {
+    return next({ name: 'signIn', query: { afterSignIn: to.fullPath } })
+  }
+
+  next()
+})
+
+export default router

@@ -41,23 +41,14 @@ import NavbarSignedOut from './NavbarSignedOut.vue'
 })
 export default class Navbar extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private drawer: boolean = true
 
   private async created() {
-    this.$router.onReady(() => {
-      if (!this.isSignedIn) {
-        const currentRoute = this.$router.currentRoute
-        const authUnawareRoutes: string[] = [
-          'signIn',
-          'signUp'
-        ]
-
-        if (!authUnawareRoutes.includes(currentRoute.name || '')) {
-          this.$router.replace({ name: 'signIn', query: { afterSignIn: currentRoute.fullPath } })
-        }
-      }
-    })
+    if (this.userModule.myUser) {
+      await this.projectModule.fetchProjects()
+    }
   }
 
   private get isSignedIn(): boolean {
