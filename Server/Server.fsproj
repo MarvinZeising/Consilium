@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Crypto.fs" />
+    <Compile Include="Authentication.fs" />
     <Compile Include="Projects/Models.fs" />
     <Compile Include="Users/Models.fs" />
     <Compile Include="Wiki/Models.fs" />

@@ -5,7 +5,7 @@ open MongoDB.Driver
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
 open System
-open Crypto
+open Authentication
 
 let find (collection : IMongoCollection<User>) (_ : string) : User[] =
     collection.Find(Builders.Filter.Empty).ToEnumerable() |> Seq.toArray
