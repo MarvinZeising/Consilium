@@ -18,11 +18,15 @@ module UserController =
                         return! json (signUp credentials) next context
                     }
 
-            GET >=> route "/users" >=> authorize >=>
+            GET >=> route "/user" >=> authorize >=>
                 fun next context ->
                     let find = context.GetService<UserFind>()
-                    let users = find ""
-                    json users next context
+                    let user = match context.TryGetRequestHeader "Authorization" with
+                               | Some token ->
+                                   token.Replace("Bearer ", "") |> getEmailFromToken |> find
+                               | None ->
+                                   None
+                    json user next context
 
             GET >=> routef "/users/email-available/%s" (fun email ->
                 fun next context ->

@@ -15,7 +15,7 @@ let authorize<'T> =
 
 let generateToken email =
     let claims = [|
-        Claim(JwtRegisteredClaimNames.Sub, email)
+        Claim(JwtRegisteredClaimNames.Email, email)
         Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
     |]
 
@@ -34,6 +34,12 @@ let generateToken email =
             signingCredentials)
 
     JwtSecurityTokenHandler().WriteToken(token)
+
+let getEmailFromToken token =
+    let handler = new JwtSecurityTokenHandler()
+    let claims = handler.ReadJwtToken(token).Claims
+    let emailClaim = claims |> Seq.find (fun c -> c.Type = JwtRegisteredClaimNames.Email)
+    emailClaim.Value
 
 let hash (password : string) : string =
     let salt = CryptSharp.Crypter.Blowfish.GenerateSalt()

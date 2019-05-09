@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Module, VuexModule, MutationAction, Action } from 'vuex-module-decorators'
+import { Module, VuexModule, MutationAction, Action, Mutation } from 'vuex-module-decorators'
 import { WordArray } from 'crypto-js'
 import SHA512 from 'crypto-js/sha512'
 import { User } from '@/models/definitions'
@@ -16,10 +16,16 @@ export default class UserModule extends VuexModule {
     return this.user !== null
   }
 
-  @MutationAction({ mutate: ['user'] })
-  public async fetchUser(email: string) {
-    const response = await axios.get(`/users?email=${email}`)
-    return { user: response.data }
+  @Action({ commit: 'setUser' })
+  public async fetchUser() {
+    const response = await axios.get(`/user`)
+    return response.data
+  }
+
+  @Action
+  public async isEmailAvailable(email: string) {
+    const response = await axios.get(`/users/email-available/${email}`)
+    return response.data
   }
 
   @Action
@@ -34,8 +40,7 @@ export default class UserModule extends VuexModule {
     if (response.data !== null) {
       const jwtToken = response.data.fields[0]
       localStorage.setItem('user', JSON.stringify({
-        token: jwtToken,
-        email: credentials.email
+        token: jwtToken
       }));
       axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`;
 
@@ -49,12 +54,6 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  public async isEmailAvailable(email: string) {
-    const response = await axios.get(`/users/email-available/${email}`)
-    return response.data
-  }
-
-  @Action
   public async signUp(credentials: { email: string, password: string }) {
     const hash: WordArray = SHA512(credentials.password + 'consilium')
 
@@ -65,11 +64,16 @@ export default class UserModule extends VuexModule {
     return true
   }
 
-  @MutationAction({ mutate: ['user'] })
+  @Action({ commit: 'setUser'})
   public async signOut() {
     localStorage.removeItem('user')
     await this.context.dispatch('clearProjects')
-    return { user: null }
+    return null
+  }
+
+  @Mutation
+  protected setUser(user: User | null) {
+    this.user = user
   }
 
 }

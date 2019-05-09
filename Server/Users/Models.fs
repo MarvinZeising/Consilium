@@ -15,7 +15,7 @@ type Credentials =
 
 type EmailAvailable = string -> bool
 
-type UserFind = string -> User[]
+type UserFind = string -> User option
 
 type SignUp = Credentials -> bool
 

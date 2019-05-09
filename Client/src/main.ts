@@ -31,7 +31,7 @@ async function init() {
   if (userItem) {
     const user = JSON.parse(userItem)
     axios.defaults.headers.common.Authorization = `Bearer ${user.token}`
-    await userModule.fetchUser(user.email)
+    await userModule.fetchUser()
   }
 
   new Vue({

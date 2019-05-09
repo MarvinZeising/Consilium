@@ -7,8 +7,8 @@ open Giraffe
 open System
 open Authentication
 
-let find (collection : IMongoCollection<User>) (_ : string) : User[] =
-    collection.Find(Builders.Filter.Empty).ToEnumerable() |> Seq.toArray
+let find (collection : IMongoCollection<User>) (_ : string) : User option =
+    collection.Find(Builders.Filter.Empty).ToEnumerable() |> Seq.tryLast
 
 let emailAvailable (collection : IMongoCollection<User>) (email : string) : bool =
     let filter = Builders.Filter.Eq((fun (x : User) -> x.Email), email)
