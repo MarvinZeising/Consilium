@@ -19,8 +19,8 @@ let generateToken email =
         Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
     |]
 
-    let expires = Nullable(DateTime.UtcNow.AddHours(1.0))
-    let notBefore = Nullable(DateTime.UtcNow)
+    let expires = DateTime.UtcNow.AddHours(1.0) |> Nullable
+    let notBefore = DateTime.UtcNow |> Nullable
     let securityKey = SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
     let signingCredentials = SigningCredentials(key = securityKey, algorithm = SecurityAlgorithms.HmacSha256)
 
@@ -37,9 +37,9 @@ let generateToken email =
 
 let getEmailFromToken token =
     let handler = new JwtSecurityTokenHandler()
-    let claims = handler.ReadJwtToken(token).Claims
-    let emailClaim = claims |> Seq.tryFind (fun c -> c.Type = JwtRegisteredClaimNames.Email)
-    emailClaim |> Option.map (fun claim -> claim.Value)
+    handler.ReadJwtToken(token).Claims
+        |> Seq.tryFind (fun c -> c.Type = JwtRegisteredClaimNames.Email)
+        |> Option.map (fun claim -> claim.Value)
 
 let hash (password : string) : string =
     let salt = CryptSharp.Crypter.Blowfish.GenerateSalt()
