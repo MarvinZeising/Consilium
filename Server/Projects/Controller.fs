@@ -25,14 +25,14 @@ module ProjectController =
                     let projects = find All
                     json projects next context
 
-            GET >=> routef "/projects/%s" (fun id -> // TODO: authorize
-                fun next context ->
+            GET >=> routef "/projects/%s" (fun id ->
+                authorize >=> fun next context ->
                     let findById = context.GetService<ProjectFindById>()
                     let project = findById id
                     json project next context)
 
-            PUT >=> routef "/projects/%s" (fun id -> // TODO: authorize
-                fun next context ->
+            PUT >=> routef "/projects/%s" (fun id ->
+                authorize >=> fun next context ->
                     task {
                         let save = context.GetService<ProjectSave>()
                         let! project = context.BindJsonAsync<Project>()
@@ -40,8 +40,8 @@ module ProjectController =
                         return! json (save project) next context
                     })
 
-            DELETE >=> routef "/projects/%s" (fun id -> // TODO: authorize
-                fun next context ->
+            DELETE >=> routef "/projects/%s" (fun id ->
+                authorize >=> fun next context ->
                     let delete = context.GetService<ProjectDelete>()
                     json (delete id) next context)
         ]
