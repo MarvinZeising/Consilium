@@ -2,19 +2,20 @@
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6 lg4>
-        <v-card
-          class="mx-auto elevation-10"
-          max-width="500"
+        <v-form
+          ref="form"
+          v-model="valid"
         >
-          <v-card-title class="title font-weight-regular justify-space-between">
-            <span>Sign in to Consilium</span>
-          </v-card-title>
 
-          <v-card-text>
-            <v-form
-              ref="form"
-              v-model="valid"
-            >
+          <v-card
+            class="mx-auto elevation-10"
+            max-width="500"
+          >
+            <v-card-title class="title font-weight-regular justify-space-between">
+              <span>Sign in to Consilium</span>
+            </v-card-title>
+
+            <v-card-text>
               <v-text-field
                 v-model="email"
                 label="Email"
@@ -34,36 +35,38 @@
                 required
                 @click:append="passwordShow = !passwordShow"
               ></v-text-field>
-            </v-form>
 
-            <span
-              class="red--text"
-              v-if="authFailed"
-            >
-              We couldn't find an account with these credentials.
-              <br>
-              Is your capslock activated, maybe?
-            </span>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              color="primary"
-              @click="signIn"
-            >
-              <span>
-                Sign in
+              <span
+                class="red--text"
+                v-if="authFailed"
+              >
+                We couldn't find an account with these credentials.
+                <br>
+                Is your capslock activated, maybe?
               </span>
-              <v-progress-circular
-                v-if="authInProgress"
-                indeterminate
-                color="white"
-                class="ml-3"
-              />
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="primary"
+                type="submit"
+                @click="signIn"
+              >
+                <span>
+                  Sign in
+                </span>
+                <v-progress-circular
+                  v-if="authInProgress"
+                  indeterminate
+                  color="white"
+                  class="ml-3"
+                />
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+
+        </v-form>
       </v-flex>
     </v-layout>
   </v-container>
@@ -75,7 +78,7 @@ import axios from 'axios'
 import Component from 'vue-class-component'
 import colors from 'vuetify/es5/util/colors'
 import UserModule from '@/store/modules/users'
-import { getModule } from 'vuex-module-decorators'
+import { getModule, Action } from 'vuex-module-decorators'
 import ProjectModule from '@/store/modules/projects'
 
 @Component
