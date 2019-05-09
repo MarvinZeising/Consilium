@@ -68,7 +68,7 @@ export default class UserModule extends VuexModule {
   @MutationAction({ mutate: ['user'] })
   public async signOut() {
     localStorage.removeItem('user')
-    // TODO: clear project store and everything fetched
+    await this.context.dispatch('clearProjects')
     return { user: null }
   }
 

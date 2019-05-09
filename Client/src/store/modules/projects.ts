@@ -16,6 +16,11 @@ export default class ProjectModule extends VuexModule {
     return { projects: response.data }
   }
 
+  @MutationAction({ mutate: ['projects'] })
+  public async clearProjects() {
+    return { projects: [] }
+  }
+
   @Action({ commit: 'setNameAndEmail' })
   public async updateProjectGeneral(project: Project) {
     await axios.put(`/projects/${project.id}`, {
