@@ -30,16 +30,14 @@ let signUp (collection : IMongoCollection<User>) (credentials : Credentials) : b
     emailNotAlreadyExisting
 
 let signIn (collection : IMongoCollection<User>) (credentials : Credentials) : string option =
+    let generateTokenIfPasswordIsCorrect credentials (user : User) : string option =
+        if verify credentials.Password user.Password
+        then credentials.Email |> generateToken |> Some
+        else None
+
     let filter = Builders<User>.Filter.Eq((fun x -> x.Email), credentials.Email)
     let user = collection.Find(filter).ToEnumerable() |> Seq.tryLast
-    match user with
-    | Some user ->
-        if verify credentials.Password user.Password then
-            credentials.Email |> generateToken |> Some
-        else
-            None
-    | None ->
-        None
+    user |> Option.bind (generateTokenIfPasswordIsCorrect credentials)
 
 type IServiceCollection with
     member this.AddUserCollection (collection : IMongoCollection<User>) =

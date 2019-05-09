@@ -13,11 +13,11 @@ let findOne (collection : IMongoCollection<Project>) (id : string) : Project opt
     collection.Find(filter).ToEnumerable() |> Seq.tryLast
 
 let save (collection : IMongoCollection<Project>) (project : Project) : Project =
-    let projects = collection.Find(fun x -> x.Id = project.Id).ToEnumerable()
+    let projects = collection.Find(fun x -> x.Id = project.Id).ToEnumerable() |> List.ofSeq
 
-    match Seq.isEmpty projects with
-    | true -> collection.InsertOne project
-    | false ->
+    match projects with
+    | [] -> collection.InsertOne project
+    | _ ->
         let filter = Builders.Filter.Eq((fun x -> x.Id), project.Id)
         let update =
             Builders.Update
