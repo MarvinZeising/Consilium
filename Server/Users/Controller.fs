@@ -1,5 +1,6 @@
 namespace Users
 
+open Controller
 open Giraffe
 open Microsoft.AspNetCore.Http
 open FSharp.Control.Tasks.V2
@@ -21,10 +22,10 @@ module UserController =
             GET >=> route "/user" >=> authorize >=>
                 fun next context ->
                     let find = context.GetService<UserFind>()
-                    let user = context.TryGetRequestHeader "Authorization"
-                               |> Option.bind (fun token -> token.Replace("Bearer ", "") |> getEmailFromToken)
-                               |> Option.bind find
-                    json user next context
+                    context.TryGetRequestHeader "Authorization"
+                       |> Option.bind (fun token -> token.Replace("Bearer ", "") |> getEmailFromToken)
+                       |> Option.bind find
+                       |> resultOr404 next context
 
             GET >=> routef "/users/email-available/%s" (fun email ->
                 fun next context ->

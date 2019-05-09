@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Controller.fs" />
     <Compile Include="Authentication.fs" />
     <Compile Include="Projects/Models.fs" />
     <Compile Include="Users/Models.fs" />
