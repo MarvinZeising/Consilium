@@ -13,8 +13,9 @@ let secret = "!H^EU(-=m{VNkM'ECh'V7X7S:q4V"
 let authorize<'T> =
     requiresAuthentication (challenge JwtBearerDefaults.AuthenticationScheme)
 
-let generateToken email =
+let generateToken id email =
     let claims = [|
+        Claim(JwtRegisteredClaimNames.Sub, id)
         Claim(JwtRegisteredClaimNames.Email, email)
         Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
     |]
@@ -35,11 +36,14 @@ let generateToken email =
 
     JwtSecurityTokenHandler().WriteToken(token)
 
-let getEmailFromToken token =
+let getFromToken claimType token =
     let handler = new JwtSecurityTokenHandler()
     handler.ReadJwtToken(token).Claims
-        |> Seq.tryFind (fun c -> c.Type = JwtRegisteredClaimNames.Email)
+        |> Seq.tryFind (fun c -> c.Type = claimType)
         |> Option.map (fun claim -> claim.Value)
+
+let getEmailFromToken = getFromToken JwtRegisteredClaimNames.Email
+let getIdFromToken = getFromToken JwtRegisteredClaimNames.Sub
 
 let hash (password : string) : string =
     let salt = CryptSharp.Crypter.Blowfish.GenerateSalt()

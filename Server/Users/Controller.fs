@@ -27,6 +27,14 @@ module UserController =
                        |> Option.bind find
                        |> resultOr404 next context
 
+            DELETE >=> route "/user" >=> authorize >=>
+                fun next context ->
+                    let delete = context.GetService<UserDelete>()
+                    context.TryGetRequestHeader "Authorization"
+                        |> Option.bind (fun token -> token.Replace("Bearer ", "") |> getIdFromToken)
+                        |> Option.bind delete
+                        |> resultOr500 next context
+
             GET >=> routef "/users/email-available/%s" (fun email ->
                 fun next context ->
                     let emailAvailable = context.GetService<EmailAvailable>()

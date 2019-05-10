@@ -32,16 +32,22 @@ let signUp (collection : IMongoCollection<User>) (credentials : Credentials) : b
 let signIn (collection : IMongoCollection<User>) (credentials : Credentials) : string option =
     let generateTokenIfPasswordIsCorrect credentials (user : User) : string option =
         if verify credentials.Password user.Password
-        then credentials.Email |> generateToken |> Some
+        then credentials.Email |> generateToken user.Id |> Some
         else None
 
     let filter = Builders<User>.Filter.Eq((fun x -> x.Email), credentials.Email)
     let user = collection.Find(filter).ToEnumerable() |> Seq.tryLast
     user |> Option.bind (generateTokenIfPasswordIsCorrect credentials)
 
+let delete (collection : IMongoCollection<User>) (id : string) : unit option =
+    if collection.DeleteOne(Builders.Filter.Eq((fun x -> x.Id), id)).DeletedCount > 0L
+    then Some()
+    else None
+
 type IServiceCollection with
     member this.AddUserCollection (collection : IMongoCollection<User>) =
         this.AddSingleton<UserFind>(find collection) |> ignore
+        this.AddSingleton<UserDelete>(delete collection) |> ignore
         this.AddSingleton<SignIn>(signIn collection) |> ignore
         this.AddSingleton<SignUp>(signUp collection) |> ignore
         this.AddSingleton<EmailAvailable>(emailAvailable collection) |> ignore
