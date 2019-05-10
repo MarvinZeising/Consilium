@@ -1,9 +1,9 @@
 namespace Users
 
-open Controller
 open Giraffe
 open Microsoft.AspNetCore.Http
 open FSharp.Control.Tasks.V2
+open ControllerHelpers
 open Authentication
 
 module UserController =
