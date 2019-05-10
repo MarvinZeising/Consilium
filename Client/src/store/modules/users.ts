@@ -40,7 +40,8 @@ export default class UserModule extends VuexModule {
     if (response.data !== null) {
       const jwtToken = response.data.fields[0]
       localStorage.setItem('user', JSON.stringify({
-        token: jwtToken
+        token: jwtToken,
+        email: credentials.email,
       }));
       axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`;
 
@@ -62,6 +63,15 @@ export default class UserModule extends VuexModule {
       password: hash.toString(),
     })
     return true
+  }
+
+  @Action
+  public async deleteAccount() {
+    if (this.isSignedIn) {
+      await axios.delete(`/user`)
+
+      this.context.dispatch('signOut', null)
+    }
   }
 
   @Action({ commit: 'setUser'})
