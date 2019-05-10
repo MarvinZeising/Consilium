@@ -89,6 +89,14 @@
       </v-list-tile>
     </v-list-group>
 
+    <!--//* Account -->
+    <v-list-tile :to="{ name: 'account' }">
+      <v-list-tile-action>
+        <v-icon>lock</v-icon>
+      </v-list-tile-action>
+      <v-list-tile-title>Account</v-list-tile-title>
+    </v-list-tile>
+
     <!--//* Sign out -->
     <v-list-tile :to="{ name: 'signOut' }">
       <v-list-tile-action>
