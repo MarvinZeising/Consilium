@@ -39,6 +39,17 @@ module UserController =
                         |> Option.bind delete
                         |> resultOrStatusCode 500 next context
 
+            PUT >=> route "/user/email" >=> authorize >=>
+                fun next context ->
+                    task {
+                        let updateEmail = context.GetService<UpdateEmail>()
+                        let! emailChange = context.BindJsonAsync<EmailChange>()
+                        return! context
+                                |> getFromToken extractIdClaim
+                                |> Option.bind (fun id -> updateEmail { emailChange with Id = id })
+                                |> resultOrStatusCode 500 next context
+                    }
+
             PUT >=> route "/user/password" >=> authorize >=>
                 fun next context ->
                     task {
