@@ -33,7 +33,7 @@
             <v-spacer></v-spacer>
             <v-btn
               flat
-              :to="{ name: 'updateGeneral' }"
+              :to="{ name: 'updateAccountGeneral' }"
             >
               Edit
             </v-btn>

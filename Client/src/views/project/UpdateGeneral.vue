@@ -1,6 +1,5 @@
 <template>
   <v-container fluid>
-
     <v-form ref="form">
 
       <v-flex xs12>
@@ -11,7 +10,7 @@
         xs12 sm8 md6 lg4
       >
         <p class="mt-4 grey--text text--darken-1">
-          The name of this Project. The Name has to be unique accross all Projects.
+          The name of this Project. The Name is unique accross all Projects, so no other Project can have this name.
         </p>
         <v-text-field
           v-model="name"
@@ -42,14 +41,15 @@
 
           <v-btn
             @click="save"
+            type="submit"
             color="primary"
           >
             Save
           </v-btn>
         </div>
       </v-flex>
-    </v-form>
 
+    </v-form>
   </v-container>
 </template>
 
@@ -95,6 +95,7 @@ export default class UpdateGeneral extends Vue {
         name: this.name,
         email: this.email
       })
+      // TODO: add error handling
 
       this.$router.back()
     }
