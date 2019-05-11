@@ -66,7 +66,10 @@ module UserController =
                     task {
                         let updatePassword = context.GetService<UpdatePassword>()
                         let! passwordChange = context.BindJsonAsync<PasswordChange>()
-                        return! json (updatePassword passwordChange) next context
+                        return! context
+                                |> getFromToken extractIdClaim
+                                |> Option.bind (fun id -> updatePassword { passwordChange with Id = id })
+                                |> resultOrStatusCode 500 next context
                     }
 
             GET >=> routef "/users/email-available/%s" (fun email ->
