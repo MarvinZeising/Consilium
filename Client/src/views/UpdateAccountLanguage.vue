@@ -3,18 +3,26 @@
     <v-form ref="form">
 
       <v-flex xs12>
-        <h1 class="headline">Update Account General</h1>
+        <h1 class="headline">Update interface language</h1>
       </v-flex>
-      <v-flex xs12 sm10 md8 lg6 >
+
+      <v-flex xs12 sm10 md8 lg6>
         <p class="mt-4 grey--text text--darken-1">
-          Your Email address. This Email is unique to your Account. You use it to sign in to this Account.
+          The language you see this website in.
           <br>
-          After saving, you will be signed out and will have to sign in with the new Email address.
+          You can choose one the translated languages.
         </p>
-        <v-text-field
-          v-model="email"
-          label="Email address"
-          :rules="emailRules"
+        <p class="mt-4 grey--text text--darken-1">
+          If you want to help translating the site into a different language, feel free to reach out to us via
+          <a href="mailto:support@consiliumapp.org">support@consiliumapp.org</a>
+        </p>
+        <p class="mt-4 grey--text text--darken-1">
+          Enter your new Password
+        </p>
+        <v-select
+          v-model="language"
+          :items="languages"
+          label="Interface language"
           box
           required
         />
@@ -25,7 +33,6 @@
           </v-btn>
           <v-btn
             @click="save"
-            type="submit"
             color="primary"
           >
             Save
@@ -42,27 +49,21 @@ import Vue from 'vue'
 import axios from 'axios'
 import { VForm } from 'vuetify/lib'
 import Component from 'vue-class-component'
+import UserModule from '@/store/modules/users'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
-import UserModule from '@/store/modules/users';
 
 @Component
-export default class UpdateGeneral extends Vue {
+export default class UpdateAccountLanguage extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
 
-  private userId: string = ''
-  private currentEmail: string = ''
-  private email: string = ''
-  private emailRules: any[] = [
-    (v: string) => !!v || 'Email is required',
-    (v: string) => /.+@.+/.test(v) || 'Email must be valid'
-  ]
+  private language: string = 'en-US'
+  private languages: string[] = ['en-US', 'de-DE']
 
   private created() {
     const user = this.userModule.myUser
     if (user) {
-      this.userId = user.id
-      this.currentEmail = user.email
+      this.language = user.language
     }
   }
 
@@ -70,7 +71,7 @@ export default class UpdateGeneral extends Vue {
     const form: any = this.$refs.form
 
     if (form.validate()) {
-      await this.userModule.updateEmail(this.email)
+      await this.userModule.updateLanguage(this.language)
       // TODO: add error handling
 
       this.$router.back()

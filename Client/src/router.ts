@@ -52,9 +52,13 @@ const router = new Router({
     name: 'changePassword',
     component: () => import('./views/ChangePassword.vue')
   }, {
-    path: '/account/update-gneeral',
+    path: '/account/update-general',
     name: 'updateAccountGeneral',
     component: () => import('./views/UpdateAccountGeneral.vue')
+  }, {
+    path: '/account/update-language',
+    name: 'updateAccountLanguage',
+    component: () => import('./views/UpdateAccountLanguage.vue')
   }, {
     path: '/sign-in',
     name: 'signIn',

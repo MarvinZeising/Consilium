@@ -61,28 +61,37 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  public async updateEmail(data: { id: string, email: string }) {
-    const user = this.user
-
-    if (user) {
+  public async updateEmail(email: string) {
+    if (this.user) {
       await axios.put('/user/email', {
-        email: data.email,
+        email,
       })
 
-      await this.signOut()
+      await this.context.dispatch('signOut')
     }
+  }
+
+  @Action({ commit: 'setUser' })
+  public async updateLanguage(language: string) {
+    const user = this.user
+    if (user) {
+      await axios.put('/user/language', {
+        language,
+      })
+      user.language = language
+    }
+    return user
   }
 
   @Action
   public async changePassword(passwords: { old: string, new: string }) {
-    const user = this.user
-
-    if (user) {
+    if (this.user) {
       await axios.put('/user/password', {
-        id: user.id,
         old: hashPassword(passwords.old),
         new: hashPassword(passwords.new),
       })
+
+      await this.context.dispatch('signOut')
     }
   }
 

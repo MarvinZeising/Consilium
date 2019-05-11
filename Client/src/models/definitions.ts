@@ -1,5 +1,5 @@
 class Project {
-  public id?: string
+  public id?: string // TODO: remove optional
   public name: string
   public email: string
 
@@ -12,10 +12,12 @@ class Project {
 class User {
   public id: string
   public email: string
+  public language: string
 
-  constructor(id: string, email: string) {
+  constructor(id: string, email: string, language: string | null) {
     this.id = id
     this.email = email
+    this.language = language || 'en-US'
   }
 }
 

@@ -2,12 +2,10 @@
   <v-container fluid>
     <v-layout wrap>
 
-      <!--//* Main Heading -->
+      <!--//* General -->
       <v-flex xs12>
         <h2 class="headline mb-3">General</h2>
       </v-flex>
-
-      <!--//* Main Settings -->
       <v-flex
         xs12 sm10 md8 lg6
         class="mb-5 pa-2"
@@ -34,6 +32,36 @@
             <v-btn
               flat
               :to="{ name: 'updateAccountGeneral' }"
+            >
+              Edit
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+
+      <!--//* Language -->
+      <v-flex xs12>
+        <h2 class="headline mb-3">Language</h2>
+      </v-flex>
+      <v-flex
+        xs12 sm10 md8 lg6
+        class="mb-5 pa-2"
+      >
+        <v-card flat>
+          <v-card-text>
+            <p class="caption mb-0 grey--text">
+              Interface language
+            </p>
+            <p class="subheading">
+              {{ displayLanguage(language) }}
+            </p>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              flat
+              :to="{ name: 'updateAccountLanguage' }"
             >
               Edit
             </v-btn>
@@ -76,8 +104,8 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
-import DeleteAccountDialog from '@/components/dialogs/DeleteAccountDialog.vue';
-import UserModule from '@/store/modules/users';
+import DeleteAccountDialog from '@/components/dialogs/DeleteAccountDialog.vue'
+import UserModule from '@/store/modules/users'
 
 @Component({
   components: { DeleteAccountDialog }
@@ -87,12 +115,27 @@ export default class Account extends Vue {
 
   private id: string = ''
   private email: string = ''
+  private language: string = ''
 
   private created() {
     const user = this.userModule.myUser
     if (user) {
       this.id = user.id
       this.email = user.email
+      this.language = user.language
+    }
+  }
+
+  private displayLanguage(language: string) {
+    switch (language) {
+      case 'en-US':
+        return 'English (US)'
+        break
+      case 'de-DE':
+        return 'German'
+        break
+      default:
+        return `Unknown language: ${language}`
     }
   }
 }
