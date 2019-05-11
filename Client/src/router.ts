@@ -46,19 +46,19 @@ const router = new Router({
   }, {
     path: '/account',
     name: 'account',
-    component: () => import('./views/Account.vue')
+    component: () => import('./views/account/Account.vue')
   }, {
     path: '/account/update-password',
     name: 'updateAccountPassword',
-    component: () => import('./views/UpdateAccountPassword.vue')
+    component: () => import('./views/account/UpdateAccountPassword.vue')
   }, {
     path: '/account/update-general',
     name: 'updateAccountGeneral',
-    component: () => import('./views/UpdateAccountGeneral.vue')
+    component: () => import('./views/account/UpdateAccountGeneral.vue')
   }, {
     path: '/account/update-language',
     name: 'updateAccountLanguage',
-    component: () => import('./views/UpdateAccountLanguage.vue')
+    component: () => import('./views/account/UpdateAccountLanguage.vue')
   }, {
     path: '/sign-in',
     name: 'signIn',
