@@ -25,7 +25,7 @@ module UserController =
                     context.TryGetRequestHeader "Authorization"
                        |> Option.bind (fun token -> token.Replace("Bearer ", "") |> getEmailFromToken)
                        |> Option.bind find
-                       |> resultOr404 next context
+                        |> resultOrStatusCode 404 next context
 
             DELETE >=> route "/user" >=> authorize >=>
                 fun next context ->
@@ -33,7 +33,7 @@ module UserController =
                     context.TryGetRequestHeader "Authorization"
                         |> Option.bind (fun token -> token.Replace("Bearer ", "") |> getIdFromToken)
                         |> Option.bind delete
-                        |> resultOr500 next context
+                        |> resultOrStatusCode 500 next context
 
             GET >=> routef "/users/email-available/%s" (fun email ->
                 fun next context ->
