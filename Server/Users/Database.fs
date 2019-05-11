@@ -7,6 +7,11 @@ open Giraffe
 open System
 open Authentication
 
+let private isCorrectPassword password (user : User) : User option =
+    if verify password user.Password
+    then Some user
+    else None
+
 let find (collection : IMongoCollection<User>) (email : string) : User option =
     let filter = Builders.Filter.Eq((fun (x : User) -> x.Email), email)
     collection.Find(filter).ToEnumerable() |> Seq.tryLast
@@ -30,17 +35,16 @@ let signUp (collection : IMongoCollection<User>) (credentials : Credentials) : b
     emailNotAlreadyExisting
 
 let signIn (collection : IMongoCollection<User>) (credentials : Credentials) : string option =
-    let generateTokenIfPasswordIsCorrect credentials (user : User) : string option =
-        if verify credentials.Password user.Password
-        then credentials.Email |> generateToken user.Id |> Some
-        else None
-
     let filter = Builders<User>.Filter.Eq((fun x -> x.Email), credentials.Email)
-    let user = collection.Find(filter).ToEnumerable() |> Seq.tryLast
-    user |> Option.bind (generateTokenIfPasswordIsCorrect credentials)
+    collection.Find(filter).ToEnumerable()
+        |> Seq.tryLast
+        |> Option.bind (isCorrectPassword credentials.Password)
+        |> Option.bind (fun user -> generateToken user.Id user.Email |> Some)
 
 let delete (collection : IMongoCollection<User>) (id : string) : unit option =
-    if collection.DeleteOne(Builders.Filter.Eq((fun x -> x.Id), id)).DeletedCount > 0L
+    let update = Builders<User>.Filter.Eq((fun x -> x.Id), id)
+
+    if collection.DeleteOne(update).DeletedCount > 0L
     then Some()
     else None
 
