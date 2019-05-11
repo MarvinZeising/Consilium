@@ -17,7 +17,7 @@
             <p class="caption mb-0 grey--text">
               ID
             </p>
-            <p class="subheading">
+            <p class="subheading grey--text">
               {{ id }}
             </p>
 
@@ -67,7 +67,6 @@
         </v-card>
       </v-flex>
 
-
     </v-layout>
   </v-container>
 </template>
@@ -75,26 +74,26 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import ProjectModule from '@/store/modules/projects'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
 import DeleteAccountDialog from '@/components/dialogs/DeleteAccountDialog.vue';
-import colors from 'vuetify/es5/util/colors'
+import UserModule from '@/store/modules/users';
 
 @Component({
   components: { DeleteAccountDialog }
 })
 export default class Account extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private userModule: UserModule = getModule(UserModule, this.$store)
 
-  private name: string = ''
+  private id: string = ''
   private email: string = ''
 
   private created() {
-    const projectId = this.$route.params.projectId
-    const project = this.projectModule.myProjects.filter((x: Project) => x.id === projectId)[0]
-    this.name = project.name
-    this.email = project.email
+    const user = this.userModule.myUser
+    if (user) {
+      this.id = user.id
+      this.email = user.email
+    }
   }
 }
 </script>

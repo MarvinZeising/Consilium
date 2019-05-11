@@ -10,10 +10,11 @@ class Project {
 }
 
 class User {
-  public id?: string
+  public id: string
   public email: string
 
-  constructor(email: string) {
+  constructor(id: string, email: string) {
+    this.id = id
     this.email = email
   }
 }
