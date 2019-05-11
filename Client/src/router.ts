@@ -48,6 +48,10 @@ const router = new Router({
     name: 'account',
     component: () => import('./views/Account.vue')
   }, {
+    path: '/account/change-password',
+    name: 'changePassword',
+    component: () => import('./views/ChangePassword.vue')
+  }, {
     path: '/sign-in',
     name: 'signIn',
     component: () => import('./views/SignIn.vue')

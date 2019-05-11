@@ -61,6 +61,19 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
+  public async changePassword(passwords: { old: string, new: string }) {
+    const user = this.user
+
+    if (user) {
+      await axios.put('/user/password', {
+        id: user.id,
+        old: hashPassword(passwords.old),
+        new: hashPassword(passwords.new),
+      })
+    }
+  }
+
+  @Action
   public async deleteAccount() {
     if (this.isSignedIn) {
       await axios.delete(`/user`)
