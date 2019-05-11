@@ -48,7 +48,7 @@
             Cancel
           </v-btn>
           <v-btn
-            @click="changePassword"
+            @click="save"
             color="primary"
           >
             Change Password
@@ -70,7 +70,7 @@ import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
 
 @Component
-export default class ChangePassword extends Vue {
+export default class UpdateAccountPassword extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
 
   private currentPassword: string = ''
@@ -81,12 +81,12 @@ export default class ChangePassword extends Vue {
     (v: string) => v.length >= 8 || 'Password must have at least 8 characters'
   ]
 
-  private async changePassword() {
+  private async save() {
     const form: any = this.$refs.form
     const projectId = this.$route.params.projectId
 
     if (form.validate()) {
-      await this.userModule.changePassword({
+      await this.userModule.updatePassword({
         old: this.currentPassword,
         new: this.newPassword,
       })

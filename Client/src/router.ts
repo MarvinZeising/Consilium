@@ -48,9 +48,9 @@ const router = new Router({
     name: 'account',
     component: () => import('./views/Account.vue')
   }, {
-    path: '/account/change-password',
-    name: 'changePassword',
-    component: () => import('./views/ChangePassword.vue')
+    path: '/account/update-password',
+    name: 'updateAccountPassword',
+    component: () => import('./views/UpdateAccountPassword.vue')
   }, {
     path: '/account/update-general',
     name: 'updateAccountGeneral',

@@ -84,7 +84,7 @@
         >
           <v-card-text>
             <v-btn
-              :to="{ name: 'changePassword' }"
+              :to="{ name: 'updateAccountPassword' }"
               class="grey lighten-3 black--text mb-4"
             >
               Change my password

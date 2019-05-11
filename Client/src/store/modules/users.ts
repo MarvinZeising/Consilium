@@ -84,7 +84,7 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  public async changePassword(passwords: { old: string, new: string }) {
+  public async updatePassword(passwords: { old: string, new: string }) {
     if (this.user) {
       await axios.put('/user/password', {
         old: hashPassword(passwords.old),
