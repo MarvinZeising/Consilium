@@ -1,12 +1,19 @@
 <template>
   <v-container fluid>
-
     <v-form ref="form">
+
       <v-flex xs12>
         <h1 class="headline">Change Password</h1>
       </v-flex>
 
       <v-flex xs12 sm10 md8 lg6>
+        <p class="mt-4 grey--text text--darken-1">
+          This is your Account's Password.
+          <br>
+          No one should know your Password (well, except you, of course).
+          <br>
+          After saving, you will be signed out and will have to sign in with your new Password.
+        </p>
         <p class="mt-4 grey--text text--darken-1">
           Enter your current Password
         </p>
@@ -48,8 +55,8 @@
           </v-btn>
         </div>
       </v-flex>
-    </v-form>
 
+    </v-form>
   </v-container>
 </template>
 
