@@ -50,6 +50,17 @@ module UserController =
                                 |> resultOrStatusCode 500 next context
                     }
 
+            PUT >=> route "/user/language" >=> authorize >=>
+                fun next context ->
+                    task {
+                        let updateLanguage = context.GetService<UpdateLanguage>()
+                        let! languageChange = context.BindJsonAsync<LanguageChange>()
+                        return! context
+                                |> getFromToken extractIdClaim
+                                |> Option.bind (fun id -> updateLanguage { languageChange with Id = id })
+                                |> resultOrStatusCode 500 next context
+                    }
+
             PUT >=> route "/user/password" >=> authorize >=>
                 fun next context ->
                     task {

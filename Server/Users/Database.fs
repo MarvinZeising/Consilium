@@ -29,6 +29,7 @@ let signUp (collection : IMongoCollection<User>) (credentials : Credentials) : b
             Id = ShortGuid.fromGuid(Guid.NewGuid())
             Email = credentials.Email
             Password = hashedPassword
+            Language = "en-US"
         }
         collection.InsertOne user
 
@@ -48,7 +49,16 @@ let updateEmail (collection : IMongoCollection<User>) (emailChange : EmailChange
         |> Option.bind (fun _ ->
             let updateFilter = Builders<User>.Filter.Eq((fun x -> x.Id), emailChange.Id)
             let updateSetter = Builders<User>.Update.Set((fun x -> x.Email), emailChange.Email)
+            collection.UpdateOne(updateFilter, updateSetter) |> Some)
+        |> Option.bind (fun _ -> Some())
 
+let updateLanguage (collection : IMongoCollection<User>) (languageChange : LanguageChange) : unit option =
+    let filter = Builders<User>.Filter.Eq((fun x -> x.Id), languageChange.Id)
+    collection.Find(filter).ToEnumerable()
+        |> Seq.tryLast
+        |> Option.bind (fun _ ->
+            let updateFilter = Builders<User>.Filter.Eq((fun x -> x.Id), languageChange.Id)
+            let updateSetter = Builders<User>.Update.Set((fun x -> x.Language), languageChange.Language)
             collection.UpdateOne(updateFilter, updateSetter) |> Some)
         |> Option.bind (fun _ -> Some())
 
@@ -61,7 +71,6 @@ let updatePassword (collection : IMongoCollection<User>) (passwordChange : Passw
             let hashedPassword = hash passwordChange.New
             let updateFilter = Builders<User>.Filter.Eq((fun x -> x.Id), passwordChange.Id)
             let updateSetter = Builders<User>.Update.Set((fun x -> x.Password), hashedPassword)
-
             collection.UpdateOne(updateFilter, updateSetter) |> Some)
         |> Option.bind (fun _ -> Some())
 
@@ -79,5 +88,6 @@ type IServiceCollection with
         this.AddSingleton<UserFind>(find collection) |> ignore
         this.AddSingleton<EmailAvailable>(emailAvailable collection) |> ignore
         this.AddSingleton<UpdateEmail>(updateEmail collection) |> ignore
+        this.AddSingleton<UpdateLanguage>(updateLanguage collection) |> ignore
         this.AddSingleton<UpdatePassword>(updatePassword collection) |> ignore
         this.AddSingleton<UserDelete>(delete collection) |> ignore

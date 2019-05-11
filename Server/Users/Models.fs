@@ -5,6 +5,7 @@ type User =
         Id: string
         Email: string
         Password: string
+        Language: string // TODO: restrict to available languages?
     }
 
 type Credentials =
@@ -26,6 +27,12 @@ type EmailChange =
          Email: string
      }
 
+type LanguageChange =
+     {
+         Id: string
+         Language: string
+     }
+
 type EmailAvailable = string -> bool
 
 type UserFind = string -> User option
@@ -37,5 +44,7 @@ type SignUp = Credentials -> bool
 type SignIn = Credentials -> string option
 
 type UpdateEmail = EmailChange -> unit option
+
+type UpdateLanguage = LanguageChange -> unit option
 
 type UpdatePassword = PasswordChange -> unit option
