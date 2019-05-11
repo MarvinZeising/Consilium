@@ -41,6 +41,19 @@ let signIn (collection : IMongoCollection<User>) (credentials : Credentials) : s
         |> Option.bind (isCorrectPassword credentials.Password)
         |> Option.bind (fun user -> generateToken user.Id user.Email |> Some)
 
+let updatePassword (collection : IMongoCollection<User>) passwordChange : unit option =
+    let filter = Builders<User>.Filter.Eq((fun x -> x.Id), passwordChange.Id)
+    collection.Find(filter).ToEnumerable()
+        |> Seq.tryLast
+        |> Option.bind (isCorrectPassword passwordChange.Old)
+        |> Option.bind (fun _ ->
+            let hashedPassword = hash passwordChange.New
+            let updateFilter = Builders<User>.Filter.Eq((fun x -> x.Id), passwordChange.Id)
+            let updateSetter = Builders<User>.Update.Set((fun x -> x.Password), hashedPassword)
+
+            collection.UpdateOne(updateFilter, updateSetter) |> Some)
+        |> Option.bind (fun _ -> Some())
+
 let delete (collection : IMongoCollection<User>) (id : string) : unit option =
     let update = Builders<User>.Filter.Eq((fun x -> x.Id), id)
 
@@ -55,3 +68,4 @@ type IServiceCollection with
         this.AddSingleton<SignIn>(signIn collection) |> ignore
         this.AddSingleton<SignUp>(signUp collection) |> ignore
         this.AddSingleton<EmailAvailable>(emailAvailable collection) |> ignore
+        this.AddSingleton<UpdatePassword>(updatePassword collection) |> ignore

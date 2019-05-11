@@ -39,6 +39,14 @@ module UserController =
                         |> Option.bind delete
                         |> resultOrStatusCode 500 next context
 
+            PUT >=> route "/user/password" >=> authorize >=>
+                fun next context ->
+                    task {
+                        let updatePassword = context.GetService<UpdatePassword>()
+                        let! passwordChange = context.BindJsonAsync<PasswordChange>()
+                        return! json (updatePassword passwordChange) next context
+                    }
+
             GET >=> routef "/users/email-available/%s" (fun email ->
                 fun next context ->
                     let emailAvailable = context.GetService<EmailAvailable>()
