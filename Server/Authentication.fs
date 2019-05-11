@@ -36,14 +36,14 @@ let generateToken id email =
 
     JwtSecurityTokenHandler().WriteToken(token)
 
-let getFromToken claimType token =
+let extractClaim claimType token =
     let handler = new JwtSecurityTokenHandler()
     handler.ReadJwtToken(token).Claims
         |> Seq.tryFind (fun c -> c.Type = claimType)
         |> Option.map (fun claim -> claim.Value)
 
-let getEmailFromToken = getFromToken JwtRegisteredClaimNames.Email
-let getIdFromToken = getFromToken JwtRegisteredClaimNames.Sub
+let extractEmailClaim = extractClaim JwtRegisteredClaimNames.Email
+let extractIdClaim = extractClaim JwtRegisteredClaimNames.Sub
 
 let hash (password : string) : string =
     let salt = CryptSharp.Crypter.Blowfish.GenerateSalt()

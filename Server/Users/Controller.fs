@@ -8,6 +8,10 @@ open Authentication
 
 module UserController =
 
+    let getFromToken extractor (context: HttpContext) =
+        context.TryGetRequestHeader "Authorization"
+           |> Option.bind (fun token -> token.Replace("Bearer ", "") |> extractor)
+
     let routes : HttpFunc -> HttpContext -> HttpFuncResult =
         choose [
 
@@ -22,16 +26,16 @@ module UserController =
             GET >=> route "/user" >=> authorize >=>
                 fun next context ->
                     let find = context.GetService<UserFind>()
-                    context.TryGetRequestHeader "Authorization"
-                       |> Option.bind (fun token -> token.Replace("Bearer ", "") |> getEmailFromToken)
-                       |> Option.bind find
+                    context
+                        |> getFromToken extractEmailClaim
+                        |> Option.bind find
                         |> resultOrStatusCode 404 next context
 
             DELETE >=> route "/user" >=> authorize >=>
                 fun next context ->
                     let delete = context.GetService<UserDelete>()
-                    context.TryGetRequestHeader "Authorization"
-                        |> Option.bind (fun token -> token.Replace("Bearer ", "") |> getIdFromToken)
+                    context
+                        |> getFromToken extractIdClaim
                         |> Option.bind delete
                         |> resultOrStatusCode 500 next context
 
