@@ -62,15 +62,15 @@ const router = new Router({
   }, {
     path: '/sign-in',
     name: 'signIn',
-    component: () => import('./views/SignIn.vue')
+    component: () => import('./views/authentication/SignIn.vue')
   }, {
     path: '/sign-out',
     name: 'signOut',
-    component: () => import('./views/SignOut.vue')
+    component: () => import('./views/authentication/SignOut.vue')
   }, {
     path: '/sign-up',
     name: 'signUp',
-    component: () => import('./views/SignUp.vue')
+    component: () => import('./views/authentication/SignUp.vue')
   }, {
     path: '*',
     redirect: '/home'
