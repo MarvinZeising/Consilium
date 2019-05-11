@@ -21,6 +21,10 @@
           v-model="currentPassword"
           label="Current Password"
           :rules="passwordRules"
+          :append-icon="currentPasswordShow ? 'visibility' : 'visibility_off'"
+          :type="currentPasswordShow ? 'text' : 'password'"
+          prepend-inner-icon="lock"
+          @click:append="currentPasswordShow = !currentPasswordShow"
           box
           required
         />
@@ -32,6 +36,10 @@
           v-model="newPassword"
           label="New Password"
           :rules="passwordRules"
+          :append-icon="newPasswordShow ? 'visibility' : 'visibility_off'"
+          :type="newPasswordShow ? 'text' : 'password'"
+          prepend-inner-icon="lock"
+          @click:append="newPasswordShow = !newPasswordShow"
           box
           required
         />
@@ -39,6 +47,10 @@
           v-model="newPasswordRepeat"
           label="Repeat new Password"
           :rules="passwordRules"
+          :append-icon="newPasswordRepeatShow ? 'visibility' : 'visibility_off'"
+          :type="newPasswordRepeatShow ? 'text' : 'password'"
+          prepend-inner-icon="lock"
+          @click:append="newPasswordRepeatShow = !newPasswordRepeatShow"
           box
           required
         />
@@ -74,8 +86,11 @@ export default class UpdateAccountPassword extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
 
   private currentPassword: string = ''
+  private currentPasswordShow: boolean = false
   private newPassword: string = ''
+  private newPasswordShow: boolean = false
   private newPasswordRepeat: string = ''
+  private newPasswordRepeatShow: boolean = false
   private passwordRules: any[] = [
     (v: string) => !!v || 'Password is required',
     (v: string) => v.length >= 8 || 'Password must have at least 8 characters'
