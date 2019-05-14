@@ -43,28 +43,6 @@ let signIn (collection : IMongoCollection<User>) (credentials : Credentials) : s
         |> Option.bind (isCorrectPassword credentials.Password)
         |> Option.bind (fun user -> generateToken user.Id user.Email |> Some)
 
-let updateLanguage (collection : IMongoCollection<User>) (languageChange : LanguageChange) : unit option =
-    let filter = Builders<User>.Filter.Eq((fun x -> x.Id), languageChange.Id)
-    collection.Find(filter).ToEnumerable()
-        |> Seq.tryLast
-        |> Option.bind (fun _ ->
-            let updateFilter = Builders<User>.Filter.Eq((fun x -> x.Id), languageChange.Id)
-            let updateSetter = Builders<User>.Update.Set((fun x -> x.Language), languageChange.Language)
-            collection.UpdateOne(updateFilter, updateSetter) |> Some)
-        |> Option.bind (fun _ -> Some())
-
-let updatePassword (collection : IMongoCollection<User>) (passwordChange : PasswordChange) : unit option =
-    let filter = Builders<User>.Filter.Eq((fun x -> x.Id), passwordChange.Id)
-    collection.Find(filter).ToEnumerable()
-        |> Seq.tryLast
-        |> Option.bind (isCorrectPassword passwordChange.Old)
-        |> Option.bind (fun _ ->
-            let hashedPassword = hash passwordChange.New
-            let updateFilter = Builders<User>.Filter.Eq((fun x -> x.Id), passwordChange.Id)
-            let updateSetter = Builders<User>.Update.Set((fun x -> x.Password), hashedPassword)
-            collection.UpdateOne(updateFilter, updateSetter) |> Some)
-        |> Option.bind (fun _ -> Some())
-
 let delete (collection : IMongoCollection<User>) (id : string) : unit option =
     let update = Builders<User>.Filter.Eq((fun x -> x.Id), id)
 
@@ -78,6 +56,4 @@ type IServiceCollection with
         this.AddSingleton<SignUp>(signUp collection) |> ignore
         this.AddSingleton<UserFind>(find collection) |> ignore
         this.AddSingleton<EmailAvailable>(emailAvailable collection) |> ignore
-        this.AddSingleton<UpdateLanguage>(updateLanguage collection) |> ignore
-        this.AddSingleton<UpdatePassword>(updatePassword collection) |> ignore
         this.AddSingleton<UserDelete>(delete collection) |> ignore

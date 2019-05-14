@@ -20,6 +20,7 @@ module UserActions =
     let updateEmail context request =
         result {
             let! validatedRequest = EmailValidation.validateEmail request
+            // TODO: canonicalize email
             let! userId = context |> getUserId
             return! updateEmail (userId, validatedRequest.email)
         }
@@ -29,4 +30,13 @@ module UserActions =
             let! validatedRequest = LanguageValidation.validateLanguage request
             let! userId = context |> getUserId
             return! updateLanguage (userId, validatedRequest.language)
+        }
+
+    let updatePassword context request =
+        result {
+            let! userId = context |> getUserId
+            let! user = getUserById userId
+            let! validatedRequest = PasswordValidation.validatePassword (request, user)
+            let! enhancedRequest = switch PasswordValidation.hashPassword validatedRequest
+            return! updatePassword (userId, enhancedRequest.newPassword)
         }

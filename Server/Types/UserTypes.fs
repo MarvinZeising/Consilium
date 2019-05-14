@@ -6,19 +6,17 @@ module UserTypes =
 
     type UpdateLanguageRequest = { language: string }
 
+    type UpdatePasswordRequest =
+        { oldPassword: string
+          newPassword: string }
+
     type User =
         {
             Id: string
             Email: string
             Password: string
-            Language: string // TODO: restrict to available languages?
+            Language: string
         }
-
-    type EmailChange =
-         {
-             Id: string
-             Email: string
-         }
 
     type UserFind = string -> User option
 

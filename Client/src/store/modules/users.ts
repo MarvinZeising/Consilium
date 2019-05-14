@@ -87,8 +87,8 @@ export default class UserModule extends VuexModule {
   public async updatePassword(passwords: { old: string, new: string }) {
     if (this.user) {
       await axios.put('/user/password', {
-        old: hashPassword(passwords.old),
-        new: hashPassword(passwords.new),
+        oldPassword: hashPassword(passwords.old),
+        newPassword: hashPassword(passwords.new),
       })
 
       await this.context.dispatch('signOut')

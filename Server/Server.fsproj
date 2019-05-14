@@ -16,8 +16,7 @@
     <Compile Include="Libraries\Logger.fs" />
     <Compile Include="Libraries\Authentication.fs" />
     <Compile Include="Validation\Validation.fs" />
-    <Compile Include="Validation\EmailValidation.fs" />
-    <Compile Include="Validation\LanguageValidation.fs" />
+    <Compile Include="Validation\UserValidation.fs" />
     <Compile Include="Database\Connection.fs" />
     <Compile Include="Database\UserDatabase.fs" />
     <Compile Include="Repositories\UserRepository.fs" />
