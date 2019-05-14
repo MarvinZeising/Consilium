@@ -1,12 +1,10 @@
 namespace Consilium
 
-/// ===========================================
-/// All the use cases or services in one place
-/// ===========================================
 module UserActions =
 
     open CommonLibrary
-    open DomainTypes
+    open CommonTypes
+    open EmailValidation
     open UserRepository
 
     // HttpContext -> Result string ?
@@ -20,9 +18,9 @@ module UserActions =
 
     // real logic - end of mocks
 
-    let handleEmailUpdate context request =
+    let updateEmail context request =
         result {
-            let! validatedRequest = Validation.combinedEmailValidation request |> Logger.log
-            let! userId = context |> getId |> Logger.log
+            let! validatedRequest = combinedEmailValidation request
+            let! userId = context |> getId
             return! updateDatabase (userId, validatedRequest.email)
         }

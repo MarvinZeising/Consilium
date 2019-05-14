@@ -3,8 +3,7 @@ namespace Consilium
 module UserDatabase =
 
     open MongoDB.Driver
-    open CommonLibrary
-    open DomainTypes
+    open UserTypes
 
     let updateDatabase (collection : IMongoCollection<User>) (userId, email) =
         let filter = Builders<User>.Filter.Eq((fun x -> x.Id), userId)

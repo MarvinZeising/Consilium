@@ -1,14 +1,11 @@
 namespace Consilium
 
-open MongoDB.Driver
-
-/// ===========================================
-/// Database functions
-/// ===========================================
 module UserRepository =
 
+    open MongoDB.Driver
     open CommonLibrary
-    open DomainTypes
+    open CommonTypes
+    open UserTypes
     open UserDatabase
 
     let private mongo = MongoClient ("mongodb://localhost:27017/")

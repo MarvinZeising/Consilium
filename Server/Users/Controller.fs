@@ -3,11 +3,12 @@ namespace Consilium
 open Giraffe
 open Microsoft.AspNetCore.Http
 open FSharp.Control.Tasks.V2
-open ControllerHelpers
+open CommonTypes
+open UserTypes
 open Authentication
-open DomainTypes
 open UserActions
 open Users
+open ControllerHelpers
 
 module UserController =
 
@@ -51,7 +52,7 @@ module UserController =
                 fun next context ->
                     task {
                         let! request = context.BindJsonAsync<UpdateEmailRequest>()
-                        let result = handleEmailUpdate context request
+                        let result = updateEmail context request
                         return! send result next context
                     }
 

@@ -6,7 +6,7 @@ namespace Consilium
 module Logger = 
 
     open CommonLibrary 
-    open DomainTypes
+    open CommonTypes
 
     let log twoTrackInput = 
         let success x = printfn "DEBUG. Success so far: %A" x; x

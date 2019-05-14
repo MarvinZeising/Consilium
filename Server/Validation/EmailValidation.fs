@@ -1,12 +1,12 @@
 namespace Consilium
 
-/// ===========================================
-/// Validation functions
-/// ===========================================
-module Validation = 
+open Validation
+
+module EmailValidation = 
 
     open CommonLibrary 
-    open DomainTypes
+    open CommonTypes
+    open UserTypes
     open System.Text.RegularExpressions
 
     let validateEmailRequired input =
@@ -16,12 +16,6 @@ module Validation =
     let validateEmailFormat input =
        if Regex.IsMatch(input.email, ".+@.+") then succeed input
        else fail [EmailInvalid]
-
-    // create a "plus" function for validation functions
-    let (&&&) v1 v2 = 
-        let addSuccess r1 r2 = r1 // return first
-        let addFailure s1 s2 = s1 @ s2  // concat
-        plus addSuccess addFailure v1 v2 
 
     let combinedEmailValidation = 
         validateEmailRequired
