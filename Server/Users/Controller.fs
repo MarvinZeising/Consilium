@@ -8,7 +8,6 @@ open UserTypes
 open Authentication
 open UserActions
 open Users
-open ControllerHelpers
 
 module UserController =
 
@@ -20,6 +19,11 @@ module UserController =
         CommonLibrary.either json (fun errors -> mapErrorCode (List.head errors)
                                                  |> setStatusCode
                                                  >=> json (List.map string errors))
+
+    let resultOrStatusCode code next context x =
+        match x with
+        | Some x -> json x next context
+        | None -> setStatusCode code next context
 
     let routes : HttpFunc -> HttpContext -> HttpFuncResult =
         choose [

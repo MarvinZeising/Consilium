@@ -21,7 +21,6 @@
     <Compile Include="Database\UserDatabase.fs" />
     <Compile Include="Repositories\UserRepository.fs" />
     <Compile Include="Actions\UserActions.fs" />
-    <Compile Include="ControllerHelpers.fs" />
     <Compile Include="Projects/Models.fs" />
     <Compile Include="Users/Models.fs" />
     <Compile Include="Wiki/Models.fs" />
