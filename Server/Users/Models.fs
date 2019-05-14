@@ -43,8 +43,6 @@ type SignUp = Credentials -> bool
 
 type SignIn = Credentials -> string option
 
-type UpdateEmail = EmailChange -> unit option
-
 type UpdateLanguage = LanguageChange -> unit option
 
 type UpdatePassword = PasswordChange -> unit option

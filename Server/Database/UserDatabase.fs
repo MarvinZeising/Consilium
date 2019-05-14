@@ -13,3 +13,7 @@ module UserDatabase =
     let updateEmail (userId, email) =
         let updateBuilder = Builders<User>.Update.Set((fun x -> x.Email), email)
         updateById userId updateBuilder
+ 
+    let updateLanguage (userId, language) =
+        let updateBuilder = Builders<User>.Update.Set((fun x -> x.Language), language)
+        updateById userId updateBuilder

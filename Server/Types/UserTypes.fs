@@ -2,10 +2,9 @@ namespace Consilium
 
 module UserTypes =
 
-    type UpdateEmailRequest =
-         {
-            email: string
-         }
+    type UpdateEmailRequest = { email: string }
+
+    type UpdateLanguageRequest = { language: string }
 
     type User =
         {
@@ -24,5 +23,3 @@ module UserTypes =
     type UserFind = string -> User option
 
     type UserDelete = string -> unit option
-
-    type UpdateEmail = EmailChange -> unit option

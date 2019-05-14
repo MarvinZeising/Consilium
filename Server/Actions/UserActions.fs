@@ -4,11 +4,10 @@ module UserActions =
 
     open CommonLibrary
     open CommonTypes
-    open EmailValidation
     open UserRepository
 
     // HttpContext -> Result string ?
-    let getId<'a> =
+    let getUserId<'a> =
         Authentication.getAuthorization
         >> Authentication.extractTokenFromAuthorization
         >> Option.bind Authentication.getIdFromToken
@@ -20,7 +19,14 @@ module UserActions =
 
     let updateEmail context request =
         result {
-            let! validatedRequest = combinedEmailValidation request
-            let! userId = context |> getId
+            let! validatedRequest = EmailValidation.validateEmail request
+            let! userId = context |> getUserId
             return! updateEmail (userId, validatedRequest.email)
+        }
+
+    let updateLanguage context request =
+        result {
+            let! validatedRequest = LanguageValidation.validateLanguage request
+            let! userId = context |> getUserId
+            return! updateLanguage (userId, validatedRequest.language)
         }

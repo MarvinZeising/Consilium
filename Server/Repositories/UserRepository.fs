@@ -8,3 +8,6 @@ module UserRepository =
 
     let updateEmail<'a> =
         tryCatch updateEmail (fun ex -> [ServerException ex])
+
+    let updateLanguage<'a> =
+        tryCatch updateLanguage (fun ex -> [ServerException ex])

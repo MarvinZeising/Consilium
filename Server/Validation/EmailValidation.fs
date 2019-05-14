@@ -1,25 +1,24 @@
 namespace Consilium
 
-open Validation
-
 module EmailValidation = 
 
+    open System.Text.RegularExpressions
     open CommonLibrary 
     open CommonTypes
     open UserTypes
-    open System.Text.RegularExpressions
+    open Validation
 
-    let validateEmailRequired input =
-       if input.email = "" then fail [EmailBlank]
+    let private validateRequired input =
+       if input.email = "" then fail [EmailRequired]
        else succeed input
 
-    let validateEmailFormat input =
+    let private validateFormat input =
        if Regex.IsMatch(input.email, ".+@.+") then succeed input
        else fail [EmailInvalid]
 
-    let combinedEmailValidation = 
-        validateEmailRequired
-        &&& validateEmailFormat
+    let validateEmail = 
+        validateRequired
+        &&& validateFormat
 
     let canonicalizeEmail input =
        { input with email = input.email.Trim().ToLower() }

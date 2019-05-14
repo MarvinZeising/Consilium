@@ -43,16 +43,6 @@ let signIn (collection : IMongoCollection<User>) (credentials : Credentials) : s
         |> Option.bind (isCorrectPassword credentials.Password)
         |> Option.bind (fun user -> generateToken user.Id user.Email |> Some)
 
-let updateEmail (collection : IMongoCollection<User>) (emailChange : EmailChange) : unit option =
-    let filter = Builders<User>.Filter.Eq((fun x -> x.Id), emailChange.Id)
-    collection.Find(filter).ToEnumerable()
-        |> Seq.tryLast
-        |> Option.bind (fun _ ->
-            let updateFilter = Builders<User>.Filter.Eq((fun x -> x.Id), emailChange.Id)
-            let updateSetter = Builders<User>.Update.Set((fun x -> x.Email), emailChange.Email)
-            collection.UpdateOne(updateFilter, updateSetter) |> Some)
-        |> Option.bind (fun _ -> Some())
-
 let updateLanguage (collection : IMongoCollection<User>) (languageChange : LanguageChange) : unit option =
     let filter = Builders<User>.Filter.Eq((fun x -> x.Id), languageChange.Id)
     collection.Find(filter).ToEnumerable()
@@ -88,7 +78,6 @@ type IServiceCollection with
         this.AddSingleton<SignUp>(signUp collection) |> ignore
         this.AddSingleton<UserFind>(find collection) |> ignore
         this.AddSingleton<EmailAvailable>(emailAvailable collection) |> ignore
-        this.AddSingleton<UpdateEmail>(updateEmail collection) |> ignore
         this.AddSingleton<UpdateLanguage>(updateLanguage collection) |> ignore
         this.AddSingleton<UpdatePassword>(updatePassword collection) |> ignore
         this.AddSingleton<UserDelete>(delete collection) |> ignore
