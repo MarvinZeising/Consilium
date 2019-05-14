@@ -4,8 +4,12 @@ module UserDatabase =
 
     open MongoDB.Driver
     open UserTypes
+    open Connection
 
-    let updateDatabase (collection : IMongoCollection<User>) (userId, email) =
+    let updateById userId updateBuilder =
         let filter = Builders<User>.Filter.Eq((fun x -> x.Id), userId)
-        let update = Builders<User>.Update.Set((fun x -> x.Email), email)
-        collection.UpdateOne(filter, update) |> ignore
+        collection.UpdateOne(filter, updateBuilder) |> ignore
+
+    let updateEmail (userId, email) =
+        let updateBuilder = Builders<User>.Update.Set((fun x -> x.Email), email)
+        updateById userId updateBuilder

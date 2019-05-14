@@ -22,5 +22,5 @@ module UserActions =
         result {
             let! validatedRequest = combinedEmailValidation request
             let! userId = context |> getId
-            return! updateDatabase (userId, validatedRequest.email)
+            return! updateEmail (userId, validatedRequest.email)
         }
