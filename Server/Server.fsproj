@@ -21,15 +21,15 @@
     <Compile Include="Database\UserDatabase.fs" />
     <Compile Include="Repositories\UserRepository.fs" />
     <Compile Include="Actions\UserActions.fs" />
-    <Compile Include="Projects/Models.fs" />
-    <Compile Include="Users/Models.fs" />
-    <Compile Include="Wiki/Models.fs" />
-    <Compile Include="Projects/Controller.fs" />
-    <Compile Include="Users/Controller.fs" />
-    <Compile Include="Wiki/Controller.fs" />
-    <Compile Include="Projects/Database.fs" />
-    <Compile Include="Users/Database.fs" />
-    <Compile Include="Wiki/MockUpDatabase.fs" />
+    <Compile Include="legacy\Projects\Models.fs" />
+    <Compile Include="legacy\Projects\Controller.fs" />
+    <Compile Include="legacy\Projects\Database.fs" />
+    <Compile Include="legacy\Users\Models.fs" />
+    <Compile Include="legacy\Users\Database.fs" />
+    <Compile Include="legacy\Wiki\Models.fs" />
+    <Compile Include="legacy\Wiki\Controller.fs" />
+    <Compile Include="legacy\Wiki\MockUpDatabase.fs" />
+    <Compile Include="Controllers\UserController.fs" />
     <Compile Include="Program.fs" />
     <PackageReference Include="CryptSharpOfficial" Version="2.1.0" />
     <PackageReference Include="Giraffe" Version="3.6.0" />
