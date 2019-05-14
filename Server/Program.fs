@@ -11,6 +11,7 @@ open Projects
 open Projects.ProjectCollection
 open Users
 open Users.UserCollection
+open Consilium
 open Wiki
 open WikiCollection
 open Microsoft.AspNetCore.Authentication.JwtBearer

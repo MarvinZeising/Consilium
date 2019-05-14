@@ -1,16 +1,24 @@
-namespace Users
+namespace Consilium
 
 open Giraffe
 open Microsoft.AspNetCore.Http
 open FSharp.Control.Tasks.V2
 open ControllerHelpers
 open Authentication
+open DomainTypes
+open UserActions
+open Users
 
 module UserController =
 
     let getFromToken extractor (context: HttpContext) =
         context.TryGetRequestHeader "Authorization"
            |> Option.bind (fun token -> token.Replace("Bearer ", "") |> extractor)
+
+    let send =
+        CommonLibrary.either json (fun errors -> mapErrorCode (List.head errors)
+                                                 |> setStatusCode
+                                                 >=> json (List.map string errors))
 
     let routes : HttpFunc -> HttpContext -> HttpFuncResult =
         choose [
@@ -27,7 +35,7 @@ module UserController =
                 fun next context ->
                     let find = context.GetService<UserFind>()
                     context
-                        |> getFromToken extractEmailClaim
+                        |> getFromToken getEmailFromToken
                         |> Option.bind find
                         |> resultOrStatusCode 404 next context
 
@@ -35,19 +43,16 @@ module UserController =
                 fun next context ->
                     let delete = context.GetService<UserDelete>()
                     context
-                        |> getFromToken extractIdClaim
+                        |> getFromToken getIdFromToken
                         |> Option.bind delete
                         |> resultOrStatusCode 500 next context
 
             PUT >=> route "/user/email" >=> authorize >=>
                 fun next context ->
                     task {
-                        let updateEmail = context.GetService<UpdateEmail>()
-                        let! emailChange = context.BindJsonAsync<EmailChange>()
-                        return! context
-                                |> getFromToken extractIdClaim
-                                |> Option.bind (fun id -> updateEmail { emailChange with Id = id })
-                                |> resultOrStatusCode 500 next context
+                        let! request = context.BindJsonAsync<UpdateEmailRequest>()
+                        let result = handleEmailUpdate context request
+                        return! send result next context
                     }
 
             PUT >=> route "/user/language" >=> authorize >=>
@@ -56,7 +61,7 @@ module UserController =
                         let updateLanguage = context.GetService<UpdateLanguage>()
                         let! languageChange = context.BindJsonAsync<LanguageChange>()
                         return! context
-                                |> getFromToken extractIdClaim
+                                |> getFromToken getIdFromToken
                                 |> Option.bind (fun id -> updateLanguage { languageChange with Id = id })
                                 |> resultOrStatusCode 500 next context
                     }
@@ -67,7 +72,7 @@ module UserController =
                         let updatePassword = context.GetService<UpdatePassword>()
                         let! passwordChange = context.BindJsonAsync<PasswordChange>()
                         return! context
-                                |> getFromToken extractIdClaim
+                                |> getFromToken getIdFromToken
                                 |> Option.bind (fun id -> updatePassword { passwordChange with Id = id })
                                 |> resultOrStatusCode 500 next context
                     }

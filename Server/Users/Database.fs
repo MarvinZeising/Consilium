@@ -5,6 +5,7 @@ open MongoDB.Driver
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
 open System
+open Consilium
 open Authentication
 
 let private isCorrectPassword password (user : User) : User option =

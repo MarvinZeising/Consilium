@@ -10,14 +10,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="CommonLibrary.fs" />
     <Compile Include="DomainTypes.fs" />
-    <Compile Include="Logger.fs" />
+    <Compile Include="Libraries\CommonLibrary.fs" />
+    <Compile Include="Libraries\Logger.fs" />
+    <Compile Include="Libraries\Authentication.fs" />
     <Compile Include="Validation.fs" />
+    <Compile Include="UserDatabase.fs" />
     <Compile Include="UserRepository.fs" />
-    <Compile Include="UseCases.fs" />
+    <Compile Include="UserActions.fs" />
     <Compile Include="ControllerHelpers.fs" />
-    <Compile Include="Authentication.fs" />
     <Compile Include="Projects/Models.fs" />
     <Compile Include="Users/Models.fs" />
     <Compile Include="Wiki/Models.fs" />

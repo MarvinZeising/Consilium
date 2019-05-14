@@ -4,6 +4,7 @@ open Giraffe
 open Microsoft.AspNetCore.Http
 open FSharp.Control.Tasks.V2
 open System
+open Consilium
 open Authentication
 
 module ProjectController =
