@@ -72,6 +72,10 @@ const router = new Router({
     name: 'signUp',
     component: () => import('./views/authentication/SignUp.vue')
   }, {
+    path: '/token',
+    name: 'token',
+    component: () => import('./views/Token.vue')
+  }, {
     path: '*',
     redirect: '/home'
   }],
