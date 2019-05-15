@@ -17,6 +17,9 @@ module UserActions =
     let getUser<'a> =
         getUserId >=> getUserById
 
+    let isEmailAvailable email =
+        getUserByEmail email |> bind (switch Option.isNone)
+
     let updateEmail context request =
         result {
             let! validatedRequest = EmailValidation.validateEmail request

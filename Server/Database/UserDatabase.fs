@@ -2,17 +2,26 @@ namespace Consilium
 
 module UserDatabase =
 
+    open System
+    open System.Linq.Expressions
     open MongoDB.Driver
     open UserTypes
     open Connection
 
-    let getUserById userId =
-        let filter = Builders<User>.Filter.Eq((fun x -> x.Id), userId)
-        collection.Find(filter).ToEnumerable() |> Seq.tryLast
+    let private find (filter : FilterDefinition<User>) =
+        collection.Find(filter).ToEnumerable()
 
-    let updateById userId updateBuilder =
+    let private updateById userId updateBuilder =
         let filter = Builders<User>.Filter.Eq((fun x -> x.Id), userId)
         collection.UpdateOne(filter, updateBuilder) |> ignore
+
+    let getUserById userId =
+        let filter = Builders<User>.Filter.Eq((fun x -> x.Id), userId)
+        filter |> find |> Seq.tryLast
+
+    let getUserByEmail email =
+        let filter = Builders<User>.Filter.Eq((fun x -> x.Email), email)
+        filter |> find |> Seq.tryLast
 
     let updateEmail (userId, email) =
         let updateBuilder = Builders<User>.Update.Set((fun x -> x.Email), email)

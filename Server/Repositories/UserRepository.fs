@@ -15,6 +15,12 @@ module UserRepository =
         with
         | ex -> fail [ServerException ex]
 
+    let getUserByEmail email =
+        try
+            switch getUserByEmail email
+        with
+        | ex -> fail [ServerException ex]
+
     let updateEmail<'a> =
         tryCatch updateEmail (fun ex -> [ServerException ex])
 

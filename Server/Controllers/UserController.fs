@@ -78,9 +78,10 @@ module UserController =
 
             GET >=> routef "/users/email-available/%s" (fun email ->
                 fun next context ->
-                    let emailAvailable = context.GetService<EmailAvailable>()
-                    let available = emailAvailable email
-                    json available next context)
+                    task {
+                        let available = email |> isEmailAvailable
+                        return! send available next context
+                    })
 
             POST >=> route "/authenticate" >=>
                 fun next context ->
