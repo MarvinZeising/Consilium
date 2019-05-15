@@ -5,6 +5,7 @@ module UserActions =
     open CommonLibrary
     open CommonTypes
     open UserRepository
+    open UserTypes
 
     let private result = new ResultBuilder()
 
@@ -17,29 +18,34 @@ module UserActions =
     let getUser<'a> =
         getUserId >=> getUserById
 
-    let isEmailAvailable email =
-        getUserByEmail email |> bind (switch Option.isNone)
+    let isEmailAvailable =
+        EmailValidation.validateEmail
+        >=> switch EmailValidation.canonicalizeEmail
+        >=> getUserByEmail
+        >=> switch Option.isNone
 
-    let updateEmail context request =
+    let updateEmail context (request : UpdateEmailRequest) =
         result {
-            let! validatedRequest = EmailValidation.validateEmail request
-            let! enhancedRequest = switch EmailValidation.canonicalizeEmail validatedRequest
+            let! email = request.email
+                         |> (EmailValidation.validateEmail
+                             >=> switch EmailValidation.canonicalizeEmail)
             let! userId = context |> getUserId
-            return! updateEmail (userId, enhancedRequest.email)
+            return! updateEmail (userId, email)
         }
 
-    let updateLanguage context request =
+    let updateLanguage context (request : UpdateLanguageRequest) =
         result {
-            let! validatedRequest = LanguageValidation.validateLanguage request
+            let! language = LanguageValidation.validateLanguage request.language
             let! userId = context |> getUserId
-            return! updateLanguage (userId, validatedRequest.language)
+            return! updateLanguage (userId, language)
         }
 
     let updatePassword context request =
         result {
             let! userId = context |> getUserId
             let! user = getUserById userId
-            let! validatedRequest = PasswordValidation.validatePassword (request, user)
-            let! enhancedRequest = switch PasswordValidation.hashPassword validatedRequest
-            return! updatePassword (userId, enhancedRequest.newPassword)
+            let! validated = (request, user)
+                             |> (PasswordValidation.validatePassword
+                                 >=> switch PasswordValidation.hashPassword)
+            return! updatePassword (userId, validated.newPassword)
         }

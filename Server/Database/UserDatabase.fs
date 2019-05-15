@@ -2,8 +2,6 @@ namespace Consilium
 
 module UserDatabase =
 
-    open System
-    open System.Linq.Expressions
     open MongoDB.Driver
     open UserTypes
     open Connection

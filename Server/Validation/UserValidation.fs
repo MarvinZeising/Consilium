@@ -8,32 +8,32 @@ open Validation
 
 module EmailValidation = 
 
-    let private validateRequired request =
-       if request.email = "" then fail [EmailRequired]
-       else succeed request
+    let private validateRequired email =
+       if email = "" then fail [EmailRequired]
+       else succeed email
 
-    let private validateFormat request =
-       if Regex.IsMatch(request.email, ".+@.+") then succeed request
+    let private validateFormat email =
+       if Regex.IsMatch(email, ".+@.+") then succeed email
        else fail [EmailInvalid]
 
     let validateEmail = 
         validateRequired
         &&& validateFormat
 
-    let canonicalizeEmail request =
-       { request with email = request.email.Trim().ToLower() }
+    let canonicalizeEmail (email : string) =
+       email.Trim().ToLower()
 
 module LanguageValidation =
 
 
     let availableLanguages = [|"de-DE";"en-US"|]
 
-    let private validateRequired request =
-       if request.language = "" then fail [LanguageRequired]
-       else succeed request
+    let private validateRequired language =
+       if language = "" then fail [LanguageRequired]
+       else succeed language
 
-    let private validateAvailable request =
-       if Array.contains request.language availableLanguages then succeed request
+    let private validateAvailable language =
+       if Array.contains language availableLanguages then succeed language
        else fail [LanguageNotAvailable]
 
     let validateLanguage = 
