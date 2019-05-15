@@ -23,18 +23,18 @@ module UserActions =
     let isEmailAvailable =
         let checkUserNotFoundError ex =
             if List.head ex = UserNotFound
-            then succeed true
-            else fail ex
+            then Ok true
+            else Error ex
 
         EmailValidation.validateEmail
         >=> switch EmailValidation.canonicalizeEmail
         >=> getUserByEmail
-        >> either (fun _ -> succeed false) checkUserNotFoundError
+        >> either (fun _ -> Ok false) checkUserNotFoundError
 
     let private isCorrectPassword password (user : User) =
         if Authentication.verify password user.Password
-        then succeed user
-        else fail [AuthenticationFailed]
+        then Ok user
+        else Error [AuthenticationFailed]
 
     let signIn<'a> (credentials : Credentials) =
         credentials.email
@@ -55,7 +55,7 @@ module UserActions =
 
         credentials.email
         |> (isEmailAvailable
-            >=> boolEither createUser (fail [EmailAlreadyExists]))
+            >=> boolEither createUser (Error [EmailAlreadyExists]))
 
     let updateEmail context (request : UpdateEmailRequest) =
         result {

@@ -13,19 +13,19 @@ module UserRepository =
         try
             let user = getUserById userId
             match user with
-            | Some user -> succeed user
-            | None -> fail [UserNotFound]
+            | Some user -> Ok user
+            | None -> Error [UserNotFound]
         with
-        | ex -> fail [ServerException ex]
+        | ex -> Error [ServerException ex]
 
     let getUserByEmail email =
         try
             let user = getUserByEmail email
             match user with
-            | Some user -> succeed user
-            | None -> fail [UserNotFound]
+            | Some user -> Ok user
+            | None -> Error [UserNotFound]
         with
-        | ex -> fail [ServerException ex]
+        | ex -> Error [ServerException ex]
 
     let updateEmail<'a> =
         updateEmail |> tryCatchError

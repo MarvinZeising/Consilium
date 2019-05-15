@@ -9,12 +9,12 @@ open Validation
 module EmailValidation = 
 
     let private validateRequired email =
-       if email = "" then fail [EmailRequired]
-       else succeed email
+       if email = "" then Error [EmailRequired]
+       else Ok email
 
     let private validateFormat email =
-       if Regex.IsMatch(email, ".+@.+") then succeed email
-       else fail [EmailInvalid]
+       if Regex.IsMatch(email, ".+@.+") then Ok email
+       else Error [EmailInvalid]
 
     let validateEmail = 
         validateRequired
@@ -29,12 +29,12 @@ module LanguageValidation =
     let availableLanguages = [|"de-DE";"en-US"|]
 
     let private validateRequired language =
-       if language = "" then fail [LanguageRequired]
-       else succeed language
+       if language = "" then Error [LanguageRequired]
+       else Ok language
 
     let private validateAvailable language =
-       if Array.contains language availableLanguages then succeed language
-       else fail [LanguageNotAvailable]
+       if Array.contains language availableLanguages then Ok language
+       else Error [LanguageNotAvailable]
 
     let validateLanguage = 
         validateRequired
@@ -43,12 +43,12 @@ module LanguageValidation =
 module PasswordValidation =
 
     let private validatePasswordCorrect (request, user) =
-        if Authentication.verify request.oldPassword user.Password then succeed request
-        else fail [PasswordWrong]
+        if Authentication.verify request.oldPassword user.Password then Ok request
+        else Error [PasswordWrong]
 
     let private validateLength (request, _) =
-        if request.newPassword.Length = 128 then succeed request
-        else fail [PasswordInvalid]
+        if request.newPassword.Length = 128 then Ok request
+        else Error [PasswordInvalid]
 
     let validatePassword =
         validateLength

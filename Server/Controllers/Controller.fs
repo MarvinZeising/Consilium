@@ -6,11 +6,11 @@ module Controller =
     open CommonTypes
 
     let private returnError errors =
-        mapErrorCode (List.head errors)
+        errors
+        |> List.head
+        |> mapErrorCode
         |> setStatusCode
-           >=> json (List.map string errors)
+        >=> json (List.map string errors)
 
     let send (result : Result<'a,Error list>) =
-        result
-        |> CommonLibrary.either json returnError
-
+        result |> CommonLibrary.either json returnError

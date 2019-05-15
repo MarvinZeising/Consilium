@@ -3,25 +3,21 @@ namespace Consilium
 module UserTypes =
 
     type Credentials =
-        { email: string
-          password: string }
+         { email: string
+           password: string }
 
-    type UpdateEmailRequest = { email: string }
+    type UpdateEmailRequest =
+         { email: string }
 
-    type UpdateLanguageRequest = { language: string }
+    type UpdateLanguageRequest =
+         { language: string }
 
     type UpdatePasswordRequest =
-        { oldPassword: string
-          newPassword: string }
+         { oldPassword: string
+           newPassword: string }
 
     type User =
-        {
-            Id: string
-            Email: string
-            Password: string
-            Language: string
-        }
-
-    type UserFind = string -> User option
-
-    type UserDelete = string -> unit option
+         { Id: string
+           Email: string
+           Password: string
+           Language: string }

@@ -1,8 +1,5 @@
 namespace Consilium
 
-/// ===========================================
-/// Logging functions
-/// ===========================================
 module Logger = 
 
     open CommonLibrary 
