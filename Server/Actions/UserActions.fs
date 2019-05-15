@@ -6,16 +6,16 @@ module UserActions =
     open CommonTypes
     open UserRepository
 
-    // HttpContext -> Result string ?
-    let getUserId<'a> =
+    let private result = new ResultBuilder()
+
+    let private getUserId<'a> =
         Authentication.getAuthorization
         >> Authentication.extractTokenFromAuthorization
         >> Option.bind Authentication.getIdFromToken
         >> maybeSucceed [AuthenticationFailed]
 
-    let result = new ResultBuilder()
-
-    // real logic - end of mocks
+    let getUser<'a> =
+        getUserId >=> getUserById
 
     let updateEmail context request =
         result {

@@ -15,10 +15,11 @@ module UserController =
         context.TryGetRequestHeader "Authorization"
            |> Option.bind (fun token -> token.Replace("Bearer ", "") |> extractor)
 
-    let send =
-        CommonLibrary.either json (fun errors -> mapErrorCode (List.head errors)
-                                                 |> setStatusCode
-                                                 >=> json (List.map string errors))
+    let send (result : Result<'a,Error list>) =
+        result
+        |> CommonLibrary.either json (fun errors -> mapErrorCode (List.head errors)
+                                                    |> setStatusCode
+                                                    >=> json (List.map string errors))
 
     let resultOrStatusCode code next context x =
         match x with
@@ -38,11 +39,10 @@ module UserController =
 
             GET >=> route "/user" >=> authorize >=>
                 fun next context ->
-                    let find = context.GetService<UserFind>()
-                    context
-                        |> getFromToken getEmailFromToken
-                        |> Option.bind find
-                        |> resultOrStatusCode 404 next context
+                    task {
+                        let user = getUser context
+                        return! send user next context
+                    }
 
             DELETE >=> route "/user" >=> authorize >=>
                 fun next context ->
