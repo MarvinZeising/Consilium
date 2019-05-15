@@ -1,30 +1,15 @@
 namespace Consilium
 
-open Giraffe
-open Microsoft.AspNetCore.Http
-open FSharp.Control.Tasks.V2
-open CommonTypes
-open UserTypes
-open Authentication
-open UserActions
-open Users
-
 module UserController =
 
-    let getFromToken extractor (context: HttpContext) =
-        context.TryGetRequestHeader "Authorization"
-           |> Option.bind (fun token -> token.Replace("Bearer ", "") |> extractor)
-
-    let send (result : Result<'a,Error list>) =
-        result
-        |> CommonLibrary.either json (fun errors -> mapErrorCode (List.head errors)
-                                                    |> setStatusCode
-                                                    >=> json (List.map string errors))
-
-    let resultOrStatusCode code next context x =
-        match x with
-        | Some x -> json x next context
-        | None -> setStatusCode code next context
+    open Giraffe
+    open Microsoft.AspNetCore.Http
+    open FSharp.Control.Tasks.V2
+    open UserTypes
+    open Authentication
+    open UserActions
+    open Users
+    open Controller
 
     let routes : HttpFunc -> HttpContext -> HttpFuncResult =
         choose [

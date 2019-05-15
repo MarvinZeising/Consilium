@@ -29,6 +29,7 @@
     <Compile Include="legacy\Wiki\Models.fs" />
     <Compile Include="legacy\Wiki\Controller.fs" />
     <Compile Include="legacy\Wiki\MockUpDatabase.fs" />
+    <Compile Include="Controllers\Controller.fs" />
     <Compile Include="Controllers\UserController.fs" />
     <Compile Include="Program.fs" />
     <PackageReference Include="CryptSharpOfficial" Version="2.1.0" />
