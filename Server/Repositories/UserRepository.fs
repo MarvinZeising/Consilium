@@ -6,6 +6,9 @@ module UserRepository =
     open CommonTypes
     open UserDatabase
 
+    let throwServerException ex =
+        [ServerException ex]
+
     let getUserById userId =
         try
             let user = getUserById userId
@@ -22,10 +25,13 @@ module UserRepository =
         | ex -> fail [ServerException ex]
 
     let updateEmail<'a> =
-        tryCatch updateEmail (fun ex -> [ServerException ex])
+        tryCatch updateEmail throwServerException
 
     let updateLanguage<'a> =
-        tryCatch updateLanguage (fun ex -> [ServerException ex])
+        tryCatch updateLanguage throwServerException
 
     let updatePassword<'a> =
-        tryCatch updatePassword (fun ex -> [ServerException ex])
+        tryCatch updatePassword throwServerException
+
+    let deleteUser<'a> =
+        tryCatch deleteUser throwServerException

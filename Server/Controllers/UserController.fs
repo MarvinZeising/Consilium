@@ -29,6 +29,14 @@ module UserController =
     let routes : HttpFunc -> HttpContext -> HttpFuncResult =
         choose [
 
+            POST >=> route "/authenticate" >=>
+                fun next context ->
+                    task {
+                        let signIn = context.GetService<SignIn>()
+                        let! credentials = context.BindJsonAsync<Credentials>()
+                        return! json (signIn credentials) next context
+                    }
+
             POST >=> route "/users" >=>
                 fun next context ->
                     task {
@@ -46,11 +54,8 @@ module UserController =
 
             DELETE >=> route "/user" >=> authorize >=>
                 fun next context ->
-                    let delete = context.GetService<UserDelete>()
-                    context
-                        |> getFromToken getIdFromToken
-                        |> Option.bind delete
-                        |> resultOrStatusCode 500 next context
+                    let result = deleteUser context
+                    send result next context
 
             PUT >=> route "/user/email" >=> authorize >=>
                 fun next context ->
@@ -82,13 +87,5 @@ module UserController =
                         let available = email |> isEmailAvailable
                         return! send available next context
                     })
-
-            POST >=> route "/authenticate" >=>
-                fun next context ->
-                    task {
-                        let signIn = context.GetService<SignIn>()
-                        let! credentials = context.BindJsonAsync<Credentials>()
-                        return! json (signIn credentials) next context
-                    }
 
         ]

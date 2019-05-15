@@ -49,3 +49,6 @@ module UserActions =
                                  >=> switch PasswordValidation.hashPassword)
             return! updatePassword (userId, validated.newPassword)
         }
+
+    let deleteUser<'a> =
+        getUserId >=> deleteUser
