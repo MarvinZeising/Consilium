@@ -2,10 +2,12 @@ namespace Consilium
 
 module UserActions =
 
+    open System
+    open Giraffe
     open CommonLibrary
     open CommonTypes
-    open UserRepository
     open UserTypes
+    open UserRepository
 
     let private result = new ResultBuilder()
 
@@ -39,6 +41,21 @@ module UserActions =
         |> (getUserByEmail
            >=> (isCorrectPassword credentials.password)
            >=> switch (fun user -> Authentication.generateToken user.Id user.Email))
+
+    let signUp (credentials : Credentials) =
+        let createUser =
+            let hashedPassword = Authentication.hash credentials.password
+            let user = {
+                Id = ShortGuid.fromGuid(Guid.NewGuid())
+                Email = credentials.email
+                Password = hashedPassword
+                Language = "en-US"
+            }
+            insertUser user
+
+        credentials.email
+        |> (isEmailAvailable
+            >=> boolEither createUser (fail [EmailAlreadyExists]))
 
     let updateEmail context (request : UpdateEmailRequest) =
         result {

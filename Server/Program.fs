@@ -9,8 +9,6 @@ open Microsoft.Extensions.Logging
 open Giraffe
 open Projects
 open Projects.ProjectCollection
-open Users
-open Users.UserCollection
 open Consilium
 open Wiki
 open WikiCollection
@@ -64,7 +62,6 @@ let configureServices (services : IServiceCollection) =
     services.AddCors() |> ignore
     services.AddGiraffe() |> ignore
     services.AddProjectCollection(db.GetCollection<Project>("projects")) |> ignore
-    services.AddUserCollection(db.GetCollection<User>("users")) |> ignore
     services.AddTabCollection(db.GetCollection<Tab>("wiki")) |> ignore
 
 let configureLogging (builder : ILoggingBuilder) =

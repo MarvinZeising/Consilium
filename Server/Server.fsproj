@@ -24,8 +24,6 @@
     <Compile Include="legacy\Projects\Models.fs" />
     <Compile Include="legacy\Projects\Controller.fs" />
     <Compile Include="legacy\Projects\Database.fs" />
-    <Compile Include="legacy\Users\Models.fs" />
-    <Compile Include="legacy\Users\Database.fs" />
     <Compile Include="legacy\Wiki\Models.fs" />
     <Compile Include="legacy\Wiki\Controller.fs" />
     <Compile Include="legacy\Wiki\MockUpDatabase.fs" />

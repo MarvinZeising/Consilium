@@ -33,6 +33,9 @@ module UserDatabase =
         let updateBuilder = Builders<User>.Update.Set((fun x -> x.Password), password)
         updateById userId updateBuilder
 
+    let insertUser user =
+        collection.InsertOne user
+
     let deleteUser userId =
         let update = Builders<User>.Filter.Eq((fun x -> x.Id), userId)
         collection.DeleteOne(update)

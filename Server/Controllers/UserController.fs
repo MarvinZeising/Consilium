@@ -23,8 +23,7 @@ module UserController =
             POST >=> route "/users" >=>
                 fun next context ->
                     task {
-                        let signUp = context.GetService<Users.SignUp>()
-                        let! credentials = context.BindJsonAsync<Users.Credentials>()
+                        let! credentials = context.BindJsonAsync<Credentials>()
                         return! json (signUp credentials) next context
                     }
 

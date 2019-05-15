@@ -36,5 +36,8 @@ module UserRepository =
     let updatePassword<'a> =
         tryCatch updatePassword throwServerException
 
+    let insertUser<'a> =
+        insertUser |> tryCatchError
+
     let deleteUser<'a> =
         tryCatch deleteUser throwServerException

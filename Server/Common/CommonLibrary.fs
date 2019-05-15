@@ -19,6 +19,11 @@ module CommonLibrary =
         | Ok s -> successFunc s
         | Error f -> failureFunc f
 
+    let boolEither successFunc failureFunc input =
+        if input
+        then successFunc
+        else failureFunc
+
     // convert a switch function into a two-track function
     let bind f =
         either f fail
