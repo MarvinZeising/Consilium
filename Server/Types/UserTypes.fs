@@ -2,6 +2,10 @@ namespace Consilium
 
 module UserTypes =
 
+    type Credentials =
+        { email: string
+          password: string }
+
     type UpdateEmailRequest = { email: string }
 
     type UpdateLanguageRequest = { language: string }

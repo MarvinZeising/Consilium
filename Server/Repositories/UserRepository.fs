@@ -20,7 +20,10 @@ module UserRepository =
 
     let getUserByEmail email =
         try
-            switch getUserByEmail email
+            let user = getUserByEmail email
+            match user with
+            | Some user -> succeed user
+            | None -> fail [UserNotFound]
         with
         | ex -> fail [ServerException ex]
 

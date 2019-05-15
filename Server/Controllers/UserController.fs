@@ -8,7 +8,6 @@ module UserController =
     open UserTypes
     open Authentication
     open UserActions
-    open Users
     open Controller
 
     let routes : HttpFunc -> HttpContext -> HttpFuncResult =
@@ -17,7 +16,6 @@ module UserController =
             POST >=> route "/authenticate" >=>
                 fun next context ->
                     task {
-                        let signIn = context.GetService<SignIn>()
                         let! credentials = context.BindJsonAsync<Credentials>()
                         return! json (signIn credentials) next context
                     }
@@ -25,17 +23,14 @@ module UserController =
             POST >=> route "/users" >=>
                 fun next context ->
                     task {
-                        let signUp = context.GetService<SignUp>()
-                        let! credentials = context.BindJsonAsync<Credentials>()
+                        let signUp = context.GetService<Users.SignUp>()
+                        let! credentials = context.BindJsonAsync<Users.Credentials>()
                         return! json (signUp credentials) next context
                     }
 
             GET >=> route "/user" >=> authorize >=>
                 fun next context ->
-                    task {
-                        let user = getUser context
-                        return! send user next context
-                    }
+                    send (getUser context) next context
 
             DELETE >=> route "/user" >=> authorize >=>
                 fun next context ->
