@@ -26,8 +26,7 @@ module UserActions =
             then Ok true
             else Error ex
 
-        EmailValidation.validateEmail
-        >=> switch EmailValidation.canonicalizeEmail
+        EmailValidation.validate
         >=> getUserByEmail
         >> either (fun _ -> Ok false) checkUserNotFoundError
 
@@ -59,28 +58,23 @@ module UserActions =
 
     let updateEmail context (request : UpdateEmailRequest) =
         result {
-            let! email = request.email
-                         |> (EmailValidation.validateEmail
-                             >=> switch EmailValidation.canonicalizeEmail)
+            let! email = request.email |> EmailValidation.validate
             let! userId = context |> getUserId
             return! updateEmail (userId, email)
         }
 
     let updateLanguage context (request : UpdateLanguageRequest) =
         result {
-            let! language = LanguageValidation.validateLanguage request.language
+            let! language = LanguageValidation.validate request.language
             let! userId = context |> getUserId
             return! updateLanguage (userId, language)
         }
 
     let updatePassword context request =
         result {
-            let! userId = context |> getUserId
-            let! user = getUserById userId
-            let! validated = (request, user)
-                             |> (PasswordValidation.validatePassword
-                                 >=> switch PasswordValidation.hashPassword)
-            return! updatePassword (userId, validated.newPassword)
+            let! user = context |> (getUserId >=> getUserById)
+            let! passwordHash = PasswordValidation.validate request user
+            return! updatePassword (user.Id, passwordHash)
         }
 
     let deleteUser<'a> =

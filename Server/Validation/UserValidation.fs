@@ -16,15 +16,15 @@ module EmailValidation =
        if Regex.IsMatch(email, ".+@.+") then Ok email
        else Error [EmailInvalid]
 
-    let validateEmail = 
-        validateRequired
-        &&& validateFormat
-
-    let canonicalizeEmail (email : string) =
+    let private canonicalizeEmail (email : string) =
        email.Trim().ToLower()
 
-module LanguageValidation =
+    let validate = 
+        validateRequired
+        &&& validateFormat
+        >=> switch canonicalizeEmail
 
+module LanguageValidation =
 
     let availableLanguages = [|"de-DE";"en-US"|]
 
@@ -36,23 +36,33 @@ module LanguageValidation =
        if Array.contains language availableLanguages then Ok language
        else Error [LanguageNotAvailable]
 
-    let validateLanguage = 
+    let validate = 
         validateRequired
         &&& validateAvailable
 
 module PasswordValidation =
 
-    let private validatePasswordCorrect (request, user) =
-        if Authentication.verify request.oldPassword user.Password then Ok request
+    type InputModel =
+         { oldPassword: string
+           newPassword: string
+           passwordHash: string }
+
+    let private validatePasswordCorrect model =
+        if Authentication.verify model.oldPassword model.passwordHash then Ok model
         else Error [PasswordWrong]
 
-    let private validateLength (request, _) =
-        if request.newPassword.Length = 128 then Ok request
+    let private validateLength model =
+        if model.newPassword.Length = 128 then Ok model
         else Error [PasswordInvalid]
 
-    let validatePassword =
-        validateLength
-        &&& validatePasswordCorrect
+    let private hashPassword model =
+        model.newPassword |> Authentication.hash
 
-    let hashPassword request =
-        { request with newPassword = request.newPassword |> Authentication.hash}
+    let validate = (fun (request : UpdatePasswordRequest) user ->
+        let model = { oldPassword=request.oldPassword
+                      newPassword=request.newPassword
+                      passwordHash=user.Password}
+
+        model |> (validatePasswordCorrect
+                  &&& validateLength
+                  >=> switch hashPassword))
