@@ -65,29 +65,6 @@
         </v-card>
       </v-flex>
 
-      <!--//* Vessel Heading -->
-      <v-flex xs12>
-        <h2 class="headline mb-3">Vessels</h2>
-      </v-flex>
-
-      <!--//* Vessel Settings -->
-      <v-flex
-        xs12 sm8 md6 lg4
-        class="mb-5 pa-2"
-      >
-        <v-card flat>
-          <v-card-text>
-            <p class="caption mb-0 grey--text">
-              Access to the Vessel module
-            </p>
-            <p class="subheading mb-0">
-              No
-            </p>
-            <p class="caption grey--text mt-2 mb-0">Access to this module is manually given by the website administrator.</p>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-
       <!--//* Critical Heading -->
       <v-flex xs12>
         <h2 class="headline mb-3 error--text">Critical area</h2>
