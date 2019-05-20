@@ -69,10 +69,16 @@ export default class DeleteProjectDialog extends Vue {
   private projectName: string = ''
   private enteredName: string = ''
 
-  private created() {
+  // TODO: add dynamic rules like it's done in DeleteAccountDialog
+
+  private async created() {
+    await this.projectModule.fetchProjects()
+
     const projectId = this.$route.params.projectId
     const project = this.projectModule.myProjects.filter((x: Project) => x.id === projectId)[0]
-    this.projectName = project.name
+    if (project) {
+      this.projectName = project.name
+    }
   }
 
   private async deleteProject() {

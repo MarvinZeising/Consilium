@@ -106,11 +106,15 @@ export default class Settings extends Vue {
   private name: string = ''
   private email: string = ''
 
-  private created() {
+  private async created() {
+    await this.projectModule.fetchProjects()
+
     const projectId = this.$route.params.projectId
     const project = this.projectModule.myProjects.filter((x: Project) => x.id === projectId)[0]
-    this.name = project.name
-    this.email = project.email
+    if (project) {
+      this.name = project.name
+      this.email = project.email
+    }
   }
 }
 </script>
