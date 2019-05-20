@@ -13,23 +13,29 @@
     <Compile Include="Common\CommonTypes.fs" />
     <Compile Include="Common\CommonLibrary.fs" />
     <Compile Include="Types\UserTypes.fs" />
+    <Compile Include="Types\ProjectTypes.fs" />
     <Compile Include="Libraries\Logger.fs" />
     <Compile Include="Libraries\Authentication.fs" />
     <Compile Include="Validation\Validation.fs" />
+    <Compile Include="Validation\CommonValidation.fs" />
     <Compile Include="Validation\UserValidation.fs" />
+    <Compile Include="Validation\ProjectValidation.fs" />
     <Compile Include="Database\Connection.fs" />
     <Compile Include="Database\UserDatabase.fs" />
+    <Compile Include="Database\ProjectDatabase.fs" />
     <Compile Include="Repositories\UserRepository.fs" />
+    <Compile Include="Repositories\ProjectRepository.fs" />
     <Compile Include="Actions\Actions.fs" />
     <Compile Include="Actions\UserActions.fs" />
+    <Compile Include="Actions\ProjectActions.fs" />
     <Compile Include="legacy\Projects\Models.fs" />
-    <Compile Include="legacy\Projects\Controller.fs" />
     <Compile Include="legacy\Projects\Database.fs" />
     <Compile Include="legacy\Wiki\Models.fs" />
     <Compile Include="legacy\Wiki\Controller.fs" />
     <Compile Include="legacy\Wiki\MockUpDatabase.fs" />
     <Compile Include="Controllers\Controller.fs" />
     <Compile Include="Controllers\UserController.fs" />
+    <Compile Include="Controllers\ProjectController.fs" />
     <Compile Include="Program.fs" />
     <PackageReference Include="CryptSharpOfficial" Version="2.1.0" />
     <PackageReference Include="Giraffe" Version="3.6.0" />

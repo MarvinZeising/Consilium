@@ -1,10 +1,12 @@
-namespace Projects
+namespace Consilium
 
 open Giraffe
 open Microsoft.AspNetCore.Http
 open FSharp.Control.Tasks.V2
 open System
-open Consilium
+open Projects
+open ProjectTypes
+open ProjectActions
 open Authentication
 
 module ProjectController =
@@ -15,7 +17,7 @@ module ProjectController =
                 fun next context ->
                     task {
                         let save = context.GetService<ProjectSave>()
-                        let! project = context.BindJsonAsync<Project>()
+                        let! project = context.BindJsonAsync<Projects.Project>()
                         let project = { project with Id = ShortGuid.fromGuid(Guid.NewGuid()) }
                         return! json (save project) next context
                     }
@@ -35,10 +37,9 @@ module ProjectController =
             PUT >=> routef "/projects/%s" (fun id ->
                 authorize >=> fun next context ->
                     task {
-                        let save = context.GetService<ProjectSave>()
-                        let! project = context.BindJsonAsync<Project>()
-                        let project = { project with Id = id }
-                        return! json (save project) next context
+                        let! input = context.BindJsonAsync<UpdateGeneralRequest>()
+                        let request = { input with Id = id }
+                        return! json (updateGeneral request) next context
                     })
 
             DELETE >=> routef "/projects/%s" (fun id ->

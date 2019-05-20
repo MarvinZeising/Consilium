@@ -4,8 +4,10 @@ module Connection =
 
     open MongoDB.Driver
     open UserTypes
+    open ProjectTypes
 
     let private mongo = MongoClient ("mongodb://localhost:27017/")
     let private db = mongo.GetDatabase "ConsiliumDb"
 
-    let collection = db.GetCollection<User>("users")
+    let userCollection = db.GetCollection<User>("users")
+    let projectCollection = db.GetCollection<Project>("projects")

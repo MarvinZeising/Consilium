@@ -5,7 +5,7 @@ namespace Consilium
 /// ===========================================
 module CommonLibrary =
 
-    // appy either a success function or failure function
+    // apply either a success function or failure function
     let either successFunc failureFunc twoTrackInput =
         match twoTrackInput with
         | Ok s -> successFunc s
@@ -64,11 +64,11 @@ module CommonLibrary =
         | Some x -> Ok x
         | None -> Error f
 
-    let map2 f1 addError x1 x2 =
+    let map2 addSuccess addError x1 x2 =
         match x1, x2 with
-        | Ok s1, Ok s2 -> f1 s1 s2
-        | Error f1, Ok _  -> Error f1
-        | Ok _, Error f2 -> Error f2
+        | Ok s1,    Ok s2 ->    Ok (addSuccess s1 s2)
+        | Error f1, Ok _ ->     Error f1
+        | Ok _,     Error f2 -> Error f2
         | Error f1, Error f2 -> Error (addError f1 f2)
 
     type ResultBuilder() =

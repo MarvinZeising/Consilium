@@ -6,6 +6,8 @@ module UserDatabase =
     open UserTypes
     open Connection
 
+    let collection = userCollection
+
     let private find (filter : FilterDefinition<User>) =
         collection.Find(filter).ToEnumerable()
 
