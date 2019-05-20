@@ -1,3 +1,5 @@
+open Consilium
+
 open System
 open System.IO
 open MongoDB.Driver
@@ -9,7 +11,6 @@ open Microsoft.Extensions.Logging
 open Giraffe
 open Projects
 open Projects.ProjectCollection
-open Consilium
 open Wiki
 open WikiCollection
 open Microsoft.AspNetCore.Authentication.JwtBearer

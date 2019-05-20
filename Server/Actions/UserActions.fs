@@ -8,8 +8,7 @@ module UserActions =
     open CommonTypes
     open UserTypes
     open UserRepository
-
-    let private result = new ResultBuilder()
+    open Actions
 
     let private getUserId<'a> =
         Authentication.getAuthorization
