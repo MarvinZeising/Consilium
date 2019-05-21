@@ -29,9 +29,10 @@ module ProjectDatabase =
                 .Set((fun x -> x.Email), request.Email)
         updateById request.Id updateBuilder
 
-    //let insertProject project =
-    //    collection.InsertOne project
+    let insertProject project =
+        collection.InsertOne project
+        project
 
-    //let deleteProject projectId =
-    //    let update = Builders<Project>.Filter.Eq((fun x -> x.Id), projectId)
-    //    collection.DeleteOne(update)
+    let deleteProject projectId =
+        let update = Builders<Project>.Filter.Eq((fun x -> x.Id), projectId)
+        collection.DeleteOne(update) |> ignore

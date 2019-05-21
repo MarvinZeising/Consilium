@@ -7,6 +7,10 @@ module ProjectTypes =
            Name: string
            Email: string }
 
+    type CreateProjectRequest =
+         { Name: string
+           Email: string }
+
     type Project =
          { Id: string
            Name: string

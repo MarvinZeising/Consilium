@@ -5,8 +5,6 @@ module ProjectController =
     open Giraffe
     open Microsoft.AspNetCore.Http
     open FSharp.Control.Tasks.V2
-    open System
-    open Projects
     open ProjectTypes
     open ProjectActions
     open Authentication
@@ -18,10 +16,8 @@ module ProjectController =
                 >=> authorize
                 >=> fun next context ->
                     task {
-                        let save = context.GetService<ProjectSave>()
-                        let! project = context.BindJsonAsync<Projects.Project>()
-                        let project = { project with Id = ShortGuid.fromGuid(Guid.NewGuid()) }
-                        return! json (save project) next context
+                        let! project = context.BindJsonAsync<CreateProjectRequest>()
+                        return! send (createProject project) next context
                     }
 
             GET >=> route "/projects"
@@ -30,7 +26,7 @@ module ProjectController =
 
             GET >=> routef "/projects/%s" (fun projectId ->
                 authorize
-                >=> json (findProjectById projectId))
+                >=> send (findProjectById projectId))
 
             PUT >=> routef "/projects/%s" (fun projectId ->
                 authorize
@@ -43,7 +39,5 @@ module ProjectController =
 
             DELETE >=> routef "/projects/%s" (fun id ->
                 authorize
-                >=> fun next context ->
-                    let delete = context.GetService<ProjectDelete>()
-                    json (delete id) next context)
+                >=> send (deleteProject id))
         ]

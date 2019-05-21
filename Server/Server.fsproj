@@ -28,8 +28,6 @@
     <Compile Include="Actions\Actions.fs" />
     <Compile Include="Actions\UserActions.fs" />
     <Compile Include="Actions\ProjectActions.fs" />
-    <Compile Include="legacy\Projects\Models.fs" />
-    <Compile Include="legacy\Projects\Database.fs" />
     <Compile Include="legacy\Wiki\Models.fs" />
     <Compile Include="legacy\Wiki\Controller.fs" />
     <Compile Include="legacy\Wiki\MockUpDatabase.fs" />

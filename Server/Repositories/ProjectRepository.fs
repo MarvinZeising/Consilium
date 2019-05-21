@@ -10,7 +10,7 @@ module ProjectRepository =
         tryCatch f (fun ex -> [ServerException ex])
 
     let getAllProjects<'a> =
-        tryCatchError getAllProjects
+        getAllProjects |> tryCatchError
 
     let getProjectById projectId =
         try
@@ -24,8 +24,8 @@ module ProjectRepository =
     let updateGeneral<'a> =
         updateGeneral |> tryCatchError
 
-    //let insertProject<'a> =
-    //    insertProject |> tryCatchError
+    let insertProject<'a> =
+        insertProject |> tryCatchError
 
-    //let deleteProject<'a> =
-    //    deleteProject |> tryCatchError
+    let deleteProject<'a> =
+        deleteProject |> tryCatchError

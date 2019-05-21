@@ -9,8 +9,6 @@ open Microsoft.AspNetCore.Cors.Infrastructure
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Logging
 open Giraffe
-open Projects
-open Projects.ProjectCollection
 open Wiki
 open WikiCollection
 open Microsoft.AspNetCore.Authentication.JwtBearer
@@ -62,7 +60,6 @@ let configureServices (services : IServiceCollection) =
         ) |> ignore
     services.AddCors() |> ignore
     services.AddGiraffe() |> ignore
-    services.AddProjectCollection(db.GetCollection<Project>("projects")) |> ignore
     services.AddTabCollection(db.GetCollection<Tab>("wiki")) |> ignore
 
 let configureLogging (builder : ILoggingBuilder) =
