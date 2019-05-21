@@ -1,11 +1,12 @@
 namespace Consilium
 
-open System
-
 module CommonTypes =
+
+    open System
 
     type Error =
          | UserNotFound
+         | ProjectNotFound
          | NameRequired
          | NameLength
          | EmailAlreadyExists
@@ -21,6 +22,7 @@ module CommonTypes =
     let mapErrorCode error =
         match error with
         | UserNotFound -> 404
+        | ProjectNotFound -> 404
         | NameRequired -> 400
         | NameLength -> 400
         | EmailAlreadyExists -> 400

@@ -9,23 +9,17 @@ module ProjectRepository =
     let tryCatchError f =
         tryCatch f (fun ex -> [ServerException ex])
 
-    //let getProjectById projectId =
-    //    try
-    //        let project = getProjectById projectId
-    //        match project with
-    //        | Some project -> Ok project
-    //        | None -> Error [ProjectNotFound]
-    //    with
-    //    | ex -> Error [ServerException ex]
+    let getAllProjects<'a> =
+        tryCatchError getAllProjects
 
-    //let getProjectByEmail email =
-    //    try
-    //        let project = getProjectByEmail email
-    //        match project with
-    //        | Some project -> Ok project
-    //        | None -> Error [ProjectNotFound]
-    //    with
-    //    | ex -> Error [ServerException ex]
+    let getProjectById projectId =
+        try
+            let project = getProjectById projectId
+            match project with
+            | Some project -> Ok project
+            | None -> Error [ProjectNotFound]
+        with
+        | ex -> Error [ServerException ex]
 
     let updateGeneral<'a> =
         updateGeneral |> tryCatchError

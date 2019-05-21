@@ -15,13 +15,12 @@ module ProjectDatabase =
         let filter = Builders<Project>.Filter.Eq((fun x -> x.Id), projectId)
         collection.UpdateOne(filter, updateBuilder) |> ignore
 
-    //let getProjectById projectId =
-    //    let filter = Builders<Project>.Filter.Eq((fun x -> x.Id), projectId)
-    //    filter |> find |> Seq.tryLast
+    let getAllProjects _ =
+        Builders.Filter.Empty |> find |> Seq.toArray
 
-    //let getProjectByEmail email =
-    //    let filter = Builders<Project>.Filter.Eq((fun x -> x.Email), email)
-    //    filter |> find |> Seq.tryLast
+    let getProjectById projectId =
+        let filter = Builders<Project>.Filter.Eq((fun x -> x.Id), projectId)
+        filter |> find |> Seq.tryLast
 
     let updateGeneral (request: UpdateGeneralRequest) =
         let updateBuilder =
