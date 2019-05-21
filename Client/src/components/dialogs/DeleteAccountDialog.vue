@@ -10,11 +10,11 @@
         </v-btn>
       </template>
       <v-card>
-        <v-card-title>
-          <span class="headline">Delete Account</span>
-        </v-card-title>
-        <v-card-text>
-          <v-form v-model="valid">
+        <v-form v-model="valid">
+          <v-card-title>
+            <span class="headline">Delete Account</span>
+          </v-card-title>
+          <v-card-text>
             <p class="subheading">
               This will delete your Account and all the Persons linked to that Account. You won't be able to sign in to the Account again after this.
             </p>
@@ -31,26 +31,27 @@
             <p class="subheading text-uppercase error--text">
               !!! This cannot be undone - everything will be gone !!!
             </p>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            flat
-            color="black"
-            @click="deleteAccountDialog = false"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            :disabled="!valid"
-            flat
-            color="error"
-            @click="deleteAccount"
-          >
-            Delete
-          </v-btn>
-        </v-card-actions>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              flat
+              color="black"
+              @click="deleteAccountDialog = false"
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              :disabled="!valid"
+              type="submit"
+              flat
+              color="error"
+              @click="deleteAccount"
+            >
+              Delete
+            </v-btn>
+          </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
   </v-layout>
@@ -90,14 +91,10 @@ export default class DeleteAccountDialog extends Vue {
   }
 
   private async deleteAccount() {
-    if (this.accountEmail === this.email) {
-      await this.userModule.deleteAccount()
+    await this.userModule.deleteAccount()
 
-      this.deleteAccountDialog = false
-      this.$router.push({ name: 'home' })
-    } else {
-      alert('Wrong Email Address!')
-    }
+    this.deleteAccountDialog = false
+    this.$router.push({ name: 'home' })
   }
 
 }
