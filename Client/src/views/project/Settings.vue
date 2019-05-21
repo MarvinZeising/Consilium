@@ -96,6 +96,7 @@ import Component from 'vue-class-component'
 import ProjectModule from '@/store/modules/projects'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
+import { Watch } from 'vue-property-decorator'
 
 @Component({
   components: { DeleteProjectDialog }
@@ -106,10 +107,20 @@ export default class Settings extends Vue {
   private name: string = ''
   private email: string = ''
 
-  private async created() {
-    await this.projectModule.fetchProjects()
+  @Watch('$route')
+  private async onRouteChanged(val: string, oldVal: string) {
+    await this.loadProject()
+  }
 
+  private async created() {
+    await this.loadProject()
+  }
+
+  private async loadProject() {
     const projectId = this.$route.params.projectId
+
+    await this.projectModule.fetchProject(projectId)
+
     const project = this.projectModule.myProjects.filter((x: Project) => x.id === projectId)[0]
     if (project) {
       this.name = project.name
