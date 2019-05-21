@@ -7,7 +7,35 @@
         <img src="https://randomuser.me/api/portraits/men/85.jpg">
       </v-list-tile-avatar>
       <v-list-tile-content>
-        <v-list-tile-title>Marvin Zeising</v-list-tile-title>
+
+
+          <v-menu
+            transition="slide-y-transition"
+            bottom
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn
+                outline
+                class="grey text--black"
+                v-on="on"
+              >
+                Marvin Zeising
+                <v-icon right>arrow_drop_down</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-tile
+                v-for="(person, i) in myPersons"
+                :key="i"
+                @click=""
+              >
+                <v-list-tile-title>
+                  <v-icon>person</v-icon>
+                  {{ person.firstname }} {{ person.lastname }}
+                </v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
       </v-list-tile-content>
     </v-list-tile>
 
@@ -112,18 +140,24 @@
 import Vue from 'vue'
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
-import { Project } from '@/models/definitions'
+import { Person, Project } from '@/models/definitions'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '@/store/modules/projects'
 import UserModule from '@/store/modules/users'
+import PersonModule from '@/store/modules/persons';
 import Component from 'vue-class-component'
 
 @Component
 export default class NavbarSignedIn extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private userModule: UserModule = getModule(UserModule, this.$store)
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
 
   private drawer: boolean = false
+
+  private get myPersons(): Person[] {
+    return this.personModule.myPersons
+  }
 
   private profileActions: any[] = [
     ['Personal', 'account_circle', 'configureProjects'],
@@ -158,5 +192,10 @@ export default class NavbarSignedIn extends Vue {
       return project
     })
   }
+
+  private async created() {
+    await this.personModule.fetchPersons()
+  }
+
 }
 </script>
