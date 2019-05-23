@@ -18,10 +18,32 @@ export default class PersonModule extends VuexModule {
         id: 'asdf',
         firstname: 'Marvin',
         lastname: 'Zeising',
-        photoUrl: ''
+        photoUrl: '',
       }]
     }
     return { persons: response.data }
+  }
+
+  @Action({ commit: 'insertPerson' })
+  public async createPerson(person: { firstname: string, lastname: string }): Promise<Person> {
+    // const response = await axios.post('/persons', {
+    //   firstname: person.firstname,
+    //   lastname: person.lastname,
+    // })
+    const response = {
+      data: new Person(
+        'k987fhvianfdkahfsgpuh',
+        person.firstname,
+        person.lastname,
+        '',
+      )
+    }
+    return response.data
+  }
+
+  @Mutation
+  protected insertPerson(person: Person) {
+    this.persons.push(person)
   }
 
 }

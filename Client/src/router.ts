@@ -48,6 +48,10 @@ const router = new Router({
     name: 'account',
     component: () => import('./views/account/Account.vue')
   }, {
+    path: '/account/create-person',
+    name: 'createPerson',
+    component: () => import('./views/account/CreatePerson.vue')
+  }, {
     path: '/account/update-password',
     name: 'updateAccountPassword',
     component: () => import('./views/account/UpdateAccountPassword.vue')

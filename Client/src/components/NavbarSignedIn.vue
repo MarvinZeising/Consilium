@@ -8,7 +8,6 @@
       </v-list-tile-avatar>
       <v-list-tile-content>
 
-
           <v-menu
             transition="slide-y-transition"
             bottom
@@ -30,9 +29,14 @@
                 @click=""
               >
                 <v-list-tile-title>
-                  <v-icon>person</v-icon>
-                  {{ person.firstname }} {{ person.lastname }}
+                  <v-icon left>person</v-icon>
+                  <span>{{person.firstname}} {{person.lastname}}</span>
                 </v-list-tile-title>
+              </v-list-tile>
+
+              <v-list-tile :to="{ name: 'createPerson' }">
+                <v-icon left>person_add</v-icon>
+                Create Person
               </v-list-tile>
             </v-list>
           </v-menu>
