@@ -4,21 +4,18 @@ import { Person } from '@/models/definitions'
 
 @Module({ name: 'PersonModule' })
 export default class PersonModule extends VuexModule {
+  public activePersonId: string | null = 'asdf'
   public persons: Person[] = []
 
   public get myPersons(): Person[] {
     return this.persons
   }
 
-  public get getActivePerson(): Person | null {
-    const persons = this.persons.filter((x) => x.isActive)
-    if (persons.length > 0) {
-      return persons[0]
-    }
-    return null
-  }
+  public get getActivePerson(): Person {
+    return this.persons.filter((x) => x.id === this.activePersonId)[0]
+ }
 
-  @MutationAction({ mutate: ['persons'] })
+  @Action({ commit: 'setPersons' })
   public async fetchPersons() {
     // const response = await axios.get('/persons')
     const response = {
@@ -26,24 +23,30 @@ export default class PersonModule extends VuexModule {
         id: 'asdf',
         firstname: 'Marvin',
         lastname: 'Zeising',
-        photoUrl: '',
+        photoUrl: 'https://randomuser.me/api/portraits/men/85.jpg',
       }, {
         id: 'asdf2',
         firstname: 'Boas',
         lastname: 'Lehrke',
-        photoUrl: '',
+        photoUrl: 'https://randomuser.me/api/portraits/men/43.jpg',
       }]
     }
     const persons: Person[] = response.data.map((data) => {
-      return new Person(
+      const person = new Person(
         data.id,
         data.firstname,
         data.lastname,
         data.photoUrl,
       )
+      if (person.id === this.activePersonId) {
+        person.isActive = true
+      }
+      return person
     })
-    persons[0].isActive = true
-    return { persons }
+    if (!this.activePersonId && persons.length > 0) {
+      this.context.dispatch('activatePerson', persons[0].id)
+    }
+    return persons
   }
 
   @Action({ commit: 'insertPerson' })
@@ -73,20 +76,18 @@ export default class PersonModule extends VuexModule {
   }
 
   @Mutation
+  protected setPersons(persons: Person[]) {
+    this.persons = persons
+  }
+
+  @Mutation
   protected insertPerson(person: Person) {
     this.persons.push(person)
   }
 
   @Mutation
   protected setIsActive(personId: string) {
-    this.persons = this.persons.map((x: Person) => {
-      if (x.id === personId) {
-        x.isActive = true
-      } else if (x.isActive === true) {
-        x.isActive = false
-      }
-      return x
-    })
+    this.activePersonId = personId
   }
 
 }

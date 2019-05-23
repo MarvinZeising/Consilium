@@ -172,7 +172,7 @@ export default class NavbarSignedIn extends Vue {
   }
 
   private profileActions: any[] = [
-    ['Personal', 'account_circle', 'configureProjects'],
+    ['Personal', 'account_circle', 'personal'],
     ['Spiritual', 'assignment_turned_in', 'configureProjects'],
     ['Availability', 'event_available', 'configureProjects'],
     ['Account', 'lock', 'configureProjects'],

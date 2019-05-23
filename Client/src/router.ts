@@ -36,6 +36,10 @@ const router = new Router({
     name: 'updateGeneral',
     component: () => import('./views/project/UpdateGeneral.vue')
   }, {
+    path: '/profile/personal',
+    name: 'personal',
+    component: () => import('./views/profile/Personal.vue')
+  }, {
     path: '/profile/configure-projects',
     name: 'configureProjects',
     component: () => import('./views/profile/ConfigureProjects.vue')
