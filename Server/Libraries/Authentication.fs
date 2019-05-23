@@ -23,7 +23,7 @@ module Authentication =
             Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         |]
 
-        let expires = DateTime.UtcNow.AddHours(1.0) |> Nullable
+        let expires = DateTime.UtcNow.AddDays(7.0) |> Nullable
         let notBefore = DateTime.UtcNow |> Nullable
         let securityKey = SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
         let signingCredentials = SigningCredentials(key = securityKey, algorithm = SecurityAlgorithms.HmacSha256)
