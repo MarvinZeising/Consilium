@@ -10,6 +10,14 @@ export default class PersonModule extends VuexModule {
     return this.persons
   }
 
+  public get getActivePerson(): Person | null {
+    const persons = this.persons.filter((x) => x.isActive)
+    if (persons.length > 0) {
+      return persons[0]
+    }
+    return null
+  }
+
   @MutationAction({ mutate: ['persons'] })
   public async fetchPersons() {
     // const response = await axios.get('/persons')
@@ -19,9 +27,23 @@ export default class PersonModule extends VuexModule {
         firstname: 'Marvin',
         lastname: 'Zeising',
         photoUrl: '',
+      }, {
+        id: 'asdf2',
+        firstname: 'Boas',
+        lastname: 'Lehrke',
+        photoUrl: '',
       }]
     }
-    return { persons: response.data }
+    const persons: Person[] = response.data.map((data) => {
+      return new Person(
+        data.id,
+        data.firstname,
+        data.lastname,
+        data.photoUrl,
+      )
+    })
+    persons[0].isActive = true
+    return { persons }
   }
 
   @Action({ commit: 'insertPerson' })
@@ -41,9 +63,30 @@ export default class PersonModule extends VuexModule {
     return response.data
   }
 
+  @Action({ commit: 'setIsActive' })
+  public async activatePerson(personId: string) {
+    // await axios.put(`/projects/${project.id}`, {
+    //   name: project.name,
+    //   email: project.email
+    // })
+    return personId
+  }
+
   @Mutation
   protected insertPerson(person: Person) {
     this.persons.push(person)
+  }
+
+  @Mutation
+  protected setIsActive(personId: string) {
+    this.persons = this.persons.map((x: Person) => {
+      if (x.id === personId) {
+        x.isActive = true
+      } else if (x.isActive === true) {
+        x.isActive = false
+      }
+      return x
+    })
   }
 
 }

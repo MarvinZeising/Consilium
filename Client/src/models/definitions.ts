@@ -17,12 +17,14 @@ class Person {
   public firstname: string
   public lastname: string
   public photoUrl: string
+  public isActive: boolean
 
   constructor(id: string, firstname: string, lastname: string, photoUrl: string) {
     this.id = id
     this.firstname = firstname
     this.lastname = lastname
     this.photoUrl = photoUrl
+    this.isActive = false
   }
 
   public fullName() {

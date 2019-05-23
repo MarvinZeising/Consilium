@@ -18,7 +18,7 @@
                 class="grey text--black"
                 v-on="on"
               >
-                Marvin Zeising
+                {{ getActivePerson }}
                 <v-icon right>arrow_drop_down</v-icon>
               </v-btn>
             </template>
@@ -26,7 +26,7 @@
               <v-list-tile
                 v-for="(person, i) in myPersons"
                 :key="i"
-                @click=""
+                @click="activatePerson(person.id)"
               >
                 <v-list-tile-title>
                   <v-icon left>person</v-icon>
@@ -153,14 +153,22 @@ import Component from 'vue-class-component'
 
 @Component
 export default class NavbarSignedIn extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private drawer: boolean = false
 
   private get myPersons(): Person[] {
     return this.personModule.myPersons
+  }
+
+  private get getActivePerson() {
+    const activePerson: Person | null = this.personModule.getActivePerson
+    if (activePerson) {
+      return activePerson.fullName()
+    }
+    return ''
   }
 
   private profileActions: any[] = [
@@ -199,6 +207,10 @@ export default class NavbarSignedIn extends Vue {
 
   private async created() {
     await this.personModule.fetchPersons()
+  }
+
+  private async activatePerson(personId: string) {
+    await this.personModule.activatePerson(personId)
   }
 
 }
