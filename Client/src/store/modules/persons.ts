@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
+import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import { Person } from '@/models/definitions'
 
 @Module({ name: 'PersonModule' })
@@ -12,25 +11,36 @@ export default class PersonModule extends VuexModule {
   }
 
   public get getActivePerson(): Person {
-    return this.persons.filter((x) => x.id === this.activePersonId)[0]
+    const persons = this.persons.filter((x) => x.id === this.activePersonId)
+    if (persons.length > 0) {
+      return persons[0]
+    }
+    return new Person('tempGuid', 'Loading...', 'Loading...', '')
  }
 
   @Action({ commit: 'setPersons' })
   public async fetchPersons() {
     // const response = await axios.get('/persons')
+    const currentlyActivePerson: Person | undefined = this.persons.find((x) => x.id === this.activePersonId)
+
+    // * fake database
     const response = {
       data: [{
         id: 'asdf',
         firstname: 'Marvin',
         lastname: 'Zeising',
-        photoUrl: 'https://randomuser.me/api/portraits/men/85.jpg',
+        photoUrl: 'https://randomuser.me/api/portraits/men/21.jpg',
       }, {
         id: 'asdf2',
-        firstname: 'Boas',
-        lastname: 'Lehrke',
-        photoUrl: 'https://randomuser.me/api/portraits/men/43.jpg',
+        firstname: 'Timon',
+        lastname: 'Loeffen',
+        photoUrl: 'https://randomuser.me/api/portraits/men/0.jpg',
       }]
     }
+    if (this.persons.length > 0) {
+      response.data = this.persons
+    }
+
     const persons: Person[] = response.data.map((data) => {
       const person = new Person(
         data.id,
@@ -43,14 +53,18 @@ export default class PersonModule extends VuexModule {
       }
       return person
     })
-    if (!this.activePersonId && persons.length > 0) {
-      this.context.dispatch('activatePerson', persons[0].id)
+
+    this.context.commit('setPersons', persons)
+
+    if (currentlyActivePerson && persons.includes(currentlyActivePerson)) {
+      this.context.commit('activatePerson', currentlyActivePerson.id)
+    } else {
+      this.context.commit('activatePerson', persons[0].id)
     }
-    return persons
   }
 
-  @Action({ commit: 'insertPerson' })
-  public async createPerson(person: { firstname: string, lastname: string }): Promise<Person> {
+  @Action
+  public async createPerson(person: { firstname: string, lastname: string }) {
     // const response = await axios.post('/persons', {
     //   firstname: person.firstname,
     //   lastname: person.lastname,
@@ -60,19 +74,16 @@ export default class PersonModule extends VuexModule {
         'k987fhvianfdkahfsgpuh',
         person.firstname,
         person.lastname,
-        '',
+        'https://randomuser.me/api/portraits/men/30.jpg',
       )
     }
-    return response.data
+    await this.context.commit('insertPerson', response.data)
+    await this.context.commit('activatePerson', response.data.id)
   }
 
-  @Action({ commit: 'setIsActive' })
-  public async activatePerson(personId: string) {
-    // await axios.put(`/projects/${project.id}`, {
-    //   name: project.name,
-    //   email: project.email
-    // })
-    return personId
+  @Mutation
+  public activatePerson(personId: string) {
+    this.activePersonId = personId
   }
 
   @Mutation
@@ -83,11 +94,6 @@ export default class PersonModule extends VuexModule {
   @Mutation
   protected insertPerson(person: Person) {
     this.persons.push(person)
-  }
-
-  @Mutation
-  protected setIsActive(personId: string) {
-    this.activePersonId = personId
   }
 
 }

@@ -149,13 +149,13 @@ export default class CreatePerson extends Vue {
     const form: any = this.$refs.form
 
     if (form.validate()) {
-      const newPerson = await this.personModule.createPerson({
+      await this.personModule.createPerson({
         firstname: this.firstname,
         lastname: this.lastname
       })
 
       // TODO: change to person overview route (or first steps to configure the person)
-      this.$router.push({ name: 'home' })
+      this.$router.push({ name: 'personal' })
     }
   }
 

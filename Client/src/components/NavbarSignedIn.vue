@@ -4,42 +4,48 @@
     <!--//* Avatar -->
     <v-list-tile avatar>
       <v-list-tile-avatar>
-        <img src="https://randomuser.me/api/portraits/men/85.jpg">
+        <img
+          v-if="getActivePerson.photoUrl"
+          :src="getActivePerson.photoUrl"
+        />
+        <img
+          v-if="!getActivePerson.photoUrl"
+          src="../assets/person-default-image.jpg"
+        />
       </v-list-tile-avatar>
       <v-list-tile-content>
+        <v-menu
+          transition="slide-y-transition"
+          bottom
+        >
+          <template v-slot:activator="{ on }">
+            <v-btn
+              outline
+              class="grey text--black"
+              v-on="on"
+            >
+              {{ getActivePerson.fullName() }}
+              <v-icon right>arrow_drop_down</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-tile
+              v-for="(person, i) in persons"
+              :key="i"
+              @click="activatePerson(person.id)"
+            >
+              <v-list-tile-title>
+                <v-icon left>person</v-icon>
+                <span>{{person.fullName()}}</span>
+              </v-list-tile-title>
+            </v-list-tile>
 
-          <v-menu
-            transition="slide-y-transition"
-            bottom
-          >
-            <template v-slot:activator="{ on }">
-              <v-btn
-                outline
-                class="grey text--black"
-                v-on="on"
-              >
-                {{ getActivePerson }}
-                <v-icon right>arrow_drop_down</v-icon>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-tile
-                v-for="(person, i) in myPersons"
-                :key="i"
-                @click="activatePerson(person.id)"
-              >
-                <v-list-tile-title>
-                  <v-icon left>person</v-icon>
-                  <span>{{person.firstname}} {{person.lastname}}</span>
-                </v-list-tile-title>
-              </v-list-tile>
-
-              <v-list-tile :to="{ name: 'createPerson' }">
-                <v-icon left>person_add</v-icon>
-                Create Person
-              </v-list-tile>
-            </v-list>
-          </v-menu>
+            <v-list-tile :to="{ name: 'createPerson' }">
+              <v-icon left>person_add</v-icon>
+              Create Person
+            </v-list-tile>
+          </v-list>
+        </v-menu>
       </v-list-tile-content>
     </v-list-tile>
 
@@ -159,16 +165,12 @@ export default class NavbarSignedIn extends Vue {
 
   private drawer: boolean = false
 
-  private get myPersons(): Person[] {
+  private get persons(): any[] {
     return this.personModule.myPersons
   }
 
-  private get getActivePerson() {
-    const activePerson: Person | null = this.personModule.getActivePerson
-    if (activePerson) {
-      return activePerson.fullName()
-    }
-    return ''
+  private get getActivePerson(): Person {
+    return this.personModule.getActivePerson
   }
 
   private profileActions: any[] = [

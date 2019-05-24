@@ -48,7 +48,16 @@
       >
         <v-card flat>
           <v-card-text>
-            <img :src="photoUrl"/>
+            <img
+              v-if="photoUrl"
+              :src="photoUrl"
+              style="max-width:300px;"
+            />
+            <img
+              v-if="!photoUrl"
+              src="../../assets/person-default-image.jpg"
+              style="max-width:200px;"
+            />
           </v-card-text>
 
           <v-card-actions>
