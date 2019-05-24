@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import SHA512 from 'crypto-js/sha512'
 import { User } from '@/models/definitions'
+import i18n from '@/i18n';
 
 @Module({ name: 'UserModule' })
 export default class UserModule extends VuexModule {
@@ -15,10 +16,19 @@ export default class UserModule extends VuexModule {
     return this.user !== null
   }
 
-  @Action({ commit: 'setUser' })
+  @Action
   public async initUserModule() {
     const response = await axios.get(`/user`)
-    return response.data
+
+    this.context.commit('setUser', response.data)
+    this.context.dispatch('updateLocale')
+  }
+
+  @Action
+  public async updateLocale() {
+    if (this.user) {
+      i18n.locale = this.user.language
+    }
   }
 
   @Action
@@ -72,7 +82,7 @@ export default class UserModule extends VuexModule {
     }
   }
 
-  @Action({ commit: 'setUser' })
+  @Action
   public async updateLanguage(language: string) {
     const user = this.user
     if (user) {
@@ -81,7 +91,8 @@ export default class UserModule extends VuexModule {
       })
       user.language = language
     }
-    return user
+    this.context.commit('setUser', user)
+    this.context.dispatch('updateLocale')
   }
 
   @Action
