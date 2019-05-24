@@ -1,0 +1,14 @@
+{
+  "general": "Generelles",
+  "nameMustEqual": "Der Projektname muss dem Namen dieses Projekts entsprechen",
+  "news": "Neuigkeiten",
+  "criticalArea": "Kritischer Bereich",
+  "delete": "Dieses Projekt löschen",
+  "deleteDescription": "Dies wird alle Kategorien, Teams und Schichten löschen. Der Informationsbereich wird geleert, jegliche Berechtigungen auf dieses Projekt zurückgezogen und das Projekt gelöscht.",
+  "deleteHint": "Gib den Namen dieses Projekts ein um fortzufahren",
+  "deleteWarning": "!!! Dies kann nicht rückgängig gemacht werden - alles wird weg sein !!!",
+  "updateGeneral": "Generelle Informationen bearbeiten",
+  "nameDescription": "Der Name dieses Projekts. Der Name ist über alle Projekte einmalig, kein anderes Projekt kann diesen Namen haben.",
+  "emailDescription1": "Wir werden diese Email-Adresse as reply-to in allen Emails nutzen, die wir im Auftrag dieses Projekts schicken.",
+  "emailDescription2": "Du kannst ein Email Konto speziell für dieses Projekt erstellen oder einfach deine eigene Email-Adresse nutzen."
+}

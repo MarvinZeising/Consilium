@@ -5,32 +5,25 @@
         <v-btn
           v-on="on"
           color="error"
-        >
-          Delete this Project
-        </v-btn>
+          v-t="'project.delete'"
+        />
       </template>
       <v-card>
         <v-form v-model="valid">
           <v-card-title>
-            <span class="headline">Delete Project</span>
+            <span class="headline" v-t="'project.delete'" />
           </v-card-title>
           <v-card-text>
-            <p class="subheading">
-              This will delete all categories, teams and shifts. It will purge the knowledge base, revoke any access to the Project and delete it.
-            </p>
-            <p class="subheading">
-              Enter the Project name to continue
-            </p>
+            <p class="subheading" v-t="'project.deleteDescription'" />
+            <p class="subheading" v-t="'project.deleteHint'" />
             <v-text-field
               v-model="enteredName"
-              label="Project name"
+              :label="$t('core.name')"
               :rules="enteredNameRules"
               box
               required
             ></v-text-field>
-            <p class="subheading text-uppercase error--text">
-              !!! This cannot be undone - everything will be gone !!!
-            </p>
+            <p class="subheading text-uppercase error--text" v-t="'project.deleteWarning'" />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -38,18 +31,16 @@
               flat
               color="black"
               @click="deleteProjectDialog = false"
-            >
-              Cancel
-            </v-btn>
+              v-t="'core.cancel'"
+            />
             <v-btn
               :disabled="!valid"
               type="submit"
               flat
               color="error"
               @click="deleteProject"
-            >
-              Delete
-            </v-btn>
+              v-t="'core.delete'"
+            />
           </v-card-actions>
         </v-form>
       </v-card>
@@ -77,8 +68,8 @@ export default class DeleteProjectDialog extends Vue {
   private enteredName: string = ''
   private get enteredNameRules() {
     return [
-      (v: string) => !!v || 'Project name is required',
-      (v: string) => v === this.projectName || 'Project name must be this Project\'s name',
+      (v: string) => !!v || this.$t('core.fieldRequired'),
+      (v: string) => v === this.projectName || this.$t('project.nameMustEqual'),
     ]
   }
 
@@ -93,9 +84,6 @@ export default class DeleteProjectDialog extends Vue {
 
   private async loadProject() {
     const projectId = this.$route.params.projectId
-
-    await this.projectModule.fetchProject(projectId)
-
     const project = this.projectModule.myProjects.filter((x: Project) => x.id === projectId)[0]
     if (project) {
       this.projectName = project.name

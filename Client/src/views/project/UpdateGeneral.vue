@@ -3,18 +3,16 @@
     <v-form ref="form">
 
       <v-flex xs12>
-        <h1 class="headline">Update General Information</h1>
+        <h1 class="headline" v-t="'project.updateGeneral'" />
       </v-flex>
 
       <v-flex
-        xs12 sm8 md6 lg4
+        xs12 sm10 md8 lg6
       >
-        <p class="mt-4 grey--text text--darken-1">
-          The name of this Project. The Name is unique accross all Projects, so no other Project can have this name.
-        </p>
+        <p class="mt-4 grey--text text--darken-1" v-t="'project.nameDescription'" />
         <v-text-field
           v-model="name"
-          label="Project Name"
+          :label="$t('core.name')"
           :rules="nameRules"
           counter="40"
           box
@@ -22,30 +20,26 @@
         />
 
         <p class="mt-4 grey--text text--darken-1">
-          We'll use this Email address as reply-to in all Emails that we send on behalf of this Project.
+          {{ $t('project.emailDescription1') }}
           <br>
-          You can create an Email account specifically for the project, or just use your own Email address.
+          {{ $t('project.emailDescription2') }}
         </p>
         <v-text-field
           v-model="email"
-          label="Project Email"
+          :label="$t('core.email')"
           :rules="emailRules"
           box
           required
         />
 
         <div class="mt-4">
-          <v-btn :to="{ name: 'settings' }">
-            Cancel
-          </v-btn>
-
+          <v-btn :to="{ name: 'settings' }" v-t="'core.cancel'" />
           <v-btn
             @click="save"
             type="submit"
             color="primary"
-          >
-            Save
-          </v-btn>
+            v-t="'core.save'"
+          />
         </div>
       </v-flex>
 
@@ -68,14 +62,14 @@ export default class UpdateGeneral extends Vue {
 
   private name: string = ''
   private nameRules: any[] = [
-    (v: string) => !!v || 'Name is required',
-    (v: string) => v.length <= 40 || 'Name must be less than 40 characters',
-    (v: string) => v.length >= 3 || 'Name must be more than 3 characters'
+    (v: string) => !!v || this.$t('core.fieldRequired'),
+    (v: string) => v.length <= 40 || this.$t('core.fieldMax', { count: 40 }),
+    (v: string) => v.length >= 3 || this.$t('core.fieldMin', { count: 3 })
   ]
   private email: string = ''
   private emailRules: any[] = [
-    (v: string) => !!v || 'Email is required',
-    (v: string) => /.+@.+/.test(v) || 'Email must be valid'
+    (v: string) => !!v || this.$t('core.fieldRequired'),
+    (v: string) => /.+@.+/.test(v) || this.$t('core.emailInvalid')
   ]
 
   private created() {

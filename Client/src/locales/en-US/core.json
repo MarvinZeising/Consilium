@@ -1,0 +1,12 @@
+{
+  "edit": "Edit",
+  "save": "Save",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "name": "Name",
+  "email": "Email",
+  "emailInvalid": "Email must be valid",
+  "fieldRequired": "This field is required",
+  "fieldMin": "This field has to have at least {count} characters",
+  "fieldMax": "This field must not have more than {count} characters"
+}

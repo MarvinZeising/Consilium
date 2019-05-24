@@ -25,15 +25,6 @@ export default class ProjectModule extends VuexModule {
   }
 
   @MutationAction({ mutate: ['projects'] })
-  public async fetchProject(projectId: string) {
-    const response = await axios.get(`/projects/${projectId}`)
-    const projects = this.projects
-      .filter((x) => x.id !== projectId)
-      .push(response.data)
-    return { projects }
-  }
-
-  @MutationAction({ mutate: ['projects'] })
   public async clearProjects() {
     return { projects: [] }
   }
