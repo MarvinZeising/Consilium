@@ -54,7 +54,7 @@
       <v-list-tile-action>
         <v-icon>home</v-icon>
       </v-list-tile-action>
-      <v-list-tile-title>Home</v-list-tile-title>
+      <v-list-tile-title v-t="'navbar.home'"/>
     </v-list-tile>
 
     <!--//* Projects -->

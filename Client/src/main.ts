@@ -10,6 +10,7 @@ import { getModule } from 'vuex-module-decorators'
 import UserModule from './store/modules/users'
 import PersonModule from './store/modules/persons';
 import ProjectModule from './store/modules/projects';
+import i18n from './i18n'
 
 async function init() {
   const userModule = getModule(UserModule, store)
@@ -44,6 +45,7 @@ async function init() {
   new Vue({
     store,
     router,
+    i18n,
     render: (h) => h(App)
   }).$mount('#app')
 }
