@@ -207,10 +207,6 @@ export default class NavbarSignedIn extends Vue {
     })
   }
 
-  private async created() {
-    await this.personModule.fetchPersons()
-  }
-
   private async activatePerson(personId: string) {
     await this.personModule.activatePerson(personId)
   }

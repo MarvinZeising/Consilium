@@ -8,9 +8,13 @@ import store from './store'
 import axios from 'axios'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from './store/modules/users'
+import PersonModule from './store/modules/persons';
+import ProjectModule from './store/modules/projects';
 
 async function init() {
   const userModule = getModule(UserModule, store)
+  const personModule = getModule(PersonModule, store)
+  const projectModule = getModule(ProjectModule, store)
 
   Vue.config.productionTip = false
 
@@ -31,7 +35,10 @@ async function init() {
   if (userItem) {
     const user = JSON.parse(userItem)
     axios.defaults.headers.common.Authorization = `Bearer ${user.token}`
-    await userModule.fetchUser()
+
+    await userModule.initUserModule()
+    await personModule.initPersonModule()
+    await projectModule.initProjectModule()
   }
 
   new Vue({

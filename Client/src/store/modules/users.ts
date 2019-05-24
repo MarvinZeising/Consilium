@@ -16,7 +16,7 @@ export default class UserModule extends VuexModule {
   }
 
   @Action({ commit: 'setUser' })
-  public async fetchUser() {
+  public async initUserModule() {
     const response = await axios.get(`/user`)
     return response.data
   }
@@ -42,8 +42,9 @@ export default class UserModule extends VuexModule {
       }));
       axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`;
 
-      await this.context.dispatch('fetchUser', credentials.email)
-      await this.context.dispatch('fetchProjects')
+      await this.context.dispatch('initUserModule', credentials.email)
+      await this.context.dispatch('initPersonModule')
+      await this.context.dispatch('initProjectModule')
 
       return true
     }

@@ -97,9 +97,5 @@ export default class Personal extends Vue {
   private get photoUrl(): string {
     return this.personModule.getActivePerson.photoUrl
   }
-
-  private async created() {
-    await this.personModule.fetchPersons()
-  }
 }
 </script>

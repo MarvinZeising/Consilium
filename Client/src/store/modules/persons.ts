@@ -18,8 +18,8 @@ export default class PersonModule extends VuexModule {
     return new Person('tempGuid', 'Loading...', 'Loading...', '')
  }
 
-  @Action({ commit: 'setPersons' })
-  public async fetchPersons() {
+  @Action
+  public async initPersonModule() {
     // const response = await axios.get('/persons')
     const currentlyActivePerson: Person | undefined = this.persons.find((x) => x.id === this.activePersonId)
 

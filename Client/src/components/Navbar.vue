@@ -45,12 +45,6 @@ export default class Navbar extends Vue {
 
   private drawer: boolean = true
 
-  private async created() {
-    if (this.userModule.myUser) {
-      await this.projectModule.fetchProjects()
-    }
-  }
-
   private get isSignedIn(): boolean {
     return this.userModule.isSignedIn
   }

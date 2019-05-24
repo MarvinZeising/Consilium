@@ -19,7 +19,7 @@ export default class ProjectModule extends VuexModule {
   }
 
   @MutationAction({ mutate: ['projects'] })
-  public async fetchProjects() {
+  public async initProjectModule() {
     const response = await axios.get('/projects')
     return { projects: response.data }
   }
