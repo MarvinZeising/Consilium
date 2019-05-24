@@ -1,0 +1,13 @@
+{
+  "createPerson": "Person erstellen",
+  "home": "Startseite",
+  "knowledgeBase": "Informationen",
+  "calendar": "Kalender",
+  "administration": "Verwaltung",
+  "settings": "Einstellungen",
+  "profile": "Profil",
+  "personal": "Persönliches",
+  "configureProjects": "Projekte konfigurieren",
+  "account": "Benutzer",
+  "signOut": "Abmelden"
+}

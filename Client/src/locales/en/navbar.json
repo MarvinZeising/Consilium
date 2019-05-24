@@ -1,3 +1,13 @@
 {
-  "home": "Home"
+  "createPerson": "Create Person",
+  "home": "Home",
+  "knowledgeBase": "Knowledge Base",
+  "calendar": "Calendar",
+  "administration": "Administration",
+  "settings": "Settings",
+  "profile": "Profile",
+  "personal": "Personal",
+  "configureProjects": "Configure Projects",
+  "account": "Account",
+  "signOut": "Sign out"
 }

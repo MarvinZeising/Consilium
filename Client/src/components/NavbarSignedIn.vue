@@ -42,7 +42,7 @@
 
             <v-list-tile :to="{ name: 'createPerson' }">
               <v-icon left>person_add</v-icon>
-              Create Person
+              {{ $t('navbar.createPerson') }}
             </v-list-tile>
           </v-list>
         </v-menu>
@@ -78,7 +78,7 @@
         <v-list-tile-action>
           <v-icon v-text="action[1]"></v-icon>
         </v-list-tile-action>
-        <v-list-tile-title v-text="action[0]"></v-list-tile-title>
+        <v-list-tile-title v-t="action[0]"></v-list-tile-title>
       </v-list-tile>
 
       <v-list-group
@@ -87,7 +87,7 @@
       >
         <template v-slot:activator>
           <v-list-tile>
-            <v-list-tile-title>Administration</v-list-tile-title>
+            <v-list-tile-title v-t="'navbar.administration'" />
           </v-list-tile>
         </template>
 
@@ -99,7 +99,7 @@
           <v-list-tile-action>
             <v-icon v-text="action[1]"></v-icon>
           </v-list-tile-action>
-          <v-list-tile-title v-text="action[0]"></v-list-tile-title>
+          <v-list-tile-title v-t="action[0]"></v-list-tile-title>
         </v-list-tile>
       </v-list-group>
 
@@ -123,7 +123,7 @@
         <v-list-tile-action>
           <v-icon v-text="action[1]"></v-icon>
         </v-list-tile-action>
-        <v-list-tile-title v-text="action[0]"></v-list-tile-title>
+        <v-list-tile-title v-t="action[0]"></v-list-tile-title>
       </v-list-tile>
     </v-list-group>
 
@@ -132,7 +132,7 @@
       <v-list-tile-action>
         <v-icon>lock</v-icon>
       </v-list-tile-action>
-      <v-list-tile-title>Account</v-list-tile-title>
+      <v-list-tile-title v-t="'navbar.account'" />
     </v-list-tile>
 
     <!--//* Sign out -->
@@ -140,7 +140,7 @@
       <v-list-tile-action>
         <v-icon>exit_to_app</v-icon>
       </v-list-tile-action>
-      <v-list-tile-title>Sign out</v-list-tile-title>
+      <v-list-tile-title v-t="'navbar.signOut'" />
     </v-list-tile>
 
   </div>
@@ -174,12 +174,12 @@ export default class NavbarSignedIn extends Vue {
   }
 
   private profileActions: any[] = [
-    ['Personal', 'account_circle', 'personal'],
-    ['Spiritual', 'assignment_turned_in', 'configureProjects'],
-    ['Availability', 'event_available', 'configureProjects'],
-    ['Account', 'lock', 'configureProjects'],
-    ['Notifications', 'notifications', 'configureProjects'],
-    ['Configure Projects', 'settings', 'configureProjects']
+    ['navbar.personal', 'account_circle', 'personal'],
+    //// ['Spiritual', 'assignment_turned_in', 'configureProjects'],
+    //// administrationAvailability', 'event_available', 'configureProjects'],
+    //// ['Account', 'lock', 'configureProjects'],
+    //// ['Notifications', 'notifications', 'configureProjects'],
+    ['navbar.configureProjects', 'settings', 'configureProjects']
   ]
 
   private get isSignedIn(): boolean {
@@ -189,19 +189,19 @@ export default class NavbarSignedIn extends Vue {
   private get myProjects(): Project[] {
     return this.projectModule.myProjects.map((project: any) => {
       project.actions = [
-        ['Knowledge Base', 'subject', 'knowledgeBase'],
-        ['Calendar', 'today', 'calendar']
+        ['navbar.knowledgeBase', 'subject', 'knowledgeBase'],
+        ['navbar.calendar', 'today', 'calendar']
       ]
       project.adminActions = [
-        ['Settings', 'settings', 'settings'],
-        ['User Management', 'group', 'settings'],
-        ['Categories', 'label', 'settings'],
-        ['Teams', 'supervisor_account', 'settings'],
-        ['Meeting Points', 'location_on', 'settings'],
-        ['Notifications', 'notifications', 'settings'],
-        ['Reports', 'message', 'settings'],
-        ['Statistics', 'show_chart', 'settings'],
-        ['Notes', 'edit', 'settings']
+        ['navbar.settings', 'settings', 'settings'],
+        //// ['User Management', 'group', 'settings'],
+        //// ['Categories', 'label', 'settings'],
+        //// ['Teams', 'supervisor_account', 'settings'],
+        //// ['Meeting Points', 'location_on', 'settings'],
+        //// ['Notifications', 'notifications', 'settings'],
+        //// ['Reports', 'message', 'settings'],
+        //// ['Statistics', 'show_chart', 'settings'],
+        //// ['Notes', 'edit', 'settings']
       ]
       return project
     })
