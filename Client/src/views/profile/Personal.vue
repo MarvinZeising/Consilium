@@ -22,8 +22,15 @@
             <p class="caption mb-0 grey--text">
               Lastname
             </p>
-            <p class="subheading mb-0">
+            <p class="subheading">
               {{ lastname }}
+            </p>
+
+            <p class="caption mb-0 grey--text">
+              Gender
+            </p>
+            <p class="subheading">
+              {{ gender }}
             </p>
           </v-card-text>
 
@@ -93,6 +100,9 @@ export default class Personal extends Vue {
   }
   private get lastname(): string {
     return this.personModule.getActivePerson.lastname
+  }
+  private get gender(): string {
+    return this.personModule.getActivePerson.gender
   }
   private get photoUrl(): string {
     return this.personModule.getActivePerson.photoUrl

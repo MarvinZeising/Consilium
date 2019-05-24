@@ -42,16 +42,12 @@ export default class PersonModule extends VuexModule {
     }
 
     const persons: Person[] = response.data.map((data) => {
-      const person = new Person(
+      return new Person(
         data.id,
         data.firstname,
         data.lastname,
         data.photoUrl,
       )
-      if (person.id === this.activePersonId) {
-        person.isActive = true
-      }
-      return person
     })
 
     this.context.commit('setPersons', persons)

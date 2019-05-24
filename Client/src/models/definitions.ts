@@ -12,19 +12,24 @@ class User {
   }
 }
 
+enum Gender {
+  Male = 'male',
+  Female = 'female',
+}
+
 class Person {
   public id: string
   public firstname: string
   public lastname: string
   public photoUrl: string
-  public isActive: boolean
+  public gender: Gender
 
   constructor(id: string, firstname: string, lastname: string, photoUrl: string) {
     this.id = id
     this.firstname = firstname
     this.lastname = lastname
+    this.gender = Gender.Male
     this.photoUrl = photoUrl
-    this.isActive = false
   }
 
   public fullName() {
