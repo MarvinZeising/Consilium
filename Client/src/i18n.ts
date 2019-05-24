@@ -8,8 +8,8 @@ function loadLocaleMessages(): LocaleMessages {
   const messages: LocaleMessages = {}
 
   locales.keys().forEach((key) => {
-    const localeMatched = key.match(/\/([A-Za-z0-9-_]+)\//i)
-    const areaMatched = key.match(/([A-Za-z0-9-_]+)\./i)
+    const localeMatched = key.match(/\/([A-Za-z-]+)\//i)
+    const areaMatched = key.match(/([A-Za-z]+)\./i)
 
     if (localeMatched && areaMatched) {
       const locale = localeMatched[1]
@@ -26,7 +26,7 @@ function loadLocaleMessages(): LocaleMessages {
 }
 
 export default new VueI18n({
-  locale: 'en',
-  fallbackLocale: 'en',
+  locale: 'en-US',
+  fallbackLocale: 'en-US',
   messages: loadLocaleMessages()
 })
