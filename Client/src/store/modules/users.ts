@@ -44,7 +44,7 @@ export default class UserModule extends VuexModule {
       password: hashPassword(credentials.password),
     })
 
-    if (response.data !== null) {
+    if (response.data !== null && response.data.case !== 'Error') {
       const jwtToken = response.data.fields[0]
       localStorage.setItem('user', JSON.stringify({
         token: jwtToken,

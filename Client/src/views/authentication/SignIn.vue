@@ -12,13 +12,13 @@
             max-width="500"
           >
             <v-card-title class="title font-weight-regular justify-space-between">
-              <span>Sign in to Consilium</span>
+              <span v-t="'account.signInFullTitle'" />
             </v-card-title>
 
             <v-card-text>
               <v-text-field
                 v-model="email"
-                label="Email"
+                :label="$t('core.email')"
                 :rules="emailRules"
                 prepend-inner-icon="person"
                 box
@@ -26,7 +26,7 @@
               ></v-text-field>
               <v-text-field
                 v-model="password"
-                label="Password"
+                :label="$t('account.password')"
                 :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
                 :type="passwordShow ? 'text' : 'password'"
                 :rules="passwordRules"
@@ -40,9 +40,9 @@
                 class="red--text"
                 v-if="authFailed"
               >
-                We couldn't find an account with these credentials.
+                {{ $t('account.passwordWrong') }}
                 <br>
-                Is your capslock activated, maybe?
+                {{ $t('account.passwordCapslock') }}
               </span>
             </v-card-text>
 
@@ -53,9 +53,7 @@
                 type="submit"
                 @click="signIn"
               >
-                <span>
-                  Sign in
-                </span>
+                <span v-t="'account.signIn'" />
                 <v-progress-circular
                   v-if="authInProgress"
                   indeterminate
