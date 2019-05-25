@@ -59,7 +59,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios'
 import Component from 'vue-class-component'
 import ProjectModule from '@/store/modules/projects'
 import UserModule from '@/store/modules/users'

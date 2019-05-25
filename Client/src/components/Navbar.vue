@@ -42,7 +42,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 import { Project } from '@/models/definitions'
 import { getModule } from 'vuex-module-decorators'

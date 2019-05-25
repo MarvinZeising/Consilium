@@ -48,7 +48,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios'
 import Component from 'vue-class-component'
 import ProjectModule from '@/store/modules/projects'
 import { getModule } from 'vuex-module-decorators'

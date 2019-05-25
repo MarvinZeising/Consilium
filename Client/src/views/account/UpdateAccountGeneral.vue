@@ -39,7 +39,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios'
 import { VForm } from 'vuetify/lib'
 import Component from 'vue-class-component'
 import { getModule } from 'vuex-module-decorators'
