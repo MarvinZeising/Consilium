@@ -1,0 +1,8 @@
+{
+  "account": "Account",
+  "signIn": "Sign in",
+  "signInFullTitle": "Sign in to Consilium",
+  "password": "Password",
+  "passwordWrong": "We couldn't find an account with these credentials.",
+  "passwordCapslock": "Is your capslock activated, maybe?"
+}

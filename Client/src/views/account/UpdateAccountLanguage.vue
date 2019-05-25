@@ -28,15 +28,15 @@
         />
 
         <div class="mt-4">
-          <v-btn :to="{ name: 'account' }">
-            Cancel
-          </v-btn>
+          <v-btn
+            :to="{ name: 'account' }"
+            v-t="'core.cancel'"
+          />
           <v-btn
             @click="save"
             color="primary"
-          >
-            Save
-          </v-btn>
+            v-t="'core.save'"
+          />
         </div>
       </v-flex>
 
@@ -55,11 +55,11 @@ import { Project } from '@/models/definitions'
 @Component
 export default class UpdateAccountLanguage extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
-
-  private language: string = 'en-US'
-  private languages: string[] = ['en-US', 'de-DE']
+  private language: string = ''
+  private languages: string[] = []
 
   private created() {
+    this.languages = this.$i18n.availableLocales
     const user = this.userModule.myUser
     if (user) {
       this.language = user.language

@@ -1,0 +1,8 @@
+{
+  "account": "Benutzer",
+  "signIn": "Anmelden",
+  "signInFullTitle": "Bei Consilium anmelden",
+  "password": "Passwort",
+  "passwordWrong": "Wir konnten keinen Benutzer mit diesen Anmeldedaten finden.",
+  "passwordCapslock": "Ist die Feststelltaste vielleicht aktiviert?"
+}
