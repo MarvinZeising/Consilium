@@ -12,12 +12,12 @@
       >
         <v-card flat>
           <v-card-text>
-            <p class="caption mb-0 grey--text" v-t="'project.name'" />
+            <p class="caption mb-0 grey--text" v-t="'core.name'" />
             <p class="subheading">
               {{ name }}
             </p>
 
-            <p class="caption mb-0 grey--text" v-t="'project.email'" />
+            <p class="caption mb-0 grey--text" v-t="'core.email'" />
             <p class="subheading mb-0">
               {{ email }}
             </p>
