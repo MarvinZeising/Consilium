@@ -10,7 +10,7 @@
         />
         <img
           v-if="!getActivePerson.photoUrl"
-          src="../assets/person-default-image.jpg"
+          src="../assets/person.jpg"
         />
       </v-list-tile-avatar>
       <v-list-tile-content>

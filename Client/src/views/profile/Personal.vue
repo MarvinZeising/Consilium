@@ -62,7 +62,7 @@
             />
             <img
               v-if="!photoUrl"
-              src="../../assets/person-default-image.jpg"
+              src="../../assets/person.jpg"
               style="max-width:200px;"
             />
           </v-card-text>
