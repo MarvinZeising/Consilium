@@ -153,7 +153,7 @@ import { Person, Project } from '@/models/definitions'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '@/store/modules/projects'
 import UserModule from '@/store/modules/users'
-import PersonModule from '@/store/modules/persons';
+import PersonModule from '@/store/modules/persons'
 import Component from 'vue-class-component'
 
 @Component

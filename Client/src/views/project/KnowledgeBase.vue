@@ -41,12 +41,12 @@ export default Vue.extend({
       newTabItemDialog: null,
       tabsModel: null,
       tabs: null
-      };
+      }
   },
   mounted() {
     axios.get(`/wiki`)
       .then((response) => this.tabs = response.data )
-      .catch((err) => this.tabs = null);
+      .catch((err) => this.tabs = null)
   }
 })
 </script>

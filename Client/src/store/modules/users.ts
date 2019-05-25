@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import SHA512 from 'crypto-js/sha512'
 import { User } from '@/models/definitions'
-import i18n from '@/i18n';
+import i18n from '@/i18n'
 
 @Module({ name: 'UserModule' })
 export default class UserModule extends VuexModule {
@@ -49,8 +49,8 @@ export default class UserModule extends VuexModule {
       localStorage.setItem('user', JSON.stringify({
         token: jwtToken,
         email: credentials.email,
-      }));
-      axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`;
+      }))
+      axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`
 
       await this.context.dispatch('initUserModule', credentials.email)
       await this.context.dispatch('initPersonModule')

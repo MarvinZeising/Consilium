@@ -43,7 +43,7 @@ import { VForm } from 'vuetify/lib'
 import Component from 'vue-class-component'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
-import UserModule from '@/store/modules/users';
+import UserModule from '@/store/modules/users'
 
 @Component
 export default class UpdateGeneral extends Vue {

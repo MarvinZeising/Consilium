@@ -54,7 +54,7 @@ import Component from 'vue-class-component'
 import ProjectModule from '@/store/modules/projects'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '../../models/definitions'
-import { Watch } from 'vue-property-decorator';
+import { Watch } from 'vue-property-decorator'
 import { VForm } from 'vuetify/lib'
 
 @Component({})

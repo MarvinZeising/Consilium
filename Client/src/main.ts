@@ -8,8 +8,8 @@ import store from './store'
 import axios from 'axios'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from './store/modules/users'
-import PersonModule from './store/modules/persons';
-import ProjectModule from './store/modules/projects';
+import PersonModule from './store/modules/persons'
+import ProjectModule from './store/modules/projects'
 import i18n from './i18n'
 
 async function init() {
@@ -19,9 +19,9 @@ async function init() {
 
   Vue.config.productionTip = false
 
-  axios.defaults.baseURL = 'http://localhost:5000';
+  axios.defaults.baseURL = 'http://localhost:5000'
   axios.interceptors.response.use((response) => {
-    return response;
+    return response
   }, (error) => {
     // * automatically sign out if token is expired
     if (error.response.status === 401 && localStorage.getItem('user')) {
@@ -29,8 +29,8 @@ async function init() {
       location.reload(true)
       // TODO: communicate signOut via an alert
     }
-    return Promise.reject(error);
-  });
+    return Promise.reject(error)
+  })
 
   const userItem = localStorage.getItem('user')
   if (userItem) {
