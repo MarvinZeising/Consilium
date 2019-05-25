@@ -3,6 +3,25 @@
     <v-toolbar app flat>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Consilium</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-menu v-if="!isSignedIn">
+        <template v-slot:activator="{ on }">
+          <v-toolbar-title v-on="on">
+            <span v-t="'language.' + language" />
+            <v-icon>arrow_drop_down</v-icon>
+          </v-toolbar-title>
+        </template>
+
+        <v-list>
+          <v-list-tile
+            v-for="language in languages"
+            :key="language"
+            @click="updateLanguage(language)"
+          >
+            <v-list-tile-title v-t="'language.' + language" />
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </v-toolbar>
 
     <v-navigation-drawer
@@ -44,9 +63,21 @@ export default class Navbar extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private drawer: boolean = true
+  private language: string = ''
+  private languages: string[] = []
+
+  private async created() {
+    this.language = this.$i18n.locale
+    this.languages = this.$i18n.availableLocales
+  }
 
   private get isSignedIn(): boolean {
     return this.userModule.isSignedIn
+  }
+
+  private updateLanguage(language: string) {
+    this.language = language
+    this.$i18n.locale = this.language
   }
 
 }
