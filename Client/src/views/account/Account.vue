@@ -4,7 +4,10 @@
 
       <!--//* General -->
       <v-flex xs12>
-        <h2 class="headline mb-3">General</h2>
+        <h2
+          class="headline mb-3"
+          v-t="'account.general'"
+        />
       </v-flex>
       <v-flex
         xs12 sm10 md8 lg6
@@ -12,36 +15,40 @@
       >
         <v-card flat>
           <v-card-text>
-            <p class="caption mb-0 grey--text">
-              ID
-            </p>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.id'"
+            />
             <p class="subheading grey--text">
               {{ id }}
             </p>
 
-            <p class="caption mb-0 grey--text">
-              Email
-            </p>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.email'"
+            />
             <p class="subheading">
               {{ email }}
             </p>
           </v-card-text>
 
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-btn
               flat
               :to="{ name: 'updateAccountGeneral' }"
-            >
-              Edit
-            </v-btn>
+              v-t="'core.edit'"
+            />
           </v-card-actions>
         </v-card>
       </v-flex>
 
       <!--//* Language -->
       <v-flex xs12>
-        <h2 class="headline mb-3">Language</h2>
+        <h2
+          class="headline mb-3"
+          v-t="'account.localization'"
+        />
       </v-flex>
       <v-flex
         xs12 sm10 md8 lg6
@@ -49,29 +56,33 @@
       >
         <v-card flat>
           <v-card-text>
-            <p class="caption mb-0 grey--text">
-              Interface language
-            </p>
-            <p class="subheading">
-              {{ displayLanguage(language) }}
-            </p>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'account.language'"
+            />
+            <p
+              class="subheading"
+              v-t="'language.' + language"
+            />
           </v-card-text>
 
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-btn
               flat
               :to="{ name: 'updateAccountLanguage' }"
-            >
-              Edit
-            </v-btn>
+              v-t="'core.edit'"
+            />
           </v-card-actions>
         </v-card>
       </v-flex>
 
       <!--//* Critical Area -->
       <v-flex xs12>
-        <h2 class="headline mb-3 error--text">Critical area</h2>
+        <h2
+          class="headline mb-3 error--text"
+          v-t="'account.criticalArea'"
+        />
       </v-flex>
       <v-flex
         xs12 sm10 md8 lg6
@@ -86,9 +97,8 @@
             <v-btn
               :to="{ name: 'updateAccountPassword' }"
               class="grey lighten-3 black--text mb-4"
-            >
-              Change my password
-            </v-btn>
+              v-t="'account.changePassword'"
+            />
 
             <DeleteAccountDialog />
           </v-card-text>
@@ -126,17 +136,5 @@ export default class Account extends Vue {
     }
   }
 
-  private displayLanguage(language: string) {
-    switch (language) {
-      case 'en-US':
-        return 'English (US)'
-        break
-      case 'de-DE':
-        return 'German'
-        break
-      default:
-        return `Unknown language: ${language}`
-    }
-  }
 }
 </script>

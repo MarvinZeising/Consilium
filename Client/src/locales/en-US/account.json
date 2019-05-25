@@ -4,5 +4,22 @@
   "signInFullTitle": "Sign in to Consilium",
   "password": "Password",
   "passwordWrong": "We couldn't find an account with these credentials.",
-  "passwordCapslock": "Is your capslock activated, maybe?"
+  "passwordCapslock": "Is your capslock activated, maybe?",
+  "localization": "Localization",
+  "updateLocalization": "Update localization",
+  "language": "Interface language",
+  "languageDescription": "The language you see this website in.",
+  "languageHint": "You can choose one of the translated languages.",
+  "translationHelp": "If you want to help translating the site into a different language, feel free to reach out to us via",
+  "updateLanguage": "Update interface language",
+  "delete": "Delete my Account",
+  "deleteDescription": "This will delete your Account and all the Persons linked to that Account. You won't be able to sign in to the Account again after this.",
+  "deleteHint": "Enter the Account's Email Address to continue",
+  "deleteWarning": "!!! This cannot be undone - everything will be gone !!!",
+  "general": "General",
+  "updateGeneral": "Update Account General",
+  "criticalArea": "Critical area",
+  "changePassword": "Change my password",
+  "emailDescription": "Your Email address. This Email is unique to your Account. You use it to sign in to this Account.",
+  "emailChangeDescription": "After saving, you will be signed out and will have to sign in with the new Email address."
 }

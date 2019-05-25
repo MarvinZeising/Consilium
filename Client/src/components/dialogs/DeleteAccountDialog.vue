@@ -5,32 +5,37 @@
         <v-btn
           v-on="on"
           color="error"
-        >
-          Delete my Account
-        </v-btn>
+          v-t="'account.delete'"
+        />
       </template>
       <v-card>
         <v-form v-model="valid">
           <v-card-title>
-            <span class="headline">Delete Account</span>
+            <span
+              class="headline"
+              v-t="'account.delete'"
+            />
           </v-card-title>
           <v-card-text>
-            <p class="subheading">
-              This will delete your Account and all the Persons linked to that Account. You won't be able to sign in to the Account again after this.
-            </p>
-            <p class="subheading">
-              Enter the Account's Email Address to continue
-            </p>
+            <p
+              class="subheading"
+              v-t="'account.deleteDescription'"
+            />
+            <p
+              class="subheading"
+              v-t="'account.deleteHint'"
+            />
             <v-text-field
               v-model="email"
-              label="Email Address"
+              :label="$t('core.email')"
               :rules="emailRules"
               box
               required
             />
-            <p class="subheading text-uppercase error--text">
-              !!! This cannot be undone - everything will be gone !!!
-            </p>
+            <p
+              class="subheading text-uppercase error--text"
+              v-t="'account.deleteWarning'"
+            />
           </v-card-text>
           <v-card-actions>
             <v-spacer />
@@ -38,18 +43,16 @@
               flat
               color="black"
               @click="deleteAccountDialog = false"
-            >
-              Cancel
-            </v-btn>
+              v-t="'core.cancel'"
+            />
             <v-btn
               :disabled="!valid"
               type="submit"
               flat
               color="error"
               @click="deleteAccount"
-            >
-              Delete
-            </v-btn>
+              v-t="'core.delete'"
+            />
           </v-card-actions>
         </v-form>
       </v-card>
@@ -76,9 +79,9 @@ export default class DeleteAccountDialog extends Vue {
   private email: string = ''
   private get emailRules() {
     return [
-      (v: string) => !!v || 'Email is required',
-      (v: string) => /.+@.+/.test(v) || 'Email must be valid',
-      (v: string) => v === this.accountEmail || 'Email must be your Account\'s Email',
+      (v: string) => !!v || this.$t('core.fieldRequired'),
+      (v: string) => /.+@.+/.test(v) || this.$t('core.emailInvalid'),
+      (v: string) => v === this.accountEmail || this.$t('account.emailMustEqual')
     ]
   }
 

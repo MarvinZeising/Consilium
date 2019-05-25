@@ -4,5 +4,22 @@
   "signInFullTitle": "Bei Consilium anmelden",
   "password": "Passwort",
   "passwordWrong": "Wir konnten keinen Benutzer mit diesen Anmeldedaten finden.",
-  "passwordCapslock": "Ist die Feststelltaste vielleicht aktiviert?"
+  "passwordCapslock": "Ist die Feststelltaste vielleicht aktiviert?",
+  "localization": "Lokalisierung",
+  "updateLocalization": "Lokalisierung bearbeiten",
+  "language": "Sprache der Oberfläche",
+  "languageDescription": "Die Sprache, in der diese Website dargestellt wird.",
+  "languageHint": "Du kannst eine der verfügbaren Übersetzungen wählen.",
+  "translationHelp": "Wenn du helfen möchtest die Seite in eine andere Sprache zu übersetzen, kannst du dich gerne an uns wenden über",
+  "updateLanguage": "Sprache der Oberfläche bearbeiten",
+  "delete": "Meinen Benutzer löschen",
+  "deleteDescription": "Dies wird deinen Benutzer samt allen damit verbundenen Personen löschen. Du wirst dich danach nicht mehr mit diesem Benutzer anmelden können.",
+  "deleteHint": "Gib die Email-Adresse deines Benutzers ein um fortzufahren",
+  "deleteWarning": "!!! Das kann nicht rückgängig gemacht werden - alles wird weg sein !!!",
+  "general": "Generelles",
+  "updateGeneral": "Generelle Informationen bearbeiten",
+  "criticalArea": "Kritischer Bereich",
+  "changePassword": "Mein Passwort ändern",
+  "emailDescription": "Deine Email-Adresse. Sie ist einzigartig für deinen Benutzer. Du brauchst sie um dich anzumelden.",
+  "emailChangeDescription": "Nach dem Speichern wirst du abgemeldet und musst dich mit der neuen Email-Adresse anmelden."
 }

@@ -3,41 +3,46 @@
     <v-form ref="form">
 
       <v-flex xs12>
-        <h1 class="headline">Update interface language</h1>
+        <h1
+          class="headline"
+          v-t="'account.updateLanguage'"
+        />
       </v-flex>
 
       <v-flex xs12 sm10 md8 lg6>
-        <p class="mt-4 grey--text text--darken-1">
-          The language you see this website in.
-          <br>
-          You can choose one the translated languages.
-        </p>
-        <p class="mt-4 grey--text text--darken-1">
-          If you want to help translating the site into a different language, feel free to reach out to us via
-          <a href="mailto:support@consiliumapp.org">support@consiliumapp.org</a>
-        </p>
-        <p class="mt-4 grey--text text--darken-1">
-          Enter your new Password
-        </p>
+        <p
+          class="mt-4 grey--text text--darken-1"
+          v-t="'account.languageDescription'"
+        />
+        <p
+          class="mt-4 grey--text text--darken-1"
+          v-t="'account.languageHint'"
+        />
         <v-select
           v-model="language"
           :items="languages"
-          label="Interface language"
+          :label="$t('account.language')"
           box
           required
         />
 
-        <div class="mt-4">
+        <div>
           <v-btn
             :to="{ name: 'account' }"
             v-t="'core.cancel'"
           />
           <v-btn
+            :disabled="this.language === $i18n.locale"
             @click="save"
             color="primary"
             v-t="'core.save'"
           />
         </div>
+
+        <p class="mt-5 grey--text text--darken-1">
+          {{ $t('account.translationHelp') }}
+          <a href="mailto:support@consiliumapp.org">support@consiliumapp.org</a>
+        </p>
       </v-flex>
 
     </v-form>

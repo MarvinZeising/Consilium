@@ -3,6 +3,8 @@
   "save": "Save",
   "delete": "Delete",
   "cancel": "Cancel",
+  "close": "Close",
+  "id": "ID",
   "name": "Name",
   "email": "Email",
   "emailInvalid": "Email must be valid",

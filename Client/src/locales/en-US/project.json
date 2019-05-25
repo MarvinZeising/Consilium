@@ -7,7 +7,7 @@
   "deleteDescription": "This will delete all categories, teams and shifts. It will purge the knowledge base, revoke any access to the Project and delete it.",
   "deleteHint": "Enter the Project name to continue",
   "deleteWarning": "!!! This cannot be undone - everything will be gone !!!",
-  "updateGeneral": "Update General Information",
+  "updateGeneral": "Update Project General",
   "nameDescription": "The name of this Project. The Name is unique accross all Projects, so no other Project can have this name.",
   "emailDescription1": "We'll use this Email address as reply-to in all Emails that we send on behalf of this Project.",
   "emailDescription2": "You can create an Email account specifically for the project, or just use your own Email address."
