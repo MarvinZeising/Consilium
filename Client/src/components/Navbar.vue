@@ -1,9 +1,9 @@
 <template>
   <nav>
     <v-toolbar app flat>
-      <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="drawer = !drawer" />
       <v-toolbar-title>Consilium</v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-menu v-if="!isSignedIn">
         <template v-slot:activator="{ on }">
           <v-toolbar-title v-on="on">

@@ -3,13 +3,19 @@
     <v-form ref="form">
 
       <v-flex xs12>
-        <h1 class="headline" v-t="'project.updateGeneral'" />
+        <h1
+          class="headline"
+          v-t="'project.updateGeneral'"
+        />
       </v-flex>
 
       <v-flex
         xs12 sm10 md8 lg6
       >
-        <p class="mt-4 grey--text text--darken-1" v-t="'project.nameDescription'" />
+        <p
+          class="mt-4 grey--text text--darken-1"
+          v-t="'project.nameDescription'"
+        />
         <v-text-field
           v-model="name"
           :label="$t('core.name')"
@@ -33,7 +39,10 @@
         />
 
         <div class="mt-4">
-          <v-btn :to="{ name: 'settings' }" v-t="'core.cancel'" />
+          <v-btn
+            :to="{ name: 'settings' }"
+            v-t="'core.cancel'"
+          />
           <v-btn
             @click="save"
             type="submit"

@@ -23,7 +23,7 @@
                 prepend-inner-icon="person"
                 box
                 required
-              ></v-text-field>
+              />
               <v-text-field
                 v-model="password"
                 :label="$t('account.password')"
@@ -34,7 +34,7 @@
                 box
                 required
                 @click:append="passwordShow = !passwordShow"
-              ></v-text-field>
+              />
 
               <span
                 class="red--text"
@@ -47,7 +47,7 @@
             </v-card-text>
 
             <v-card-actions>
-              <v-spacer></v-spacer>
+              <v-spacer />
               <v-btn
                 color="primary"
                 type="submit"

@@ -16,25 +16,23 @@
             label="Tab name"
             box
             required
-          ></v-text-field>
+          />
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn
             flat
             color="black"
             @click="newTabDialog = false"
-          >
-            Close
-          </v-btn>
+            v-t="'core.close'"
+          />
           <v-btn
             :disabled="tabName == ''"
             flat
             color="primary"
             @click="newTabDialog = false"
-          >
-            Save
-          </v-btn>
+            v-t="'core.save'"
+          />
         </v-card-actions>
       </v-card>
     </v-dialog>

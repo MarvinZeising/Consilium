@@ -11,22 +11,34 @@
       <v-card>
         <v-form v-model="valid">
           <v-card-title>
-            <span class="headline" v-t="'project.delete'" />
+            <span
+              class="headline"
+              v-t="'project.delete'"
+            />
           </v-card-title>
           <v-card-text>
-            <p class="subheading" v-t="'project.deleteDescription'" />
-            <p class="subheading" v-t="'project.deleteHint'" />
+            <p
+              class="subheading"
+              v-t="'project.deleteDescription'"
+            />
+            <p
+              class="subheading"
+              v-t="'project.deleteHint'"
+            />
             <v-text-field
               v-model="enteredName"
               :label="$t('core.name')"
               :rules="enteredNameRules"
               box
               required
-            ></v-text-field>
-            <p class="subheading text-uppercase error--text" v-t="'project.deleteWarning'" />
+            />
+            <p
+              class="subheading text-uppercase error--text"
+              v-t="'project.deleteWarning'"
+            />
           </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-btn
               flat
               color="black"

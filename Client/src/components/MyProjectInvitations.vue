@@ -43,7 +43,7 @@
           >
             Accept
           </v-btn>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn
             flat
             color="error"

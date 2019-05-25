@@ -14,7 +14,7 @@
             class="grey lighten-4"
           />
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-btn
               v-if="itemPosition != 0"
               flat

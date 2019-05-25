@@ -12,7 +12,7 @@
       <v-text-field
         v-model="accessToken"
         label="Project access token"
-      ></v-text-field>
+      />
       <v-btn
         :disabled="accessToken == ''"
         color="primary"

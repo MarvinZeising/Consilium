@@ -27,13 +27,13 @@
               :rules="emailRules"
               box
               required
-            ></v-text-field>
+            />
             <p class="subheading text-uppercase error--text">
               !!! This cannot be undone - everything will be gone !!!
             </p>
           </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-btn
               flat
               color="black"

@@ -4,7 +4,10 @@
 
       <!--//* Main Heading -->
       <v-flex xs12>
-        <h2 class="headline mb-3" v-t="'project.general'" />
+        <h2
+          class="headline mb-3"
+          v-t="'project.general'"
+        />
       </v-flex>
       <v-flex
         xs12 sm10 md8 lg6
@@ -12,19 +15,25 @@
       >
         <v-card flat>
           <v-card-text>
-            <p class="caption mb-0 grey--text" v-t="'core.name'" />
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.name'"
+            />
             <p class="subheading">
               {{ name }}
             </p>
 
-            <p class="caption mb-0 grey--text" v-t="'core.email'" />
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.email'"
+            />
             <p class="subheading mb-0">
               {{ email }}
             </p>
           </v-card-text>
 
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-btn
               flat
               :to="{ name: 'updateGeneral' }"
@@ -36,7 +45,10 @@
 
       <!--//* News Heading -->
       <v-flex xs12>
-        <h2 class="headline mb-3" v-t="'project.news'"/>
+        <h2
+          class="headline mb-3"
+          v-t="'project.news'"
+        />
       </v-flex>
       <v-flex
         xs12 sm10 md8 lg6
@@ -55,7 +67,10 @@
 
       <!--//* Critical Heading -->
       <v-flex xs12>
-        <h2 class="headline mb-3 error--text" v-t="'project.criticalArea'" />
+        <h2
+          class="headline mb-3 error--text"
+          v-t="'project.criticalArea'"
+        />
       </v-flex>
       <v-flex
         xs12 sm8 md6 lg4

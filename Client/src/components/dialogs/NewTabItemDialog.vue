@@ -33,7 +33,7 @@
                   counter
                   maxlength="50"
                   box
-                ></v-text-field>
+                />
                 <v-textarea
                   v-model="content"
                   label="Content"
@@ -44,7 +44,7 @@
                   box
                   hint="You can use the MarkDown syntax here."
                   persistent-hint
-                ></v-textarea>
+                />
 
                 <a
                   href="https://www.markdownguide.org/getting-started"
@@ -88,7 +88,7 @@
           </v-container>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn
             flat
             color="black"

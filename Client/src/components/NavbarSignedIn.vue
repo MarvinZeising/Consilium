@@ -66,7 +66,7 @@
     >
       <template v-slot:activator>
         <v-list-tile>
-          <v-list-tile-title v-text="project.name"></v-list-tile-title>
+          <v-list-tile-title v-text="project.name" />
         </v-list-tile>
       </template>
 
@@ -76,9 +76,9 @@
         :to="{ name: action[2], params: { projectId: project.id }}"
       >
         <v-list-tile-action>
-          <v-icon v-text="action[1]"></v-icon>
+          <v-icon v-text="action[1]" />
         </v-list-tile-action>
-        <v-list-tile-title v-t="action[0]"></v-list-tile-title>
+        <v-list-tile-title v-t="action[0]" />
       </v-list-tile>
 
       <v-list-group
@@ -97,9 +97,9 @@
           :to="{ name: action[2], params: { projectId: project.id }}"
         >
           <v-list-tile-action>
-            <v-icon v-text="action[1]"></v-icon>
+            <v-icon v-text="action[1]" />
           </v-list-tile-action>
-          <v-list-tile-title v-t="action[0]"></v-list-tile-title>
+          <v-list-tile-title v-t="action[0]" />
         </v-list-tile>
       </v-list-group>
 
@@ -121,9 +121,9 @@
         :to="{ name: action[2] }"
       >
         <v-list-tile-action>
-          <v-icon v-text="action[1]"></v-icon>
+          <v-icon v-text="action[1]" />
         </v-list-tile-action>
-        <v-list-tile-title v-t="action[0]"></v-list-tile-title>
+        <v-list-tile-title v-t="action[0]" />
       </v-list-tile>
     </v-list-group>
 

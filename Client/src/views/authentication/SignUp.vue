@@ -14,7 +14,7 @@
               size="24"
               v-text="step"
               v-if="step > 0 && step < 3"
-            ></v-avatar>
+            />
           </v-card-title>
 
           <v-window v-model="step">
@@ -80,7 +80,7 @@
                     box
                     required
                     @click:append="passwordShow = !passwordShow"
-                  ></v-text-field>
+                  />
                   <p class="grey--text text--darken-1">
                     Just to be sure, please confirm your password one more time
                   </p>
@@ -93,7 +93,7 @@
                     box
                     required
                     @click:append="passwordRepeatShow = !passwordRepeatShow"
-                  ></v-text-field>
+                  />
                 </v-form>
 
               </v-card-text>
@@ -114,7 +114,7 @@
             </v-window-item>
           </v-window>
 
-          <v-divider></v-divider>
+          <v-divider />
 
           <v-card-actions v-if="step < 3">
             <v-btn
@@ -131,7 +131,7 @@
             >
               Back
             </v-btn>
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-btn
               :disabled="(step === 1 && (!emailValid || nextLoading)) || (step === 2 && !passwordValid)"
               color="primary"

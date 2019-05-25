@@ -1,6 +1,6 @@
 <template>
   <v-footer>
-    <v-spacer></v-spacer>
+    <v-spacer />
     <router-link
       :to="{ name: 'termsOfUse' }"
       style="text-decoration:none"
