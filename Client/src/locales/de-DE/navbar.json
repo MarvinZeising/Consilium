@@ -9,5 +9,7 @@
   "personal": "Persönliches",
   "configureProjects": "Projekte konfigurieren",
   "account": "Benutzer",
-  "signOut": "Abmelden"
+  "signOut": "Abmelden",
+  "signIn": "Mit deinem Benutzer anmelden",
+  "signUp": "Einen Benutzer erstellen"
 }
