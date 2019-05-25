@@ -111,7 +111,7 @@
     >
       <template v-slot:activator>
         <v-list-tile>
-          <v-list-tile-title>Profile</v-list-tile-title>
+          <v-list-tile-title v-t="'navbar.profile'" />
         </v-list-tile>
       </template>
 
