@@ -5,6 +5,8 @@
   "password": "Password",
   "passwordWrong": "We couldn't find an account with these credentials.",
   "passwordCapslock": "Is your capslock activated, maybe?",
+  "passwordMustEqual": "The passwords have to match",
+  "passwordRepeat": "Confirm password",
   "changePasswordDescription1": "This is your Account's password.",
   "changePasswordDescription2": "No one should know your password (well, except you, of course).",
   "changePasswordHint": "After saving, you will be signed out and will have to sign in with your new password.",
@@ -29,5 +31,27 @@
   "criticalArea": "Critical area",
   "changePassword": "Change my password",
   "emailDescription": "Your Email address. This Email is unique to your Account. You use it to sign in to this Account.",
-  "emailChangeDescription": "After saving, you will be signed out and will have to sign in with the new Email address."
+  "emailChangeDescription": "After saving, you will be signed out and will have to sign in with the new Email address.",
+  "emailMustEqual": "Email must be your Account's email",
+  "emailUnique": "Sorry, this email already exists. Please choose another one.",
+  "signUp": {
+    "fullTitle": "Welcome to Consilium!",
+    "email": "Enter your Email Address",
+    "password": "Choose a password",
+    "passwordHint": "Please choose a password for your Account",
+    "passwordConfirmHint": "Just to be sure, please confirm your password one more time",
+    "description1": "You want to create an Account?",
+    "description2": "Perfect! Just click Start.",
+    "hint1": "You'll be asked to enter your email address and choose a password.",
+    "hint2": "We'll then send you a verification email to activate your Account.",
+    "signInHint": "If you already have an Account, you can sign in instead.",
+    "signInLink": "I have an account",
+    "passwordRuleHint": "Has to have at least 8 characters",
+    "passwordDescription": "Please choose a password for your account",
+    "passwordRepeatDescription": "Just to be sure, please confirm your password one more time",
+    "success": "Success!",
+    "successDescription1": "We sent you an email with a verfication link.",
+    "successDescription2": "Use that link to activate your Account.",
+    "successDescription3": "Please also check your spam folder if you can't find it."
+  }
 }

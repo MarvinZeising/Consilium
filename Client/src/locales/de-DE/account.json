@@ -5,6 +5,8 @@
   "password": "Passwort",
   "passwordWrong": "Wir konnten keinen Benutzer mit diesen Anmeldedaten finden.",
   "passwordCapslock": "Ist die Feststelltaste vielleicht aktiviert?",
+  "passwordMustEqual": "Die Passwörter müssen übereinstimmen",
+  "passwordRepeat": "Wiederhole das Passwort",
   "changePasswordDescription1": "Das ist das Passwort deines Benutzers.",
   "changePasswordDescription2": "Niemand sollte dein Passwort kennen (also außer dir natürlich).",
   "changePasswordHint": "Nach dem Speichern wirst du abgemeldet und musst dich mit dem neuen Passwort wieder anmelden.",
@@ -29,5 +31,27 @@
   "criticalArea": "Kritischer Bereich",
   "changePassword": "Mein Passwort ändern",
   "emailDescription": "Deine Email-Adresse. Sie ist einzigartig für deinen Benutzer. Du brauchst sie um dich anzumelden.",
-  "emailChangeDescription": "Nach dem Speichern wirst du abgemeldet und musst dich mit der neuen Email-Adresse anmelden."
+  "emailChangeDescription": "Nach dem Speichern wirst du abgemeldet und musst dich mit der neuen Email-Adresse anmelden.",
+  "emailMustEqual": "Die Email-Adresse muss die deines Accounts sein",
+  "emailUnique": "Sorry, diese Email existiert bereits. Bitte wähle eine andere.",
+  "signUp": {
+    "fullTitle": "Willkommen bei Consilium!",
+    "email": "Gib deine Email-Address ein",
+    "password": "Wähle ein Passwort",
+    "passwordHint": "Bitte wähle ein Passwort für deinen Benutzer",
+    "passwordConfirmHint": "Um sicherzugehen wiederhole, das Passwort bitte",
+    "description1": "Du möchtest einen Benutzer erstellen?",
+    "description2": "Perfekt! Klick auf Start um loszulegen.",
+    "hint1": "Du wirst nach deiner Email-Adresse gefragt und musst ein Passwort vergeben.",
+    "hint2": "Wir werden dir dann eine Email mit einem Bestätigungslink senden, mit dem du deinen Benutzer aktivieren kannst.",
+    "signInHint": "Wenn du bereits einen Benutzer hast, kannst du dich stattdessen anmelden.",
+    "signInLink": "I habe bereits einen Benutzer",
+    "passwordRuleHint": "Muss mindestens 8 Zeichen lang sein",
+    "passwordDescription": "Bitte wähle ein Passwort für deinen Benutzer",
+    "passwordRepeatDescription": "Nur um sicherzugehen, wiederhole das Passwort bitte",
+    "success": "Benutzer erfolgreich angelegt!",
+    "successDescription1": "Wir haben dir eine Email mit einem Bestätigungslink geschickt.",
+    "successDescription2": "Nutze diesen Link um deinen Benutzer zu aktivieren.",
+    "successDescription3": "Wenn du keine Email findest, überprüfe bitte auch den Spam-Ordner."
+  }
 }

@@ -20,15 +20,18 @@
           <v-window v-model="step">
             <v-window-item :value="0">
               <div class="pa-3 text-xs-center">
-                <h2 class="headline">Welcome to Consilium!</h2>
-                <p>You want to create an account?</p>
-                <p>Perfect! Just click Start.</p>
+                <h2
+                  class="headline"
+                  v-t="'account.signUp.fullTitle'"
+                />
+                <p v-t="'account.signUp.description1'" />
+                <p v-t="'account.signUp.description2'" />
                 <p>
-                  You'll be asked to enter your Email Address and choose a password.
+                  {{ $t('account.signUp.hint1') }}
                   <br>
-                  We'll then send you a verification email to activate your account.
+                  {{ $t('account.signUp.hint2') }}
                 </p>
-                <p>If you already have an account, you can sign in instead.</p>
+                <p v-t="'account.signUp.signInHint'" />
               </div>
             </v-window-item>
 
@@ -39,13 +42,14 @@
                   ref="emailForm"
                   v-model="emailValid"
                 >
-                  <p class="grey--text text--darken-1">
-                    This is the email you will use to sign in to your Consilium account
-                  </p>
+                  <p
+                    class="grey--text text--darken-1"
+                    v-t="'account.emailDescription'"
+                  />
                   <v-text-field
                     v-model="email"
                     type="email"
-                    label="Email"
+                    :label="$t('core.email')"
                     :rules="emailRules"
                     box
                   />
@@ -53,9 +57,8 @@
                 <span
                   class="red--text"
                   v-if="emailAlreadyExists"
-                >
-                  Sorry, this email already exists. Please choose another one.
-                </span>
+                  v-t="'account.emailUnique'"
+                />
 
               </v-card-text>
             </v-window-item>
@@ -67,26 +70,28 @@
                   ref="passwordForm"
                   v-model="passwordValid"
                 >
-                  <p class="grey--text text--darken-1">
-                    Please choose a password for your account
-                  </p>
+                  <p
+                    class="grey--text text--darken-1"
+                    v-t="'account.signUp.passwordDescription'"
+                  />
                   <v-text-field
                     v-model="password"
-                    label="Password"
+                    :label="$t('account.password')"
                     :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
                     :type="passwordShow ? 'text' : 'password'"
                     :rules="passwordRules"
-                    hint="Has to have at least 8 characters"
+                    :hint="$t('account.signUp.passwordRuleHint')"
                     box
                     required
                     @click:append="passwordShow = !passwordShow"
                   />
-                  <p class="grey--text text--darken-1">
-                    Just to be sure, please confirm your password one more time
-                  </p>
+                  <p
+                    class="grey--text text--darken-1"
+                    v-t="'account.signUp.passwordRepeatDescription'"
+                  />
                   <v-text-field
                     v-model="passwordRepeat"
-                    label="Confirm Password"
+                    :label="$t('account.passwordRepeat')"
                     :append-icon="passwordRepeatShow ? 'visibility' : 'visibility_off'"
                     :type="passwordRepeatShow ? 'text' : 'password'"
                     :rules="passwordRepeatRules"
@@ -101,14 +106,16 @@
 
             <v-window-item :value="3">
               <div class="pa-3 text-xs-center">
-                <h2 class="headline">Success!</h2>
-                <!--// TODO: add link here -->
+                <h2
+                  class="headline"
+                  v-t="'account.signUp.success'"
+                />
                 <p>
-                  We sent you an email with a verfication link.
+                  {{ $t('account.signUp.successDescription1') }}
                   <br>
-                  Use that link to activate your account.
+                  {{ $t('account.signUp.successDescription2') }}
                   <br>
-                  Please also check your spam folder if you can't find it.
+                  {{ $t('account.signUp.successDescription3') }}
                 </p>
               </div>
             </v-window-item>
@@ -121,28 +128,28 @@
               v-if="step === 0"
               flat
               :to="{ name: 'signIn' }"
-            >
-              I have an account
-            </v-btn>
+              v-t="'account.signUp.signInLink'"
+            />
             <v-btn
               v-if="step !== 0"
               flat
               @click="step--"
-            >
-              Back
-            </v-btn>
+              v-t="'core.back'"
+            />
             <v-spacer />
             <v-btn
               :disabled="(step === 1 && (!emailValid || nextLoading)) || (step === 2 && !passwordValid)"
               color="primary"
               @click="next"
             >
-              <span v-if="step === 0">
-                Start
-              </span>
-              <span v-if="!nextLoading && step > 0 && step < 3">
-                Next
-              </span>
+              <span
+                v-if="step === 0"
+                v-t="'core.start'"
+              />
+              <span
+                v-if="!nextLoading && step > 0 && step < 3"
+                v-t="'core.next'"
+              />
               <v-progress-circular
                 v-if="nextLoading"
                 indeterminate
