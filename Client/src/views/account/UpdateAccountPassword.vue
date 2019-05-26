@@ -3,23 +3,29 @@
     <v-form ref="form">
 
       <v-flex xs12>
-        <h1 class="headline">Change Password</h1>
+        <h1
+          class="headline"
+          v-t="'account.changePassword'"
+        />
       </v-flex>
 
       <v-flex xs12 sm10 md8 lg6>
         <p class="mt-4 grey--text text--darken-1">
-          This is your Account's Password.
+          {{ $t('account.changePasswordDescription1') }}
           <br>
-          No one should know your Password (well, except you, of course).
-          <br>
-          After saving, you will be signed out and will have to sign in with your new Password.
+          {{ $t('account.changePasswordDescription2') }}
         </p>
-        <p class="mt-4 grey--text text--darken-1">
-          Enter your current Password
-        </p>
+        <p
+          class="mt-4 grey--text text--darken-1"
+          v-t="'account.changePasswordHint'"
+        />
+        <p
+          class="mt-4 grey--text text--darken-1"
+          v-t="'account.currentPasswordHint'"
+        />
         <v-text-field
           v-model="currentPassword"
-          label="Current Password"
+          :label="$t('account.currentPassword')"
           :rules="passwordRules"
           :append-icon="currentPasswordShow ? 'visibility' : 'visibility_off'"
           :type="currentPasswordShow ? 'text' : 'password'"
@@ -29,12 +35,13 @@
           required
         />
 
-        <p class="mt-4 grey--text text--darken-1">
-          Enter your new Password
-        </p>
+        <p
+          class="mt-4 grey--text text--darken-1"
+          v-t="'account.newPasswordHint'"
+        />
         <v-text-field
           v-model="newPassword"
-          label="New Password"
+          :label="$t('account.newPassword')"
           :rules="passwordRules"
           :append-icon="newPasswordShow ? 'visibility' : 'visibility_off'"
           :type="newPasswordShow ? 'text' : 'password'"
@@ -45,7 +52,7 @@
         />
         <v-text-field
           v-model="newPasswordRepeat"
-          label="Repeat new Password"
+          :label="$t('account.newPasswordRepeat')"
           :rules="passwordRules"
           :append-icon="newPasswordRepeatShow ? 'visibility' : 'visibility_off'"
           :type="newPasswordRepeatShow ? 'text' : 'password'"
@@ -56,15 +63,15 @@
         />
 
         <div class="mt-4">
-          <v-btn :to="{ name: 'account' }">
-            Cancel
-          </v-btn>
+          <v-btn
+            :to="{ name: 'account' }"
+            v-t="'core.cancel'"
+          />
           <v-btn
             @click="save"
             color="primary"
-          >
-            Change Password
-          </v-btn>
+            v-t="'core.save'"
+          />
         </div>
       </v-flex>
 
@@ -91,8 +98,8 @@ export default class UpdateAccountPassword extends Vue {
   private newPasswordRepeat: string = ''
   private newPasswordRepeatShow: boolean = false
   private passwordRules: any[] = [
-    (v: string) => !!v || 'Password is required',
-    (v: string) => v.length >= 8 || 'Password must have at least 8 characters'
+    (v: string) => !!v || this.$t('fieldRequired'),
+    (v: string) => v.length >= 8 || this.$t('core.fieldMin', { count: 8 })
   ]
 
   private async save() {
