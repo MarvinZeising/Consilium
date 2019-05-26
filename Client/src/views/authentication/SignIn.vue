@@ -77,6 +77,7 @@ import colors from 'vuetify/es5/util/colors'
 import UserModule from '@/store/modules/users'
 import { getModule, Action } from 'vuex-module-decorators'
 import ProjectModule from '@/store/modules/projects'
+import i18n from '@/i18n'
 
 @Component
 export default class SignIn extends Vue {
@@ -89,14 +90,14 @@ export default class SignIn extends Vue {
 
   private email: string = ''
   private emailRules: any[] = [
-    (v: string) => !!v || 'Email is required',
-    (v: string) => /.+@.+/.test(v) || 'Email must be valid'
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => /.+@.+/.test(v) || i18n.t('account.emailInvalid')
   ]
 
   private password: string = ''
   private passwordShow: boolean = false
   private passwordRules: any[] = [
-    (v: string) => !!v || 'Password is required'
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
   ]
 
   private created() {

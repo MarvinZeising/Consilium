@@ -68,6 +68,7 @@ import UserModule from '@/store/modules/users'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '../../models/definitions'
 import { VForm } from 'vuetify/lib'
+import i18n from '@/i18n'
 
 @Component
 export default class DeleteAccountDialog extends Vue {
@@ -79,9 +80,9 @@ export default class DeleteAccountDialog extends Vue {
   private email: string = ''
   private get emailRules() {
     return [
-      (v: string) => !!v || this.$t('core.fieldRequired'),
-      (v: string) => /.+@.+/.test(v) || this.$t('core.emailInvalid'),
-      (v: string) => v === this.accountEmail || this.$t('account.emailMustEqual')
+      (v: string) => !!v || i18n.t('core.fieldRequired'),
+      (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid'),
+      (v: string) => v === this.accountEmail || i18n.t('account.emailMustEqual')
     ]
   }
 

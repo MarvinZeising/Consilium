@@ -162,6 +162,7 @@ import Component from 'vue-class-component'
 import colors from 'vuetify/es5/util/colors'
 import UserModule from '@/store/modules/users'
 import { getModule } from 'vuex-module-decorators'
+import i18n from '@/i18n'
 
 @Component
 export default class SignUp extends Vue {
@@ -174,32 +175,32 @@ export default class SignUp extends Vue {
   private emailValid: boolean = false
   private emailAlreadyExists: boolean = false
   private emailRules: any[] = [
-    (v: string) => !!v || 'Email is required',
-    (v: string) => /.+@.+/.test(v) || 'Email must be valid'
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid'),
   ]
 
   private password: string = ''
   private passwordShow: boolean = false
   private passwordValid: boolean = false
   private passwordRules: any[] = [
-    (v: string) => !!v || 'Password is required',
-    (v: string) => v.length >= 8 || 'Password must have at least 8 characters'
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => v.length >= 8 || i18n.t('core.fieldMin', { count: 8 }),
   ]
 
   private passwordRepeat: string = ''
   private passwordRepeatShow: boolean = false
   private get passwordRepeatRules() {
     return [
-      (v: string) => !!v || 'Confirm password is required',
-      (v: string) => v === this.password || 'The passwords have to be equal'
+      (v: string) => !!v || i18n.t('core.fieldRequired'),
+      (v: string) => v === this.password || i18n.t('account.passwordMustEqual'),
     ]
   }
 
   private get currentTitle() {
     switch (this.step) {
       case 0: return ''
-      case 1: return 'Enter your Email Address'
-      case 2: return 'Choose a password'
+      case 1: return i18n.t('account.signUp.email')
+      case 2: return i18n.t('account.signUp.password')
       default: return ''
     }
   }

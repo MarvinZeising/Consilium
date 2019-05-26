@@ -68,6 +68,7 @@ import { getModule } from 'vuex-module-decorators'
 import { Project } from '../../models/definitions'
 import { Watch } from 'vue-property-decorator'
 import { VForm } from 'vuetify/lib'
+import i18n from '@/i18n'
 
 @Component({})
 export default class DeleteProjectDialog extends Vue {
@@ -79,8 +80,8 @@ export default class DeleteProjectDialog extends Vue {
   private enteredName: string = ''
   private get enteredNameRules() {
     return [
-      (v: string) => !!v || this.$t('core.fieldRequired'),
-      (v: string) => v === this.projectName || this.$t('project.nameMustEqual'),
+      (v: string) => !!v || i18n.t('core.fieldRequired'),
+      (v: string) => v === this.projectName || i18n.t('project.nameMustEqual'),
     ]
   }
 

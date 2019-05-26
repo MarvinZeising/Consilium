@@ -49,6 +49,7 @@ import Component from 'vue-class-component'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
 import UserModule from '@/store/modules/users'
+import i18n from '@/i18n'
 
 @Component
 export default class UpdateAccountGeneral extends Vue {
@@ -58,8 +59,8 @@ export default class UpdateAccountGeneral extends Vue {
   private currentEmail: string = ''
   private email: string = ''
   private emailRules: any[] = [
-    (v: string) => !!v || this.$t('core.fieldRequired'),
-    (v: string) => /.+@.+/.test(v) || this.$t('core.emailInvalid')
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid')
   ]
 
   private created() {

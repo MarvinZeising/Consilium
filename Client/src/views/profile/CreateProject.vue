@@ -106,6 +106,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import ProjectModule from '@/store/modules/projects'
 import { getModule } from 'vuex-module-decorators'
+import i18n from '@/i18n'
 
 @Component
 export default class CreateProject extends Vue {
@@ -116,15 +117,15 @@ export default class CreateProject extends Vue {
 
   private name: string = ''
   private nameRules: any[] = [
-    (v: string) => !!v || 'Name is required',
-    (v: string) => v.length <= 40 || 'Name must be less than 40 characters',
-    (v: string) => v.length >= 3 || 'Name must be more than 3 characters'
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
+    (v: string) => v.length >= 3 || i18n.t('core.fieldMin', { count: 3 })
   ]
 
   private email: string = ''
   private emailRules: any[] = [
-    (v: string) => !!v || 'Email is required',
-    (v: string) => /.+@.+/.test(v) || 'Email must be valid'
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid')
   ]
 
   private goBack() {

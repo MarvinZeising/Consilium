@@ -56,6 +56,7 @@ import Component from 'vue-class-component'
 import UserModule from '@/store/modules/users'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
+import i18n from '@/i18n'
 
 @Component
 export default class UpdateAccountLanguage extends Vue {
@@ -64,7 +65,7 @@ export default class UpdateAccountLanguage extends Vue {
   private languages: string[] = []
 
   private created() {
-    this.languages = this.$i18n.availableLocales
+    this.languages = i18n.availableLocales
     const user = this.userModule.myUser
     if (user) {
       this.language = user.language

@@ -86,6 +86,7 @@ import Component from 'vue-class-component'
 import UserModule from '@/store/modules/users'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
+import i18n from '@/i18n'
 
 @Component
 export default class UpdateAccountPassword extends Vue {
@@ -98,8 +99,8 @@ export default class UpdateAccountPassword extends Vue {
   private newPasswordRepeat: string = ''
   private newPasswordRepeatShow: boolean = false
   private passwordRules: any[] = [
-    (v: string) => !!v || this.$t('fieldRequired'),
-    (v: string) => v.length >= 8 || this.$t('core.fieldMin', { count: 8 })
+    (v: string) => !!v || i18n.t('fieldRequired'),
+    (v: string) => v.length >= 8 || i18n.t('core.fieldMin', { count: 8 })
   ]
 
   private async save() {
