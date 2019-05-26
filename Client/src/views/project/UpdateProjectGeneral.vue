@@ -63,21 +63,22 @@ import Component from 'vue-class-component'
 import ProjectModule from '@/store/modules/projects'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
+import i18n from '@/i18n'
 
 @Component
-export default class UpdateGeneral extends Vue {
+export default class UpdateProjectGeneral extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private name: string = ''
   private nameRules: any[] = [
-    (v: string) => !!v || this.$t('core.fieldRequired'),
-    (v: string) => v.length <= 40 || this.$t('core.fieldMax', { count: 40 }),
-    (v: string) => v.length >= 3 || this.$t('core.fieldMin', { count: 3 })
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
+    (v: string) => v.length >= 3 || i18n.t('core.fieldMin', { count: 3 })
   ]
   private email: string = ''
   private emailRules: any[] = [
-    (v: string) => !!v || this.$t('core.fieldRequired'),
-    (v: string) => /.+@.+/.test(v) || this.$t('core.emailInvalid')
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid')
   ]
 
   private created() {

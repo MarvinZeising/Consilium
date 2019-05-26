@@ -34,7 +34,7 @@ const router = new Router({
   }, {
     path: '/project/:projectId/settings/update-general',
     name: 'updateGeneral',
-    component: () => import('./views/project/UpdateGeneral.vue')
+    component: () => import('./views/project/UpdateProjectGeneral.vue')
   }, {
     path: '/profile/personal',
     name: 'personal',

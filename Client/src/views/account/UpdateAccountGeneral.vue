@@ -51,7 +51,7 @@ import { Project } from '@/models/definitions'
 import UserModule from '@/store/modules/users'
 
 @Component
-export default class UpdateGeneral extends Vue {
+export default class UpdateAccountGeneral extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
 
   private userId: string = ''
