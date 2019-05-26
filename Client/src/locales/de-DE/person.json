@@ -1,0 +1,8 @@
+{
+  "firstname": "Vorname",
+  "lastname": "Nachname",
+  "gender": "Geschlecht",
+  "general": "Generelles",
+  "photo": "Bild",
+  "updatePhoto": "Bild ändern"
+}

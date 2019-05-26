@@ -4,7 +4,10 @@
 
       <!--//* General Heading -->
       <v-flex xs12>
-        <h2 class="headline mb-3">General</h2>
+        <h2
+          class="headline mb-3"
+          v-t="'person.general'"
+        />
       </v-flex>
       <v-flex
         xs12 sm10 md8 lg6
@@ -12,16 +15,18 @@
       >
         <v-card flat>
           <v-card-text>
-            <p class="caption mb-0 grey--text">
-              Firstname
-            </p>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'person.firstname'"
+            />
             <p class="subheading">
               {{ firstname }}
             </p>
 
-            <p class="caption mb-0 grey--text">
-              Lastname
-            </p>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'person.lastname'"
+            />
             <p class="subheading">
               {{ lastname }}
             </p>
@@ -29,9 +34,10 @@
             <p class="caption mb-0 grey--text">
               Gender
             </p>
-            <p class="subheading">
-              {{ gender }}
-            </p>
+            <p
+              class="subheading"
+              v-t="'person.gender'"
+            />
           </v-card-text>
 
           <v-card-actions>
@@ -39,16 +45,18 @@
             <v-btn
               flat
               :to="{ name: 'home' }"
-            >
-              Edit
-            </v-btn>
+              v-t="'core.edit'"
+            />
           </v-card-actions>
         </v-card>
       </v-flex>
 
       <!--//* Photo Heading -->
       <v-flex xs12>
-        <h2 class="headline mb-3">Photo</h2>
+        <h2
+          class="headline mb-3"
+          v-t="'person.photo'"
+        />
       </v-flex>
       <v-flex
         class="mb-5 pa-2 shrink"
@@ -72,9 +80,8 @@
               flat
               block
               :to="{ name: 'home' }"
-            >
-              Update Photo
-            </v-btn>
+              v-t="'person.updatePhoto'"
+            />
           </v-card-actions>
         </v-card>
       </v-flex>

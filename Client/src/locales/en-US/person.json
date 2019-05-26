@@ -1,0 +1,8 @@
+{
+  "firstname": "Firstname",
+  "lastname": "Lastname",
+  "gender": "Gender",
+  "general": "General",
+  "photo": "Photo",
+  "updatePhoto": "Update photo"
+}
