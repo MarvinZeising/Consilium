@@ -73,7 +73,7 @@
         />
       </v-flex>
       <v-flex
-        xs12 sm8 md6 lg4
+        xs12 sm10 md8 lg6
         class="mb-5 pa-2"
       >
         <v-card

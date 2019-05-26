@@ -1,7 +1,7 @@
 <template>
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md6 lg4>
+      <v-flex xs12 sm10 md8 lg6>
         <v-card
           class="mx-auto elevation-10"
           max-width="500"
