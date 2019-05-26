@@ -40,7 +40,7 @@
     "password": "Wähle ein Passwort",
     "passwordHint": "Bitte wähle ein Passwort für deinen Benutzer",
     "passwordConfirmHint": "Um sicherzugehen wiederhole, das Passwort bitte",
-    "description1": "Du möchtest einen Benutzer erstellen?",
+    "description1": "Du möchtest einen Benutzer anlegen?",
     "description2": "Perfekt! Klick auf Start um loszulegen.",
     "hint1": "Du wirst nach deiner Email-Adresse gefragt und musst ein Passwort vergeben.",
     "hint2": "Wir werden dir dann eine Email mit einem Bestätigungslink senden, mit dem du deinen Benutzer aktivieren kannst.",

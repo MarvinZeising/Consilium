@@ -10,5 +10,7 @@
   "updateGeneral": "Update Project General",
   "nameDescription": "The name of this Project. The Name is unique accross all Projects, so no other Project can have this name.",
   "emailDescription1": "We'll use this Email address as reply-to in all Emails that we send on behalf of this Project.",
-  "emailDescription2": "You can create an Email account specifically for the project, or just use your own Email address."
+  "emailDescription2": "You can create an Email account specifically for the project, or just use your own Email address.",
+  "create": "Create a new Project",
+  "createButton": "Create Project"
 }

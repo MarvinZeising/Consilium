@@ -7,11 +7,13 @@
   "back": "Zurück",
   "next": "Weiter",
   "start": "Start",
+  "review": "Zusammenfassung",
   "id": "ID",
   "name": "Name",
   "email": "Email-Adresse",
   "emailInvalid": "Die Email-Addresse muss gültig sein",
   "fieldRequired": "Dies ist ein Pflichtfeld",
   "fieldMin": "Dieses Feld muss mindestens {count} Zeichen lang sein",
-  "fieldMax": "Dieses Feld darf maximal {count} Zeichen lang sein"
+  "fieldMax": "Dieses Feld darf maximal {count} Zeichen lang sein",
+  "fieldCamelCase": "Dieses Feld muss mit einem Großbuchstaben anfangen"
 }

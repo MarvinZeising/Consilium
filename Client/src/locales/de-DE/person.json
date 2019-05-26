@@ -1,8 +1,11 @@
 {
   "firstname": "Vorname",
+  "firstnameDescription": "Der Vorname der Person.",
   "lastname": "Nachname",
+  "lastnameDescription": "Der Nachname der Person.",
   "gender": "Geschlecht",
   "general": "Generelles",
   "photo": "Bild",
-  "updatePhoto": "Bild ändern"
+  "updatePhoto": "Bild ändern",
+  "create": "Neue Person anlegen"
 }

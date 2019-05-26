@@ -10,5 +10,7 @@
   "updateGeneral": "Generelle Informationen bearbeiten",
   "nameDescription": "Der Name dieses Projekts. Der Name ist über alle Projekte einmalig, kein anderes Projekt kann diesen Namen haben.",
   "emailDescription1": "Wir werden diese Email-Adresse as reply-to in allen Emails nutzen, die wir im Auftrag dieses Projekts schicken.",
-  "emailDescription2": "Du kannst ein Email Konto speziell für dieses Projekt erstellen oder einfach deine eigene Email-Adresse nutzen."
+  "emailDescription2": "Du kannst ein Email Konto speziell für dieses Projekt erstellen oder einfach deine eigene Email-Adresse nutzen.",
+  "create": "Neues Projekt erstellen",
+  "createButton": "Projekt erstellen"
 }

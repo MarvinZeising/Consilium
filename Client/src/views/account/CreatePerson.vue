@@ -1,6 +1,9 @@
 <template>
   <v-container class="createPerson">
-    <h1 class="headline mb-4">Create a new Person</h1>
+    <h1
+      class="headline mb-4"
+      v-t="'person.create'"
+    />
 
     <v-form
       ref="form"
@@ -13,9 +16,8 @@
           <v-stepper-step
             :complete="activeStep > 1"
             step="1"
-          >
-            General
-          </v-stepper-step>
+            v-t="'person.general'"
+          />
 
           <v-stepper-content step="1">
             <p class="mt-4 grey--text text--darken-1">
@@ -30,24 +32,26 @@
               <br>
               That way, you can manage the shifts for yourself and others (e.g. your spouse, parents, children, friends, etc.)
             </p>
-            <p class="mt-4 grey--text text--darken-1">
-              The first name of this Person.
-            </p>
+            <p
+              class="mt-4 grey--text text--darken-1"
+              v-t="'person.firstnameDescription'"
+            />
             <v-text-field
               v-model="firstname"
-              label="Firstname"
+              :label="$t('person.firstname')"
               :rules="nameRules"
               counter="40"
               box
               required
             />
 
-            <p class="mt-4 grey--text text--darken-1">
-              The last name of this Person.
-            </p>
+            <p
+              class="mt-4 grey--text text--darken-1"
+              v-t="'person.lastnameDescription'"
+            />
             <v-text-field
               v-model="lastname"
-              label="Lastname"
+              :label="$t('person.lastname')"
               :rules="nameRules"
               counter="40"
               box
@@ -58,32 +62,35 @@
               :disabled="!valid"
               @click="validateStep"
               color="primary"
-            >
-              Continue
-            </v-btn>
+              v-t="'core.next'"
+            />
             <v-btn
               flat
               @click="goBack"
-            >
-              Cancel
-            </v-btn>
+              v-t="'core.cancel'"
+            />
           </v-stepper-content>
 
           <v-stepper-step
             :complete="activeStep > 2"
             step="2"
-          >
-            Review
-          </v-stepper-step>
+            v-t="'core.review'"
+          />
 
           <v-stepper-content step="2">
-            <p class="caption mb-0">Firstname</p>
+            <p
+              class="caption mb-0"
+              v-t="'person.firstname'"
+            />
             <p
               v-text="firstname"
               class="title"
             />
 
-            <p class="caption mb-0">Lastname</p>
+            <p
+              class="caption mb-0"
+              v-t="'person.lastname'"
+            />
             <p
               v-text="lastname"
               class="title"
@@ -92,15 +99,13 @@
             <v-btn
               @click="createPerson"
               color="primary"
-            >
-              Create Person
-            </v-btn>
+              v-t="'person.create'"
+            />
             <v-btn
               flat
               @click="activeStep = 1"
-            >
-              Back
-            </v-btn>
+              v-t="'core.back'"
+            />
           </v-stepper-content>
 
         </v-stepper>
@@ -116,6 +121,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import PersonModule from '@/store/modules/persons'
 import { getModule } from 'vuex-module-decorators'
+import i18n from '@/i18n'
 
 @Component
 export default class CreatePerson extends Vue {
@@ -127,9 +133,9 @@ export default class CreatePerson extends Vue {
   private firstname: string = ''
   private lastname: string = ''
   private nameRules: any[] = [
-    (v: string) => !!v || 'Name is required',
-    (v: string) => v.length <= 40 || 'Name must be less than 40 characters',
-    (v: string) => v.charAt(0) === v.charAt(0).toUpperCase() || 'Name must begin with an uppercase letter'
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
+    (v: string) => v.charAt(0) === v.charAt(0).toUpperCase() || i18n.t('core.fieldCamelCase')
   ]
 
   private goBack() {

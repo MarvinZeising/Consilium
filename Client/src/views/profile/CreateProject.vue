@@ -1,6 +1,9 @@
 <template>
   <v-container class="createProject">
-    <h1 class="headline mb-4">Create a new Project</h1>
+    <h1
+      class="headline mb-4"
+      v-t="'project.create'"
+    />
 
     <v-form
       ref="form"
@@ -13,9 +16,8 @@
           <v-stepper-step
             :complete="activeStep > 1"
             step="1"
-          >
-            General
-          </v-stepper-step>
+            v-t="'project.general'"
+          />
 
           <v-stepper-content step="1">
             <p class="mt-4 grey--text text--darken-1">
@@ -23,7 +25,7 @@
             </p>
             <v-text-field
               v-model="name"
-              label="Project name"
+              :label="$t('core.name')"
               :rules="nameRules"
               counter="40"
               box
@@ -37,7 +39,7 @@
             </p>
             <v-text-field
               v-model="email"
-              label="Project email"
+              :label="$t('core.email')"
               type="email"
               :rules="emailRules"
               box
@@ -48,32 +50,35 @@
               :disabled="!valid"
               @click="validateStep"
               color="primary"
-            >
-              Continue
-            </v-btn>
+              v-t="'core.next'"
+            />
             <v-btn
               flat
               @click="goBack"
-            >
-              Cancel
-            </v-btn>
+              v-t="'core.cancel'"
+            />
           </v-stepper-content>
 
           <v-stepper-step
             :complete="activeStep > 2"
             step="2"
-          >
-            Review
-          </v-stepper-step>
+            v-t="'core.review'"
+          />
 
           <v-stepper-content step="2">
-            <p class="caption mb-0">Name</p>
+            <p
+              class="caption mb-0"
+              v-t="'core.name'"
+            />
             <p
               v-text="name"
               class="title"
             />
 
-            <p class="caption mb-0">Email</p>
+            <p
+              class="caption mb-0"
+              v-t="'core.email'"
+            />
             <p
               v-text="email"
               class="title"
@@ -82,15 +87,13 @@
             <v-btn
               @click="createProject"
               color="primary"
-            >
-              Create project
-            </v-btn>
+              v-t="'project.createButton'"
+            />
             <v-btn
               flat
               @click="activeStep = 1"
-            >
-              Back
-            </v-btn>
+              v-t="'core.back'"
+            />
           </v-stepper-content>
 
         </v-stepper>

@@ -7,11 +7,13 @@
   "back": "Back",
   "next": "Next",
   "start": "Start",
+  "review": "Review",
   "id": "ID",
   "name": "Name",
   "email": "Email",
   "emailInvalid": "Email must be valid",
   "fieldRequired": "This field is required",
   "fieldMin": "This field has to have at least {count} characters",
-  "fieldMax": "This field must not have more than {count} characters"
+  "fieldMax": "This field must not have more than {count} characters",
+  "fieldCamelCase": "Name must begin with an uppercase letter"
 }

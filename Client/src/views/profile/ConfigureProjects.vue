@@ -9,7 +9,10 @@
 
     <!--//* Create Project -->
     <v-flex xs12>
-      <h2 class="headline mb-3">Create a new Project</h2>
+      <h2
+        class="headline mb-3"
+        v-t="'project.create'"
+      />
     </v-flex>
     <v-flex
       xs12 sm10 md8 lg6
@@ -22,9 +25,9 @@
       </p>
       <v-btn
         :to="{ name: 'createProject' }"
-        color="warning">
-        Create a new Project
-      </v-btn>
+        color="warning"
+        v-t="'project.create'"
+      />
     </v-flex>
   </v-container>
 </template>
