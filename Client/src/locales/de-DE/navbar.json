@@ -11,5 +11,7 @@
   "account": "Benutzer",
   "signOut": "Abmelden",
   "signIn": "Mit deinem Benutzer anmelden",
-  "signUp": "Einen Benutzer erstellen"
+  "signUp": "Einen Benutzer erstellen",
+  "termsOfUse": "Nutzungsbedingungen",
+  "privacyPolicy": "Datenschutzerklärung"
 }
