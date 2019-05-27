@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="TestLibrary.fs" />
     <Compile Include="EmailValidation.fs" />
+    <Compile Include="LanguageValidation.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

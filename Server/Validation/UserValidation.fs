@@ -8,7 +8,7 @@ open Validation
 
 module LanguageValidation =
 
-    let availableLanguages = [|"de-DE";"en-US"|]
+    let private availableLanguages = [|"de-DE";"en-US"|]
 
     let private validateRequired language =
        if language = "" then Error [LanguageRequired]
