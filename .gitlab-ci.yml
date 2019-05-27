@@ -1,14 +1,29 @@
 stages:
-  - test
   - build
+  - test
+  - publish
 
-test:
+build:
+  image: microsoft/dotnet:latest
+  stage: build
+  script:
+    - dotnet build ./Server/Server.fsproj
+
+unit:
   image: microsoft/dotnet:latest
   stage: test
   script:
-    - dotnet test ./Tests/Tests.fsproj
+    - dotnet test ./Tests/UnitTests/UnitTests.fsproj
+    
+integration:
+  image: microsoft/dotnet:latest
+  stage: test
+  script:
+    - dotnet build ./Server/Server.fsproj
+    - dotnet run ./Server/Server.fsproj &
+    - dotnet test ./Tests/IntegrationTests/IntegrationTests.fsproj
 
-build:
+publish:
   image: docker:latest
   services:
     - docker:dind
