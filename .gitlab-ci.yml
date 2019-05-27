@@ -6,7 +6,7 @@ test:
   image: microsoft/dotnet:latest
   stage: test
   script:
-    - dotnet test .\Tests\Tests.fsproj
+    - dotnet test ./Tests/Tests.fsproj
 
 build:
   image: docker:latest
