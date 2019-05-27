@@ -22,16 +22,9 @@ yarn-error.log*
 *.njsproj
 *.sw*
 
-Server/bin/
-Server/obj/
+# build directories and files
+**/bin/
+**/obj/
 Server/app
 Client/app
 .dtbcache
-Tests/bin/
-Tests/obj/
-Tests/UnitTests/bin/
-Tests/UnitTests/obj/
-Tests/IntegrationTests/obj/
-Tests/IntegrationTests/bin/
-Tests/TestLibrary/obj/
-Tests/TestLibrary/bin/
