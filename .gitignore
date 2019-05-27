@@ -28,3 +28,5 @@ Server/obj/
 Server/app
 Client/app
 .dtbcache
+Tests/bin/
+Tests/obj/

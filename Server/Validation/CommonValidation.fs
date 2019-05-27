@@ -12,7 +12,7 @@ module EmailValidation =
        else Ok email
 
     let private validateFormat email =
-       if Regex.IsMatch(email, ".+@.+") then Ok email
+       if Regex.IsMatch(email, ".+@.+\..+") then Ok email
        else Error [EmailInvalid]
 
     let private canonicalizeEmail (email : string) =
