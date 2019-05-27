@@ -12,11 +12,7 @@ open System
 let private shaM = new SHA512Managed()
 
 let private getPasswordData (plainText: string) =
-    let hash = plainText
-               |> Encoding.UTF8.GetBytes
-               |> shaM.ComputeHash
-               |> BitConverter.ToString
-    let password = hash.Replace("-", "").ToLower()
+    let password = Security.getShaPassword plainText
     let encryptedPassword = Authentication.hash password
     (password, encryptedPassword)
 

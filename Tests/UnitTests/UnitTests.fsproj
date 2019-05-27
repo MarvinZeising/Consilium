@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Server\Server.fsproj" />
+    <ProjectReference Include="..\TestLibrary\TestLibrary.fsproj" />
   </ItemGroup>
 
 </Project>
