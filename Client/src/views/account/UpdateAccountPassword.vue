@@ -99,7 +99,7 @@ export default class UpdateAccountPassword extends Vue {
   private newPasswordRepeat: string = ''
   private newPasswordRepeatShow: boolean = false
   private passwordRules: any[] = [
-    (v: string) => !!v || i18n.t('fieldRequired'),
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => v.length >= 8 || i18n.t('core.fieldMin', { count: 8 })
   ]
 
