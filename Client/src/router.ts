@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router, { Route } from 'vue-router'
-import Home from '@/views/Home.vue'
 
 Vue.use(Router)
 
@@ -10,7 +9,7 @@ const router = new Router({
   routes: [{
     path: '/home',
     name: 'home',
-    component: Home
+    component: () => import('./views/Home.vue')
   }, {
     path: '/terms-of-use',
     name: 'termsOfUse',
@@ -82,7 +81,7 @@ const router = new Router({
   }, {
     path: '/token',
     name: 'token',
-    component: () => import('./views/Token.vue')
+    component: () => import('./views/authentication/Token.vue')
   }, {
     path: '*',
     redirect: '/home'
