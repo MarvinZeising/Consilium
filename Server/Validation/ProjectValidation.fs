@@ -3,9 +3,7 @@ namespace Consilium
 module ProjectValidation =
 
     open CommonTypes
-    open CommonLibrary
     open Validation
-    open ProjectTypes
 
     let private validateRequired name =
        if name = "" then Error [NameRequired]

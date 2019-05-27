@@ -12,6 +12,7 @@
     <Compile Include="EmailValidation.fs" />
     <Compile Include="LanguageValidation.fs" />
     <Compile Include="PasswordValidation.fs" />
+    <Compile Include="ProjectValidation.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
