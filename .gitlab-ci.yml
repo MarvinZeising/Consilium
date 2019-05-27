@@ -20,7 +20,7 @@ integration:
   stage: test
   script:
     - dotnet build ./Server/Server.fsproj
-    - dotnet run ./Server/Server.fsproj &
+    - dotnet run -p ./Server/Server.fsproj &
     - dotnet test ./Tests/IntegrationTests/IntegrationTests.fsproj
 
 publish:
