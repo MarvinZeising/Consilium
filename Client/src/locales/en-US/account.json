@@ -2,6 +2,7 @@
   "account": "Account",
   "signIn": "Sign in",
   "signInFullTitle": "Sign in to Consilium",
+  "signingOut": "Signing you out ...",
   "password": "Password",
   "passwordWrong": "We couldn't find an account with these credentials.",
   "passwordCapslock": "Is your capslock activated, maybe?",

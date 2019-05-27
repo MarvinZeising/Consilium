@@ -1,4 +1,6 @@
 {
+  "description1": "You can have multiple Persons connected to your Account.",
+  "description2": "That way, you can manage the Shifts for yourself and others (e.g. your spouse, parents, children, friends, etc)",
   "firstname": "Firstname",
   "firstnameDescription": "The first name of this Person.",
   "lastname": "Lastname",
@@ -7,5 +9,8 @@
   "general": "General",
   "photo": "Photo",
   "updatePhoto": "Update photo",
-  "create": "Create a new Person"
+  "create": "Create a new Person",
+  "createDescription1": "Why create a Person?",
+  "createDescription2": "You already have an Account. But an Account is only for signing in.",
+  "createDescription3": "To actually connect to a Project and participate, you need a Person."
 }

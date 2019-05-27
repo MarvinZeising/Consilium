@@ -12,5 +12,7 @@
   "emailDescription1": "Wir werden diese Email-Adresse as reply-to in allen Emails nutzen, die wir im Auftrag dieses Projekts schicken.",
   "emailDescription2": "Du kannst ein Email Konto speziell für dieses Projekt erstellen oder einfach deine eigene Email-Adresse nutzen.",
   "create": "Neues Projekt erstellen",
+  "createDescription1": "Bist du der Koordinator eines Events oder Projekts?",
+  "createDescription2": "Dann kannst du ein Projekt erstellen und die Verkündiger einladen teilzunehmen.",
   "createButton": "Projekt erstellen"
 }

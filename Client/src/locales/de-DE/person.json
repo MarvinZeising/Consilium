@@ -1,4 +1,6 @@
 {
+  "description1": "Du kannst für deinen Benutzer mehrere Personen anlegen.",
+  "description2": "Dadurch kannst du die Schichten von dir und anderen Personen verwalten (z.B. deinem Ehepartner, Eltern, Kindern, Freunden, etc.)",
   "firstname": "Vorname",
   "firstnameDescription": "Der Vorname der Person.",
   "lastname": "Nachname",
@@ -7,5 +9,8 @@
   "general": "Generelles",
   "photo": "Bild",
   "updatePhoto": "Bild ändern",
-  "create": "Neue Person anlegen"
+  "create": "Neue Person anlegen",
+  "createDescription1": "Warum eine Person anlegen?",
+  "createDescription2": "Du hast bereits einen Benutzer. Aber ein Benutzer ist nur zum Anmelden am System.",
+  "createDescription3": "Um tatsächlich an einem Projekt teilzunehmen, brauchst du eine Person."
 }

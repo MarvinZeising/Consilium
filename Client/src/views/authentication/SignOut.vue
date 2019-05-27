@@ -1,9 +1,10 @@
 <template>
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
-      <h3 class="headline">
-        Signing you out ...
-      </h3>
+      <h3
+        class="headline"
+        v-t="'account.signingOut'"
+      />
     </v-layout>
   </v-container>
 </template>

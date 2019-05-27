@@ -2,6 +2,7 @@
   "account": "Benutzer",
   "signIn": "Anmelden",
   "signInFullTitle": "Bei Consilium anmelden",
+  "signingOut": "Du wirst abgemeldet ...",
   "password": "Passwort",
   "passwordWrong": "Wir konnten keinen Benutzer mit diesen Anmeldedaten finden.",
   "passwordCapslock": "Ist die Feststelltaste vielleicht aktiviert?",

@@ -19,9 +19,9 @@
       class="mb-5"
     >
       <p>
-        Are you the Coordinator of an event/a project?
+        {{ $t('project.createDescription1') }}
         <br>
-        Then you can create a new Project and invite all the Publishers to it.
+        {{ $t('project.createDescription2') }}
       </p>
       <v-btn
         :to="{ name: 'createProject' }"

@@ -20,9 +20,10 @@
           />
 
           <v-stepper-content step="1">
-            <p class="mt-4 grey--text text--darken-1">
-              The name of this Project. The Name has to be unique accross all Projects.
-            </p>
+            <p
+              class="mt-4 grey--text text--darken-1"
+              v-t="'project.nameDescription'"
+            />
             <v-text-field
               v-model="name"
               :label="$t('core.name')"
@@ -33,9 +34,9 @@
             />
 
             <p class="mt-4 grey--text text--darken-1">
-              We'll use this Email address as reply-to in all Emails that we send on behalf of this Project.
+              {{ $t('project.emailDescription1') }}
               <br>
-              You can create an Email account specifically for the project, or just use your own Email address.
+              {{ $t('project.emailDescription2') }}
             </p>
             <v-text-field
               v-model="email"

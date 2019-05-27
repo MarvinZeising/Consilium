@@ -21,16 +21,16 @@
 
           <v-stepper-content step="1">
             <p class="mt-4 grey--text text--darken-1">
-              Why create a Person?
+              {{ $t('person.createDescription1') }}
               <br>
-              You already have a user. But a user is only for signing in.
+              {{ $t('person.createDescription2') }}
               <br>
-              To actually connect to a project and participate, you need a Person.
+              {{ $t('person.createDescription3') }}
             </p>
             <p class="mt-4 grey--text text--darken-1">
-              You can have multiple Persons connected to your user.
+              {{ $t('person.description1') }}
               <br>
-              That way, you can manage the shifts for yourself and others (e.g. your spouse, parents, children, friends, etc.)
+              {{ $t('person.description2') }}
             </p>
             <p
               class="mt-4 grey--text text--darken-1"

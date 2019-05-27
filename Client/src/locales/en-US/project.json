@@ -12,5 +12,7 @@
   "emailDescription1": "We'll use this Email address as reply-to in all Emails that we send on behalf of this Project.",
   "emailDescription2": "You can create an Email account specifically for the project, or just use your own Email address.",
   "create": "Create a new Project",
+  "createDescription1": "Are you the Coordinator of an event/a project?",
+  "createDescription2": "Then you can create a new Project and invite all the Publishers to it.",
   "createButton": "Create Project"
 }
