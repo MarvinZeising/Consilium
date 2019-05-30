@@ -44,8 +44,8 @@ let configureApp (app : IApplicationBuilder) =
        .UseGiraffe routes
 
 let configureServices (services : IServiceCollection) =
-    let mongo = MongoClient ("mongodb://root:abc123@ds123624.mlab.com:23624/consiliumdb")
-    let db = mongo.GetDatabase "consiliumdb"
+    let mongo = MongoClient ("mongodb://db:27017/")
+    let db = mongo.GetDatabase "ConsiliumDb"
 
     services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(fun options ->

@@ -1,0 +1,20 @@
+version: '2.0'
+
+services:
+
+  db:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodata:/data/db
+
+  app:
+    build: ../
+    depends_on:
+      - "db"
+    ports:
+      - '8080:80'
+
+volumes:
+  mongodata:
