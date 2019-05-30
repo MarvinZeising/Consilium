@@ -10,11 +10,18 @@ services:
       - mongodata:/data/db
 
   app:
-    build: ../
+    build: ./
     depends_on:
       - "db"
     ports:
       - '8080:80'
+
+  integration:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.IntegrationTests
+    depends_on:
+      - "app"
 
 volumes:
   mongodata:

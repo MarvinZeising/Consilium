@@ -13,7 +13,7 @@ let createRandomUser =
     let request = JsonConvert.SerializeObject(credentials);
 
     Http.Request
-         ( "http://localhost:5000/users",
+         ( "http://app:80/users",
            headers = [ ContentType HttpContentTypes.Json ],
            body = TextRequest request ) |> ignore
 
