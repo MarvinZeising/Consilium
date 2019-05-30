@@ -1,6 +1,6 @@
 stages:
-  - test
   - build
+  - test
 
 build:
   stage: build
@@ -11,8 +11,6 @@ build:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_TOKEN" $CI_REGISTRY
     - docker build --pull -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
-  only:
-    - master
 
 unit:
   stage: test

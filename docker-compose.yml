@@ -10,7 +10,7 @@ services:
       - mongodata:/data/db
 
   app:
-    build: ./
+    image: registry.gitlab.com/marvinzeising/consilium
     depends_on:
       - "db"
     ports:
