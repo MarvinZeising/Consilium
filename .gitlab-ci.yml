@@ -14,14 +14,14 @@ unit:
   stage: test
   script:
     - dotnet test ./Tests/UnitTests/UnitTests.fsproj
-    
+
 integration:
   image: microsoft/dotnet:latest
   stage: test
   script:
-    - dotnet build ./Server/Server.fsproj
-    - dotnet run -p ./Server/Server.fsproj &
-    - dotnet test ./Tests/IntegrationTests/IntegrationTests.fsproj
+    - apk add --no-cache py-pip
+    - pip install docker-compose
+    - docker-compose run integration
 
 publish:
   image: docker:latest
