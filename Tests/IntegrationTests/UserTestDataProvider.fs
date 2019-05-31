@@ -3,17 +3,18 @@
 open FSharp.Data
 open FSharp.Data.HttpRequestHeaders
 open Newtonsoft.Json
+open Config
 open TestLibrary
 open Consilium.UserTypes
 
-let createRandomUser =
+let createRandomUser _ =
     let credentials = { email = Randomize.email ()
                         password = Randomize.password () }
 
-    let request = JsonConvert.SerializeObject(credentials);
+    let request = JsonConvert.SerializeObject credentials
 
     Http.Request
-         ( "http://app:80/users",
+         ( serverUrl + "/users",
            headers = [ ContentType HttpContentTypes.Json ],
            body = TextRequest request ) |> ignore
 
