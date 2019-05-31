@@ -20,6 +20,7 @@
                 v-model="email"
                 :label="$t('core.email')"
                 :rules="emailRules"
+                name="email"
                 prepend-inner-icon="person"
                 box
                 required
@@ -30,6 +31,7 @@
                 :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
                 :type="passwordShow ? 'text' : 'password'"
                 :rules="passwordRules"
+                name="password"
                 prepend-inner-icon="lock"
                 box
                 required

@@ -48,6 +48,7 @@
                   />
                   <v-text-field
                     v-model="email"
+                    name="email"
                     type="email"
                     :label="$t('core.email')"
                     :rules="emailRules"
@@ -81,6 +82,7 @@
                     :type="passwordShow ? 'text' : 'password'"
                     :rules="passwordRules"
                     :hint="$t('account.signUp.passwordRuleHint')"
+                    name="password"
                     box
                     required
                     @click:append="passwordShow = !passwordShow"
@@ -95,6 +97,7 @@
                     :append-icon="passwordRepeatShow ? 'visibility' : 'visibility_off'"
                     :type="passwordRepeatShow ? 'text' : 'password'"
                     :rules="passwordRepeatRules"
+                    name="passwordRepeat"
                     box
                     required
                     @click:append="passwordRepeatShow = !passwordRepeatShow"
