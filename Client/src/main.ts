@@ -23,8 +23,9 @@ async function init() {
   axios.interceptors.response.use((response) => {
     return response
   }, (error) => {
-    // * automatically sign out if token is expired
-    if (error.response.status === 401 && localStorage.getItem('user')) {
+    // * automatically sign out if token is expired or invalid
+    if ((error.response.status === 401 || error.response.status === 404)
+      && localStorage.getItem('user')) {
       userModule.signOut()
       location.reload(true)
       // TODO: communicate signOut via an alert
