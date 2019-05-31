@@ -19,7 +19,7 @@ async function init() {
 
   Vue.config.productionTip = false
 
-  axios.defaults.baseURL = 'http://localhost:8081'
+  axios.defaults.baseURL = 'http://localhost:8090'
   axios.interceptors.response.use((response) => {
     return response
   }, (error) => {

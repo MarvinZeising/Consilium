@@ -14,7 +14,7 @@ services:
     build: ./Server
     ports:
       # outside-port:inside-port
-      - '8081:80'
+      - '8090:80'
     volumes:
       - '.:/app'
     working_dir: '/app/Server'
