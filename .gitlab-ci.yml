@@ -1,16 +1,16 @@
 stages:
-  - build
+# - build
   - test
 
-build:
-  stage: build
-  image: docker:latest
-  services:
-    - docker:dind
-  script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_TOKEN" $CI_REGISTRY
-    - docker build --pull -t $CI_REGISTRY_IMAGE .
-    - docker push $CI_REGISTRY_IMAGE
+#build:
+#  stage: build
+#  image: docker:latest
+#  services:
+#    - docker:dind
+#  script:
+#    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_TOKEN" $CI_REGISTRY
+#    - docker build --pull -t $CI_REGISTRY_IMAGE .
+#    - docker push $CI_REGISTRY_IMAGE
 
 unit:
   stage: test

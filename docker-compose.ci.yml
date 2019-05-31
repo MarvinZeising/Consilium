@@ -10,9 +10,9 @@ services:
       - mongodata:/data/db
 
   app:
-    image: registry.gitlab.com/marvinzeising/consilium
+    build: ./
     depends_on:
-      - "db"
+      - 'db'
     ports:
       - '8080:80'
 
@@ -21,7 +21,7 @@ services:
       context: ./
       dockerfile: ./Dockerfile.IntegrationTests
     depends_on:
-      - "app"
+      - 'app'
 
 volumes:
   mongodata:
