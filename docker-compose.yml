@@ -3,10 +3,18 @@ version: '3.7'
 
 services:
 
+  db:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodata:/data/db
+
   server:
     build: ./Server
     ports:
-      - '80:8080'
+      # outside-port:inside-port
+      - '8081:80'
     volumes:
       - '.:/app'
     working_dir: '/app/Server'
@@ -15,8 +23,12 @@ services:
   client:
     build: ./Client
     ports:
+      # outside-port:inside-port
       - '8080:8080'
     volumes:
       - './Client:/app/Client'
     working_dir: '/app/Client'
     command: 'npm run serve'
+
+volumes:
+  mongodata:
