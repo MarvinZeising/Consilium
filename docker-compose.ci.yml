@@ -19,7 +19,7 @@ services:
   integration:
     build:
       context: ./
-      dockerfile: ./Dockerfile.IntegrationTests
+      dockerfile: ./Tests/IntegrationTests/Dockerfile
     depends_on:
       - 'app'
 
