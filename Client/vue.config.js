@@ -7,5 +7,10 @@ module.exports = {
       fallbackLocale: 'en-US',
       localeDir: 'locales'
     }
+  },
+  devServer: {
+    watchOptions: {
+      poll: true
+    }
   }
 }

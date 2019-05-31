@@ -1,27 +1,22 @@
-version: '2.0'
+# for local development
+version: '3.7'
 
 services:
 
-  db:
-    image: mongo
+  server:
+    build: ./Server
     ports:
-      - '27017:27017'
+      - '80:8080'
     volumes:
-      - mongodata:/data/db
+      - '.:/app'
+    working_dir: '/app/Server'
+    command: 'dotnet watch run'
 
-  app:
-    image: registry.gitlab.com/marvinzeising/consilium
-    depends_on:
-      - "db"
+  client:
+    build: ./Client
     ports:
-      - '8080:80'
-
-  integration:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile.IntegrationTests
-    depends_on:
-      - "app"
-
-volumes:
-  mongodata:
+      - '8080:8080'
+    volumes:
+      - './Client:/app/Client'
+    working_dir: '/app/Client'
+    command: 'npm run serve'
