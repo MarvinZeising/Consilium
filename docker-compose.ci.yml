@@ -12,16 +12,14 @@ services:
   app:
     build: ./
     depends_on:
-      - 'db'
-    ports:
-      - '8080:80'
+      - db
 
   integration:
     build:
       context: ./
       dockerfile: ./Tests/IntegrationTests/Dockerfile
     depends_on:
-      - 'app'
+      - app
 
 volumes:
   mongodata:
