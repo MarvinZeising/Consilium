@@ -3,7 +3,6 @@
 open FSharp.Data
 open FSharp.Data.HttpRequestHeaders
 open Newtonsoft.Json
-open Config
 open TestLibrary
 open Consilium.UserTypes
 
@@ -14,7 +13,7 @@ let createRandomUser _ =
     let request = JsonConvert.SerializeObject credentials
 
     Http.Request
-         ( serverUrl + "/users",
+         ( Config.serverUrl + "/users",
            headers = [ ContentType HttpContentTypes.Json ],
            body = TextRequest request ) |> ignore
 
