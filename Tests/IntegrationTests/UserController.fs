@@ -6,6 +6,10 @@ open FSharp.Data
 open TestLibrary
 
 [<Fact>]
+let ``POST /users should create a new user`` () =
+    UserTestDataProvider.createRandomUser () |> ignore
+
+[<Fact>]
 let ``GET /users/email-available should return true if available`` () =
     let result = Http.RequestString <| Config.serverUrl + "/users/email-available/" + Randomize.email ()
 
@@ -18,3 +22,11 @@ let ``GET /users/email-available should return false if not available`` () =
     let result = Http.RequestString <| Config.serverUrl + "/users/email-available/" + credentials.email
 
     result.ShouldBe "false"
+
+[<Fact>]
+let ``POST /authenticate should return a token`` () =
+    let credentials = UserTestDataProvider.createRandomUser ()
+
+    let response = UserTestDataProvider.signInWithCredentials credentials
+
+    response.StatusCode.ShouldBe 200

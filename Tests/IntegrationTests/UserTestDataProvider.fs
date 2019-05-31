@@ -18,3 +18,14 @@ let createRandomUser _ =
            body = TextRequest request ) |> ignore
 
     credentials
+
+let signInWithCredentials credentials =
+    let request = JsonConvert.SerializeObject credentials
+
+    Http.Request
+         ( Config.serverUrl + "/authenticate",
+           headers = [ ContentType HttpContentTypes.Json ],
+           body = TextRequest request ) 
+
+let signInWithRandomUser =
+    signInWithCredentials createRandomUser
