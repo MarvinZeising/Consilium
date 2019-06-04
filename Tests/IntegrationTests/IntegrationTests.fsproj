@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Config.fs" />
+    <Compile Include="Base.fs" />
     <Compile Include="UserTestDataProvider.fs" />
     <Compile Include="UserController.fs" />
     <Compile Include="Program.fs" />

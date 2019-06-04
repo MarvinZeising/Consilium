@@ -3,8 +3,8 @@
 open FSharp.Data
 open FSharp.Data.HttpRequestHeaders
 open Newtonsoft.Json
-open TestLibrary
 open Consilium.UserTypes
+open TestLibrary
 
 let createRandomUser _ =
     let credentials = { email = Randomize.email ()
@@ -13,7 +13,7 @@ let createRandomUser _ =
     let request = JsonConvert.SerializeObject credentials
 
     Http.Request
-         ( Config.serverUrl + "/users",
+         ( Base.config.TestServerUrl + "/users",
            headers = [ ContentType HttpContentTypes.Json ],
            body = TextRequest request ) |> ignore
 
@@ -23,7 +23,7 @@ let signInWithCredentials credentials =
     let request = JsonConvert.SerializeObject credentials
 
     Http.Request
-         ( Config.serverUrl + "/authenticate",
+         ( Base.config.TestServerUrl + "/authenticate",
            headers = [ ContentType HttpContentTypes.Json ],
            body = TextRequest request ) 
 
