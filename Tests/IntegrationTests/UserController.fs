@@ -29,4 +29,7 @@ let ``POST /authenticate should return a token`` () =
 
     let response = UserTestDataProvider.signInWithCredentials credentials
 
+    match response.Body with
+    | Text token -> token.ShouldStartWith "ey"
+    | Binary _ -> Assert.True(false)
     response.StatusCode.ShouldBe 200
