@@ -17,7 +17,7 @@ module UserController =
                 fun next context ->
                     task {
                         let! credentials = context.BindJsonAsync<Credentials>()
-                        return! json (signIn credentials) next context
+                        return! sendString (signIn credentials) next context
                     }
 
             POST >=> route "/users" >=>
