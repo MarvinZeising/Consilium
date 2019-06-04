@@ -32,4 +32,11 @@ let ``POST /authenticate should return a token`` () =
     match response.Body with
     | Text token -> token.ShouldStartWith "ey"
     | Binary _ -> Assert.True(false)
+
+[<Fact>]
+let ``POST /users should create a user`` () =
+    let credentials = UserTestDataProvider.createRandomUser ()
+
+    let response = UserTestDataProvider.signInWithCredentials credentials
+
     response.StatusCode.ShouldBe 200
