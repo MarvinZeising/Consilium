@@ -1,83 +1,75 @@
-open Consilium
+namespace Consilium
 
-open System
-open System.IO
-open MongoDB.Driver
-open Microsoft.AspNetCore.Builder
-open Microsoft.AspNetCore.Hosting
-open Microsoft.AspNetCore.Cors.Infrastructure
-open Microsoft.Extensions.DependencyInjection
-open Microsoft.Extensions.Logging
-open Giraffe
-open Wiki
-open WikiCollection
-open Microsoft.AspNetCore.Authentication.JwtBearer
-open Microsoft.IdentityModel.Tokens
-open System.Text
-open Authentication
+module Program =
 
-let routes =
-    choose [
-        ProjectController.routes
-        UserController.routes
-        WikiController.routes
-    ]
+    open System
+    open System.IO
+    open Microsoft.AspNetCore.Builder
+    open Microsoft.AspNetCore.Hosting
+    open Microsoft.AspNetCore.Cors.Infrastructure
+    open Microsoft.Extensions.DependencyInjection
+    open Microsoft.Extensions.Logging
+    open Giraffe
+    open Microsoft.AspNetCore.Authentication.JwtBearer
+    open Microsoft.IdentityModel.Tokens
+    open System.Text
+    open Authentication
 
-let errorHandler (ex : Exception) (logger : ILogger) =
-    logger.LogError(EventId(), ex, "An unhandled exception has occurred while executing the request.")
-    clearResponse
-    >=> ServerErrors.INTERNAL_ERROR ex.Message
+    let routes =
+        choose [
+            ProjectController.routes
+            UserController.routes
+        ]
 
-let configureCors (builder : CorsPolicyBuilder) =
-    builder.WithOrigins("http://localhost:8080")
-           .AllowAnyMethod()
-           .AllowAnyHeader()
-           |> ignore
+    let errorHandler (ex : Exception) (logger : ILogger) =
+        logger.LogError(EventId(), ex, "An unhandled exception has occurred while executing the request.")
+        clearResponse
+        >=> ServerErrors.INTERNAL_ERROR ex.Message
 
-let configureApp (app : IApplicationBuilder) =
-    app.UseGiraffeErrorHandler(errorHandler)
-       .UseCors(configureCors)
-       .UseDefaultFiles()
-       .UseStaticFiles()
-       .UseAuthentication()
-       //.UseResponseCaching()
-       .UseGiraffe routes
+    let configureCors (builder : CorsPolicyBuilder) =
+        builder.WithOrigins("http://localhost:8080")
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               |> ignore
 
-let configureServices (services : IServiceCollection) =
-    let mongo = MongoClient ("mongodb://db:27017/")
-    let db = mongo.GetDatabase "ConsiliumDb"
+    let configureApp (app : IApplicationBuilder) =
+        app.UseGiraffeErrorHandler(errorHandler)
+           .UseCors(configureCors)
+           .UseDefaultFiles()
+           .UseStaticFiles()
+           .UseAuthentication()
+           .UseGiraffe routes
 
-    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(fun options ->
-            options.TokenValidationParameters <- TokenValidationParameters(
-                ValidateActor = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = "consiliumapp.org",
-                ValidAudience = "consiliumapp.org",
-                IssuerSigningKey = SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)))
-        ) |> ignore
-    services.AddCors() |> ignore
-    services.AddGiraffe() |> ignore
-    services.AddTabCollection(db.GetCollection<Tab>("wiki")) |> ignore
+    let configureServices (services : IServiceCollection) =
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(fun options ->
+                    options.TokenValidationParameters <- TokenValidationParameters(
+                        ValidateActor = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "consiliumapp.org",
+                        ValidAudience = "consiliumapp.org",
+                        IssuerSigningKey = SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)))) |> ignore
+        services.AddCors() |> ignore
+        services.AddGiraffe() |> ignore
 
-let configureLogging (builder : ILoggingBuilder) =
-    let filter (l : LogLevel) = l.Equals LogLevel.Error
+    let configureLogging (builder : ILoggingBuilder) =
+        let filter (l : LogLevel) = l.Equals LogLevel.Error
 
-    builder.AddFilter(filter)
-           .AddConsole()
-           .AddDebug()
-           |> ignore
+        builder.AddFilter(filter)
+               .AddConsole()
+               .AddDebug()
+               |> ignore
 
-[<EntryPoint>]
-let main _ =
-    WebHostBuilder()
-        .UseKestrel()
-        .UseContentRoot(Directory.GetCurrentDirectory())
-        .Configure(Action<IApplicationBuilder> configureApp)
-        .ConfigureServices(configureServices)
-        .ConfigureLogging(configureLogging)
-        .Build()
-        .Run()
-    0
+    [<EntryPoint>]
+    let main _ =
+        WebHostBuilder()
+            .UseKestrel()
+            .UseContentRoot(Directory.GetCurrentDirectory())
+            .Configure(Action<IApplicationBuilder> configureApp)
+            .ConfigureServices(configureServices)
+            .ConfigureLogging(configureLogging)
+            .Build()
+            .Run()
+        0
