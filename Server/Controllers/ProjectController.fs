@@ -17,16 +17,16 @@ module ProjectController =
                 >=> fun next context ->
                     task {
                         let! project = context.BindJsonAsync<CreateProjectRequest>()
-                        return! send (createProject project) next context
+                        return! sendJson (createProject project) next context
                     }
 
             GET >=> route "/projects"
                 >=> authorize
-                >=> send findAllProjects
+                >=> sendJson findAllProjects
 
             GET >=> routef "/projects/%s" (fun projectId ->
                 authorize
-                >=> send (findProjectById projectId))
+                >=> sendJson (findProjectById projectId))
 
             PUT >=> routef "/projects/%s" (fun projectId ->
                 authorize
@@ -39,5 +39,5 @@ module ProjectController =
 
             DELETE >=> routef "/projects/%s" (fun id ->
                 authorize
-                >=> send (deleteProject id))
+                >=> sendJson (deleteProject id))
         ]

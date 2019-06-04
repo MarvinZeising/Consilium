@@ -12,5 +12,8 @@ module Controller =
         |> setStatusCode
         >=> json (List.map string errors)
 
-    let send (result : Result<'a,Error list>) =
-        result |> CommonLibrary.either json returnError
+    let sendJson (result : Result<'a,Error list>) =
+        result |> CommonLibrary.either ResponseWriters.json returnError
+
+    let sendString (result : Result<string,Error list>) =
+        result |> CommonLibrary.either ResponseWriters.htmlString returnError

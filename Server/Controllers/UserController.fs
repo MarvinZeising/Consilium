@@ -29,19 +29,19 @@ module UserController =
 
             GET >=> route "/user" >=> authorize >=>
                 fun next context ->
-                    send (getUser context) next context
+                    sendJson (getUser context) next context
 
             DELETE >=> route "/user" >=> authorize >=>
                 fun next context ->
                     let result = deleteUser context
-                    send result next context
+                    sendJson result next context
 
             PUT >=> route "/user/email" >=> authorize >=>
                 fun next context ->
                     task {
                         let! request = context.BindJsonAsync<UpdateEmailRequest>()
                         let result = updateEmail context request
-                        return! send result next context
+                        return! sendJson result next context
                     }
 
             PUT >=> route "/user/language" >=> authorize >=>
@@ -49,7 +49,7 @@ module UserController =
                     task {
                         let! request = context.BindJsonAsync<UpdateLanguageRequest>()
                         let result = updateLanguage context request
-                        return! send result next context
+                        return! sendJson result next context
                     }
 
             PUT >=> route "/user/password" >=> authorize >=>
@@ -57,14 +57,14 @@ module UserController =
                     task {
                         let! request = context.BindJsonAsync<UpdatePasswordRequest>()
                         let result = updatePassword context request
-                        return! send result next context
+                        return! sendJson result next context
                     }
 
             GET >=> routef "/users/email-available/%s" (fun email ->
                 fun next context ->
                     task {
                         let available = email |> isEmailAvailable
-                        return! send available next context
+                        return! sendJson available next context
                     })
 
         ]
