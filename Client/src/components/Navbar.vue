@@ -2,7 +2,7 @@
   <nav>
     <v-toolbar app flat>
       <v-toolbar-side-icon @click="drawer = !drawer" />
-      <v-toolbar-title>Consilium</v-toolbar-title>
+      <v-toolbar-title>{{ appTitle }}</v-toolbar-title>
       <v-spacer />
       <v-menu v-if="!isSignedIn">
         <template v-slot:activator="{ on }">
@@ -64,6 +64,10 @@ export default class Navbar extends Vue {
   private drawer: boolean = true
   private language: string = ''
   private languages: string[] = []
+
+  private get appTitle() {
+    return process.env.VUE_APP_TITLE || 'Consilium (DEV)'
+  }
 
   private async created() {
     this.language = this.$i18n.locale
