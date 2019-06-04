@@ -2,12 +2,15 @@ FROM node:10 AS client
 WORKDIR /src
 COPY ./Client .
 RUN npm install --no-optional
-RUN npm run build
+RUN ./node_modules/.bin/vue-cli-service build --dest /app --mode staging
 
 FROM microsoft/dotnet:2.2-sdk AS server
 WORKDIR /src
-COPY ./Server .
-RUN dotnet publish "Server.fsproj" -c Release -o /app
+RUN pwd
+COPY ./Server ./Server
+COPY ./Tests ./Tests
+RUN dotnet test ./Tests/UnitTests/UnitTests.fsproj
+RUN dotnet publish ./Server/Server.fsproj -c Release -o /app
 
 FROM microsoft/dotnet:2.2-aspnetcore-runtime AS final
 WORKDIR /app

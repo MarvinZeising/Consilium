@@ -7,8 +7,8 @@ docker-compose*
 .git
 .gitignore
 .env
-*/bin
-*/obj
+**/bin
+**/obj
 README.md
 LICENSE
 .vscode

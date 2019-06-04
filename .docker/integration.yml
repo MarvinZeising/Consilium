@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+
+  db:
+    image: mongo
+    volumes:
+      - mongodata:/data/db
+
+  app:
+    build:
+      context: ../
+      dockerfile: .docker/staging.dockerfile
+    environment:
+      - DB_URL=mongodb://db:27017/
+      - DB_NAME=ConsiliumDb
+    depends_on:
+      - db
+
+  integration:
+    build:
+      context: ../
+      dockerfile: .docker/integration.dockerfile
+    environment:
+      - SERVER_URL=http://app:80
+    depends_on:
+      - app
+
+volumes:
+  mongodata:

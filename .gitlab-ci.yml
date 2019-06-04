@@ -12,16 +12,10 @@ stages:
 #    - docker build --pull -t $CI_REGISTRY_IMAGE .
 #    - docker push $CI_REGISTRY_IMAGE
 
-unit:
-  stage: test
-  image: microsoft/dotnet:latest
-  script:
-    - dotnet test ./Tests/UnitTests/UnitTests.fsproj
-
 integration:
   stage: test
   image: marvinzeising/docker-compose
   services:
     - docker:dind
   script:
-    - docker-compose -f ./docker-compose.ci.yml run integration
+    - docker-compose -f .docker/integration.yml run integration
