@@ -6,10 +6,7 @@ open Newtonsoft.Json
 open Consilium.UserTypes
 open TestLibrary
 
-let createRandomUser _ =
-    let credentials = { email = Randomize.email ()
-                        password = Randomize.password () }
-
+let createUser credentials =
     let request = JsonConvert.SerializeObject credentials
 
     Http.Request
@@ -19,7 +16,13 @@ let createRandomUser _ =
 
     credentials
 
-let signInWithCredentials credentials =
+let createRandomUser _ =
+    let credentials = { email = Randomize.email ()
+                        password = Randomize.password () }
+
+    createUser credentials
+
+let signInWithCredentials (credentials: Credentials) =
     let request = JsonConvert.SerializeObject credentials
 
     Http.Request
@@ -27,5 +30,14 @@ let signInWithCredentials credentials =
            headers = [ ContentType HttpContentTypes.Json ],
            body = TextRequest request ) 
 
-let signInWithRandomUser =
-    signInWithCredentials createRandomUser
+let signInWithRandomUser<'a> =
+    signInWithCredentials << createRandomUser
+
+let getTokenForUser credentials =
+    createUser credentials |> ignore
+
+    let response = signInWithCredentials credentials
+
+    match response.Body with
+    | Text token -> token
+    | Binary _ -> ""
