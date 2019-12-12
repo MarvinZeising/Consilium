@@ -7,9 +7,7 @@
           <Node name="Server" expanded="True">
             <Node name="Server" expanded="True">
               <Node name="Dependencies" expanded="True" />
-              <Node name="wwwroot" expanded="True" />
               <Node name="Projects" expanded="True" />
-              <Node name="Program.fs" selected="True" />
             </Node>
           </Node>
         </State>
