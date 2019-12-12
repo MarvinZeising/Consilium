@@ -2,6 +2,8 @@ namespace Consilium
 
 module Program =
 
+    printfn "Initializing server..."
+
     open System
     open System.IO
     open Microsoft.AspNetCore.Builder
@@ -17,6 +19,7 @@ module Program =
 
     let routes =
         choose [
+            SystemController.routes
             ProjectController.routes
             UserController.routes
         ]
@@ -61,6 +64,8 @@ module Program =
                .AddConsole()
                .AddDebug()
                |> ignore
+
+    printfn "Initialized!"
 
     [<EntryPoint>]
     let main _ =
