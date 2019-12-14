@@ -70,16 +70,32 @@
         </v-list-tile>
       </template>
 
-      <v-list-tile
-        v-for="(action, j) in project.actions"
-        :key="j"
-        :to="{ name: action[2], params: { projectId: project.id }}"
-      >
+      <v-list-tile :to="{ name: 'calendar', params: { projectId: project.id }}">
         <v-list-tile-action>
-          <v-icon v-text="action[1]" />
+          <v-icon>today</v-icon>
         </v-list-tile-action>
-        <v-list-tile-title v-t="action[0]" />
+        <v-list-tile-title v-t="'navbar.calendar'" />
       </v-list-tile>
+
+      <v-list-group
+        v-if="project.topics.length > 0"
+        no-action
+        sub-group
+      >
+        <template v-slot:activator>
+          <v-list-tile>
+            <v-list-tile-title v-t="'navbar.knowledgeBase'" />
+          </v-list-tile>
+        </template>
+
+        <v-list-tile
+          v-for="(topic, j) in project.topics"
+          :key="j"
+          :to="{ name: 'knowledgeBase', params: { projectId: project.id, topicId: topic.id }}"
+        >
+          <v-list-tile-title v-text="topic.name" />
+        </v-list-tile>
+      </v-list-group>
 
       <v-list-group
         no-action
@@ -106,9 +122,7 @@
     </v-list-group>
 
     <!--//* Profile -->
-    <v-list-group
-      prepend-icon="person"
-    >
+    <v-list-group prepend-icon="person">
       <template v-slot:activator>
         <v-list-tile>
           <v-list-tile-title v-t="'navbar.profile'" />
@@ -149,11 +163,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
-import { Person, Project } from '@/models/definitions'
+import { Person, Project, Topic } from '@/models/definitions'
 import { getModule } from 'vuex-module-decorators'
-import ProjectModule from '@/store/modules/projects'
 import UserModule from '@/store/modules/users'
 import PersonModule from '@/store/modules/persons'
+import ProjectModule from '@/store/modules/projects'
+import KnowledgeBaseModule from '../store/modules/knowledgeBase'
 import Component from 'vue-class-component'
 
 @Component
@@ -161,6 +176,7 @@ export default class NavbarSignedIn extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private drawer: boolean = false
 
@@ -187,10 +203,9 @@ export default class NavbarSignedIn extends Vue {
 
   private get myProjects(): Project[] {
     return this.projectModule.myProjects.map((project: any) => {
-      project.actions = [
-        ['navbar.knowledgeBase', 'subject', 'knowledgeBase'],
-        ['navbar.calendar', 'today', 'calendar']
-      ]
+      project.topics = this.knowledgeBaseModule.allTopics.filter((topic: Topic) => {
+        return topic.projectId == project.id
+      })
       project.adminActions = [
         ['navbar.settings', 'settings', 'settings'],
         //// ['User Management', 'group', 'settings'],

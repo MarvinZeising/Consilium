@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import UserModule from './modules/users'
 import PersonModule from './modules/persons'
 import ProjectModule from './modules/projects'
+import KnowledgeBaseModule from './modules/knowledgeBase'
 import AlertModule from './modules/alerts'
 
 Vue.use(Vuex)
@@ -13,6 +14,7 @@ const store = new Vuex.Store({
     UserModule,
     PersonModule,
     ProjectModule,
+    KnowledgeBaseModule,
     AlertModule,
   }
 })

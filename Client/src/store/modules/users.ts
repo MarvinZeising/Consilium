@@ -52,9 +52,11 @@ export default class UserModule extends VuexModule {
       }))
       axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`
 
+      // keep in sync with main.ts
       await this.context.dispatch('initUserModule', credentials.email)
       await this.context.dispatch('initPersonModule')
       await this.context.dispatch('initProjectModule')
+      await this.context.dispatch('initKnowledgeBaseModule')
 
       return true
     }
@@ -121,6 +123,7 @@ export default class UserModule extends VuexModule {
     localStorage.removeItem('user')
     this.context.dispatch('clearPersons', [])
     this.context.dispatch('clearProjects', [])
+    this.context.dispatch('clearKnowledgeBases', [])
     return null
   }
 

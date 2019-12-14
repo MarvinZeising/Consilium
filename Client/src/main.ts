@@ -11,15 +11,18 @@ import UserModule from './store/modules/users'
 import PersonModule from './store/modules/persons'
 import ProjectModule from './store/modules/projects'
 import i18n from './i18n'
+import KnowledgeBaseModule from './store/modules/knowledgeBase'
 
 async function init() {
   const userModule = getModule(UserModule, store)
   const personModule = getModule(PersonModule, store)
   const projectModule = getModule(ProjectModule, store)
+  const knowledgeBaseModule = getModule(KnowledgeBaseModule, store)
 
   Vue.config.productionTip = false
 
   axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:5000'
+  axios.defaults.timeout = 3000
   axios.interceptors.response.use((response) => {
     return response
   }, (error) => {
@@ -38,9 +41,11 @@ async function init() {
     const user = JSON.parse(userItem)
     axios.defaults.headers.common.Authorization = `Bearer ${user.token}`
 
+    // keep in sync with modules/users.ts
     await userModule.initUserModule()
     await personModule.initPersonModule()
     await projectModule.initProjectModule()
+    await knowledgeBaseModule.initKnowledgeBaseModule()
   }
 
   new Vue({

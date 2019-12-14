@@ -48,8 +48,21 @@ class Project {
   }
 }
 
+class Topic {
+  public id: string
+  public projectId: string
+  public name: string
+
+  constructor(projectId: string, name: string) {
+    this.id = ''
+    this.projectId = projectId
+    this.name = name
+  }
+}
+
 export {
   User,
   Person,
   Project,
+  Topic,
 }
