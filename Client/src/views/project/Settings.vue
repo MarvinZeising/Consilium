@@ -130,7 +130,7 @@
       <v-flex xs12>
         <h2
           class="headline mb-3 error--text"
-          v-t="'project.criticalArea'"
+          v-t="'core.criticalArea'"
         />
       </v-flex>
       <v-flex

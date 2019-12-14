@@ -29,7 +29,6 @@
   "deleteWarning": "!!! This cannot be undone - everything will be gone !!!",
   "general": "General",
   "updateGeneral": "Update Account General",
-  "criticalArea": "Critical area",
   "changePassword": "Change my password",
   "emailDescription": "Your Email address. This Email is unique to your Account. You use it to sign in to this Account.",
   "emailChangeDescription": "After saving, you will be signed out and will have to sign in with the new Email address.",

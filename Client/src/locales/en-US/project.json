@@ -2,7 +2,6 @@
   "general": "General",
   "nameMustEqual": "Project name must be this Project's name",
   "news": "News",
-  "criticalArea": "Critical area",
   "delete": "Delete this Project",
   "deleteDescription": "This will delete all categories, teams and shifts. It will purge the knowledge base, revoke any access to the Project and delete it.",
   "deleteHint": "Enter the Project name to continue",
