@@ -5,9 +5,7 @@ module UserRepository =
     open CommonLibrary
     open CommonTypes
     open UserDatabase
-
-    let tryCatchError f =
-        tryCatch f (fun ex -> [ServerException ex])
+    open Repository
 
     let getUserById userId =
         try
