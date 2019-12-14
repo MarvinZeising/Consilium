@@ -34,5 +34,3 @@ module CommonTypes =
         | PasswordWrong -> 400
         | AuthenticationFailed -> 401
         | ServerException _ -> 500
-
-    type IdRequest = { Id: string }

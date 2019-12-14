@@ -37,16 +37,12 @@ module KnowledgeBaseController =
                 >=> fun next context ->
                     task {
                         let! input = context.BindJsonAsync<UpdateTopicRequest>()
-                        return! json input next context
+                        return! json (updateTopic input) next context
                     }
 
-            DELETE >=> route "/knowledge-base/topics"
-                >=> authorize
+            DELETE >=> routef "/knowledge-base/topics/%s" (fun id ->
+                authorize
                 // TODO: check admin privileges
-                >=> fun next context ->
-                    task {
-                        let! input = context.BindJsonAsync<IdRequest>()
-                        return! json (deleteTopic input.Id) next context
-                    }
+                >=> sendJson (deleteTopic id))
 
         ]
