@@ -65,6 +65,67 @@
         </v-card>
       </v-flex>
 
+      <!--//* Knowledge Base Heading -->
+      <v-flex xs12>
+        <h2
+          class="headline mb-3"
+          v-t="'knowledgeBase.topics'"
+        />
+      </v-flex>
+      <v-flex
+        xs12 sm10 md8 lg6
+        class="mb-5 pa-2"
+      >
+        <p>
+          {{ $t('knowledgeBase.topicsDescription') }}
+        </p>
+        <v-card flat>
+          <v-list>
+            <v-list-tile
+              v-for="(topic, index) in topics"
+              :key="topic.name"
+            >
+              <v-list-tile-content>
+                <v-list-tile-title v-text="topic.name" />
+              </v-list-tile-content>
+
+              <v-list-tile-action style="flex-direction:row; align-items:center;">
+                <v-btn icon class="ma-0">
+                  <v-icon color="grey">edit</v-icon>
+                </v-btn>
+                <v-btn icon class="ma-0">
+                  <v-icon color="grey">delete</v-icon>
+                </v-btn>
+                <v-btn
+                  v-if="index > 0"
+                  icon
+                  class="ma-0"
+                >
+                  <v-icon color="grey">expand_less</v-icon>
+                </v-btn>
+                <v-btn
+                  v-if="index < topics.length - 1"
+                  icon
+                  class="ma-0"
+                >
+                  <v-icon color="grey">expand_more</v-icon>
+                </v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list>
+        </v-card>
+        <v-flex
+          xs12
+          class="mt-2"
+        >
+          <v-btn
+            :to="{ name: 'create' }"
+            color="primary"
+            v-t="'knowledgeBase.createTopic'"
+          />
+        </v-flex>
+      </v-flex>
+
       <!--//* Critical Heading -->
       <v-flex xs12>
         <h2
@@ -97,17 +158,20 @@ import DeleteProjectDialog from '@/components/dialogs/DeleteProjectDialog.vue'
 import Component from 'vue-class-component'
 import ProjectModule from '@/store/modules/projects'
 import { getModule } from 'vuex-module-decorators'
-import { Project } from '@/models/definitions'
+import { Project, Topic } from '@/models/definitions'
 import { Watch } from 'vue-property-decorator'
+import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
 
 @Component({
   components: { DeleteProjectDialog }
 })
 export default class Settings extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private name: string = ''
   private email: string = ''
+  private topics: Topic[] = []
 
   @Watch('$route')
   private async onRouteChanged(val: string, oldVal: string) {
@@ -124,6 +188,8 @@ export default class Settings extends Vue {
     if (project) {
       this.name = project.name
       this.email = project.email
+
+      this.topics = this.knowledgeBaseModule.allTopics.filter((x: Topic) => x.projectId === projectId)
     }
   }
 }
