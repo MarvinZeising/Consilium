@@ -4,6 +4,7 @@
       <v-flex xs12 sm10 md8 lg6>
         <v-form
           ref="form"
+          type="post"
           v-model="valid"
         >
 
@@ -108,7 +109,10 @@ export default class SignIn extends Vue {
     }
   }
 
-  private async signIn() {
+  private async signIn(e: any) {
+    e.preventDefault()
+    e.stopPropagation()
+
     this.authInProgress = true
     this.authFailed = false
 
