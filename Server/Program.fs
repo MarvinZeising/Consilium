@@ -22,6 +22,7 @@ module Program =
             SystemController.routes
             ProjectController.routes
             UserController.routes
+            KnowledgeBaseController.routes
         ]
 
     let errorHandler (ex : Exception) (logger : ILogger) =

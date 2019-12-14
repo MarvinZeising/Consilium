@@ -7,6 +7,7 @@ module Connection =
     open UserTypes
     open PersonTypes
     open ProjectTypes
+    open KnowledgeBaseTypes
 
     type Config = {
         DbUrl: string
@@ -30,3 +31,4 @@ module Connection =
     let userCollection = db.GetCollection<User> "users"
     let personCollection = db.GetCollection<Person> "persons"
     let projectCollection = db.GetCollection<Project> "projects"
+    let topicsCollection = db.GetCollection<Topic> "topics"
