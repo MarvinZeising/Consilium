@@ -1,9 +1,9 @@
-import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
+import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
 import { Person } from '@/models/definitions'
 
 @Module({ name: 'PersonModule' })
 export default class PersonModule extends VuexModule {
-  public activePersonId: string | null = 'asdf'
+  public activePersonId: string | null = null
   public persons: Person[] = []
 
   public get myPersons(): Person[] {
@@ -60,6 +60,12 @@ export default class PersonModule extends VuexModule {
   }
 
   @Action
+  public async clearPersons() {
+    this.context.commit('setPersons', [])
+    this.context.commit('activatePerson', null)
+  }
+
+  @Action
   public async createPerson(person: { firstname: string, lastname: string }) {
     // const response = await axios.post('/persons', {
     //   firstname: person.firstname,
@@ -73,12 +79,12 @@ export default class PersonModule extends VuexModule {
         'https://randomuser.me/api/portraits/men/30.jpg',
       )
     }
-    await this.context.commit('insertPerson', response.data)
-    await this.context.commit('activatePerson', response.data.id)
+    this.context.commit('insertPerson', response.data)
+    this.context.commit('activatePerson', response.data.id)
   }
 
   @Mutation
-  public activatePerson(personId: string) {
+  public activatePerson(personId: string | null) {
     this.activePersonId = personId
   }
 
