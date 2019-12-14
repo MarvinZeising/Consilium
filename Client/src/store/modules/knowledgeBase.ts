@@ -30,6 +30,21 @@ export default class KnowledgeBaseModule extends VuexModule {
     this.context.commit('insertTopic', response.data)
   }
 
+  @Action
+  public async renameTopic(topic: Topic) {
+    await axios.put('/knowledge-base/topics', {
+      id: topic.id,
+      name: topic.name,
+    })
+    this.context.commit('updateTopic', topic)
+  }
+
+  @Action
+  public async deleteTopic(topicId: string) {
+    await axios.delete(`/knowledge-base/topics/${topicId}`)
+    this.context.commit('removeTopic', topicId)
+  }
+
   @Mutation
   protected setTopics(topics: Topic[]) {
     this.topics = topics
@@ -38,6 +53,15 @@ export default class KnowledgeBaseModule extends VuexModule {
   @Mutation
   protected insertTopic(topic: Topic) {
     this.topics.push(topic)
+  }
+
+  @Mutation
+  protected updateTopic(updatedTopic: Topic) {
+    for (const topic of this.topics) {
+      if (topic.id === updatedTopic.id) {
+        topic.name = updatedTopic.name
+      }
+    }
   }
 
   @Mutation

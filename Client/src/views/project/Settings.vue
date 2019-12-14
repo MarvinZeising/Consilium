@@ -82,7 +82,7 @@
         <v-card flat>
           <v-list>
             <v-list-tile
-              v-for="(topic, index) in topics"
+              v-for="(topic, index) in getTopics"
               :key="topic.name"
             >
               <v-list-tile-content>
@@ -90,12 +90,6 @@
               </v-list-tile-content>
 
               <v-list-tile-action style="flex-direction:row; align-items:center;">
-                <v-btn icon class="ma-0">
-                  <v-icon color="grey">edit</v-icon>
-                </v-btn>
-                <v-btn icon class="ma-0">
-                  <v-icon color="grey">delete</v-icon>
-                </v-btn>
                 <v-btn
                   v-if="index > 0"
                   icon
@@ -104,12 +98,14 @@
                   <v-icon color="grey">expand_less</v-icon>
                 </v-btn>
                 <v-btn
-                  v-if="index < topics.length - 1"
+                  v-if="index < getTopics.length - 1"
                   icon
                   class="ma-0"
                 >
                   <v-icon color="grey">expand_more</v-icon>
                 </v-btn>
+                <RenameTopicDialog :topicId="topic.id" />
+                <DeleteTopicDialog :topicId="topic.id" />
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
@@ -118,11 +114,7 @@
           xs12
           class="mt-2"
         >
-          <v-btn
-            :to="{ name: 'create' }"
-            color="primary"
-            v-t="'knowledgeBase.createTopic'"
-          />
+          <NewTopicDialog />
         </v-flex>
       </v-flex>
 
@@ -154,16 +146,24 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import DeleteProjectDialog from '@/components/dialogs/DeleteProjectDialog.vue'
 import Component from 'vue-class-component'
 import ProjectModule from '@/store/modules/projects'
 import { getModule } from 'vuex-module-decorators'
 import { Project, Topic } from '@/models/definitions'
 import { Watch } from 'vue-property-decorator'
 import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
+import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vue'
+import NewTopicDialog from '../../components/dialogs/NewTopicDialog.vue'
+import RenameTopicDialog from '../../components/dialogs/RenameTopicDialog.vue'
+import DeleteTopicDialog from '../../components/dialogs/DeleteTopicDialog.vue'
 
 @Component({
-  components: { DeleteProjectDialog }
+  components: {
+    DeleteProjectDialog,
+    NewTopicDialog,
+    RenameTopicDialog,
+    DeleteTopicDialog,
+  }
 })
 export default class Settings extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
@@ -171,7 +171,6 @@ export default class Settings extends Vue {
 
   private name: string = ''
   private email: string = ''
-  private topics: Topic[] = []
 
   @Watch('$route')
   private async onRouteChanged(val: string, oldVal: string) {
@@ -182,14 +181,17 @@ export default class Settings extends Vue {
     await this.loadProject()
   }
 
+  private get getTopics() {
+    const projectId = this.$route.params.projectId
+    return this.knowledgeBaseModule.allTopics.filter((x: Topic) => x.projectId === projectId)
+  }
+
   private async loadProject() {
     const projectId = this.$route.params.projectId
     const project = this.projectModule.myProjects.filter((x: Project) => x.id === projectId)[0]
     if (project) {
       this.name = project.name
       this.email = project.email
-
-      this.topics = this.knowledgeBaseModule.allTopics.filter((x: Topic) => x.projectId === projectId)
     }
   }
 }
