@@ -6,6 +6,7 @@ module UserActions =
     open Giraffe
     open CommonLibrary
     open CommonTypes
+    open CommonValidation
     open UserTypes
     open UserRepository
     open Actions
@@ -25,7 +26,7 @@ module UserActions =
             then Ok true
             else Error ex
 
-        EmailValidation.validate
+        validateEmail
         >=> getUserByEmail
         >> either (fun _ -> Ok false) checkUserNotFoundError
 
@@ -57,7 +58,7 @@ module UserActions =
 
     let updateEmail context (request : UpdateEmailRequest) =
         result {
-            let! email = request.email |> EmailValidation.validate
+            let! email = request.email |> validateEmail
             let! userId = context |> getUserId
             return! updateEmail (userId, email)
         }

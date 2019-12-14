@@ -4,6 +4,7 @@ module ProjectActions =
 
     open Giraffe
     open System
+    open CommonValidation
     open ProjectTypes
     open ProjectRepository
     open Actions
@@ -16,8 +17,8 @@ module ProjectActions =
 
     let updateGeneral (input: UpdateGeneralRequest) =
         result {
-            let! validatedName = input.Name |> ProjectValidation.validateName
-            let! validatedEmail = input.Email |> EmailValidation.validate
+            let! validatedName = input.Name |> validateName
+            let! validatedEmail = input.Email |> validateEmail
             let request = { input with
                                   Name = validatedName
                                   Email = validatedEmail
@@ -28,14 +29,13 @@ module ProjectActions =
     let createProject (input: CreateProjectRequest) =
         result {
             let projectId = ShortGuid.fromGuid(Guid.NewGuid())
-            let! validatedName = input.Name |> ProjectValidation.validateName
-            let! validatedEmail = input.Email |> EmailValidation.validate
+            let! validatedName = input.Name |> validateName
+            let! validatedEmail = input.Email |> validateEmail
             let project = { Id = projectId
                             Name = validatedName
                             Email = validatedEmail}
             return! insertProject project 
         }
-
 
     let deleteProject projectId =
         result {
