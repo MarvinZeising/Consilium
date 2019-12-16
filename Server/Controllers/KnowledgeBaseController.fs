@@ -8,20 +8,16 @@ module KnowledgeBaseController =
     open CommonTypes
     open KnowledgeBaseTypes
     open KnowledgeBaseActions
+    open KnowledgeBaseDatabase
     open Authentication
     open Controller
 
+    // TODO: check admin privileges
     let routes : HttpFunc -> HttpContext -> HttpFuncResult =
-        choose [
+        authorize >=> subRoute "/knowledge-base" (choose [
 
-            GET >=> route "/knowledge-base/topics"
-                >=> authorize
-                >=> sendJson findAllTopics
-
-            GET >=> routef "/knowledge-base/topics/by-project/%s" (fun projectId ->
-                authorize
-                // TODO: check admin privileges
-                >=> sendJson (findTopicsByProjectId projectId))
+            getRoute "/topic" (fun next ctx ->
+                sendJson (getTopics ctx) next ctx)
 
             POST >=> route "/knowledge-base/topics"
                 >=> authorize // TODO: check admin privileges
@@ -31,18 +27,15 @@ module KnowledgeBaseController =
                         return! sendJson (createTopic project) next context
                     }
 
-            PUT >=> route "/knowledge-base/topics"
-                >=> authorize
-                // TODO: check admin privileges
-                >=> fun next context ->
-                    task {
-                        let! input = context.BindJsonAsync<UpdateTopicRequest>()
-                        return! json (updateTopic input) next context
-                    }
 
             DELETE >=> routef "/knowledge-base/topics/%s" (fun id ->
                 authorize
                 // TODO: check admin privileges
                 >=> sendJson (deleteTopic id))
+            putRoute "/topic" (fun next context ->
+                task {
+                    let! input = context.BindJsonAsync<UpdateTopicRequest>()
+                    return! json (updateTopic input) next context
+                })
 
-        ]
+        ])

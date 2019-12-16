@@ -10,6 +10,8 @@ module Authentication =
     open Microsoft.IdentityModel.Tokens
     open Microsoft.AspNetCore.Authentication.JwtBearer
     open Microsoft.AspNetCore.Http
+    open CommonTypes
+    open CommonLibrary
 
     let secret = "!H^EU(-=m{VNkM'ECh'V7X7S:q4V"
 
@@ -55,6 +57,12 @@ module Authentication =
     let getEmailFromToken = extractClaim JwtRegisteredClaimNames.Email
     let getIdFromToken = extractClaim JwtRegisteredClaimNames.Sub
 
+    let getUserId<'a> =
+        getAuthorization
+        >> extractTokenFromAuthorization
+        >> Option.bind getIdFromToken
+        >> maybeSucceed [AuthenticationFailed]
+
     let hash (password : string) : string =
         let salt = CryptSharp.Crypter.Blowfish.GenerateSalt()
 
@@ -62,3 +70,4 @@ module Authentication =
 
     let verify (password : string) (hash : string) : bool =
         CryptSharp.Crypter.CheckPassword(password, hash)
+

@@ -9,12 +9,6 @@ module ProjectActions =
     open ProjectRepository
     open Actions
 
-    let findAllProjects =
-        getAllProjects ()
-
-    let findProjectById =
-        getProjectById
-
     let updateGeneral (input: UpdateGeneralRequest) =
         result {
             let! validatedName = input.Name |> validateName

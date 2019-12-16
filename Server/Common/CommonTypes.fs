@@ -7,6 +7,7 @@ module CommonTypes =
     type Error =
          | UserNotFound
          | ProjectNotFound
+         | TopicNotFound
          | NameRequired
          | NameLength
          | EmailAlreadyExists
@@ -23,6 +24,7 @@ module CommonTypes =
         match error with
         | UserNotFound -> 404
         | ProjectNotFound -> 404
+        | TopicNotFound -> 404
         | NameRequired -> 400
         | NameLength -> 400
         | EmailAlreadyExists -> 400

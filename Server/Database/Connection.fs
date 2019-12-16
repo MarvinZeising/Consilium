@@ -21,7 +21,7 @@ module Connection =
         | value -> value
 
     let config =
-        { DbUrl = getEnvVar "DB_URL" "mongodb://localhost:27017/"
+        { DbUrl = getEnvVar "DB_URL" "mongodb://localhost:27017/?connectTimeoutMS=3000&socketTimeoutMS=3000"
           DbName = getEnvVar "DB_NAME" "ConsiliumDb"
           TestServerUrl = getEnvVar "SERVER_URL" "http://localhost:5000" }
 
@@ -31,4 +31,4 @@ module Connection =
     let userCollection = db.GetCollection<User> "users"
     let personCollection = db.GetCollection<Person> "persons"
     let projectCollection = db.GetCollection<Project> "projects"
-    let topicsCollection = db.GetCollection<Topic> "topics"
+    let topicCollection = db.GetCollection<Topic> "topics"

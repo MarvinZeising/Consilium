@@ -9,12 +9,6 @@ module KnowledgeBaseActions =
     open KnowledgeBaseTypes
     open KnowledgeBaseRepository
 
-    let findAllTopics =
-        getAllTopics ()
-
-    let findTopicsByProjectId =
-        getTopicsByProjectId
-
     let updateTopic (input: UpdateTopicRequest) =
         result {
             let! validatedName = input.Name |> validateName
@@ -24,12 +18,12 @@ module KnowledgeBaseActions =
 
     let createTopic (input: CreateTopicRequest) =
         result {
-            let topicId = ShortGuid.fromGuid(Guid.NewGuid())
             let! validatedName = input.Name |> validateName
 
-            return! insertTopic { Id = topicId
+            return! insertTopic { Id = ShortGuid.fromGuid(Guid.NewGuid())
                                   ProjectId = input.ProjectId
-                                  Name = validatedName }
+                                  Name = validatedName
+                                  Order = input.Order }
         }
 
     let deleteTopic topicId =

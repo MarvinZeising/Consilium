@@ -3,24 +3,26 @@ namespace Consilium
 module ProjectDatabase =
 
     open MongoDB.Driver
+    open CommonTypes
     open ProjectTypes
     open Connection
+    open Database
 
     let private collection = projectCollection;
 
-    let private find (filter : FilterDefinition<Project>) =
-        collection.Find(filter).ToEnumerable()
+    let private findProject<'a> = findOne projectCollection ProjectNotFound
+    let private findProjects<'a> = find projectCollection
 
     let private updateById projectId updateBuilder =
         let filter = Builders<Project>.Filter.Eq((fun x -> x.Id), projectId)
         collection.UpdateOne(filter, updateBuilder) |> ignore
 
-    let getAllProjects _ =
-        Builders.Filter.Empty |> find |> Seq.toArray
+    let getProjects ctx =
+        findProjects Builders<Project>.Filter.Empty ctx
 
-    let getProjectById projectId =
+    let getProjectById projectId ctx =
         let filter = Builders<Project>.Filter.Eq((fun x -> x.Id), projectId)
-        filter |> find |> Seq.tryLast
+        findProject filter ctx
 
     let updateGeneral (request: UpdateGeneralRequest) =
         let updateBuilder =

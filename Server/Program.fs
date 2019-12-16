@@ -19,10 +19,12 @@ module Program =
 
     let routes =
         choose [
-            SystemController.routes
+            Controller.routes
             ProjectController.routes
             UserController.routes
             KnowledgeBaseController.routes
+
+            RequestErrors.NOT_FOUND "Not Found"
         ]
 
     let errorHandler (ex : Exception) (logger : ILogger) =
