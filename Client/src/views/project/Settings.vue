@@ -94,6 +94,7 @@
                   v-if="index > 0"
                   icon
                   class="ma-0"
+                  @click="knowledgeBaseModule.moveTopicUp(topic.order)"
                 >
                   <v-icon color="grey">expand_less</v-icon>
                 </v-btn>
@@ -101,6 +102,7 @@
                   v-if="index < getTopics.length - 1"
                   icon
                   class="ma-0"
+                  @click="knowledgeBaseModule.moveTopicDown(topic.order)"
                 >
                   <v-icon color="grey">expand_more</v-icon>
                 </v-btn>
@@ -183,6 +185,7 @@ export default class Settings extends Vue {
 
   private get getTopics() {
     const projectId = this.$route.params.projectId
+
     return this.knowledgeBaseModule.allTopics.filter((x: Topic) => x.projectId === projectId)
   }
 
@@ -194,5 +197,6 @@ export default class Settings extends Vue {
       this.email = project.email
     }
   }
+
 }
 </script>
