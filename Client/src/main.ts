@@ -7,13 +7,15 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import store from './store'
 import axios from 'axios'
 import { getModule } from 'vuex-module-decorators'
+import AlertModule from './store/modules/alerts'
 import UserModule from './store/modules/users'
 import PersonModule from './store/modules/persons'
 import ProjectModule from './store/modules/projects'
-import i18n from './i18n'
 import KnowledgeBaseModule from './store/modules/knowledgeBase'
+import i18n from './i18n'
 
 async function init() {
+  const alertModule = getModule(AlertModule, store)
   const userModule = getModule(UserModule, store)
   const personModule = getModule(PersonModule, store)
   const projectModule = getModule(ProjectModule, store)
@@ -56,10 +58,16 @@ async function init() {
     axios.defaults.headers.common.Authorization = `Bearer ${user.token}`
 
     // keep in sync with modules/users.ts
-    await userModule.initUserModule()
-    await personModule.initPersonModule()
-    await projectModule.initProjectModule()
-    await knowledgeBaseModule.initKnowledgeBaseModule()
+    try {
+      await userModule.initUserModule()
+      await personModule.initPersonModule()
+      await projectModule.initProjectModule()
+      await knowledgeBaseModule.initKnowledgeBaseModule()
+    } catch (error) {
+      if (!error.response) {
+        router.push({ name: 'serverException' })
+      }
+    }
   }
 }
 

@@ -11,6 +11,10 @@ const router = new Router({
     name: 'home',
     component: () => import('./views/Home.vue')
   }, {
+    path: '/server-exception',
+    name: 'serverException',
+    component: () => import('./views/ServerException.vue')
+  }, {
     path: '/terms-of-use',
     name: 'termsOfUse',
     component: () => import('./views/TermsOfUse.vue')
