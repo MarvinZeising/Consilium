@@ -11,36 +11,39 @@
         </v-btn>
       </template>
       <v-card>
-        <v-card-title>
-          <span
-            class="headline"
-            v-t="'knowledgeBase.renameTopic'"
-          ></span>
-        </v-card-title>
-        <v-card-text>
-          <v-text-field
-            v-model="topicName"
-            :label="$t('core.name')"
-            box
-            required
-          />
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            flat
-            color="black"
-            @click="renameTopicDialog = false"
-            v-t="'core.close'"
-          />
-          <v-btn
-            :disabled="topicName == ''"
-            flat
-            color="primary"
-            @click="renameTopic"
-            v-t="'core.save'"
-          />
-        </v-card-actions>
+        <v-form v-model="form">
+          <v-card-title>
+            <span
+              class="headline"
+              v-t="'knowledgeBase.renameTopic'"
+            ></span>
+          </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="topicName"
+              :label="$t('core.name')"
+              box
+              required
+            />
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn
+              flat
+              color="black"
+              @click="renameTopicDialog = false"
+              v-t="'core.close'"
+            />
+            <v-btn
+              :disabled="topicName == ''"
+              flat
+              color="primary"
+              @click="renameTopic"
+              v-t="'core.save'"
+              type="submit"
+            />
+          </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
   </v-layout>
@@ -59,6 +62,7 @@ export default class RenameTopicDialog extends Vue {
 
   @Prop(String) readonly topicId: string | undefined
 
+  private form: any
   private renameTopicDialog: any = null
   private topicName: string = ''
 
@@ -71,7 +75,7 @@ export default class RenameTopicDialog extends Vue {
     let updatedTopic = new Topic('', this.topicName)
     updatedTopic.id = this.topicId || ''
 
-    await this.knowledgeBaseModule.renameTopic(updatedTopic)
+    await this.knowledgeBaseModule.changeTopic(updatedTopic)
 
     this.renameTopicDialog = false
   }
