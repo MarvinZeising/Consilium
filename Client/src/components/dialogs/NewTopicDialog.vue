@@ -9,33 +9,36 @@
         />
       </template>
       <v-card>
-        <v-card-title>
-          <span class="headline">Add new Topic</span>
-        </v-card-title>
-        <v-card-text>
-          <v-text-field
-            v-model="topicName"
-            :label="$t('core.name')"
-            box
-            required
-          />
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            flat
-            color="black"
-            @click="newTopicDialog = false"
-            v-t="'core.close'"
-          />
-          <v-btn
-            :disabled="topicName == ''"
-            flat
-            color="primary"
-            @click="createTopic"
-            v-t="'core.save'"
-          />
-        </v-card-actions>
+        <v-form v-model="form">
+          <v-card-title>
+            <span class="headline">Add new Topic</span>
+          </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="topicName"
+              :label="$t('core.name')"
+              box
+              required
+            />
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn
+              flat
+              color="black"
+              @click="newTopicDialog = false"
+              v-t="'core.close'"
+            />
+            <v-btn
+              :disabled="topicName == ''"
+              flat
+              color="primary"
+              @click="createTopic"
+              v-t="'core.save'"
+              type="submit"
+            />
+          </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
   </v-layout>
@@ -52,6 +55,7 @@ import i18n from '@/i18n'
 export default class NewTopicDialog extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
+  private form: any
   private newTopicDialog: any = null
   private topicName: string = ''
 
