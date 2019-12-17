@@ -23,18 +23,32 @@ async function init() {
 
   axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:5000'
   axios.defaults.timeout = 3000
-  axios.interceptors.response.use((response) => {
-    return response
-  }, (error) => {
-    // * automatically sign out if token is expired or invalid
-    if ((error.response.status === 401 || error.response.status === 404)
-      && localStorage.getItem('user')) {
-      userModule.signOut()
-      location.reload(true)
-      // TODO: communicate signOut via an alert
-    }
-    return Promise.reject(error)
-  })
+  axios.interceptors.response.use(
+    (response) => {
+      return response
+    },
+    (error) => {
+      if (!error.response) {
+        alertModule.showAlert({
+          message: error.message,
+          color: 'error',
+          timeout: 3000,
+        })
+      } else if ((error.response.status === 401) && localStorage.getItem('user')) {
+        // * automatically sign out if token is expired or invalid
+        userModule.signOut()
+        location.reload(true)
+        // TODO: communicate signOut via an alert
+      }
+      return Promise.reject(error)
+    })
+
+  new Vue({
+    store,
+    router,
+    i18n,
+    render: (h) => h(App)
+  }).$mount('#app')
 
   const userItem = localStorage.getItem('user')
   if (userItem) {
@@ -47,13 +61,6 @@ async function init() {
     await projectModule.initProjectModule()
     await knowledgeBaseModule.initKnowledgeBaseModule()
   }
-
-  new Vue({
-    store,
-    router,
-    i18n,
-    render: (h) => h(App)
-  }).$mount('#app')
 }
 
 init()
