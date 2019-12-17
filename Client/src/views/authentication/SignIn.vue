@@ -52,17 +52,13 @@
             <v-card-actions>
               <v-spacer />
               <v-btn
+                :disabled="authInProgress"
+                :loading="authInProgress"
                 color="primary"
                 type="submit"
                 @click="signIn"
               >
                 <span v-t="'account.signIn'" />
-                <v-progress-circular
-                  v-if="authInProgress"
-                  indeterminate
-                  color="white"
-                  class="ml-3"
-                />
               </v-btn>
             </v-card-actions>
           </v-card>

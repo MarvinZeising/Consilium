@@ -39,10 +39,12 @@ export default class UserModule extends VuexModule {
 
   @Action
   public async signIn(credentials: { email: string, password: string }) {
-    const response = await axios.post('/authenticate', {
+    await this.context.dispatch('signOut')
+
+    const response: any = await axios.post('/authenticate', {
       email: credentials.email,
       password: hashPassword(credentials.password),
-    })
+    }).catch(() => false)
 
     if (response.data !== null && typeof(response.data) === 'string') {
       const jwtToken = response.data
