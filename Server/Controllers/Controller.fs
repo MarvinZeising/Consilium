@@ -4,53 +4,90 @@ module Controller =
 
     open Giraffe
     open Microsoft.AspNetCore.Http
+    open Microsoft.Extensions.Logging
+    open FSharp.Control.Tasks.V2
     open CommonTypes
 
+    let private logErrors errors (ctx: HttpContext) =
+        let logger = ctx.GetLogger("Consilium.Controller.logError")
+        logger.LogError (Printf.sprintf "%A" errors)
+
     let private returnError errors =
-        errors
-        |> List.head
-        |> mapErrorCode
-        |> setStatusCode
+        errors |> List.head |> mapErrorCode |> setStatusCode
         >=> json (List.map string errors)
 
-    let sendJson result =
-        result |> CommonLibrary.either json returnError
+    let sendJson (result: Result<'a,Error list>) (next: HttpFunc) (ctx: HttpContext) =
+        match result with
+        | Ok value -> json value next ctx
+        | Error errors ->
+            logErrors errors ctx |> ignore
+            returnError errors next ctx
 
-    let sendString (result : Result<string,Error list>) =
-        result |> CommonLibrary.either htmlString returnError
+    let sendString (result: Result<string,Error list>) next ctx =
+        match result with
+        | Ok value ->
+            printfn "%s" value
+            htmlString value next ctx
+        | Error errors ->
+            logErrors errors ctx |> ignore
+            returnError errors next ctx
 
-    let private routeWithLogging prefix path func =
-        printfn "ROUTE %s: %s" prefix path
-        route path >=> func
+    let private logRoute prefix path (ctx: HttpContext) =
+        let logger = ctx.GetLogger("Consilium.Controller.Route")
+        let date = System.DateTime.UtcNow.ToLongTimeString()
+        logger.LogInformation (Printf.sprintf "%s ROUTE %s: %s" date prefix path)
 
-    let private routeFWithLogging prefix path func =
-        printfn "ROUTE %s: %A" prefix path
-        routef path func
+    let private routeWithLogging prefix path (handle: HttpHandler) =
+        route path >=> (fun next ctx ->
+            logRoute prefix path ctx
+            handle next ctx)
 
-    let getRoute path func =
-        GET >=> routeWithLogging "GET" path func
+    let private routeFWithLogging prefix path handle =
+        routef path (fun value next ctx ->
+            logRoute prefix (path.ToString()) ctx
+            handle value next ctx)
 
-    let getRouteF path func =
-        GET >=> routeFWithLogging "GET" path func
+    let handlePayload = fun func request (next: HttpFunc) (ctx: HttpContext) ->
+        task {
+            let result = func request ctx
+            match result with
+            | Ok value -> return! Successful.OK value next ctx
+            | Error errors -> return! returnError errors next ctx
+        }
 
-    let postRoute path func =
-        POST >=> routeWithLogging "POST" path func
+    let handleRequest = fun func (next: HttpFunc) (ctx: HttpContext) ->
+        task {
+            let result = func ctx
+            match result with
+            | Ok value -> return! Successful.OK value next ctx
+            | Error errors -> return! returnError errors next ctx
+        }
 
-    let postRouteF path func =
-        POST >=> routeFWithLogging "POST" path func
+    let getRoute path handle =
+        GET >=> routeWithLogging "GET" path handle
 
-    let putRoute path func =
-        PUT >=> routeWithLogging "PUT" path func
+    let getRouteF path handle =
+        GET >=> routeFWithLogging "GET" path handle
 
-    let putRouteF path func =
-        PUT >=> routeFWithLogging "PUT" path func
+    let postRoute path handle =
+        printfn "init %s" path
+        POST >=> routeWithLogging "POST" path handle
 
-    let deleteRoute path func =
-        DELETE >=> routeWithLogging "DELETE" path func
+    let postRouteF path handle =
+        POST >=> routeFWithLogging "POST" path handle
 
-    let deleteRouteF path func =
-        DELETE >=> routeFWithLogging "DELETE" path func
+    let putRoute path handle =
+        PUT >=> routeWithLogging "PUT" path handle
+
+    let putRouteF path handle =
+        PUT >=> routeFWithLogging "PUT" path handle
+
+    let deleteRoute path handle =
+        DELETE >=> routeWithLogging "DELETE" path handle
+
+    let deleteRouteF path handle =
+        DELETE >=> routeFWithLogging "DELETE" path handle
 
     let routes : HttpFunc -> HttpContext -> HttpFuncResult = choose [
-        getRoute "/status" (fun next ctx -> sendString (Ok "Server is up and running") next ctx)
+        getRoute "/status" (sendString (Ok "Server is up and running"))
     ]

@@ -3,24 +3,23 @@ namespace Consilium
 module PersonDatabase =
 
     open MongoDB.Driver
+    open CommonTypes
     open PersonTypes
     open Connection
+    open Database
 
-    let private collection = personCollection;
+    let private collection = personCollection
 
-    let private find (filter : FilterDefinition<Person>) =
-        collection.Find(filter).ToEnumerable()
+    let private findPerson<'a> = findOne personCollection PersonNotFound
+    let private findPersons<'a> = find personCollection
 
     let private updateById personId updateBuilder =
         let filter = Builders<Person>.Filter.Eq((fun x -> x.Id), personId)
         collection.UpdateOne(filter, updateBuilder) |> ignore
 
-    let getAllPersons _ =
-        Builders.Filter.Empty |> find |> Seq.toArray
-
-    let getPersonById personId =
-        let filter = Builders<Person>.Filter.Eq((fun x -> x.Id), personId)
-        filter |> find |> Seq.tryLast
+    let getPersons userId =
+        let filter = Builders<Person>.Filter.Eq((fun x -> x.UserId), userId)
+        filter |> findPersons
 
     let updateGeneral (request: UpdateNameRequest) =
         let updateBuilder =
@@ -35,4 +34,4 @@ module PersonDatabase =
 
     let deletePerson personId =
         let update = Builders<Person>.Filter.Eq((fun x -> x.Id), personId)
-        collection.DeleteOne(update) |> ignore
+        collection.DeleteOne(update)

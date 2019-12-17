@@ -6,6 +6,7 @@ module CommonTypes =
 
     type Error =
          | UserNotFound
+         | PersonNotFound
          | ProjectNotFound
          | TopicNotFound
          | NameRequired
@@ -23,6 +24,7 @@ module CommonTypes =
     let mapErrorCode error =
         match error with
         | UserNotFound -> 404
+        | PersonNotFound -> 404
         | ProjectNotFound -> 404
         | TopicNotFound -> 404
         | NameRequired -> 400

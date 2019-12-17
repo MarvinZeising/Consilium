@@ -33,10 +33,12 @@
     <Compile Include="Actions\UserActions.fs" />
     <Compile Include="Actions\ProjectActions.fs" />
     <Compile Include="Actions\KnowledgeBaseActions.fs" />
+    <Compile Include="Handlers\PersonHandlers.fs" />
     <Compile Include="Controllers\Controller.fs" />
     <Compile Include="Controllers\UserController.fs" />
     <Compile Include="Controllers\ProjectController.fs" />
     <Compile Include="Controllers\KnowledgeBaseController.fs" />
+    <Compile Include="Controllers\PersonController.fs" />
     <Compile Include="Program.fs" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App">
