@@ -43,82 +43,7 @@
         </v-card>
       </v-flex>
 
-      <!--//* News Heading -->
-      <v-flex xs12>
-        <h2
-          class="headline mb-3"
-          v-t="'project.news'"
-        />
-      </v-flex>
-      <v-flex
-        xs12 sm10 md8 lg6
-        class="mb-5 pa-2"
-      >
-        <v-card flat>
-          <v-card-text>
-            <p class="subheading mb-0">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi autem quas, veniam suscipit numquam sunt quo a eum eligendi rerum exercitationem doloremque velit. Veritatis odio, ratione commodi impedit earum cumque.
-              <br>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, et, fuga eveniet nesciunt atque magnam, sunt non natus alias nobis culpa. Natus repudiandae, necessitatibus nam doloribus excepturi voluptatibus consectetur ad?
-            </p>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-
-      <!--//* Knowledge Base Heading -->
-      <v-flex xs12>
-        <h2
-          class="headline mb-3"
-          v-t="'knowledgeBase.topics'"
-        />
-      </v-flex>
-      <v-flex
-        xs12 sm10 md8 lg6
-        class="mb-5 pa-2"
-      >
-        <p>
-          {{ $t('knowledgeBase.topicsDescription') }}
-        </p>
-        <v-card flat>
-          <v-list>
-            <v-list-tile
-              v-for="(topic, index) in getTopics"
-              :key="topic.name"
-            >
-              <v-list-tile-content>
-                <v-list-tile-title v-text="topic.name" />
-              </v-list-tile-content>
-
-              <v-list-tile-action style="flex-direction:row; align-items:center;">
-                <v-btn
-                  v-if="index > 0"
-                  icon
-                  class="ma-0"
-                  @click="knowledgeBaseModule.moveTopicUp(topic.order)"
-                >
-                  <v-icon color="grey">expand_less</v-icon>
-                </v-btn>
-                <v-btn
-                  v-if="index < getTopics.length - 1"
-                  icon
-                  class="ma-0"
-                  @click="knowledgeBaseModule.moveTopicDown(topic.order)"
-                >
-                  <v-icon color="grey">expand_more</v-icon>
-                </v-btn>
-                <RenameTopicDialog :topicId="topic.id" />
-                <DeleteTopicDialog :topicId="topic.id" />
-              </v-list-tile-action>
-            </v-list-tile>
-          </v-list>
-        </v-card>
-        <v-flex
-          xs12
-          class="mt-2"
-        >
-          <NewTopicDialog />
-        </v-flex>
-      </v-flex>
+      <Topics />
 
       <!--//* Critical Heading -->
       <v-flex xs12>
@@ -154,17 +79,13 @@ import { getModule } from 'vuex-module-decorators'
 import { Project, Topic } from '@/models/definitions'
 import { Watch } from 'vue-property-decorator'
 import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
+import Topics from '../../components/Topics.vue'
 import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vue'
-import NewTopicDialog from '../../components/dialogs/NewTopicDialog.vue'
-import RenameTopicDialog from '../../components/dialogs/RenameTopicDialog.vue'
-import DeleteTopicDialog from '../../components/dialogs/DeleteTopicDialog.vue'
 
 @Component({
   components: {
     DeleteProjectDialog,
-    NewTopicDialog,
-    RenameTopicDialog,
-    DeleteTopicDialog,
+    Topics,
   }
 })
 export default class Settings extends Vue {
