@@ -20,10 +20,10 @@ module Program =
     let routes =
         choose [
             Controller.routes
-            ProjectController.routes
             UserController.routes
+            PersonController.routes
+            ProjectController.routes
             KnowledgeBaseController.routes
-
             RequestErrors.NOT_FOUND "Not Found"
         ]
 
@@ -61,10 +61,7 @@ module Program =
         services.AddGiraffe() |> ignore
 
     let configureLogging (builder : ILoggingBuilder) =
-        let filter (l : LogLevel) = l.Equals LogLevel.Error
-
-        builder.AddFilter(filter)
-               .AddConsole()
+        builder.AddConsole()
                .AddDebug()
                |> ignore
 
