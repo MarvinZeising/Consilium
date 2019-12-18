@@ -47,8 +47,15 @@ module Controller =
             logRoute prefix (path.ToString()) ctx
             handle value next ctx)
 
+    let logRequest (ctx: HttpContext) =
+        let logger = ctx.GetLogger("Consilium.Controller")
+        let method = ctx.Request.Method
+        let path = ctx.Request.Path.Value
+        logger.LogInformation (Printf.sprintf "%s %s" method path)
+
     let handlePayload = fun func request (next: HttpFunc) (ctx: HttpContext) ->
         task {
+            logRequest ctx
             let result = func request ctx
             match result with
             | Ok value -> return! Successful.OK value next ctx
@@ -57,6 +64,7 @@ module Controller =
 
     let handleRequest = fun func (next: HttpFunc) (ctx: HttpContext) ->
         task {
+            logRequest ctx
             let result = func ctx
             match result with
             | Ok value -> return! Successful.OK value next ctx

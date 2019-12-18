@@ -25,16 +25,27 @@ module PersonHandlers =
             let! validatedLastname = request.Lastname |> validateName
             let! userId = Authentication.getUserId ctx
 
-            let person = { Id = newId
-                           UserId = userId
-                           Firstname = validatedFirstname
-                           Lastname = validatedLastname }
-
-            return insertPerson person
+            return insertPerson {
+                Id = newId
+                UserId = userId
+                Firstname = validatedFirstname
+                Lastname = validatedLastname }
         }
 
-    let deletePerson personId (next:HttpFunc) (ctx: HttpContext) =
+    let updateGeneral (request: UpdateGeneralRequest) (ctx: HttpContext) =
         result {
-            deletePerson personId |> ignore
-            return! Successful.OK "asdf"
+            let! validatedFirstname = request.Firstname |> validateName
+            let! validatedLastname = request.Lastname |> validateName
+            let! userId = Authentication.getUserId ctx
+
+            return updateGeneral {
+                Id = request.Id
+                UserId = userId
+                Firstname = validatedFirstname
+                Lastname = validatedLastname }
+        }
+
+    let deletePerson personId (ctx: HttpContext) =
+        result {
+            return deletePerson personId
         }

@@ -3,8 +3,9 @@ namespace Consilium
 module PersonTypes =
 
     [<CLIMutable>]
-    type UpdateNameRequest =
-         { PersonId: string
+    type UpdateGeneralRequest =
+         { Id: string
+           UserId: string // filled server-side
            Firstname: string
            Lastname: string }
 

@@ -15,12 +15,9 @@ module PersonController =
         POST >=> route "/persons"
              >=> bindJson<CreatePersonRequest> (handlePayload createPerson)
 
-        //putRoute "/persons" (fun next context ->
-            //task {
-            //    let! input = context.BindJsonAsync<UpdateTopicRequest>()
-            //    return! json (updateTopic input) next context
-            //})
+        PUT >=> route "/persons"
+            >=> bindJson<UpdateGeneralRequest> (handlePayload updateGeneral)
 
-        //DELETE >=> routef "/persons/%s" deletePerson
+        DELETE >=> routef "/persons/%s" (handlePayload deletePerson)
 
     ]
