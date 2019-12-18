@@ -27,16 +27,16 @@ module UserController =
                         return! json (signUp credentials) next context
                     }
 
-            GET >=> route "/user" >=> authorize >=>
+            GET >=> route "/users" >=> authorize >=>
                 fun next context ->
                     sendJson (getUser context) next context
 
-            DELETE >=> route "/user" >=> authorize >=>
+            DELETE >=> route "/users" >=> authorize >=>
                 fun next context ->
                     let result = deleteUser context
                     sendJson result next context
 
-            PUT >=> route "/user/email" >=> authorize >=>
+            PUT >=> route "/users/email" >=> authorize >=>
                 fun next context ->
                     task {
                         let! request = context.BindJsonAsync<UpdateEmailRequest>()
@@ -44,7 +44,7 @@ module UserController =
                         return! sendJson result next context
                     }
 
-            PUT >=> route "/user/language" >=> authorize >=>
+            PUT >=> route "/users/language" >=> authorize >=>
                 fun next context ->
                     task {
                         let! request = context.BindJsonAsync<UpdateLanguageRequest>()
@@ -52,7 +52,7 @@ module UserController =
                         return! sendJson result next context
                     }
 
-            PUT >=> route "/user/password" >=> authorize >=>
+            PUT >=> route "/users/password" >=> authorize >=>
                 fun next context ->
                     task {
                         let! request = context.BindJsonAsync<UpdatePasswordRequest>()
