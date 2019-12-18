@@ -27,10 +27,6 @@ const router = new Router({
     name: 'calendar',
     component: () => import('./views/project/Calendar.vue')
   }, {
-    path: '/project/:projectId/knowledge-base',
-    name: 'knowledgeBase',
-    component: () => import('./views/project/KnowledgeBase.vue')
-  }, {
     path: '/project/:projectId/settings',
     name: 'settings',
     component: () => import('./views/project/Settings.vue')

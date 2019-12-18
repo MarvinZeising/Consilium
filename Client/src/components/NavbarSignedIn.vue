@@ -204,7 +204,7 @@ export default class NavbarSignedIn extends Vue {
   private get myProjects(): Project[] {
     return this.projectModule.myProjects.map((project: any) => {
       project.topics = this.knowledgeBaseModule.allTopics.filter((topic: Topic) => {
-        return topic.projectId == project.id
+        return topic.projectId === project.id
       })
       project.adminActions = [
         ['navbar.settings', 'settings', 'settings'],

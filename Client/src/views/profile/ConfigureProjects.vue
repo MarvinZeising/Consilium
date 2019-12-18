@@ -34,9 +34,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import MyProjects from '@/components/MyProjects.vue'
-import MyProjectInvitations from '@/components/MyProjectInvitations.vue'
-import JoinProject from '@/components/JoinProject.vue'
+import MyProjects from '../../components/MyProjects.vue'
+import MyProjectInvitations from '../../components/MyProjectInvitations.vue'
+import JoinProject from '../../components/JoinProject.vue'
 import Component from 'vue-class-component'
 
 @Component({

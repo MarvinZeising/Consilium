@@ -70,7 +70,8 @@ import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
 export default class DeleteProjectDialog extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
-  @Prop(String) readonly topicId: string | undefined
+  @Prop(String)
+  private readonly topicId: string | undefined
 
   private valid: any = false
   private deleteTopicDialog: boolean = false

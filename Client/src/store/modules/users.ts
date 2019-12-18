@@ -18,7 +18,7 @@ export default class UserModule extends VuexModule {
 
   @Action
   public async initUserModule() {
-    const response = await axios.get(`/user`)
+    const response = await axios.get(`/users`)
 
     this.context.commit('setUser', response.data)
     this.context.dispatch('updateLocale')
@@ -78,7 +78,7 @@ export default class UserModule extends VuexModule {
   @Action
   public async updateEmail(email: string) {
     if (this.user) {
-      await axios.put('/user/email', {
+      await axios.put('/usersemail', {
         email,
       })
 
@@ -90,7 +90,7 @@ export default class UserModule extends VuexModule {
   public async updateLanguage(language: string) {
     const user = this.user
     if (user) {
-      await axios.put('/user/language', {
+      await axios.put('/userslanguage', {
         language,
       })
       user.language = language
@@ -102,7 +102,7 @@ export default class UserModule extends VuexModule {
   @Action
   public async updatePassword(passwords: { old: string, new: string }) {
     if (this.user) {
-      await axios.put('/user/password', {
+      await axios.put('/userspassword', {
         oldPassword: hashPassword(passwords.old),
         newPassword: hashPassword(passwords.new),
       })

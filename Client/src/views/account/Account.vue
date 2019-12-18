@@ -114,8 +114,8 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '@/models/definitions'
-import DeleteAccountDialog from '@/components/dialogs/DeleteAccountDialog.vue'
-import UserModule from '@/store/modules/users'
+import DeleteAccountDialog from '../../components/dialogs/DeleteAccountDialog.vue'
+import UserModule from '../../store/modules/users'
 
 @Component({
   components: { DeleteAccountDialog }

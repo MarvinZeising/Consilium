@@ -60,7 +60,8 @@ import i18n from '@/i18n'
 export default class RenameTopicDialog extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
-  @Prop(String) readonly topicId: string | undefined
+  @Prop(String)
+  private readonly topicId: string | undefined
 
   private form: any
   private renameTopicDialog: any = null
@@ -68,14 +69,14 @@ export default class RenameTopicDialog extends Vue {
 
   private async created() {
     this.topicName = await this.knowledgeBaseModule.allTopics
-      .filter((x: Topic) => x.id == this.topicId)[0].name
+      .filter((x: Topic) => x.id === this.topicId)[0].name
   }
 
   private async renameTopic() {
-    let updatedTopic = new Topic('', this.topicName)
+    const updatedTopic = new Topic('', this.topicName)
     updatedTopic.id = this.topicId || ''
 
-    await this.knowledgeBaseModule.changeTopic(updatedTopic)
+    await this.knowledgeBaseModule.renameTopic(updatedTopic)
 
     this.renameTopicDialog = false
   }
