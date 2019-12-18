@@ -27,6 +27,10 @@ const router = new Router({
     name: 'calendar',
     component: () => import('./views/project/Calendar.vue')
   }, {
+    path: '/project/:projectId/topic/:topicId',
+    name: 'topic',
+    component: () => import('./views/project/Articles.vue')
+  }, {
     path: '/project/:projectId/settings',
     name: 'settings',
     component: () => import('./views/project/Settings.vue')
