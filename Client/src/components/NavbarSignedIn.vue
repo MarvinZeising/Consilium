@@ -39,11 +39,6 @@
                 <span>{{person.fullName()}}</span>
               </v-list-tile-title>
             </v-list-tile>
-
-            <v-list-tile :to="{ name: 'createPerson' }">
-              <v-icon left>person_add</v-icon>
-              {{ $t('navbar.createPerson') }}
-            </v-list-tile>
           </v-list>
         </v-menu>
       </v-list-tile-content>
