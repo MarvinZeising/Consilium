@@ -35,6 +35,7 @@ class Person {
   public fullName() {
     return this.firstname + ' ' + this.lastname
   }
+
 }
 
 class Project {
@@ -62,9 +63,24 @@ class Topic {
   }
 }
 
+class Article {
+  public id: string
+  public topicId: string
+  public title: string
+  public content: string
+
+  constructor(topicId: string, title: string, content: string) {
+    this.id = ''
+    this.topicId = topicId
+    this.title = title
+    this.content = content
+  }
+}
+
 export {
   User,
   Person,
   Project,
   Topic,
+  Article,
 }
