@@ -20,7 +20,7 @@
               v-t="'core.name'"
             />
             <p class="subheading">
-              {{ name }}
+              {{ getProject.name }}
             </p>
 
             <p
@@ -28,7 +28,7 @@
               v-t="'core.email'"
             />
             <p class="subheading mb-0">
-              {{ email }}
+              {{ getProject.email }}
             </p>
           </v-card-text>
 
@@ -169,33 +169,11 @@ import DeleteTopicDialog from '../../components/dialogs/DeleteTopicDialog.vue'
 })
 export default class Settings extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
-  private name: string = ''
-  private email: string = ''
-
-  @Watch('$route')
-  private async onRouteChanged(val: string, oldVal: string) {
-    await this.loadProject()
-  }
-
-  private async created() {
-    await this.loadProject()
-  }
-
-  private get getTopics() {
+  public get getProject(): Project {
     const projectId = this.$route.params.projectId
-
-    return this.knowledgeBaseModule.allTopics.filter((x: Topic) => x.projectId === projectId)
-  }
-
-  private async loadProject() {
-    const projectId = this.$route.params.projectId
-    const project = this.projectModule.myProjects.filter((x: Project) => x.id === projectId)[0]
-    if (project) {
-      this.name = project.name
-      this.email = project.email
-    }
+    const projects = this.projectModule.myProjects.filter((project) => project.id === projectId)
+    return projects.length > 0 ? projects[0] : new Project('Loading', 'Loading')
   }
 
 }
