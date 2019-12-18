@@ -1,26 +1,24 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-layout wrap>
 
       <!--//* General -->
-      <v-flex xs12>
+      <v-flex xs12 sm10 md8 lg6>
         <h2
           class="headline mb-3"
           v-t="'account.general'"
         />
-      </v-flex>
-      <v-flex
-        xs12 sm10 md8 lg6
-        class="mb-5 pa-2"
-      >
-        <v-card flat>
+        <v-card
+          flat
+          class="ma-2 mb-5"
+        >
           <v-card-text>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.id'"
             />
             <p class="subheading grey--text">
-              {{ id }}
+              {{ userModule.myUser.id }}
             </p>
 
             <p
@@ -28,7 +26,7 @@
               v-t="'core.email'"
             />
             <p class="subheading">
-              {{ email }}
+              {{ userModule.myUser.email }}
             </p>
           </v-card-text>
 
@@ -43,18 +41,13 @@
         </v-card>
       </v-flex>
 
-      <!--//* Language -->
-      <v-flex xs12>
+      <!--//* Localization -->
+      <v-flex xs12 sm10 md8 lg6>
         <h2
           class="headline mb-3"
           v-t="'account.localization'"
         />
-      </v-flex>
-      <v-flex
-        xs12 sm10 md8 lg6
-        class="mb-5 pa-2"
-      >
-        <v-card flat>
+        <v-card flat class="ma-2 mb-5">
           <v-card-text>
             <p
               class="caption mb-0 grey--text"
@@ -62,7 +55,7 @@
             />
             <p
               class="subheading"
-              v-t="'language.' + language"
+              v-t="'language.' + userModule.myUser.language"
             />
           </v-card-text>
 
@@ -77,21 +70,20 @@
         </v-card>
       </v-flex>
 
+      <!--//* Persons -->
+      <MyPersons />
+
       <!--//* Critical Area -->
-      <v-flex xs12>
+      <v-flex xs12 sm10 md8 lg6>
         <h2
           class="headline mb-3 error--text"
           v-t="'core.criticalArea'"
         />
-      </v-flex>
-      <v-flex
-        xs12 sm10 md8 lg6
-        class="mb-5 pa-2"
-      >
         <v-card
           flat
           dark
           color="red lighten-4"
+          class="ma-2"
         >
           <v-card-text>
             <v-btn
@@ -113,28 +105,15 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getModule } from 'vuex-module-decorators'
-import { Project } from '@/models/definitions'
+import { Project } from '../../models/definitions'
+import MyPersons from '../../components/MyPersons.vue'
 import DeleteAccountDialog from '../../components/dialogs/DeleteAccountDialog.vue'
 import UserModule from '../../store/modules/users'
 
 @Component({
-  components: { DeleteAccountDialog }
+  components: { DeleteAccountDialog, MyPersons }
 })
 export default class Account extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
-
-  private id: string = ''
-  private email: string = ''
-  private language: string = ''
-
-  private created() {
-    const user = this.userModule.myUser
-    if (user) {
-      this.id = user.id
-      this.email = user.email
-      this.language = user.language
-    }
-  }
-
 }
 </script>

@@ -6,7 +6,7 @@ export default class PersonModule extends VuexModule {
   public activePersonId: string | null = null
   public persons: Person[] = []
 
-  public get myPersons(): Person[] {
+  public get getPersons(): Person[] {
     return this.persons
   }
 

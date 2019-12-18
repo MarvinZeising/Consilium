@@ -1,19 +1,17 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-layout wrap>
 
       <!--//* General Heading -->
-      <v-flex xs12>
+      <v-flex xs12 sm10 md8 lg6>
         <h2
           class="headline mb-3"
           v-t="'person.general'"
         />
-      </v-flex>
-      <v-flex
-        xs12 sm10 md8 lg6
-        class="mb-5 pa-2"
-      >
-        <v-card flat>
+        <v-card
+          flat
+          class="ma-2 mb-5"
+        >
           <v-card-text>
             <p
               class="caption mb-0 grey--text"
@@ -52,16 +50,15 @@
       </v-flex>
 
       <!--//* Photo Heading -->
-      <v-flex xs12>
+      <v-flex xs12 sm10 md8 lg6>
         <h2
           class="headline mb-3"
           v-t="'person.photo'"
         />
-      </v-flex>
-      <v-flex
-        class="mb-5 pa-2 shrink"
-      >
-        <v-card flat>
+        <v-card
+          flat
+          class="ma-2 mb-5"
+        >
           <v-card-text>
             <img
               v-if="photoUrl"
@@ -76,9 +73,9 @@
           </v-card-text>
 
           <v-card-actions>
+            <v-spacer />
             <v-btn
               flat
-              block
               :to="{ name: 'home' }"
               v-t="'person.updatePhoto'"
             />

@@ -176,7 +176,7 @@ export default class NavbarSignedIn extends Vue {
   private drawer: boolean = false
 
   private get persons(): any[] {
-    return this.personModule.myPersons
+    return this.personModule.getPersons
   }
 
   private get getActivePerson(): Person {

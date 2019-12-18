@@ -1,5 +1,6 @@
 <template>
   <div class="myProjectInvitations">
+
     <!--//* Project invitations -->
     <v-flex xs12>
       <h2 class="headline mb-3">Pending Project invitations</h2>
@@ -53,6 +54,7 @@
         </v-card-actions>
       </v-card>
     </v-flex>
+
   </div>
 </template>
 
