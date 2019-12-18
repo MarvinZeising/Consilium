@@ -63,7 +63,7 @@ export default class RenameTopicDialog extends Vue {
   @Prop(String)
   private readonly topicId: string | undefined
 
-  private form: any
+  private form: any = null
   private renameTopicDialog: any = null
   private topicName: string = ''
 

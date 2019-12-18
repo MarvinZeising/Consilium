@@ -55,7 +55,7 @@ import i18n from '@/i18n'
 export default class NewTopicDialog extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
-  private form: any
+  private form: any = null
   private newTopicDialog: any = null
   private topicName: string = ''
 
