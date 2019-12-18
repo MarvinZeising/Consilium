@@ -10,8 +10,8 @@
       </v-card-text>
       <v-list>
         <v-list-tile
-          v-for="(person) in getPersons"
-          :key="person.id"
+          v-for="(person, index) in getPersons"
+          :key="index"
         >
           <v-list-tile-content>
             <v-list-tile-title v-text="person.fullName()" />
@@ -26,6 +26,12 @@
               <v-icon color="grey">edit</v-icon>
             </v-btn>
           </v-list-tile-action>
+        </v-list-tile>
+        <v-list-tile
+          v-if="getPersons.length === 0"
+          class="warning white--text"
+        >
+          <span v-t="'person.noPersons'" />
         </v-list-tile>
       </v-list>
       <v-card-actions>

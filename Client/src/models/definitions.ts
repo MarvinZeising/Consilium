@@ -24,12 +24,12 @@ class Person {
   public photoUrl: string
   public gender: Gender
 
-  constructor(id: string, firstname: string, lastname: string, photoUrl: string) {
+  constructor(id: string, firstname: string, lastname: string) {
     this.id = id
     this.firstname = firstname
     this.lastname = lastname
     this.gender = Gender.Male
-    this.photoUrl = photoUrl
+    this.photoUrl = 'https://randomuser.me/api/portraits/men/21.jpg'
   }
 
   public fullName() {

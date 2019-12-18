@@ -12,7 +12,7 @@
           flat
           class="ma-2 mb-5"
         >
-          <v-card-text>
+          <v-card-text v-if="userModule.myUser">
             <p
               class="caption mb-0 grey--text"
               v-t="'core.id'"
@@ -48,7 +48,7 @@
           v-t="'account.localization'"
         />
         <v-card flat class="ma-2 mb-5">
-          <v-card-text>
+          <v-card-text v-if="userModule.myUser">
             <p
               class="caption mb-0 grey--text"
               v-t="'account.language'"

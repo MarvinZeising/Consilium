@@ -2,14 +2,17 @@
   <div>
 
     <!--//* Avatar -->
-    <v-list-tile avatar>
+    <v-list-tile
+      v-if="personModule.getActivePerson"
+      avatar
+    >
       <v-list-tile-avatar>
         <img
-          v-if="getActivePerson.photoUrl"
-          :src="getActivePerson.photoUrl"
+          v-if="personModule.getActivePerson.photoUrl"
+          :src="personModule.getActivePerson.photoUrl"
         />
         <img
-          v-if="!getActivePerson.photoUrl"
+          v-if="!personModule.getActivePerson.photoUrl"
           src="../assets/person.jpg"
         />
       </v-list-tile-avatar>
@@ -24,19 +27,19 @@
               class="grey text--black"
               v-on="on"
             >
-              {{ getActivePerson.fullName() }}
+              {{ personModule.getActivePerson.fullName() }}
               <v-icon right>arrow_drop_down</v-icon>
             </v-btn>
           </template>
           <v-list>
             <v-list-tile
-              v-for="(person, i) in persons"
+              v-for="(person, i) in personModule.getPersons"
               :key="i"
-              @click="activatePerson(person.id)"
+              @click="personModule.activatePerson(person.id)"
             >
               <v-list-tile-title>
                 <v-icon left>person</v-icon>
-                <span>{{person.fullName()}}</span>
+                <span>{{ person.fullName() }}</span>
               </v-list-tile-title>
             </v-list-tile>
           </v-list>
@@ -86,7 +89,7 @@
         <v-list-tile
           v-for="(topic, j) in project.topics"
           :key="j"
-          :to="{ name: 'knowledgeBase', params: { projectId: project.id, topicId: topic.id }}"
+          :to="{ name: 'topic', params: { projectId: project.id, topicId: topic.id }}"
         >
           <v-list-tile-title v-text="topic.name" />
         </v-list-tile>
@@ -117,7 +120,10 @@
     </v-list-group>
 
     <!--//* Profile -->
-    <v-list-group prepend-icon="person">
+    <v-list-group
+      v-if="personModule.getActivePerson"
+      prepend-icon="person"
+    >
       <template v-slot:activator>
         <v-list-tile>
           <v-list-tile-title v-t="'navbar.profile'" />
@@ -175,14 +181,6 @@ export default class NavbarSignedIn extends Vue {
 
   private drawer: boolean = false
 
-  private get persons(): any[] {
-    return this.personModule.getPersons
-  }
-
-  private get getActivePerson(): Person {
-    return this.personModule.getActivePerson
-  }
-
   private profileActions: any[] = [
     ['navbar.personal', 'account_circle', 'personal'],
     //// ['Spiritual', 'assignment_turned_in', 'configureProjects'],
@@ -191,10 +189,6 @@ export default class NavbarSignedIn extends Vue {
     //// ['Notifications', 'notifications', 'configureProjects'],
     ['navbar.configureProjects', 'settings', 'configureProjects']
   ]
-
-  private get isSignedIn(): boolean {
-    return this.userModule.isSignedIn
-  }
 
   private get myProjects(): Project[] {
     return this.projectModule.myProjects.map((project: any) => {
@@ -214,10 +208,6 @@ export default class NavbarSignedIn extends Vue {
       ]
       return project
     })
-  }
-
-  private async activatePerson(personId: string) {
-    await this.personModule.activatePerson(personId)
   }
 
 }

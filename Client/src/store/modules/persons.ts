@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
 import { Person } from '@/models/definitions'
 
@@ -10,52 +11,32 @@ export default class PersonModule extends VuexModule {
     return this.persons
   }
 
-  public get getActivePerson(): Person {
-    const persons = this.persons.filter((x) => x.id === this.activePersonId)
-    if (persons.length > 0) {
-      return persons[0]
-    }
-    return new Person('tempGuid', 'Loading...', 'Loading...', '')
+  public get getActivePerson(): Person | undefined {
+    return this.persons.find((x) => x.id === this.activePersonId)
  }
 
   @Action
   public async initPersonModule() {
-    // const response = await axios.get('/persons')
-    const currentlyActivePerson: Person | undefined = this.persons.find((x) => x.id === this.activePersonId)
+    const response = await axios.get('/persons')
 
-    // * fake database
-    const response = {
-      data: [{
-        id: 'asdf',
-        firstname: 'Marvin',
-        lastname: 'Zeising',
-        photoUrl: 'https://randomuser.me/api/portraits/men/21.jpg',
-      }, {
-        id: 'asdf2',
-        firstname: 'Timon',
-        lastname: 'Loeffen',
-        photoUrl: 'https://randomuser.me/api/portraits/men/0.jpg',
-      }]
-    }
-    if (this.persons.length > 0) {
-      response.data = this.persons
-    }
+    if (response.data && response.data.length > 0) {
+      const currentlyActivePerson = this.persons.find((x) => x.id === this.activePersonId)
 
-    const persons: Person[] = response.data.map((data) => {
-      return new Person(
-        data.id,
-        data.firstname,
-        data.lastname,
-        data.photoUrl,
-      )
-    })
+      const persons = response.data.map((data: Person) => {
+        return new Person(
+          data.id,
+          data.firstname,
+          data.lastname,
+        )
+      })
 
-    this.context.commit('setPersons', persons)
+      this.context.commit('setPersons', persons)
 
-    if (currentlyActivePerson && persons.includes(currentlyActivePerson)) {
-      this.context.commit('activatePerson', currentlyActivePerson.id)
-    } else {
-      this.context.commit('activatePerson', persons[0].id)
+      if (currentlyActivePerson && persons.includes(currentlyActivePerson)) {
+        this.context.commit('activatePerson', currentlyActivePerson.id)
+      } else {
+        this.context.commit('activatePerson', persons[0].id)
+      }
     }
   }
 
@@ -67,20 +48,33 @@ export default class PersonModule extends VuexModule {
 
   @Action
   public async createPerson(person: { firstname: string, lastname: string }) {
-    // const response = await axios.post('/persons', {
-    //   firstname: person.firstname,
-    //   lastname: person.lastname,
-    // })
-    const response = {
-      data: new Person(
-        'k987fhvianfdkahfsgpuh',
-        person.firstname,
-        person.lastname,
-        'https://randomuser.me/api/portraits/men/30.jpg',
-      )
+    const response = await axios.post('/persons', {
+      firstname: person.firstname,
+      lastname: person.lastname,
+    })
+
+    const newPerson = new Person(
+      response.data.id,
+      response.data.firstname,
+      response.data.lastname)
+
+    this.context.commit('insertPerson', newPerson)
+    this.context.commit('activatePerson', newPerson.id)
+
+    await this.context.dispatch('initProjectModule')
+    await this.context.dispatch('initKnowledgeBaseModule')
+  }
+
+  @Action({ commit: 'removePerson' })
+  public async deletePerson(personId: string) {
+    await axios.delete(`/persons/${personId}`)
+
+    const otherPerson = this.persons.find((x: Person) => x.id !== personId)
+    if (otherPerson) {
+      this.context.commit('activatePerson', otherPerson.id)
     }
-    this.context.commit('insertPerson', response.data)
-    this.context.commit('activatePerson', response.data.id)
+
+    return personId
   }
 
   @Mutation
@@ -96,6 +90,14 @@ export default class PersonModule extends VuexModule {
   @Mutation
   protected insertPerson(person: Person) {
     this.persons.push(person)
+  }
+
+  @Mutation
+  protected removePerson(personId: string) {
+    const person = this.persons.find((x: Person) => x.id === personId)
+    if (person) {
+      this.persons.splice(this.persons.indexOf(person), 1)
+    }
   }
 
 }

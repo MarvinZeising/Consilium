@@ -12,30 +12,41 @@
           flat
           class="ma-2 mb-5"
         >
-          <v-card-text>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'person.firstname'"
-            />
-            <p class="subheading">
-              {{ firstname }}
-            </p>
+          <v-card-text v-if="personModule.getActivePerson">
 
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'person.lastname'"
-            />
-            <p class="subheading">
-              {{ lastname }}
-            </p>
+            <v-flex xs12 md6>
+              <p
+                class="caption mb-0 grey--text"
+                v-t="'person.firstname'"
+              />
+              <p class="subheading">
+                {{ personModule.getActivePerson.firstname }}
+              </p>
+            </v-flex>
 
-            <p class="caption mb-0 grey--text">
-              Gender
-            </p>
-            <p
-              class="subheading"
-              v-t="'person.gender'"
-            />
+            <v-flex xs12 md6>
+              <p
+                class="caption mb-0 grey--text"
+                v-t="'person.lastname'"
+              />
+              <p class="subheading">
+                {{ personModule.getActivePerson.lastname }}
+              </p>
+            </v-flex>
+
+            <v-flex xs12 md6>
+              <p
+                class="caption mb-0 grey--text"
+                v-t="'person.gender'"
+              >
+                Gender
+              </p>
+              <p
+                class="subheading"
+                v-t="'person.' + personModule.getActivePerson.gender"
+              />
+            </v-flex>
+
           </v-card-text>
 
           <v-card-actions>
@@ -61,12 +72,12 @@
         >
           <v-card-text>
             <img
-              v-if="photoUrl"
-              :src="photoUrl"
+              v-if="personModule.getActivePerson && personModule.getActivePerson.photoUrl"
+              :src="personModule.getActivePerson.photoUrl"
               style="max-width:300px;"
             />
             <img
-              v-if="!photoUrl"
+              v-else
               src="../../assets/person.jpg"
               style="max-width:200px;"
             />
@@ -83,6 +94,29 @@
         </v-card>
       </v-flex>
 
+      <!--//* Critical Heading -->
+      <v-flex xs12>
+        <h2
+          class="headline mb-3 error--text"
+          v-t="'core.criticalArea'"
+        />
+      </v-flex>
+      <v-flex
+        xs12 sm10 md8 lg6
+        class="mb-5 pa-2"
+      >
+        <v-card
+          v-if="personModule.getActivePerson"
+          flat
+          dark
+          color="red lighten-4"
+        >
+          <v-card-text>
+            <DeletePersonDialog :personId="personModule.getActivePerson.id" />
+          </v-card-text>
+        </v-card>
+      </v-flex>
+
     </v-layout>
   </v-container>
 </template>
@@ -91,25 +125,15 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { getModule } from 'vuex-module-decorators'
-import { Person } from '@/models/definitions'
 import { Watch, Prop } from 'vue-property-decorator'
-import PersonModule from '@/store/modules/persons'
+import { Person } from '../../models/definitions'
+import PersonModule from '../../store/modules/persons'
+import DeletePersonDialog from '../../components/dialogs/DeletePersonDialog.vue'
 
-@Component
+@Component({
+  components: { DeletePersonDialog }
+})
 export default class Personal extends Vue {
   private personModule: PersonModule = getModule(PersonModule, this.$store)
-
-  private get firstname(): string {
-    return this.personModule.getActivePerson.firstname
-  }
-  private get lastname(): string {
-    return this.personModule.getActivePerson.lastname
-  }
-  private get gender(): string {
-    return this.personModule.getActivePerson.gender
-  }
-  private get photoUrl(): string {
-    return this.personModule.getActivePerson.photoUrl
-  }
 }
 </script>

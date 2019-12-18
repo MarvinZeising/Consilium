@@ -6,11 +6,20 @@
   "lastname": "Nachname",
   "lastnameDescription": "Der Nachname der Person.",
   "gender": "Geschlecht",
+  "male": "Bruder",
+  "female": "Schwester",
   "general": "Generelles",
   "photo": "Bild",
   "updatePhoto": "Bild ändern",
   "create": "Neue Person anlegen",
   "createDescription1": "Warum eine Person anlegen?",
   "createDescription2": "Du hast bereits einen Benutzer. Aber ein Benutzer ist nur zum Anmelden am System.",
-  "createDescription3": "Um tatsächlich an einem Projekt teilzunehmen, brauchst du eine Person."
+  "createDescription3": "Um tatsächlich an einem Projekt teilzunehmen, brauchst du eine Person.",
+  "persons": "Personen",
+  "personsDescription": "Dein Benutzer ist mit den folgenden Personen verknüpft. Jede dieser Personen kann an einem oder mehreren Projekten teilnehmen.",
+  "delete": "Diese Person löschen",
+  "deleteDescription": "Dies wird diese Person und alle zukünftigen Bewerbungen/Teilnahmen der Person für/an Schichten aller Projekte unwiderruflich löschen. Du wirst den Zugriff auf alle Projekte verlieren, zu denen diese Person Zugriff hatte.",
+  "deleteHint": "Gib den Vornamen dieser Person ein um fortzufahren",
+  "nameMustEqual": "Der Name muss dem Vornamen dieser Person entsprechen",
+  "noPersons": "Du hast noch keine Personen angelegt!"
 }
