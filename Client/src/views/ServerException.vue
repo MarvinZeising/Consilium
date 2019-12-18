@@ -25,7 +25,7 @@ import { Component } from 'vue-property-decorator'
 @Component({})
 export default class ServerException extends Vue {
   private tryAgainNow() {
-    location.reload(true)
+    location.assign('/')
   }
 }
 </script>
