@@ -52,11 +52,13 @@ class Topic {
   public id: string
   public projectId: string
   public name: string
+  public order: number
 
   constructor(projectId: string, name: string) {
     this.id = ''
     this.projectId = projectId
     this.name = name
+    this.order = 0
   }
 }
 

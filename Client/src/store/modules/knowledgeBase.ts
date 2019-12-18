@@ -7,7 +7,7 @@ export default class KnowledgeBaseModule extends VuexModule {
   public topics: Topic[] = []
 
   public get allTopics(): Topic[] {
-    return this.topics
+    return this.topics.sort((a: Topic, b: Topic) => a.order - b.order)
   }
 
   @Action
@@ -31,18 +31,52 @@ export default class KnowledgeBaseModule extends VuexModule {
   }
 
   @Action
-  public async renameTopic(topic: Topic) {
+  public async changeTopic(topic: Topic) {
     await axios.put('/knowledge-base/topics', {
       id: topic.id,
       name: topic.name,
+      order: topic.order,
     })
     this.context.commit('updateTopic', topic)
   }
 
   @Action
   public async deleteTopic(topicId: string) {
+    const topic = this.allTopics.filter((x: Topic) => x.id === topicId)[0]
     await axios.delete(`/knowledge-base/topics/${topicId}`)
     this.context.commit('removeTopic', topicId)
+
+    for (const t of this.allTopics.filter((x: Topic) => x.order > topic.order)) {
+      this.context.dispatch('moveTopicDown', t.id)
+    }
+  }
+
+  @Action
+  public async moveTopicUp(currentOrder: number) {
+    for (const topic of this.allTopics) {
+      if (topic.order === currentOrder - 1) {
+        topic.order++
+        this.context.dispatch('changeTopic', topic)
+      } else if (topic.order === currentOrder) {
+        topic.order--
+        this.context.dispatch('changeTopic', topic)
+        break
+      }
+    }
+  }
+
+  @Action
+  public async moveTopicDown(currentOrder: number) {
+    for (const topic of this.allTopics) {
+      if (topic.order === currentOrder) {
+        topic.order++
+        this.context.dispatch('changeTopic', topic)
+      } else if (topic.order === currentOrder + 1) {
+        topic.order--
+        this.context.dispatch('changeTopic', topic)
+        break
+      }
+    }
   }
 
   @Mutation
@@ -60,12 +94,14 @@ export default class KnowledgeBaseModule extends VuexModule {
     for (const topic of this.topics) {
       if (topic.id === updatedTopic.id) {
         topic.name = updatedTopic.name
+        topic.order = updatedTopic.order
       }
     }
   }
 
   @Mutation
   protected removeTopic(topicId: string) {
+    // TODO: re-calculate order
     this.topics = this.topics.filter((x: Topic) => x.id !== topicId)
   }
 
