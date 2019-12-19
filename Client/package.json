@@ -4,20 +4,14 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "./node_modules/.bin/vue-cli-service build --dest /app",
     "lint": "vue-cli-service lint",
+    "build": "./node_modules/.bin/vue-cli-service build --dest /app",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@types/marked": "^0.6.5",
-    "@types/node": "^12.0.4",
-    "@vue/cli-plugin-babel": "^3.5.0",
-    "@vue/cli-plugin-typescript": "^3.5.0",
-    "@vue/cli-plugin-unit-mocha": "^3.5.0",
-    "@vue/cli-service": "^3.5.0",
-    "@vue/test-utils": "1.0.0-beta.29",
+    "@vue/cli-upgrade": "^3.12.1",
     "axios": "^0.18.0",
     "babel-plugin-transform-decorators": "^6.24.1",
     "core-js": "^2.6.5",
@@ -28,28 +22,36 @@
     "roboto-fontface": "*",
     "tslib": "^1.9.3",
     "vue": "^2.6.6",
+    "vue-class-component": "^6.0.0",
     "vue-i18n": "^8.0.0",
+    "vue-property-decorator": "^8.0.0",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.5.5",
-    "vuex": "^3.1.0"
+    "vue-template-compiler": "^2.5.21",
+    "vuetify": "2.1.15",
+    "vuex": "^3.1.0",
+    "vuex-module-decorators": "^0.9.8"
   },
   "devDependencies": {
     "@kazupon/vue-i18n-loader": "^0.3.0",
     "@types/chai": "^4.1.0",
     "@types/crypto-js": "^3.1.43",
+    "@types/marked": "^0.6.5",
     "@types/mocha": "^5.2.4",
+    "@types/node": "^12.0.4",
     "@types/webpack": "^4.4.0",
+    "@vue/cli-plugin-babel": "^3.5.0",
+    "@vue/cli-plugin-e2e-cypress": "^3.5.0",
+    "@vue/cli-plugin-typescript": "^3.5.0",
+    "@vue/cli-plugin-unit-mocha": "^3.5.0",
+    "@vue/cli-service": "^3.5.0",
+    "@vue/test-utils": "1.0.0-beta.29",
     "chai": "^4.1.2",
     "fibers": "^3.1.1",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
     "typescript": "^3.2.1",
-    "vue-class-component": "^6.0.0",
     "vue-cli-plugin-i18n": "^0.6.0",
-    "vue-cli-plugin-vuetify": "^0.5.0",
-    "vue-property-decorator": "^8.0.0",
-    "vue-template-compiler": "^2.5.21",
-    "vuex-module-decorators": "^0.9.8"
+    "vue-cli-plugin-vuetify": "^0.5.0"
   },
   "postcss": {
     "plugins": {
@@ -60,8 +62,5 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ],
-  "optionalDependencies": {
-    "@vue/cli-plugin-e2e-cypress": "^3.3.0"
-  }
+  ]
 }

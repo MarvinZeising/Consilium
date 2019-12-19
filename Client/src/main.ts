@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import './plugins/vuetify'
+import Vuetify from 'vuetify/lib'
+import colors from 'vuetify/lib/util/colors'
 import App from './App.vue'
 import router from './router'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
@@ -45,7 +46,23 @@ async function init() {
       return Promise.reject(error)
     })
 
+  const vuetify = new Vuetify(/*{
+    theme: {
+      primary: colors.indigo.base,
+      secondary: colors.pink.base,
+      accent: colors.amber.base,
+      error: colors.red.base,
+      warning: colors.orange.base,
+      info: colors.cyan.base,
+      success: colors.green.base
+    },
+    iconfont: 'md',
+  }*/)
+
+  Vue.use(Vuetify)
+
   new Vue({
+    vuetify,
     store,
     router,
     i18n,
