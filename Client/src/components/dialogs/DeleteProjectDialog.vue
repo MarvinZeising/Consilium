@@ -1,63 +1,61 @@
 <template>
-  <v-layout>
-    <v-dialog v-model="deleteProjectDialog" persistent max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-btn
-          v-on="on"
-          color="error"
-          v-t="'project.delete'"
-        />
-      </template>
-      <v-card>
-        <v-form v-model="valid">
-          <v-card-title>
-            <span
-              class="headline"
-              v-t="'project.delete'"
-            />
-          </v-card-title>
-          <v-card-text>
-            <p
-              class="subheading"
-              v-t="'project.deleteDescription'"
-            />
-            <p
-              class="subheading"
-              v-t="'project.deleteHint'"
-            />
-            <v-text-field
-              v-model="enteredName"
-              :label="$t('core.name')"
-              :rules="enteredNameRules"
-              box
-              required
-            />
-            <p
-              class="subheading text-uppercase error--text"
-              v-t="'project.deleteWarning'"
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              flat
-              color="black"
-              @click="deleteProjectDialog = false"
-              v-t="'core.cancel'"
-            />
-            <v-btn
-              :disabled="!valid"
-              type="submit"
-              flat
-              color="error"
-              @click="deleteProject"
-              v-t="'core.delete'"
-            />
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
-  </v-layout>
+  <v-dialog v-model="deleteProjectDialog" persistent max-width="600px">
+    <template v-slot:activator="{ on }">
+      <v-btn
+        v-on="on"
+        color="error"
+        v-t="'project.delete'"
+      />
+    </template>
+    <v-card>
+      <v-form v-model="valid">
+        <v-card-title>
+          <span
+            class="headline"
+            v-t="'project.delete'"
+          />
+        </v-card-title>
+        <v-card-text>
+          <p
+            class="subheading"
+            v-t="'project.deleteDescription'"
+          />
+          <p
+            class="subheading"
+            v-t="'project.deleteHint'"
+          />
+          <v-text-field
+            v-model="enteredName"
+            :label="$t('core.name')"
+            :rules="enteredNameRules"
+            box
+            required
+          />
+          <p
+            class="subheading text-uppercase error--text"
+            v-t="'project.deleteWarning'"
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            flat
+            color="black"
+            @click="deleteProjectDialog = false"
+            v-t="'core.cancel'"
+          />
+          <v-btn
+            :disabled="!valid"
+            type="submit"
+            flat
+            color="error"
+            @click="deleteProject"
+            v-t="'core.delete'"
+          />
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">

@@ -1,63 +1,61 @@
 <template>
-  <v-layout>
-    <v-dialog v-model="deleteAccountDialog" persistent max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-btn
-          v-on="on"
-          color="error"
-          v-t="'account.delete'"
-        />
-      </template>
-      <v-card>
-        <v-form v-model="valid">
-          <v-card-title>
-            <span
-              class="headline"
-              v-t="'account.delete'"
-            />
-          </v-card-title>
-          <v-card-text>
-            <p
-              class="subheading"
-              v-t="'account.deleteDescription'"
-            />
-            <p
-              class="subheading"
-              v-t="'account.deleteHint'"
-            />
-            <v-text-field
-              v-model="email"
-              :label="$t('core.email')"
-              :rules="emailRules"
-              box
-              required
-            />
-            <p
-              class="subheading text-uppercase error--text"
-              v-t="'account.deleteWarning'"
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              flat
-              color="black"
-              @click="deleteAccountDialog = false"
-              v-t="'core.cancel'"
-            />
-            <v-btn
-              :disabled="!valid"
-              type="submit"
-              flat
-              color="error"
-              @click="deleteAccount"
-              v-t="'core.delete'"
-            />
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
-  </v-layout>
+  <v-dialog v-model="deleteAccountDialog" persistent max-width="600px">
+    <template v-slot:activator="{ on }">
+      <v-btn
+        v-on="on"
+        color="error"
+        v-t="'account.delete'"
+      />
+    </template>
+    <v-card>
+      <v-form v-model="valid">
+        <v-card-title>
+          <span
+            class="headline"
+            v-t="'account.delete'"
+          />
+        </v-card-title>
+        <v-card-text>
+          <p
+            class="subheading"
+            v-t="'account.deleteDescription'"
+          />
+          <p
+            class="subheading"
+            v-t="'account.deleteHint'"
+          />
+          <v-text-field
+            v-model="email"
+            :label="$t('core.email')"
+            :rules="emailRules"
+            box
+            required
+          />
+          <p
+            class="subheading text-uppercase error--text"
+            v-t="'account.deleteWarning'"
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            flat
+            color="black"
+            @click="deleteAccountDialog = false"
+            v-t="'core.cancel'"
+          />
+          <v-btn
+            :disabled="!valid"
+            type="submit"
+            flat
+            color="error"
+            @click="deleteAccount"
+            v-t="'core.delete'"
+          />
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">

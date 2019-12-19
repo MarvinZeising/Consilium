@@ -1,59 +1,57 @@
 <template>
-  <v-layout>
-    <v-dialog v-model="deletePersonDialog" persistent max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-btn
-          v-on="on"
-          color="error"
-          v-t="'person.delete'"
-        />
-      </template>
-      <v-card>
-        <v-form v-model="valid">
-          <v-card-title>
-            <span
-              class="headline"
-              v-t="'person.delete'"
-            />
-          </v-card-title>
-          <v-card-text>
-            <p
-              class="subheading"
-              v-t="'person.deleteDescription'"
-            />
-            <p
-              class="subheading"
-              v-t="'person.deleteHint'"
-            />
-            <v-text-field
-              v-model="enteredName"
-              :label="$t('core.name')"
-              :rules="enteredNameRules"
-              box
-              required
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              flat
-              color="black"
-              @click="deletePersonDialog = false"
-              v-t="'core.cancel'"
-            />
-            <v-btn
-              :disabled="!valid"
-              type="submit"
-              flat
-              color="error"
-              @click="deletePerson"
-              v-t="'core.delete'"
-            />
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
-  </v-layout>
+  <v-dialog v-model="deletePersonDialog" persistent max-width="600px">
+    <template v-slot:activator="{ on }">
+      <v-btn
+        v-on="on"
+        color="error"
+        v-t="'person.delete'"
+      />
+    </template>
+    <v-card>
+      <v-form v-model="valid">
+        <v-card-title>
+          <span
+            class="headline"
+            v-t="'person.delete'"
+          />
+        </v-card-title>
+        <v-card-text>
+          <p
+            class="subheading"
+            v-t="'person.deleteDescription'"
+          />
+          <p
+            class="subheading"
+            v-t="'person.deleteHint'"
+          />
+          <v-text-field
+            v-model="enteredName"
+            :label="$t('core.name')"
+            :rules="enteredNameRules"
+            box
+            required
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            flat
+            color="black"
+            @click="deletePersonDialog = false"
+            v-t="'core.cancel'"
+          />
+          <v-btn
+            :disabled="!valid"
+            type="submit"
+            flat
+            color="error"
+            @click="deletePerson"
+            v-t="'core.delete'"
+          />
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">

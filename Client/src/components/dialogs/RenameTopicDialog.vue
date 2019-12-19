@@ -1,52 +1,50 @@
 <template>
-  <v-layout>
-    <v-dialog v-model="renameTopicDialog" persistent max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-btn
-          v-on="on"
-          icon
-          class="ma-0"
-        >
-          <v-icon color="grey">edit</v-icon>
-        </v-btn>
-      </template>
-      <v-card>
-        <v-form v-model="form">
-          <v-card-title>
-            <span
-              class="headline"
-              v-t="'knowledgeBase.renameTopic'"
-            ></span>
-          </v-card-title>
-          <v-card-text>
-            <v-text-field
-              v-model="topicName"
-              :label="$t('core.name')"
-              box
-              required
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              flat
-              color="black"
-              @click="renameTopicDialog = false"
-              v-t="'core.close'"
-            />
-            <v-btn
-              :disabled="topicName == ''"
-              flat
-              color="primary"
-              @click="renameTopic"
-              v-t="'core.save'"
-              type="submit"
-            />
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
-  </v-layout>
+  <v-dialog v-model="renameTopicDialog" persistent max-width="600px">
+    <template v-slot:activator="{ on }">
+      <v-btn
+        v-on="on"
+        icon
+        class="ma-0"
+      >
+        <v-icon color="grey">edit</v-icon>
+      </v-btn>
+    </template>
+    <v-card>
+      <v-form v-model="form">
+        <v-card-title>
+          <span
+            class="headline"
+            v-t="'knowledgeBase.renameTopic'"
+          ></span>
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            v-model="topicName"
+            :label="$t('core.name')"
+            box
+            required
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            flat
+            color="black"
+            @click="renameTopicDialog = false"
+            v-t="'core.close'"
+          />
+          <v-btn
+            :disabled="topicName == ''"
+            flat
+            color="primary"
+            @click="renameTopic"
+            v-t="'core.save'"
+            type="submit"
+          />
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">

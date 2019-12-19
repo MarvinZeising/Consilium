@@ -3,17 +3,15 @@
     <v-layout wrap>
 
       <!--//* Main Heading -->
-      <v-flex xs12>
+      <v-flex xs12 sm10 md8 lg6>
         <h2
           class="headline mb-3"
           v-t="'project.general'"
         />
-      </v-flex>
-      <v-flex
-        xs12 sm10 md8 lg6
-        class="mb-5 pa-2"
-      >
-        <v-card flat>
+        <v-card
+          flat
+          class="ma-2 mb-5"
+        >
           <v-card-text>
             <p
               class="caption mb-0 grey--text"
@@ -46,20 +44,16 @@
       <Topics />
 
       <!--//* Critical Heading -->
-      <v-flex xs12>
+      <v-flex xs12 sm10 md8 lg6>
         <h2
           class="headline mb-3 error--text"
           v-t="'core.criticalArea'"
         />
-      </v-flex>
-      <v-flex
-        xs12 sm10 md8 lg6
-        class="mb-5 pa-2"
-      >
         <v-card
           flat
           dark
           color="red lighten-4"
+          class="ma-2 mb-5"
         >
           <v-card-text>
             <DeleteProjectDialog />

@@ -1,61 +1,59 @@
 <template>
-  <v-layout>
-    <v-dialog v-model="deleteTopicDialog" persistent max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-btn
-          v-on="on"
-          icon
-          class="ma-0"
-        >
-          <v-icon color="grey">delete</v-icon>
-        </v-btn>
-      </template>
-      <v-card>
-        <v-form v-model="valid">
-          <v-card-title>
-            <span
-              class="headline"
-              v-t="'knowledgeBase.deleteTopic'"
-            />
-          </v-card-title>
-          <v-card-text>
-            <p
-              class="subheading"
-              v-t="'knowledgeBase.deleteTopicDescription'"
-            />
-            <p
-              class="subheading"
-              v-t="'knowledgeBase.deleteTopicHint'"
-            />
-            <v-text-field
-              v-model="enteredName"
-              :label="$t('core.name')"
-              :rules="enteredNameRules"
-              box
-              required
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              flat
-              color="black"
-              @click="deleteTopicDialog = false"
-              v-t="'core.cancel'"
-            />
-            <v-btn
-              :disabled="!valid"
-              type="submit"
-              flat
-              color="error"
-              @click="deleteTopic"
-              v-t="'core.delete'"
-            />
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
-  </v-layout>
+  <v-dialog v-model="deleteTopicDialog" persistent max-width="600px">
+    <template v-slot:activator="{ on }">
+      <v-btn
+        v-on="on"
+        icon
+        class="ma-0"
+      >
+        <v-icon color="grey">delete</v-icon>
+      </v-btn>
+    </template>
+    <v-card>
+      <v-form v-model="valid">
+        <v-card-title>
+          <span
+            class="headline"
+            v-t="'knowledgeBase.deleteTopic'"
+          />
+        </v-card-title>
+        <v-card-text>
+          <p
+            class="subheading"
+            v-t="'knowledgeBase.deleteTopicDescription'"
+          />
+          <p
+            class="subheading"
+            v-t="'knowledgeBase.deleteTopicHint'"
+          />
+          <v-text-field
+            v-model="enteredName"
+            :label="$t('core.name')"
+            :rules="enteredNameRules"
+            box
+            required
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            flat
+            color="black"
+            @click="deleteTopicDialog = false"
+            v-t="'core.cancel'"
+          />
+          <v-btn
+            :disabled="!valid"
+            type="submit"
+            flat
+            color="error"
+            @click="deleteTopic"
+            v-t="'core.delete'"
+          />
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">

@@ -1,47 +1,45 @@
 <template>
-  <v-layout>
-    <v-dialog v-model="newTopicDialog" persistent max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-btn
-          v-on="on"
-          color="primary"
-          v-t="'knowledgeBase.createTopic'"
-        />
-      </template>
-      <v-card>
-        <v-form v-model="form">
-          <v-card-title>
-            <span class="headline">Add new Topic</span>
-          </v-card-title>
-          <v-card-text>
-            <v-text-field
-              v-model="topicName"
-              :label="$t('core.name')"
-              box
-              required
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              flat
-              color="black"
-              @click="newTopicDialog = false"
-              v-t="'core.close'"
-            />
-            <v-btn
-              :disabled="topicName == ''"
-              flat
-              color="primary"
-              @click="createTopic"
-              v-t="'core.save'"
-              type="submit"
-            />
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
-  </v-layout>
+  <v-dialog v-model="newTopicDialog" persistent max-width="600px">
+    <template v-slot:activator="{ on }">
+      <v-btn
+        v-on="on"
+        flat
+        v-t="'knowledgeBase.createTopic'"
+      />
+    </template>
+    <v-card>
+      <v-form v-model="form">
+        <v-card-title>
+          <span class="headline">Add new Topic</span>
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            v-model="topicName"
+            :label="$t('core.name')"
+            box
+            required
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            flat
+            color="black"
+            @click="newTopicDialog = false"
+            v-t="'core.close'"
+          />
+          <v-btn
+            :disabled="topicName == ''"
+            flat
+            color="primary"
+            @click="createTopic"
+            v-t="'core.save'"
+            type="submit"
+          />
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">
