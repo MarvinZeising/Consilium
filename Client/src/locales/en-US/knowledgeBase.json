@@ -6,5 +6,6 @@
   "deleteTopic": "Delete Topic",
   "deleteTopicDescription": "This will delete the topic and all articles created for this topic.",
   "deleteTopicHint": "Enter the topic name to continue",
-  "topicNameMustEqual": "Name must be this Topic's name"
+  "topicNameMustEqual": "Name must be this Topic's name",
+  "noTopics": "You didn't create any topics, yet."
 }

@@ -6,5 +6,6 @@
   "deleteTopic": "Thema löschen",
   "deleteTopicDescription": "Dadurch wird das Thema samt allen darin erstellten Artikeln gelöscht.",
   "deleteTopicHint": "Gib den Namen dieses Themas ein um fortzufahren",
-  "topicNameMustEqual": "Der Name muss dem Namen dieses Themas entsprechen"
+  "topicNameMustEqual": "Der Name muss dem Namen dieses Themas entsprechen",
+  "noTopics": "Du hast noch keine Themen angelegt."
 }
