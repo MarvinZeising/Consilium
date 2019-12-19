@@ -41,7 +41,5 @@ export default class Articles extends Vue {
     content: 'My awesome content'
   }]
 
-  private async load() {
-  }
 }
 </script>

@@ -74,7 +74,7 @@ export default class RenameTopicDialog extends Vue {
     const updatedTopic = new Topic('', this.topicName)
     updatedTopic.id = this.topicId || ''
 
-    await this.knowledgeBaseModule.renameTopic(updatedTopic)
+    await this.knowledgeBaseModule.changeTopic(updatedTopic)
 
     this.renameTopicDialog = false
   }

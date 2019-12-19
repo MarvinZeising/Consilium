@@ -1,13 +1,13 @@
 import Vue from 'vue'
-import Router, { Route } from 'vue-router'
+import VueRouter, { Route } from 'vue-router'
 import Home from './views/Home.vue'
 import ServerException from './views/ServerException.vue'
 import SignIn from './views/authentication/SignIn.vue'
 import SignOut from './views/authentication/SignOut.vue'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-const router = new Router({
+const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,
   routes: [{
