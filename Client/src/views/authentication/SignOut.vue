@@ -10,10 +10,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import UserModule from '@/store/modules/users'
+import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import Component from 'vue-class-component'
+import UserModule from '@/store/modules/users'
 
 @Component
 export default class SignOut extends Vue {

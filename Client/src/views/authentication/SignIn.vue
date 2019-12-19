@@ -70,13 +70,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import colors from 'vuetify/es5/util/colors'
-import UserModule from '@/store/modules/users'
+import { Vue, Component } from 'vue-property-decorator'
 import { getModule, Action } from 'vuex-module-decorators'
-import ProjectModule from '@/store/modules/projects'
+import colors from 'vuetify/es5/util/colors'
 import i18n from '@/i18n'
+import UserModule from '@/store/modules/users'
+import ProjectModule from '@/store/modules/projects'
 
 @Component
 export default class SignIn extends Vue {

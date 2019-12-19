@@ -66,12 +66,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import ProjectModule from '@/store/modules/projects'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import ProjectModule from '@/store/modules/projects'
 import { Project, Topic } from '@/models/definitions'
-import { Watch } from 'vue-property-decorator'
 import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
 import Topics from '../../components/Topics.vue'
 import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vue'

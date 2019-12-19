@@ -117,11 +117,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import PersonModule from '@/store/modules/persons'
+import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '@/i18n'
+import PersonModule from '@/store/modules/persons'
 
 @Component
 export default class CreatePerson extends Vue {

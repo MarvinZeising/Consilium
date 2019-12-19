@@ -122,10 +122,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { Watch, Prop } from 'vue-property-decorator'
 import { Person } from '../../models/definitions'
 import PersonModule from '../../store/modules/persons'
 import DeletePersonDialog from '../../components/dialogs/DeletePersonDialog.vue'

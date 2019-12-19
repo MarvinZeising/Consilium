@@ -162,7 +162,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
 import { Person, Project, Topic } from '@/models/definitions'
 import { getModule } from 'vuex-module-decorators'
@@ -170,7 +170,6 @@ import UserModule from '@/store/modules/users'
 import PersonModule from '@/store/modules/persons'
 import ProjectModule from '@/store/modules/projects'
 import KnowledgeBaseModule from '../store/modules/knowledgeBase'
-import Component from 'vue-class-component'
 
 @Component
 export default class NavbarSignedIn extends Vue {

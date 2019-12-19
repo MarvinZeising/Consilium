@@ -47,14 +47,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import PersonModule from '../store/modules/persons'
 import UserModule from '../store/modules/users'
 import { Person } from '../models/definitions'
 
-@Component({})
+@Component
 export default class MyPersons extends Vue {
   private personModule: PersonModule = getModule(PersonModule, this.$store)
 

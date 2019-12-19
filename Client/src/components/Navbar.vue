@@ -41,13 +41,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
-import { Project } from '@/models/definitions'
 import { getModule } from 'vuex-module-decorators'
+import { Project } from '@/models/definitions'
 import ProjectModule from '@/store/modules/projects'
 import UserModule from '@/store/modules/users'
-import Component from 'vue-class-component'
 import NavbarSignedIn from './NavbarSignedIn.vue'
 import NavbarSignedOut from './NavbarSignedOut.vue'
 

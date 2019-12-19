@@ -33,11 +33,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'vue-property-decorator'
 import MyProjects from '../../components/MyProjects.vue'
 import MyProjectInvitations from '../../components/MyProjectInvitations.vue'
 import JoinProject from '../../components/JoinProject.vue'
-import Component from 'vue-class-component'
 
 @Component({
   components: {

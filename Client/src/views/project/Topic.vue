@@ -23,15 +23,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 import axios from 'axios'
-import Component from 'vue-class-component'
-import { Watch } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
 import { Topic, Article } from '../../models/definitions'
 
-@Component({})
+@Component
 export default class Articles extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 

@@ -102,8 +102,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '../../models/definitions'
 import MyPersons from '../../components/MyPersons.vue'

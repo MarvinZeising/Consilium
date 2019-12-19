@@ -4,7 +4,6 @@
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
-    "noEmitHelpers": false,
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -15,9 +14,7 @@
     "types": [
       "webpack-env",
       "mocha",
-      "chai",
-      "webpack",
-      "webpack-env"
+      "chai"
     ],
     "paths": {
       "@/*": [

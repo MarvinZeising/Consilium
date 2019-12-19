@@ -57,13 +57,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { VForm } from 'vuetify/lib'
-import Component from 'vue-class-component'
-import ProjectModule from '@/store/modules/projects'
+import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { Project } from '@/models/definitions'
+import { VForm } from 'vuetify/lib'
 import i18n from '@/i18n'
+import ProjectModule from '@/store/modules/projects'
+import { Project } from '@/models/definitions'
 
 @Component
 export default class UpdateProjectGeneral extends Vue {

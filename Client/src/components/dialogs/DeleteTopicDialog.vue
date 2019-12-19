@@ -64,7 +64,7 @@ import { VForm } from 'vuetify/lib'
 import i18n from '@/i18n'
 import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
 
-@Component({})
+@Component
 export default class DeleteProjectDialog extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 

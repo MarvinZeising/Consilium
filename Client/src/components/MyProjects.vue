@@ -47,10 +47,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import ProjectModule from '@/store/modules/projects'
+import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import ProjectModule from '@/store/modules/projects'
 import { Project } from '@/models/definitions'
 
 @Component

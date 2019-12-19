@@ -80,13 +80,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { VForm } from 'vuetify/lib'
-import Component from 'vue-class-component'
-import UserModule from '@/store/modules/users'
+import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { Project } from '@/models/definitions'
+import { VForm } from 'vuetify/lib'
 import i18n from '@/i18n'
+import UserModule from '@/store/modules/users'
+import { Project } from '@/models/definitions'
 
 @Component
 export default class UpdateAccountPassword extends Vue {

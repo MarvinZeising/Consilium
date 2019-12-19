@@ -57,10 +57,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import KnowledgeBaseModule from '@/store/modules/knowledgeBase'
+import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import KnowledgeBaseModule from '@/store/modules/knowledgeBase'
 import { Topic } from '@/models/definitions'
 import NewTopicDialog from './dialogs/NewTopicDialog.vue'
 import RenameTopicDialog from './dialogs/RenameTopicDialog.vue'

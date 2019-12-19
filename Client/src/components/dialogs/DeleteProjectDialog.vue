@@ -59,16 +59,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import ProjectModule from '@/store/modules/projects'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '../../models/definitions'
-import { Watch } from 'vue-property-decorator'
 import { VForm } from 'vuetify/lib'
 import i18n from '@/i18n'
 
-@Component({})
+@Component
 export default class DeleteProjectDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 

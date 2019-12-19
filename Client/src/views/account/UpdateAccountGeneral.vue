@@ -43,13 +43,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'vue-property-decorator'
 import { VForm } from 'vuetify/lib'
-import Component from 'vue-class-component'
 import { getModule } from 'vuex-module-decorators'
+import i18n from '@/i18n'
 import { Project } from '@/models/definitions'
 import UserModule from '@/store/modules/users'
-import i18n from '@/i18n'
 
 @Component
 export default class UpdateAccountGeneral extends Vue {

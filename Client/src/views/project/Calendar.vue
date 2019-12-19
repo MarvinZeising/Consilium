@@ -55,9 +55,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'vue-property-decorator'
 import moment from 'moment'
-import Component from 'vue-class-component'
 
 @Component
 export default class Calendar extends Vue {
