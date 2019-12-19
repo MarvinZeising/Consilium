@@ -16,5 +16,5 @@
   "fieldMin": "This field has to have at least {count} characters",
   "fieldMax": "This field must not have more than {count} characters",
   "fieldCamelCase": "Name must begin with an uppercase letter",
-  "criticalArea": "Critical area"
+  "dangerZone": "Danger Zone"
 }

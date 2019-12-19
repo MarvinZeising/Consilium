@@ -15,7 +15,7 @@
     <v-flex
       v-for="(project, i) in projects"
       :key="i"
-      xs12 sm10 md8 lg6
+      xs12 sm10 md8 lg6 xl4
       class="mb-5 pa-2"
     >
       <v-card>
@@ -27,14 +27,14 @@
 
         <v-card-actions>
           <v-btn
-            flat
+            text
             color="primary"
           >
             Show permissions
           </v-btn>
           <v-spacer />
           <v-btn
-            flat
+            text
             color="error"
           >
             Leave Project

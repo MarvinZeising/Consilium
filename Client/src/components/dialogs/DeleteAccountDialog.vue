@@ -17,29 +17,29 @@
         </v-card-title>
         <v-card-text>
           <p
-            class="subheading"
+            class="subtitle-1"
             v-t="'account.deleteDescription'"
           />
           <p
-            class="subheading"
+            class="subtitle-1"
             v-t="'account.deleteHint'"
           />
           <v-text-field
             v-model="email"
             :label="$t('core.email')"
             :rules="emailRules"
-            box
+            filled
             required
           />
           <p
-            class="subheading text-uppercase error--text"
+            class="subtitle-1 text-uppercase error--text"
             v-t="'account.deleteWarning'"
           />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn
-            flat
+            text
             color="black"
             @click="deleteAccountDialog = false"
             v-t="'core.cancel'"
@@ -47,7 +47,7 @@
           <v-btn
             :disabled="!valid"
             type="submit"
-            flat
+            text
             color="error"
             @click="deleteAccount"
             v-t="'core.delete'"

@@ -8,7 +8,7 @@
           v-t="'account.updateGeneral'"
         />
       </v-flex>
-      <v-flex xs12 sm10 md8 lg6 >
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <p class="mt-4 grey--text text--darken-1"
           v-t="'account.emailDescription'"
         />
@@ -20,7 +20,7 @@
           v-model="email"
           :label="$t('core.email')"
           :rules="emailRules"
-          box
+          filled
           required
         />
 

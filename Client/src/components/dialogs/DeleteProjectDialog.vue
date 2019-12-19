@@ -17,29 +17,29 @@
         </v-card-title>
         <v-card-text>
           <p
-            class="subheading"
+            class="subtitle-1"
             v-t="'project.deleteDescription'"
           />
           <p
-            class="subheading"
+            class="subtitle-1"
             v-t="'project.deleteHint'"
           />
           <v-text-field
             v-model="enteredName"
             :label="$t('core.name')"
             :rules="enteredNameRules"
-            box
+            filled
             required
           />
           <p
-            class="subheading text-uppercase error--text"
+            class="subtitle-1 text-uppercase error--text"
             v-t="'project.deleteWarning'"
           />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn
-            flat
+            text
             color="black"
             @click="deleteProjectDialog = false"
             v-t="'core.cancel'"
@@ -47,7 +47,7 @@
           <v-btn
             :disabled="!valid"
             type="submit"
-            flat
+            text
             color="error"
             @click="deleteProject"
             v-t="'core.delete'"

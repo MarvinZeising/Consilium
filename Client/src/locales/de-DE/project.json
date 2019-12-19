@@ -2,7 +2,6 @@
   "general": "Generelles",
   "nameMustEqual": "Der Projektname muss dem Namen dieses Projekts entsprechen",
   "news": "Neuigkeiten",
-  "criticalArea": "Kritischer Bereich",
   "delete": "Dieses Projekt löschen",
   "deleteDescription": "Dies wird alle Kategorien, Teams und Schichten löschen. Der Informationsbereich wird geleert, jegliche Berechtigungen auf dieses Projekt zurückgezogen und das Projekt gelöscht.",
   "deleteHint": "Gib den Namen dieses Projekts ein um fortzufahren",

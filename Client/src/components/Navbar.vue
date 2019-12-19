@@ -1,8 +1,23 @@
 <template>
-  <nav>
-    <v-toolbar app flat>
-      <v-toolbar-side-icon @click="drawer = !drawer" />
-      <v-toolbar-title>{{ appTitle }}</v-toolbar-title>
+  <div>
+
+    <NavbarSignedIn
+      v-if="isSignedIn"
+      :drawer="drawer"
+    />
+    <NavbarSignedOut
+      v-else
+      :drawer="drawer"
+    />
+
+    <v-app-bar
+      app
+      :clipped-left="$vuetify.breakpoint.lgAndUp"
+      color="primary"
+      dark
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title>Consilium</v-toolbar-title>
       <v-spacer />
       <v-menu v-if="!isSignedIn">
         <template v-slot:activator="{ on }">
@@ -11,33 +26,19 @@
             <v-icon>arrow_drop_down</v-icon>
           </v-toolbar-title>
         </template>
-
         <v-list>
-          <v-list-tile
+          <v-list-item
             v-for="language in languages"
             :key="language"
             @click="updateLanguage(language)"
           >
-            <v-list-tile-title v-t="'language.' + language" />
-          </v-list-tile>
+            <v-list-item-title v-t="'language.' + language" />
+          </v-list-item>
         </v-list>
       </v-menu>
-    </v-toolbar>
+    </v-app-bar>
 
-    <v-navigation-drawer
-      app
-      v-model='drawer'
-    >
-      <v-list :expand="true">
-
-        <NavbarSignedIn v-if="isSignedIn" />
-
-        <NavbarSignedOut v-if="!isSignedIn" />
-
-      </v-list>
-    </v-navigation-drawer>
-
-  </nav>
+  </div>
 </template>
 
 <script lang="ts">
@@ -61,12 +62,9 @@ export default class Navbar extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private drawer: boolean = true
+
   private language: string = ''
   private languages: string[] = []
-
-  private get appTitle() {
-    return process.env.VUE_APP_TITLE || 'Consilium (DEV)'
-  }
 
   private async created() {
     this.language = this.$i18n.locale

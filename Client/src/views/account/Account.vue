@@ -3,7 +3,7 @@
     <v-layout wrap>
 
       <!--//* General -->
-      <v-flex xs12 sm10 md8 lg6>
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
           class="headline mb-3"
           v-t="'account.general'"
@@ -17,7 +17,7 @@
               class="caption mb-0 grey--text"
               v-t="'core.id'"
             />
-            <p class="subheading grey--text">
+            <p class="subtitle-1 grey--text">
               {{ userModule.myUser.id }}
             </p>
 
@@ -25,7 +25,7 @@
               class="caption mb-0 grey--text"
               v-t="'core.email'"
             />
-            <p class="subheading">
+            <p class="subtitle-1">
               {{ userModule.myUser.email }}
             </p>
           </v-card-text>
@@ -33,7 +33,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn
-              flat
+              text
               :to="{ name: 'updateAccountGeneral' }"
               v-t="'core.edit'"
             />
@@ -42,7 +42,7 @@
       </v-flex>
 
       <!--//* Localization -->
-      <v-flex xs12 sm10 md8 lg6>
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
           class="headline mb-3"
           v-t="'account.localization'"
@@ -54,7 +54,7 @@
               v-t="'account.language'"
             />
             <p
-              class="subheading"
+              class="subtitle-1"
               v-t="'language.' + userModule.myUser.language"
             />
           </v-card-text>
@@ -62,7 +62,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn
-              flat
+              text
               :to="{ name: 'updateAccountLanguage' }"
               v-t="'core.edit'"
             />
@@ -73,26 +73,27 @@
       <!--//* Persons -->
       <MyPersons />
 
-      <!--//* Critical Area -->
-      <v-flex xs12 sm10 md8 lg6>
+      <!--//* Danger Zone -->
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
           class="headline mb-3 error--text"
-          v-t="'core.criticalArea'"
+          v-t="'core.dangerZone'"
         />
         <v-card
           flat
-          dark
           color="red lighten-4"
           class="ma-2"
         >
           <v-card-text>
-            <v-btn
-              :to="{ name: 'updateAccountPassword' }"
-              class="grey lighten-3 black--text mb-4"
-              v-t="'account.changePassword'"
-            />
+            <v-layout column>
+              <v-btn
+                :to="{ name: 'updateAccountPassword' }"
+                class="mb-4"
+                v-t="'account.changePassword'"
+              />
 
-            <DeleteAccountDialog />
+              <DeleteAccountDialog />
+            </v-layout>
           </v-card-text>
         </v-card>
       </v-flex>

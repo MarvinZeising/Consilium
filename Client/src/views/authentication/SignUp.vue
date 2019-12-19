@@ -1,7 +1,7 @@
 <template>
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
-      <v-flex xs12 sm10 md8 lg6>
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <v-card
           class="mx-auto elevation-10"
           max-width="500"
@@ -10,7 +10,7 @@
             <span>{{ currentTitle }}</span>
             <v-avatar
               color="primary lighten-2"
-              class="subheading white--text"
+              class="subtitle-1 white--text"
               size="24"
               v-text="step"
               v-if="step > 0 && step < 3"
@@ -52,7 +52,7 @@
                     type="email"
                     :label="$t('core.email')"
                     :rules="emailRules"
-                    box
+                    filled
                   />
                 </v-form>
                 <span
@@ -83,7 +83,7 @@
                     :rules="passwordRules"
                     :hint="$t('account.signUp.passwordRuleHint')"
                     name="password"
-                    box
+                    filled
                     required
                     @click:append="passwordShow = !passwordShow"
                   />
@@ -98,7 +98,7 @@
                     :type="passwordRepeatShow ? 'text' : 'password'"
                     :rules="passwordRepeatRules"
                     name="passwordRepeat"
-                    box
+                    filled
                     required
                     @click:append="passwordRepeatShow = !passwordRepeatShow"
                   />
@@ -129,13 +129,13 @@
           <v-card-actions v-if="step < 3">
             <v-btn
               v-if="step === 0"
-              flat
+              text
               :to="{ name: 'signIn' }"
               v-t="'account.signUp.signInLink'"
             />
             <v-btn
               v-if="step !== 0"
-              flat
+              text
               @click="step--"
               v-t="'core.back'"
             />

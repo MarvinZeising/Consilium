@@ -21,21 +21,21 @@
           <v-text-field
             v-model="topicName"
             :label="$t('core.name')"
-            box
+            filled
             required
           />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn
-            flat
+            text
             color="black"
             @click="renameTopicDialog = false"
             v-t="'core.close'"
           />
           <v-btn
             :disabled="topicName == ''"
-            flat
+            text
             color="primary"
             @click="renameTopic"
             v-t="'core.save'"

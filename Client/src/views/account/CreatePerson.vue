@@ -10,7 +10,7 @@
       v-model="valid"
     >
 
-      <v-flex xs12 sm10 md8 lg6>
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <v-stepper v-model="activeStep" vertical>
 
           <v-stepper-step
@@ -41,7 +41,7 @@
               :label="$t('person.firstname')"
               :rules="nameRules"
               counter="40"
-              box
+              filled
               required
             />
 
@@ -54,7 +54,7 @@
               :label="$t('person.lastname')"
               :rules="nameRules"
               counter="40"
-              box
+              filled
               required
             />
 
@@ -65,7 +65,7 @@
               v-t="'core.next'"
             />
             <v-btn
-              flat
+              text
               @click="goBack"
               v-t="'core.cancel'"
             />
@@ -102,7 +102,7 @@
               v-t="'person.create'"
             />
             <v-btn
-              flat
+              text
               @click="activeStep = 1"
               v-t="'core.back'"
             />

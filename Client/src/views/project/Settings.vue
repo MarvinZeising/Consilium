@@ -3,7 +3,7 @@
     <v-layout wrap>
 
       <!--//* Main Heading -->
-      <v-flex xs12 sm10 md8 lg6>
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
           class="headline mb-3"
           v-t="'project.general'"
@@ -17,7 +17,7 @@
               class="caption mb-0 grey--text"
               v-t="'core.name'"
             />
-            <p class="subheading">
+            <p class="subtitle-1">
               {{ getProject.name }}
             </p>
 
@@ -25,7 +25,7 @@
               class="caption mb-0 grey--text"
               v-t="'core.email'"
             />
-            <p class="subheading mb-0">
+            <p class="subtitle-1 mb-0">
               {{ getProject.email }}
             </p>
           </v-card-text>
@@ -33,7 +33,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn
-              flat
+              text
               :to="{ name: 'updateGeneral' }"
               v-t="'core.edit'"
             />
@@ -43,11 +43,11 @@
 
       <Topics />
 
-      <!--//* Critical Heading -->
-      <v-flex xs12 sm10 md8 lg6>
+      <!--//* Danger Zone -->
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
           class="headline mb-3 error--text"
-          v-t="'core.criticalArea'"
+          v-t="'core.dangerZone'"
         />
         <v-card
           flat

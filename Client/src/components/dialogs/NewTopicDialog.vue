@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
-        flat
+        text
         v-t="'knowledgeBase.createTopic'"
       />
     </template>
@@ -16,21 +16,21 @@
           <v-text-field
             v-model="topicName"
             :label="$t('core.name')"
-            box
+            filled
             required
           />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn
-            flat
+            text
             color="black"
             @click="newTopicDialog = false"
             v-t="'core.close'"
           />
           <v-btn
             :disabled="topicName == ''"
-            flat
+            text
             color="primary"
             @click="createTopic"
             v-t="'core.save'"

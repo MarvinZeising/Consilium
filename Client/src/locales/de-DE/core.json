@@ -15,5 +15,6 @@
   "fieldRequired": "Dies ist ein Pflichtfeld",
   "fieldMin": "Dieses Feld muss mindestens {count} Zeichen lang sein",
   "fieldMax": "Dieses Feld darf maximal {count} Zeichen lang sein",
-  "fieldCamelCase": "Dieses Feld muss mit einem Großbuchstaben anfangen"
+  "fieldCamelCase": "Dieses Feld muss mit einem Großbuchstaben anfangen",
+  "dangerZone": "Gefahrenzone"
 }

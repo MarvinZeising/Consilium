@@ -2,15 +2,15 @@
   <div class="knowledge-base">
     <v-list two-line>
       <template v-for="(article, index) in articles">
-        <v-list-tile
+        <v-list-item
           :key="article.title"
           @click=""
         >
-          <v-list-tile-content>
-            <v-list-tile-title v-html="article.title"></v-list-tile-title>
-            <v-list-tile-sub-title v-html="article.content"></v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
+          <v-list-item-content>
+            <v-list-item-title v-html="article.title"></v-list-item-title>
+            <v-list-item-subtitle v-html="article.content"></v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
 
         <v-divider
           v-if="index > articles.length"

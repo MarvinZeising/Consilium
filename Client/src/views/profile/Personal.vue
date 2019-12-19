@@ -3,7 +3,7 @@
     <v-layout wrap>
 
       <!--//* General Heading -->
-      <v-flex xs12 sm10 md8 lg6>
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
           class="headline mb-3"
           v-t="'person.general'"
@@ -19,7 +19,7 @@
                 class="caption mb-0 grey--text"
                 v-t="'person.firstname'"
               />
-              <p class="subheading">
+              <p class="subtitle-1">
                 {{ personModule.getActivePerson.firstname }}
               </p>
             </v-flex>
@@ -29,7 +29,7 @@
                 class="caption mb-0 grey--text"
                 v-t="'person.lastname'"
               />
-              <p class="subheading">
+              <p class="subtitle-1">
                 {{ personModule.getActivePerson.lastname }}
               </p>
             </v-flex>
@@ -42,7 +42,7 @@
                 Gender
               </p>
               <p
-                class="subheading"
+                class="subtitle-1"
                 v-t="'person.' + personModule.getActivePerson.gender"
               />
             </v-flex>
@@ -52,7 +52,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn
-              flat
+              text
               :to="{ name: 'home' }"
               v-t="'core.edit'"
             />
@@ -60,56 +60,18 @@
         </v-card>
       </v-flex>
 
-      <!--//* Photo Heading -->
-      <v-flex xs12 sm10 md8 lg6>
-        <h2
-          class="headline mb-3"
-          v-t="'person.photo'"
-        />
-        <v-card
-          flat
-          class="ma-2 mb-5"
-        >
-          <v-card-text>
-            <img
-              v-if="personModule.getActivePerson && personModule.getActivePerson.photoUrl"
-              :src="personModule.getActivePerson.photoUrl"
-              style="max-width:300px;"
-            />
-            <img
-              v-else
-              src="../../assets/person.jpg"
-              style="max-width:200px;"
-            />
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              flat
-              :to="{ name: 'home' }"
-              v-t="'person.updatePhoto'"
-            />
-          </v-card-actions>
-        </v-card>
-      </v-flex>
-
-      <!--//* Critical Heading -->
-      <v-flex xs12>
+      <!--//* Danger Zone -->
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
           class="headline mb-3 error--text"
-          v-t="'core.criticalArea'"
+          v-t="'core.dangerZone'"
         />
-      </v-flex>
-      <v-flex
-        xs12 sm10 md8 lg6
-        class="mb-5 pa-2"
-      >
         <v-card
           v-if="personModule.getActivePerson"
           flat
           dark
           color="red lighten-4"
+          class="ma-2 mb-5"
         >
           <v-card-text>
             <DeletePersonDialog :personId="personModule.getActivePerson.id" />

@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 sm10 md8 lg6>
+  <v-flex xs12 sm10 md8 lg6 xl4>
     <h2
       class="headline mb-3"
       v-t="'person.persons'"
@@ -9,21 +9,22 @@
         {{ $t('person.personsDescription') }}
       </v-card-text>
       <v-list>
-        <v-list-tile
+        <v-list-item
           v-if="getPersons.length === 0"
-          class="warning white--text"
+          dark
+          class="warning"
         >
           <span v-t="'person.noPersons'" />
-        </v-list-tile>
-        <v-list-tile
+        </v-list-item>
+        <v-list-item
           v-for="(person, index) in getPersons"
           :key="index"
         >
-          <v-list-tile-content>
-            <v-list-tile-title v-text="person.fullName()" />
-          </v-list-tile-content>
+          <v-list-item-content>
+            <v-list-item-title v-text="person.fullName()" />
+          </v-list-item-content>
 
-          <v-list-tile-action>
+          <v-list-item-action>
             <v-btn
               icon
               class="ma-0"
@@ -31,13 +32,13 @@
             >
               <v-icon color="grey">edit</v-icon>
             </v-btn>
-          </v-list-tile-action>
-        </v-list-tile>
+          </v-list-item-action>
+        </v-list-item>
       </v-list>
       <v-card-actions>
         <v-spacer />
         <v-btn
-          flat
+          text
           :to="{ name: 'createPerson' }"
           v-t="'person.create'"
         />

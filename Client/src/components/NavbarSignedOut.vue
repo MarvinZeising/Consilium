@@ -1,24 +1,39 @@
 <template>
-  <div>
+  <v-navigation-drawer
+    app
+    v-model='drawer'
+    :clipped="$vuetify.breakpoint.lgAndUp"
+  >
 
-    <!--//* Sign in -->
-    <v-list-tile :to="{ name: 'signIn' }">
-      <v-list-tile-title>{{ $t('navbar.signIn') }}</v-list-tile-title>
-    </v-list-tile>
+    <v-list nav>
 
-    <!--//* Sign up -->
-    <v-list-tile :to="{ name: 'signUp' }">
-      <v-list-tile-title>{{ $t('navbar.signUp') }}</v-list-tile-title>
-    </v-list-tile>
+      <!--//* Sign in -->
+      <v-list-item :to="{ name: 'signIn' }">
+        <v-list-item-content>
+          <v-list-item-title>{{ $t('navbar.signIn') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
-  </div>
+      <!--//* Sign up -->
+      <v-list-item :to="{ name: 'signUp' }">
+        <v-list-item-content>
+          <v-list-item-title>{{ $t('navbar.signUp') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+    </v-list>
+
+  </v-navigation-drawer>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class NavbarSignedOut extends Vue {
-  private drawer: boolean = false
+
+  @Prop(Boolean)
+  private readonly drawer?: boolean
+
 }
 </script>

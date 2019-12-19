@@ -29,7 +29,6 @@
   "deleteWarning": "!!! Das kann nicht rückgängig gemacht werden - alles wird weg sein !!!",
   "general": "Generelles",
   "updateGeneral": "Generelle Informationen bearbeiten",
-  "criticalArea": "Kritischer Bereich",
   "changePassword": "Mein Passwort ändern",
   "emailDescription": "Deine Email-Adresse. Sie ist einzigartig für deinen Benutzer. Du brauchst sie um dich anzumelden.",
   "emailChangeDescription": "Nach dem Speichern wirst du abgemeldet und musst dich mit der neuen Email-Adresse anmelden.",

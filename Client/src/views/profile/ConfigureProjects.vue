@@ -15,7 +15,7 @@
       />
     </v-flex>
     <v-flex
-      xs12 sm10 md8 lg6
+      xs12 sm10 md8 lg6 xl4
       class="mb-5"
     >
       <p>

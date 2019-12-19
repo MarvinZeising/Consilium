@@ -19,25 +19,25 @@
         </v-card-title>
         <v-card-text>
           <p
-            class="subheading"
+            class="subtitle-1"
             v-t="'knowledgeBase.deleteTopicDescription'"
           />
           <p
-            class="subheading"
+            class="subtitle-1"
             v-t="'knowledgeBase.deleteTopicHint'"
           />
           <v-text-field
             v-model="enteredName"
             :label="$t('core.name')"
             :rules="enteredNameRules"
-            box
+            filled
             required
           />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn
-            flat
+            text
             color="black"
             @click="deleteTopicDialog = false"
             v-t="'core.cancel'"
@@ -45,7 +45,7 @@
           <v-btn
             :disabled="!valid"
             type="submit"
-            flat
+            text
             color="error"
             @click="deleteTopic"
             v-t="'core.delete'"

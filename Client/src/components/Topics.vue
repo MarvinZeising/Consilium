@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 sm10 md8 lg6>
+  <v-flex xs12 sm10 md8 lg6 xl4>
     <h2
       class="headline mb-3"
       v-t="'knowledgeBase.topics'"
@@ -12,21 +12,21 @@
         {{ $t('knowledgeBase.topicsDescription') }}
       </v-card-text>
       <v-list>
-        <v-list-tile
+        <v-list-item
           class="grey lighten-3 grey--text text--darken-2"
           v-if="getTopics.length === 0"
         >
           <span v-t="'knowledgeBase.noTopics'" />
-        </v-list-tile>
-        <v-list-tile
+        </v-list-item>
+        <v-list-item
           v-for="(topic, index) in getTopics"
           :key="topic.name"
         >
-          <v-list-tile-content>
-            <v-list-tile-title v-text="topic.name" />
-          </v-list-tile-content>
+          <v-list-item-content>
+            <v-list-item-title v-text="topic.name" />
+          </v-list-item-content>
 
-          <v-list-tile-action style="flex-direction:row; align-items:center;">
+          <v-list-item-action style="flex-direction:row; align-items:center;">
             <v-btn
               v-if="index > 0"
               icon
@@ -45,8 +45,8 @@
             </v-btn>
             <RenameTopicDialog :topicId="topic.id" />
             <DeleteTopicDialog :topicId="topic.id" />
-          </v-list-tile-action>
-        </v-list-tile>
+          </v-list-item-action>
+        </v-list-item>
       </v-list>
       <v-card-actions>
         <v-spacer />

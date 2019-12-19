@@ -1,7 +1,7 @@
 <template>
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
-      <v-flex xs12 sm10 md8 lg6>
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <v-form
           ref="form"
           type="post"
@@ -23,7 +23,7 @@
                 :rules="emailRules"
                 name="email"
                 prepend-inner-icon="person"
-                box
+                filled
                 required
               />
               <v-text-field
@@ -34,7 +34,7 @@
                 :rules="passwordRules"
                 name="password"
                 prepend-inner-icon="lock"
-                box
+                filled
                 required
                 @click:append="passwordShow = !passwordShow"
               />
@@ -56,7 +56,7 @@
                 :loading="authInProgress"
                 color="primary"
                 type="submit"
-                @click="signIn"
+                @click.stop="signIn"
               >
                 <span v-t="'account.signIn'" />
               </v-btn>
@@ -105,9 +105,6 @@ export default class SignIn extends Vue {
   }
 
   private async signIn(e: any) {
-    e.preventDefault()
-    e.stopPropagation()
-
     this.authInProgress = true
     this.authFailed = false
 

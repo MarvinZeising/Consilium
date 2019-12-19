@@ -9,7 +9,7 @@
         />
       </v-flex>
 
-      <v-flex xs12 sm10 md8 lg6>
+      <v-flex xs12 sm10 md8 lg6 xl4>
         <p
           class="mt-4 grey--text text--darken-1"
           v-t="'account.languageDescription'"
@@ -22,7 +22,7 @@
           v-model="language"
           :items="languages"
           :label="$t('account.language')"
-          box
+          filled
           required
         />
 
