@@ -46,14 +46,13 @@
       <!--//* Danger Zone -->
       <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
-          class="headline mb-3 error--text"
+          class="headline mb-3"
           v-t="'core.dangerZone'"
         />
         <v-card
-          flat
-          dark
-          color="red lighten-4"
+          outlined
           class="ma-2 mb-5"
+          style="border-color:#f00;"
         >
           <v-card-text>
             <DeleteProjectDialog />
