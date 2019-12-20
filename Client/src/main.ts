@@ -24,7 +24,7 @@ async function init() {
   Vue.config.productionTip = false
 
   axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:5000'
-  axios.defaults.timeout = 3000
+  axios.defaults.timeout = 5000
   axios.interceptors.response.use(
     (response) => {
       return response
@@ -34,7 +34,7 @@ async function init() {
         alertModule.showAlert({
           message: error.message,
           color: 'error',
-          timeout: 3000,
+          timeout: 5000,
         })
       } else if ((error.response.status === 401) && localStorage.getItem('user')) {
         // * automatically sign out if token is expired or invalid

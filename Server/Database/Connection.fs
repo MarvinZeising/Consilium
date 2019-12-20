@@ -21,7 +21,7 @@ module Connection =
         | value -> value
 
     let config =
-        { DbUrl = getEnvVar "DB_URL" "mongodb://localhost:27017/?connectTimeoutMS=3000&socketTimeoutMS=3000"
+        { DbUrl = getEnvVar "DB_URL" "mongodb://localhost:27017/?connectTimeoutMS=5000&socketTimeoutMS=5000"
           DbName = getEnvVar "DB_NAME" "ConsiliumDb"
           TestServerUrl = getEnvVar "SERVER_URL" "http://localhost:5000" }
 
