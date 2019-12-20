@@ -99,7 +99,7 @@ export default class SignIn extends Vue {
   ]
 
   private created() {
-    if (this.userModule.isSignedIn) {
+    if (this.userModule.getUser) {
       this.$router.replace({ name: 'home' })
     }
   }

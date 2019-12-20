@@ -63,7 +63,7 @@ export default class UpdateAccountGeneral extends Vue {
   ]
 
   private created() {
-    const user = this.userModule.myUser
+    const user = this.userModule.getUser
     if (user) {
       this.userId = user.id
       this.currentEmail = user.email

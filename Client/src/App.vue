@@ -1,10 +1,9 @@
 <template>
   <v-app>
-    <Navbar v-if="isSignedIn" />
+    <Navbar />
     <v-content>
       <router-view/>
     </v-content>
-    <Footer v-if="isSignedIn" />
 
     <v-snackbar
       v-model="alertModule.getSnackbar.show"
@@ -33,17 +32,13 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import Navbar from './components/Navbar.vue'
-import Footer from './components/Footer.vue'
 import AlertModule from './store/modules/alerts'
+import UserModule from './store/modules/users'
 
 @Component({
-  components: {
-    Navbar,
-    Footer
-  }
+  components: { Navbar }
 })
 export default class App extends Vue {
   private alertModule: AlertModule = getModule(AlertModule, this.$store)
-  private isSignedIn: boolean = true
 }
 </script>

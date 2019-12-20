@@ -84,7 +84,7 @@ export default class DeleteAccountDialog extends Vue {
   }
 
   private created() {
-    const user = this.userModule.myUser
+    const user = this.userModule.getUser
     if (user) {
       this.accountEmail = user.email
     }

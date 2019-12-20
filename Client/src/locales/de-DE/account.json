@@ -1,7 +1,9 @@
 {
   "account": "Benutzer",
+  "manage": "Benutzereinstellungen",
   "signIn": "Anmelden",
   "signInFullTitle": "Bei Consilium anmelden",
+  "signOut": "Abmelden",
   "signingOut": "Du wirst abgemeldet ...",
   "password": "Passwort",
   "passwordWrong": "Wir konnten keinen Benutzer mit diesen Anmeldedaten finden.",

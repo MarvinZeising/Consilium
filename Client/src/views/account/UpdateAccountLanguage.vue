@@ -65,7 +65,7 @@ export default class UpdateAccountLanguage extends Vue {
 
   private created() {
     this.languages = i18n.availableLocales
-    const user = this.userModule.myUser
+    const user = this.userModule.getUser
     if (user) {
       this.language = user.language
     }

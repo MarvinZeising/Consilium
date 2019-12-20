@@ -1,14 +1,16 @@
 <template>
-  <v-navigation-drawer
-    app
-    v-model='drawer'
-    :clipped="$vuetify.breakpoint.lgAndUp"
-  >
+  <div>
 
-    <v-list nav>
+    <v-list
+      nav
+      dense
+    >
 
       <!--//* Sign in -->
       <v-list-item :to="{ name: 'signIn' }">
+        <v-list-item-icon>
+          <v-icon>fingerprint</v-icon>
+        </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>{{ $t('navbar.signIn') }}</v-list-item-title>
         </v-list-item-content>
@@ -16,6 +18,9 @@
 
       <!--//* Sign up -->
       <v-list-item :to="{ name: 'signUp' }">
+        <v-list-item-icon>
+          <v-icon>person_add</v-icon>
+        </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>{{ $t('navbar.signUp') }}</v-list-item-title>
         </v-list-item-content>
@@ -23,7 +28,7 @@
 
     </v-list>
 
-  </v-navigation-drawer>
+  </div>
 </template>
 
 <script lang="ts">

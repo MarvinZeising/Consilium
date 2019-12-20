@@ -1,7 +1,9 @@
 {
   "account": "Account",
+  "manage": "Manage account",
   "signIn": "Sign in",
   "signInFullTitle": "Sign in to Consilium",
+  "SignOut": "Sign out",
   "signingOut": "Signing you out ...",
   "password": "Password",
   "passwordWrong": "We couldn't find an account with these credentials.",

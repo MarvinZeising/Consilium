@@ -8,12 +8,8 @@ import i18n from '@/i18n'
 export default class UserModule extends VuexModule {
   public user: User | null = null
 
-  public get myUser(): User | null {
+  public get getUser(): User | null {
     return this.user
-  }
-
-  public get isSignedIn(): boolean {
-    return this.user !== null
   }
 
   @Action
@@ -113,7 +109,7 @@ export default class UserModule extends VuexModule {
 
   @Action
   public async deleteAccount() {
-    if (this.isSignedIn) {
+    if (this.getUser) {
       await axios.delete(`/users`)
 
       this.context.dispatch('signOut', null)

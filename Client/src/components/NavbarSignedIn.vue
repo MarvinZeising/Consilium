@@ -1,9 +1,5 @@
 <template>
-  <v-navigation-drawer
-    app
-    v-model='drawer'
-    :clipped="$vuetify.breakpoint.lgAndUp"
-  >
+  <div>
 
     <!-- //* Person -->
     <v-menu
@@ -24,9 +20,9 @@
               </v-list-item-title>
               <v-list-item-subtitle>Wuppertal-Nord</v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-action>
+            <v-list-item-icon>
               <v-icon right>arrow_drop_down</v-icon>
-            </v-list-item-action>
+            </v-list-item-icon>
           </v-list-item>
         </v-list>
       </template>
@@ -56,13 +52,20 @@
 
     <v-divider></v-divider>
 
-    <v-list>
+    <v-list
+      nav
+      dense
+    >
 
       <!--//* Home -->
-      <v-list-item :to="{ name: 'home' }">
-        <v-list-item-action>
+      <v-list-item
+        link
+        color="primary"
+        :to="{ name: 'home' }"
+      >
+        <v-list-item-icon>
           <v-icon>home</v-icon>
-        </v-list-item-action>
+        </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title v-t="'navbar.home'"/>
         </v-list-item-content>
@@ -82,9 +85,7 @@
         </template>
 
         <v-list-item :to="{ name: 'calendar', params: { projectId: project.id }}">
-          <v-list-item-action>
-            <v-icon>today</v-icon>
-          </v-list-item-action>
+          <v-list-item-icon />
           <v-list-item-content>
             <v-list-item-title v-t="'navbar.calendar'" />
           </v-list-item-content>
@@ -127,9 +128,6 @@
             :key="j"
             :to="{ name: action[2], params: { projectId: project.id }}"
           >
-            <v-list-item-action>
-              <v-icon v-text="action[1]" />
-            </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title v-t="action[0]" />
             </v-list-item-content>
@@ -154,42 +152,18 @@
           :key="i"
           :to="{ name: action[2] }"
         >
-          <v-list-item-action>
+          <v-list-item-icon>
             <v-icon v-text="action[1]" />
-          </v-list-item-action>
+          </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title v-t="action[0]" />
           </v-list-item-content>
         </v-list-item>
       </v-list-group>
 
-      <!--//* Account -->
-      <v-list-item :to="{ name: 'account' }">
-        <v-list-item-action>
-          <v-icon>lock</v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title v-t="'navbar.account'" />
-        </v-list-item-content>
-      </v-list-item>
-
     </v-list>
 
-    <!--//* Sign out -->
-    <template v-slot:append>
-      <div class="pa-2">
-        <v-btn
-          block
-          :to="{ name: 'signOut' }"
-        >
-         <v-icon left>exit_to_app</v-icon>
-         {{ $t('navbar.signOut') }}
-        </v-btn>
-      </div>
-    </template>
-
-  </v-navigation-drawer>
-
+  </div>
 </template>
 
 <script lang="ts">
@@ -208,9 +182,6 @@ export default class NavbarSignedIn extends Vue {
   private personModule: PersonModule = getModule(PersonModule, this.$store)
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
-
-  @Prop(Boolean)
-  private readonly drawer?: boolean
 
   private profileActions: any[] = [
     ['navbar.personal', 'account_circle', 'personal'],

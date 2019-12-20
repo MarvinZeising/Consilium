@@ -12,13 +12,13 @@
           flat
           class="ma-2 mb-5"
         >
-          <v-card-text v-if="userModule.myUser">
+          <v-card-text v-if="userModule.getUser">
             <p
               class="caption mb-0 grey--text"
               v-t="'core.id'"
             />
             <p class="subtitle-1 grey--text">
-              {{ userModule.myUser.id }}
+              {{ userModule.getUser.id }}
             </p>
 
             <p
@@ -26,7 +26,7 @@
               v-t="'core.email'"
             />
             <p class="subtitle-1">
-              {{ userModule.myUser.email }}
+              {{ userModule.getUser.email }}
             </p>
           </v-card-text>
 
@@ -48,14 +48,14 @@
           v-t="'account.localization'"
         />
         <v-card flat class="ma-2 mb-5">
-          <v-card-text v-if="userModule.myUser">
+          <v-card-text v-if="userModule.getUser">
             <p
               class="caption mb-0 grey--text"
               v-t="'account.language'"
             />
             <p
               class="subtitle-1"
-              v-t="'language.' + userModule.myUser.language"
+              v-t="'language.' + userModule.getUser.language"
             />
           </v-card-text>
 
