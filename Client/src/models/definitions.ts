@@ -21,7 +21,6 @@ class Person {
   public id: string
   public firstname: string
   public lastname: string
-  public photoUrl: string
   public gender: Gender
 
   constructor(id: string, firstname: string, lastname: string) {
@@ -29,7 +28,6 @@ class Person {
     this.firstname = firstname
     this.lastname = lastname
     this.gender = Gender.Male
-    this.photoUrl = 'https://randomuser.me/api/portraits/men/21.jpg'
   }
 
   public fullName() {
@@ -80,6 +78,7 @@ class Article {
 export {
   User,
   Person,
+  Gender,
   Project,
   Topic,
   Article,

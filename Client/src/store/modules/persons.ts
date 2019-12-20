@@ -65,6 +65,20 @@ export default class PersonModule extends VuexModule {
     await this.context.dispatch('initKnowledgeBaseModule')
   }
 
+  @Action({ commit: 'setGeneral' })
+  public async updatePersonGeneral(person: {
+    id: string,
+    firstname: string,
+    lastname: string
+  }) {
+    await axios.put(`/persons`, {
+      id: person.id,
+      firstname: person.firstname,
+      lastname: person.lastname,
+    })
+    return person
+  }
+
   @Action({ commit: 'removePerson' })
   public async deletePerson(personId: string) {
     await axios.delete(`/persons/${personId}`)
@@ -85,6 +99,17 @@ export default class PersonModule extends VuexModule {
   @Mutation
   protected setPersons(persons: Person[]) {
     this.persons = persons
+  }
+
+  @Mutation
+  protected setGeneral(person: Person) {
+    this.persons = this.persons.map((x: Person) => {
+      if (x.id === person.id) {
+        x.firstname = person.firstname
+        x.lastname = person.lastname
+      }
+      return x
+    })
   }
 
   @Mutation
