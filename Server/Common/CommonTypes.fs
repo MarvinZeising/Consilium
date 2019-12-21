@@ -18,6 +18,7 @@ module CommonTypes =
          | LanguageNotAvailable
          | PasswordInvalid
          | PasswordWrong
+         | GenderInvalid
          | AuthenticationFailed
          | ServerException of Exception
 
@@ -36,5 +37,6 @@ module CommonTypes =
         | LanguageNotAvailable -> 400
         | PasswordInvalid -> 400
         | PasswordWrong -> 400
+        | GenderInvalid -> 400
         | AuthenticationFailed -> 401
         | ServerException _ -> 500

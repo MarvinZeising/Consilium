@@ -29,7 +29,8 @@ module PersonDatabase =
     let updateGeneral (request: UpdateGeneralRequest) =
         updateByIds request.UserId request.Id (Builders<Person>.Update
             .Set((fun x -> x.Firstname), request.Firstname)
-            .Set((fun x -> x.Lastname), request.Lastname))
+            .Set((fun x -> x.Lastname), request.Lastname)
+            .Set((fun x -> x.Gender), request.Gender))
 
     let insertPerson person =
         collection.InsertOne person

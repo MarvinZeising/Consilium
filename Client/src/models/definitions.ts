@@ -23,11 +23,11 @@ class Person {
   public lastname: string
   public gender: Gender
 
-  constructor(id: string, firstname: string, lastname: string) {
+  constructor(id: string, firstname: string, lastname: string, gender: Gender) {
     this.id = id
     this.firstname = firstname
     this.lastname = lastname
-    this.gender = Gender.Male
+    this.gender = gender
   }
 
   public fullName() {

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
-import { Person } from '@/models/definitions'
+import { Person, Gender } from '@/models/definitions'
 
 @Module({ name: 'PersonModule' })
 export default class PersonModule extends VuexModule {
@@ -27,6 +27,7 @@ export default class PersonModule extends VuexModule {
           data.id,
           data.firstname,
           data.lastname,
+          data.gender,
         )
       })
 
@@ -51,12 +52,14 @@ export default class PersonModule extends VuexModule {
     const response = await axios.post('/persons', {
       firstname: person.firstname,
       lastname: person.lastname,
+      gender: Gender.Male,
     })
 
     const newPerson = new Person(
       response.data.id,
       response.data.firstname,
-      response.data.lastname)
+      response.data.lastname,
+      Gender.Male)
 
     this.context.commit('insertPerson', newPerson)
     this.context.commit('activatePerson', newPerson.id)
@@ -69,12 +72,14 @@ export default class PersonModule extends VuexModule {
   public async updatePersonGeneral(person: {
     id: string,
     firstname: string,
-    lastname: string
+    lastname: string,
+    gender: string,
   }) {
     await axios.put(`/persons`, {
       id: person.id,
       firstname: person.firstname,
       lastname: person.lastname,
+      gender: person.gender,
     })
     return person
   }
@@ -107,6 +112,7 @@ export default class PersonModule extends VuexModule {
       if (x.id === person.id) {
         x.firstname = person.firstname
         x.lastname = person.lastname
+        x.gender = person.gender
       }
       return x
     })

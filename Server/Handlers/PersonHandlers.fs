@@ -6,6 +6,7 @@ module PersonHandlers =
     open System
     open Microsoft.AspNetCore.Http
     open CommonValidation
+    open PersonValidation
     open PersonTypes
     open PersonDatabase
     open Actions
@@ -25,26 +26,30 @@ module PersonHandlers =
 
             let! validatedFirstname = request.Firstname |> validatePersonName
             let! validatedLastname = request.Lastname |> validatePersonName
+            let! validatedGender = request.Gender |> validateGender
             let! userId = Authentication.getUserId ctx
 
             return insertPerson {
                 Id = newId
                 UserId = userId
                 Firstname = validatedFirstname
-                Lastname = validatedLastname }
+                Lastname = validatedLastname
+                Gender = validatedGender }
         }
 
     let updateGeneral (request: UpdateGeneralRequest) (ctx: HttpContext) =
         result {
             let! validatedFirstname = request.Firstname |> validatePersonName
             let! validatedLastname = request.Lastname |> validatePersonName
+            let! validatedGender = request.Gender |> validateGender
             let! userId = Authentication.getUserId ctx
 
             return updateGeneral {
                 Id = request.Id
                 UserId = userId
                 Firstname = validatedFirstname
-                Lastname = validatedLastname }
+                Lastname = validatedLastname
+                Gender = validatedGender }
         }
 
     let deletePerson personId (ctx: HttpContext) =

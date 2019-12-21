@@ -18,6 +18,7 @@
     <Compile Include="Validation\Validation.fs" />
     <Compile Include="Validation\CommonValidation.fs" />
     <Compile Include="Validation\UserValidation.fs" />
+    <Compile Include="Validation\PersonValidation.fs" />
     <Compile Include="Validation\ProjectValidation.fs" />
     <Compile Include="Database\Connection.fs" />
     <Compile Include="Database\Database.fs" />
@@ -40,14 +41,14 @@
     <Compile Include="Controllers\KnowledgeBaseController.fs" />
     <Compile Include="Controllers\PersonController.fs" />
     <Compile Include="Program.fs" />
+    <PackageReference Include="CryptSharpOfficial" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Giraffe" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App">
       <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
       <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
     </PackageReference>
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
-    <PackageReference Include="CryptSharpOfficial" Version="2.1.0" />
-    <PackageReference Include="Giraffe" Version="3.6.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.8.0" />
   </ItemGroup>
 </Project>

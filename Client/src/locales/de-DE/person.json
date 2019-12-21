@@ -6,6 +6,7 @@
   "lastname": "Nachname",
   "lastnameDescription": "Der Nachname der Person.",
   "gender": "Geschlecht",
+  "genderDescription": "Das Geschlecht der Person.",
   "male": "Bruder",
   "female": "Schwester",
   "general": "Generelles",

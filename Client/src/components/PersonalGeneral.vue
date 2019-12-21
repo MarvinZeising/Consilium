@@ -68,6 +68,17 @@
             filled
             required
           />
+
+          <p v-t="'person.genderDescription'" />
+          <v-select
+            v-model="gender"
+            :items="genderValues"
+            item-text="name"
+            item-value="value"
+            :label="$t('person.gender')"
+            filled
+            required
+          ></v-select>
         </v-form>
       </v-card-text>
 
@@ -119,6 +130,7 @@ export default class PersonalGeneral extends Vue {
     if (this.editMode) {
       this.firstname = this.personModule.getActivePerson?.firstname || ''
       this.lastname = this.personModule.getActivePerson?.lastname || ''
+      this.gender = this.personModule.getActivePerson?.gender || ''
     }
   }
 
@@ -128,6 +140,11 @@ export default class PersonalGeneral extends Vue {
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => v.length <= 20 || i18n.t('core.fieldMax', { count: 20 }),
     (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
+  ]
+  private gender: string = this.personModule.getActivePerson?.gender || 'male'
+  private genderValues: any[] = [
+    { value: 'male', name: i18n.t('person.male') },
+    { value: 'female', name: i18n.t('person.female') },
   ]
 
   private async save() {
@@ -139,6 +156,7 @@ export default class PersonalGeneral extends Vue {
         id: personId,
         firstname: this.firstname,
         lastname: this.lastname,
+        gender: this.gender,
       })
       // TODO: add error handling
 
