@@ -9,9 +9,11 @@ module ProjectActions =
     open ProjectRepository
     open Actions
 
+    let private validateProjectName = validateName 40
+
     let updateGeneral (input: UpdateGeneralRequest) =
         result {
-            let! validatedName = input.Name |> validateName
+            let! validatedName = input.Name |> validateProjectName
             let! validatedEmail = input.Email |> validateEmail
             let request = { input with
                                   Name = validatedName
@@ -23,7 +25,7 @@ module ProjectActions =
     let createProject (input: CreateProjectRequest) =
         result {
             let projectId = ShortGuid.fromGuid(Guid.NewGuid())
-            let! validatedName = input.Name |> validateName
+            let! validatedName = input.Name |> validateProjectName
             let! validatedEmail = input.Email |> validateEmail
             let project = { Id = projectId
                             Name = validatedName

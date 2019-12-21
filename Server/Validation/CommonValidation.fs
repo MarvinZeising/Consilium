@@ -27,6 +27,6 @@ module CommonValidation =
         &&& validateEmailFormat
         >=> switch canonicalizeEmail
 
-    let validateName =
+    let validateName maxLength =
         validateRequired NameRequired
-        &&& validateLength 40
+        &&& validateLength maxLength

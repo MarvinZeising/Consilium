@@ -10,6 +10,8 @@ module PersonHandlers =
     open PersonDatabase
     open Actions
 
+    let private validatePersonName = validateName 20
+
     let getPersons (ctx: HttpContext) =
         result {
             let! userId = Authentication.getUserId ctx
@@ -21,8 +23,8 @@ module PersonHandlers =
         result {
             let newId = ShortGuid.fromGuid(Guid.NewGuid())
 
-            let! validatedFirstname = request.Firstname |> validateName
-            let! validatedLastname = request.Lastname |> validateName
+            let! validatedFirstname = request.Firstname |> validatePersonName
+            let! validatedLastname = request.Lastname |> validatePersonName
             let! userId = Authentication.getUserId ctx
 
             return insertPerson {
@@ -34,8 +36,8 @@ module PersonHandlers =
 
     let updateGeneral (request: UpdateGeneralRequest) (ctx: HttpContext) =
         result {
-            let! validatedFirstname = request.Firstname |> validateName
-            let! validatedLastname = request.Lastname |> validateName
+            let! validatedFirstname = request.Firstname |> validatePersonName
+            let! validatedLastname = request.Lastname |> validatePersonName
             let! userId = Authentication.getUserId ctx
 
             return updateGeneral {
