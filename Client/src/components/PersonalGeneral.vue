@@ -3,7 +3,7 @@
   <v-flex xs12 sm10 md8 lg6 xl4>
     <h2
       class="headline mb-3"
-      v-t="'person.general'"
+      v-t="'core.general'"
     />
     <v-card
       v-if="personModule.getActivePerson"
@@ -17,6 +17,7 @@
         class="text--primary"
       >
         <v-layout wrap>
+
           <v-flex xs6>
             <p
               class="caption mb-0 grey--text"
@@ -43,6 +44,7 @@
               v-t="'person.' + personModule.getActivePerson.gender"
             />
           </v-flex>
+
         </v-layout>
       </v-card-text>
 

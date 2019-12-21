@@ -16,7 +16,7 @@
           <v-stepper-step
             :complete="activeStep > 1"
             step="1"
-            v-t="'person.general'"
+            v-t="'core.general'"
           />
 
           <v-stepper-content step="1">

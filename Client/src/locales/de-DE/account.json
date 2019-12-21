@@ -29,8 +29,6 @@
   "deleteDescription": "Dies wird deinen Benutzer samt allen damit verbundenen Personen löschen. Du wirst dich danach nicht mehr mit diesem Benutzer anmelden können.",
   "deleteHint": "Gib die Email-Adresse deines Benutzers ein um fortzufahren",
   "deleteWarning": "!!! Das kann nicht rückgängig gemacht werden - alles wird weg sein !!!",
-  "general": "Generelles",
-  "updateGeneral": "Generelle Informationen bearbeiten",
   "changePassword": "Mein Passwort ändern",
   "emailDescription": "Deine Email-Adresse. Sie ist einzigartig für deinen Benutzer. Du brauchst sie um dich anzumelden.",
   "emailChangeDescription": "Nach dem Speichern wirst du abgemeldet und musst dich mit der neuen Email-Adresse anmelden.",

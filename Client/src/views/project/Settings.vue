@@ -6,7 +6,7 @@
       <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
           class="headline mb-3"
-          v-t="'project.general'"
+          v-t="'core.general'"
         />
         <v-card
           flat

@@ -16,5 +16,6 @@
   "fieldMin": "Dieses Feld muss mindestens {count} Zeichen lang sein",
   "fieldMax": "Dieses Feld darf maximal {count} Zeichen lang sein",
   "fieldCamelCase": "Dieses Feld muss mit einem Großbuchstaben anfangen",
+  "general": "Generelles",
   "dangerZone": "Gefahrenzone"
 }

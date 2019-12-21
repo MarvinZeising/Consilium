@@ -79,10 +79,6 @@ const router = new VueRouter({
     name: 'updateAccountPassword',
     component: () => import('./views/account/UpdateAccountPassword.vue'),
   }, {
-    path: '/account/update-general',
-    name: 'updateAccountGeneral',
-    component: () => import('./views/account/UpdateAccountGeneral.vue'),
-  }, {
     path: '/account/update-language',
     name: 'updateAccountLanguage',
     component: () => import('./views/account/UpdateAccountLanguage.vue'),

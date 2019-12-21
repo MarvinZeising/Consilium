@@ -27,7 +27,7 @@ export default new Vuetify({
         success: colors.green.base,
       },
     },
-    dark: false,
+    dark: true,
   },
   iconfont: 'md',
 });

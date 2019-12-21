@@ -9,7 +9,6 @@
   "genderDescription": "The gender of this person.",
   "male": "Male",
   "female": "Female",
-  "general": "General",
   "photo": "Photo",
   "updatePhoto": "Update photo",
   "create": "Create a new person",
