@@ -45,7 +45,7 @@
               <div class="mb-3">
                 <span class="subtitle-2">You're signed in with</span>
                 <br>
-                <span class="subtitle-1 black--text">marvin.zeising@gmail.com</span>
+                <span class="subtitle-1 text--primary">marvin.zeising@gmail.com</span>
               </div>
               <v-btn
                 outlined
