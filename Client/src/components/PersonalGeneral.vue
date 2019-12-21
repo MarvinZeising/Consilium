@@ -16,26 +16,34 @@
         v-if="!editMode"
         class="text--primary"
       >
-          <p
-            class="caption mb-0 grey--text"
-            v-t="'person.firstname'"
-          />
-          <p class="subtitle-1">{{ personModule.getActivePerson.firstname }}</p>
+        <v-layout wrap>
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'person.firstname'"
+            />
+            <p class="subtitle-1">{{ personModule.getActivePerson.firstname }}</p>
+          </v-flex>
 
-          <p
-            class="caption mb-0 grey--text"
-            v-t="'person.lastname'"
-          />
-          <p class="subtitle-1">{{ personModule.getActivePerson.lastname }}</p>
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'person.lastname'"
+            />
+            <p class="subtitle-1">{{ personModule.getActivePerson.lastname }}</p>
+          </v-flex>
 
-          <p
-            class="caption mb-0 grey--text"
-            v-t="'person.gender'"
-          />
-          <p
-            class="subtitle-1"
-            v-t="'person.' + personModule.getActivePerson.gender"
-          />
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'person.gender'"
+            />
+            <p
+              class="subtitle-1"
+              v-t="'person.' + personModule.getActivePerson.gender"
+            />
+          </v-flex>
+        </v-layout>
       </v-card-text>
 
       <!-- //* UPDATE -->
