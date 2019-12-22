@@ -1,26 +1,25 @@
 namespace Consilium
 
-open System.Text.RegularExpressions
 open CommonLibrary 
 open CommonTypes
 open UserTypes
 open Validation
 
-module LanguageValidation =
+module UserValidation =
 
-    let private availableLanguages = [|"de-DE";"en-US"|]
+    let validateLanguage language =
+        match language with
+        | "en-US" -> Ok "en-US"
+        | "de-DE" -> Ok "de-DE"
+        | "" -> Error [LanguageRequired]
+        | _ -> Error [LanguageInvalid]
 
-    let private validateRequired language =
-       if language = "" then Error [LanguageRequired]
-       else Ok language
-
-    let private validateAvailable language =
-       if Array.contains language availableLanguages then Ok language
-       else Error [LanguageNotAvailable]
-
-    let validate = 
-        validateRequired
-        &&& validateAvailable
+    let validateTheme theme =
+        match theme with
+        | "light" -> Ok "light"
+        | "dark" -> Ok "dark"
+        | "" -> Error [ThemeRequired]
+        | _ -> Error [ThemeInvalid]
 
 module PasswordValidation =
 

@@ -8,10 +8,15 @@ module UserController =
     open UserTypes
     open Authentication
     open UserActions
+    open UserHandlers
     open Controller
 
     let routes : HttpFunc -> HttpContext -> HttpFuncResult =
         choose [
+
+            // new pattern
+            PUT >=> route "/users/interface"
+                >=> bindJson<UpdateInterfaceRequest> (handlePayload updateInterface)
 
             POST >=> route "/authenticate" >=>
                 fun next context ->
@@ -41,14 +46,6 @@ module UserController =
                     task {
                         let! request = context.BindJsonAsync<UpdateEmailRequest>()
                         let result = updateEmail context request
-                        return! sendJson result next context
-                    }
-
-            PUT >=> route "/users/language" >=> authorize >=>
-                fun next context ->
-                    task {
-                        let! request = context.BindJsonAsync<UpdateLanguageRequest>()
-                        let result = updateLanguage context request
                         return! sendJson result next context
                     }
 

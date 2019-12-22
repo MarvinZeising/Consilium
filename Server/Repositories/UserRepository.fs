@@ -28,9 +28,6 @@ module UserRepository =
     let updateEmail<'a> =
         updateEmail |> tryCatchError
 
-    let updateLanguage<'a> =
-        updateLanguage |> tryCatchError
-
     let updatePassword<'a> =
         updatePassword |> tryCatchError
 

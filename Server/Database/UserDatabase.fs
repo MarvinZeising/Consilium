@@ -27,13 +27,15 @@ module UserDatabase =
         let updateBuilder = Builders<User>.Update.Set((fun x -> x.Email), email)
         updateById userId updateBuilder
  
-    let updateLanguage (userId, language) =
-        let updateBuilder = Builders<User>.Update.Set((fun x -> x.Language), language)
-        updateById userId updateBuilder
- 
     let updatePassword (userId, password) =
         let updateBuilder = Builders<User>.Update.Set((fun x -> x.Password), password)
         updateById userId updateBuilder
+
+    // new pattern
+    let updateInterface (request: UpdateInterfaceRequest) =
+        updateById request.Id (Builders<User>.Update
+            .Set((fun x -> x.Language), request.Language)
+            .Set((fun x -> x.Theme), request.Theme))
 
     let insertUser user =
         collection.InsertOne user

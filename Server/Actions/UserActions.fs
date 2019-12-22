@@ -49,6 +49,7 @@ module UserActions =
                 Email = credentials.email
                 Password = hashedPassword
                 Language = "en-US"
+                Theme = "light"
             }
             insertUser user
 
@@ -61,13 +62,6 @@ module UserActions =
             let! email = request.email |> validateEmail
             let! userId = context |> getUserId
             return! updateEmail (userId, email)
-        }
-
-    let updateLanguage context (request : UpdateLanguageRequest) =
-        result {
-            let! language = LanguageValidation.validate request.language
-            let! userId = context |> getUserId
-            return! updateLanguage (userId, language)
         }
 
     let updatePassword context request =

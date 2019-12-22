@@ -1,14 +1,19 @@
-import NewTabItemDialog from '@/components/dialogs/NewTabItemDialog.vue'
+enum Theme {
+  Light = 'light',
+  Dark = 'dark',
+}
 
 class User {
   public id: string
   public email: string
   public language: string
+  public theme: Theme
 
   constructor(id: string, email: string, language: string | null) {
     this.id = id
     this.email = email
     this.language = language || 'en-US'
+    this.theme = Theme.Light
   }
 }
 
@@ -77,6 +82,7 @@ class Article {
 
 export {
   User,
+  Theme,
   Person,
   Gender,
   Project,

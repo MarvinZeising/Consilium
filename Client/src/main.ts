@@ -45,14 +45,6 @@ async function init() {
       return Promise.reject(error)
     })
 
-  new Vue({
-    vuetify,
-    store,
-    router,
-    i18n,
-    render: (h) => h(App)
-  }).$mount('#app')
-
   const userItem = localStorage.getItem('user')
   if (userItem) {
     const user = JSON.parse(userItem)
@@ -64,10 +56,26 @@ async function init() {
       await personModule.initPersonModule()
       await projectModule.initProjectModule()
       await knowledgeBaseModule.initKnowledgeBaseModule()
+
+      if (userModule.getUser) {
+        vuetify.framework.theme.dark = userModule.getUser.theme === 'dark'
+      }
+
+      if (router.currentRoute.name === 'serverException') {
+        router.push({ name: 'home' })
+      }
     } catch (error) {
       if (!error.response) {
         router.push({ name: 'serverException' })
       }
+    } finally {
+      new Vue({
+        vuetify,
+        store,
+        router,
+        i18n,
+        render: (h) => h(App)
+      }).$mount('#app')
     }
   }
 }

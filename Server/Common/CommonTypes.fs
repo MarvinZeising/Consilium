@@ -14,11 +14,13 @@ module CommonTypes =
          | EmailAlreadyExists
          | EmailRequired
          | EmailInvalid
-         | LanguageRequired
-         | LanguageNotAvailable
          | PasswordInvalid
          | PasswordWrong
          | GenderInvalid
+         | LanguageRequired
+         | LanguageInvalid
+         | ThemeRequired
+         | ThemeInvalid
          | AuthenticationFailed
          | ServerException of Exception
 
@@ -33,10 +35,12 @@ module CommonTypes =
         | EmailAlreadyExists -> 400
         | EmailRequired -> 400
         | EmailInvalid -> 400
-        | LanguageRequired -> 400
-        | LanguageNotAvailable -> 400
         | PasswordInvalid -> 400
         | PasswordWrong -> 400
         | GenderInvalid -> 400
+        | LanguageRequired -> 400
+        | LanguageInvalid -> 400
+        | ThemeRequired -> 400
+        | ThemeInvalid -> 400
         | AuthenticationFailed -> 401
         | ServerException _ -> 500

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import SHA512 from 'crypto-js/sha512'
-import { User } from '@/models/definitions'
+import { User, Theme } from '@/models/definitions'
 import i18n from '@/i18n'
 
 @Module({ name: 'UserModule' })
@@ -50,7 +50,7 @@ export default class UserModule extends VuexModule {
       }))
       axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`
 
-      // keep in sync with main.ts
+      // keep in sync with main.ts (and with action SignOut in here)
       await this.context.dispatch('initUserModule', credentials.email)
       await this.context.dispatch('initPersonModule')
       await this.context.dispatch('initProjectModule')
@@ -83,13 +83,18 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  public async updateLanguage(language: string) {
+  public async updateInterface(accountInterface: {
+    language: string,
+    theme: string,
+   }) {
     const user = this.user
     if (user) {
-      await axios.put('/users/language', {
-        language,
+      await axios.put('/users/interface', {
+        language: accountInterface.language,
+        theme: accountInterface.theme,
       })
-      user.language = language
+      user.language = accountInterface.language
+      user.theme = accountInterface.theme === 'light' ? Theme.Light : Theme.Dark
     }
     this.context.commit('setUser', user)
     this.context.dispatch('updateLocale')

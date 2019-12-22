@@ -21,7 +21,7 @@
           <v-flex xs6>
             <p
               class="caption mb-0 grey--text"
-              v-t="'account.id'"
+              v-t="'core.id'"
             />
             <p class="subtitle-1 grey--text">{{ userModule.getUser.id }}</p>
           </v-flex>
@@ -29,7 +29,7 @@
           <v-flex xs6>
             <p
               class="caption mb-0 grey--text"
-              v-t="'account.email'"
+              v-t="'core.email'"
             />
             <p class="subtitle-1">{{ userModule.getUser.email }}</p>
           </v-flex>
