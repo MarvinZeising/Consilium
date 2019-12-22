@@ -84,7 +84,7 @@ export default class Settings extends Vue {
 
   public get getProject(): Project {
     const projectId = this.$route.params.projectId
-    const projects = this.projectModule.myProjects.filter((project) => project.id === projectId)
+    const projects = this.projectModule.getProjects.filter((project) => project.id === projectId)
     return projects.length > 0 ? projects[0] : new Project('Loading', 'Loading')
   }
 

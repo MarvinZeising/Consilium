@@ -82,7 +82,7 @@ export default class UpdateProjectGeneral extends Vue {
 
   private created() {
     const projectId = this.$route.params.projectId
-    const project = this.projectModule.myProjects.filter((x: Project) => x.id === projectId)[0]
+    const project = this.projectModule.getProjects.filter((x: Project) => x.id === projectId)[0]
     this.name = project.name
     this.email = project.email
   }

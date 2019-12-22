@@ -73,7 +73,7 @@
 
       <!--//* Projects -->
       <v-list-group
-        v-for="(project, i) in myProjects"
+        v-for="(project, i) in getProjects"
         :key="i"
         prepend-icon="extension"
         value="true"
@@ -192,8 +192,8 @@ export default class NavbarSignedIn extends Vue {
     ['navbar.configureProjects', 'settings', 'configureProjects']
   ]
 
-  private get myProjects(): Project[] {
-    return this.projectModule.myProjects.map((project: any) => {
+  private get getProjects(): Project[] {
+    return this.projectModule.getProjects.map((project: any) => {
       project.topics = this.knowledgeBaseModule.allTopics.filter((topic: Topic) => {
         return topic.projectId === project.id
       })

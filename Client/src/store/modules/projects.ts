@@ -6,7 +6,7 @@ import { Project } from '../../models/definitions'
 export default class ProjectModule extends VuexModule {
   public projects: Project[] = []
 
-  public get myProjects(): Project[] {
+  public get getProjects(): Project[] {
     return this.projects.sort((a, b) => {
       if (a.name < b.name) {
         return -1

@@ -92,7 +92,7 @@ export default class DeleteProjectDialog extends Vue {
 
   private async loadProject() {
     const projectId = this.$route.params.projectId
-    const project = this.projectModule.myProjects.filter((x: Project) => x.id === projectId)[0]
+    const project = this.projectModule.getProjects.filter((x: Project) => x.id === projectId)[0]
     if (project) {
       this.projectName = project.name
     }
