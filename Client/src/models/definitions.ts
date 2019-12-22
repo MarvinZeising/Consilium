@@ -52,6 +52,35 @@ class Project {
   }
 }
 
+enum ProjectParticipationStatus {
+  Invited = 'Invited',
+  Requested = 'Requested',
+  Active = 'Active',
+  Inactive = 'Inactive',
+}
+
+class ProjectParticipation {
+  public id: string
+  public personId: string
+  public projectId: string
+  public createdDate: string
+  public status: ProjectParticipationStatus
+
+  constructor(
+    id: string,
+    personId: string,
+    projectId: string,
+    createdDate: string,
+    status: ProjectParticipationStatus
+  ) {
+    this.id = id
+    this.personId = personId
+    this.projectId = projectId
+    this.createdDate = createdDate
+    this.status = status
+  }
+}
+
 class Topic {
   public id: string
   public projectId: string
@@ -86,6 +115,8 @@ export {
   Person,
   Gender,
   Project,
+  ProjectParticipation,
+  ProjectParticipationStatus,
   Topic,
   Article,
 }

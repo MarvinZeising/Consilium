@@ -1,10 +1,12 @@
 import axios from 'axios'
-import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
-import { Project } from '../../models/definitions'
+import { Module, VuexModule, Mutation, Action, MutationAction, getModule } from 'vuex-module-decorators'
+import { Project, ProjectParticipation } from '../../models/definitions'
+import PersonModule from './persons'
 
 @Module({ name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
   public projects: Project[] = []
+  public participations: ProjectParticipation[] = []
 
   public get getProjects(): Project[] {
     return this.projects.sort((a, b) => {
@@ -18,10 +20,24 @@ export default class ProjectModule extends VuexModule {
     })
   }
 
-  @MutationAction({ mutate: ['projects'] })
-  public async initProjectModule() {
-    const response = await axios.get('/projects')
-    return { projects: response.data }
+  public get getParticipations(): ProjectParticipation[] {
+    return this.participations
+  }
+
+  @Action
+  public async loadProjects(personId: string) {
+    const response = await axios.get(`/project-participations/${personId}`)
+    const projectParticipations: ProjectParticipation[] = response.data
+
+    const projects: Project[] = []
+    for (const projectParticipation of projectParticipations) {
+      const projectResponse = await axios.get(`/projects/${projectParticipation.projectId}`)
+      const project: Project = projectResponse.data
+      projects.push(project)
+    }
+
+    this.context.commit('setParticipations', projectParticipations)
+    this.context.commit('setProjects', projects)
   }
 
   @MutationAction({ mutate: ['projects'] })
@@ -51,6 +67,16 @@ export default class ProjectModule extends VuexModule {
   public async deleteProject(projectId: string) {
     await axios.delete(`/projects/${projectId}`)
     return projectId
+  }
+
+  @Mutation
+  public async setProjects(projects: Project[]) {
+    this.projects = projects
+  }
+
+  @Mutation
+  public async setParticipations(participations: ProjectParticipation[]) {
+    this.participations = participations
   }
 
   @Mutation

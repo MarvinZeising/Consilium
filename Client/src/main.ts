@@ -54,7 +54,6 @@ async function init() {
     try {
       await userModule.initUserModule()
       await personModule.initPersonModule()
-      await projectModule.initProjectModule()
       await knowledgeBaseModule.initKnowledgeBaseModule()
 
       if (userModule.getUser) {

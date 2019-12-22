@@ -1,65 +1,99 @@
 <template>
-  <div class="myProjects">
+  <v-flex xs12 sm10 md8 lg6 xl4>
+    <h2
+      class="headline mb-3"
+      v-t="'project.projects'"
+    />
+    <v-card flat class="ma-2 mb-5">
+      <v-card-text class="grey--text">
+        {{ $t('project.projectsDescription') }}
+      </v-card-text>
+      <v-list>
+        <v-list-item
+          v-if="getProjects.length === 0"
+          dark
+          class="warning"
+        >
+          <span v-t="'project.noprojects'" />
+        </v-list-item>
+        <v-list-item
+          two-line
+          v-for="(project, index) in getProjects"
+          :key="index"
+          :class="isStatusInvited(project.id) || isStatusRequested(project.id) ? 'info' : ''"
+        >
+          <v-list-item-content>
+            <v-list-item-title v-text="project.name" />
+            <v-list-item-subtitle v-t="'project.participationStatus.' + getParticipationStatus(project.id)" />
+          </v-list-item-content>
 
-    <!--//* My Projects -->
-    <v-flex xs12>
-      <h2 class="headline mb-3">Your Projects</h2>
-    </v-flex>
-
-    <!--//* No Projects existing -->
-    <v-flex v-if="projects == []">
-      <i>You don't have access to any Projects, yet.</i>
-    </v-flex>
-
-    <!--//* Data -->
-    <v-flex
-      v-for="(project, i) in projects"
-      :key="i"
-      xs12 sm10 md8 lg6 xl4
-      class="mb-5 pa-2"
-    >
-      <v-card>
-        <v-card-title primary-title>
-          <h3 class="title mb-0 ml-2">
-            {{ project.name }}
-          </h3>
-        </v-card-title>
-
-        <v-card-actions>
-          <v-btn
-            text
-            color="primary"
-          >
-            Show permissions
-          </v-btn>
-          <v-spacer />
-          <v-btn
-            text
-            color="error"
-          >
-            Leave Project
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-
-  </div>
+          <v-list-item-action>
+            <v-btn
+              v-if="isStatusInvited(project.id)"
+              text
+              class="ma-0"
+              @click=""
+            >
+              Handle
+            </v-btn>
+            <v-btn
+              v-else-if="isStatusRequested(project.id)"
+              text
+              class="ma-0"
+              @click=""
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              v-else
+              icon
+              class="ma-0"
+              @click=""
+            >
+              <v-icon>edit</v-icon>
+            </v-btn>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn
+          text
+          :to="{ name: 'createProject' }"
+          v-t="'project.create'"
+        />
+      </v-card-actions>
+    </v-card>
+  </v-flex>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import ProjectModule from '@/store/modules/projects'
-import { Project } from '@/models/definitions'
+import ProjectModule from '../store/modules/projects'
+import { Project, ProjectParticipationStatus } from '../models/definitions'
 
 @Component
-export default class PersonalProjects extends Vue {
+export default class ProjectalProjects extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
-  private projects: Project[] = []
+  private get getProjects() {
+    return this.projectModule.getProjects
+  }
 
-  private created() {
-    this.projects = this.projectModule.myProjects
+  private isStatusInvited(projectId: string) {
+    return this.getParticipationStatus(projectId) === ProjectParticipationStatus.Invited
+  }
+
+  private isStatusRequested(projectId: string) {
+    return this.getParticipationStatus(projectId) === ProjectParticipationStatus.Requested
+  }
+
+  private getParticipationStatus(projectId: string) {
+    const participation = this.projectModule.getParticipations
+      .find((p) => p.projectId === projectId)
+
+    return participation?.status || 'none'
   }
 
 }

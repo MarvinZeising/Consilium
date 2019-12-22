@@ -53,7 +53,6 @@ export default class UserModule extends VuexModule {
       // keep in sync with main.ts (and with action SignOut in here)
       await this.context.dispatch('initUserModule', credentials.email)
       await this.context.dispatch('initPersonModule')
-      await this.context.dispatch('initProjectModule')
       await this.context.dispatch('initKnowledgeBaseModule')
 
       return true

@@ -34,17 +34,19 @@ export default class PersonModule extends VuexModule {
       this.context.commit('setPersons', persons)
 
       if (currentlyActivePerson && persons.includes(currentlyActivePerson)) {
-        this.context.commit('activatePerson', currentlyActivePerson.id)
+        this.context.dispatch('activatePerson', currentlyActivePerson.id)
       } else {
-        this.context.commit('activatePerson', persons[0].id)
+        this.context.dispatch('activatePerson', persons[0].id)
       }
+
+      // this.context.dispatch('loadProjects')
     }
   }
 
   @Action
   public async clearPersons() {
     this.context.commit('setPersons', [])
-    this.context.commit('activatePerson', null)
+    this.context.dispatch('activatePerson', null)
   }
 
   @Action
@@ -62,10 +64,7 @@ export default class PersonModule extends VuexModule {
       Gender.Male)
 
     this.context.commit('insertPerson', newPerson)
-    this.context.commit('activatePerson', newPerson.id)
-
-    await this.context.dispatch('initProjectModule')
-    await this.context.dispatch('initKnowledgeBaseModule')
+    this.context.dispatch('activatePerson', newPerson.id)
   }
 
   @Action({ commit: 'setGeneral' })
@@ -90,14 +89,24 @@ export default class PersonModule extends VuexModule {
 
     const otherPerson = this.persons.find((x: Person) => x.id !== personId)
     if (otherPerson) {
-      this.context.commit('activatePerson', otherPerson.id)
+      this.context.dispatch('activatePerson', otherPerson.id)
     }
 
     return personId
   }
 
+  @Action({ commit: 'setActivePersonId' })
+  public async activatePerson(personId: string | null) {
+    if (personId) {
+      this.context.dispatch('loadProjects', personId)
+    } else {
+      this.context.dispatch('clearProjects')
+    }
+    return personId
+  }
+
   @Mutation
-  public activatePerson(personId: string | null) {
+  public setActivePersonId(personId: string | null) {
     this.activePersonId = personId
   }
 
