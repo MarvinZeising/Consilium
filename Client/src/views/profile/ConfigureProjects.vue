@@ -1,9 +1,9 @@
 <template>
   <v-container fluid>
 
-    <MyProjects />
+    <PersonalProjects />
 
-    <MyProjectInvitations />
+    <PersonalProjectInvitations />
 
     <JoinProject />
 
@@ -34,14 +34,14 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import MyProjects from '../../components/MyProjects.vue'
-import MyProjectInvitations from '../../components/MyProjectInvitations.vue'
+import PersonalProjects from '../../components/PersonalProjects.vue'
+import PersonalProjectInvitations from '../../components/PersonalProjectInvitations.vue'
 import JoinProject from '../../components/JoinProject.vue'
 
 @Component({
   components: {
-    MyProjects,
-    MyProjectInvitations,
+    PersonalProjects,
+    PersonalProjectInvitations,
     JoinProject
   }
 })

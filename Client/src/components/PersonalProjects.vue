@@ -53,7 +53,7 @@ import ProjectModule from '@/store/modules/projects'
 import { Project } from '@/models/definitions'
 
 @Component
-export default class MyProjects extends Vue {
+export default class PersonalProjects extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private projects: Project[] = []

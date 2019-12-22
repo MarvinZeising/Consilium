@@ -7,7 +7,7 @@
       <AccountInterface />
 
       <!--//* Persons -->
-      <MyPersons />
+      <AccountPersons />
 
       <!--//* Danger Zone -->
       <v-flex xs12 sm10 md8 lg6 xl4>
@@ -44,7 +44,7 @@ import { getModule } from 'vuex-module-decorators'
 import { Project } from '../../models/definitions'
 import AccountGeneral from '../../components/AccountGeneral.vue'
 import AccountInterface from '../../components/AccountInterface.vue'
-import MyPersons from '../../components/MyPersons.vue'
+import AccountPersons from '../../components/AccountPersons.vue'
 import DeleteAccountDialog from '../../components/dialogs/DeleteAccountDialog.vue'
 import UserModule from '../../store/modules/users'
 
@@ -53,7 +53,7 @@ import UserModule from '../../store/modules/users'
     AccountGeneral,
     AccountInterface,
     DeleteAccountDialog,
-    MyPersons,
+    AccountPersons,
   }
 })
 export default class Account extends Vue {

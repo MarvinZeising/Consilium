@@ -55,7 +55,7 @@ import UserModule from '../store/modules/users'
 import { Person } from '../models/definitions'
 
 @Component
-export default class MyPersons extends Vue {
+export default class AccountPersons extends Vue {
   private personModule: PersonModule = getModule(PersonModule, this.$store)
 
   private get getPersons() {
