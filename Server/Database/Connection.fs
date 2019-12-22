@@ -7,6 +7,7 @@ module Connection =
     open UserTypes
     open PersonTypes
     open ProjectTypes
+    open ProjectParticipationTypes
     open KnowledgeBaseTypes
 
     type Config = {
@@ -31,4 +32,5 @@ module Connection =
     let userCollection = db.GetCollection<User> "users"
     let personCollection = db.GetCollection<Person> "persons"
     let projectCollection = db.GetCollection<Project> "projects"
+    let projectParticipationCollection = db.GetCollection<ProjectParticipation> "projectParticipation"
     let topicCollection = db.GetCollection<Topic> "topics"

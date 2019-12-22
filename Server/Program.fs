@@ -23,8 +23,9 @@ module Program =
             UserController.routes
             PersonController.routes
             ProjectController.routes
+            ProjectParticipationController.routes
             KnowledgeBaseController.routes
-            RequestErrors.NOT_FOUND "Not Found"
+            RequestErrors.NOT_FOUND "Route not found"
         ]
 
     let errorHandler (ex : Exception) (logger : ILogger) =

@@ -34,7 +34,7 @@ module Controller =
 
     let private logRoute prefix path (ctx: HttpContext) =
         let logger = ctx.GetLogger("Consilium.Controller.Route")
-        let date = System.DateTime.UtcNow.ToLongTimeString()
+        let date = System.DateTime.UtcNow.ToHtmlString()
         logger.LogInformation (Printf.sprintf "%s ROUTE %s: %s" date prefix path)
 
     let private routeWithLogging prefix path (handle: HttpHandler) =

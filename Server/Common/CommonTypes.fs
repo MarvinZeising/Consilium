@@ -8,6 +8,7 @@ module CommonTypes =
          | UserNotFound
          | PersonNotFound
          | ProjectNotFound
+         | ProjectParticipationNotFound
          | TopicNotFound
          | NameRequired
          | NameLength
@@ -29,6 +30,7 @@ module CommonTypes =
         | UserNotFound -> 404
         | PersonNotFound -> 404
         | ProjectNotFound -> 404
+        | ProjectParticipationNotFound -> 404
         | TopicNotFound -> 404
         | NameRequired -> 400
         | NameLength -> 400

@@ -3,19 +3,20 @@
 open Xunit
 open Consilium
 open CommonTypes
+open UserValidation
 open TestLibrary
 
 [<Fact>]
 let ``validate language is valid`` () =
-    let result = "en-US" |> LanguageValidation.validate
+    let result = "en-US" |> validateLanguage
     result |> shouldSucceedWith "en-US"
 
 [<Fact>]
 let ``validate language is not empty`` () =
-    let result = "" |> LanguageValidation.validate
+    let result = "" |> validateLanguage
     result |> shouldContainError LanguageRequired
 
 [<Fact>]
 let ``validate language is not unknown`` () =
-    let result = "unknown" |> LanguageValidation.validate
-    result |> shouldContainError LanguageNotAvailable
+    let result = "unknown" |> validateLanguage
+    result |> shouldContainError LanguageInvalid
