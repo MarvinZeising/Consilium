@@ -38,7 +38,6 @@
           <v-spacer />
           <v-btn
             text
-            color="black"
             @click="deleteTopicDialog = false"
             v-t="'core.cancel'"
           />

@@ -40,7 +40,6 @@
           <v-spacer />
           <v-btn
             text
-            color="black"
             @click="deleteAccountDialog = false"
             v-t="'core.cancel'"
           />

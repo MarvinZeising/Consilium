@@ -24,7 +24,6 @@
           <v-spacer />
           <v-btn
             text
-            color="black"
             @click="newTopicDialog = false"
             v-t="'core.close'"
           />
