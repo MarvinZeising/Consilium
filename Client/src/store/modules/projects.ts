@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction, getModule } from 'vuex-module-decorators'
-import { Project, ProjectParticipation } from '../../models/definitions'
+import { Project, ProjectParticipation, ProjectParticipationStatus } from '../../models/definitions'
 import PersonModule from './persons'
 
 @Module({ name: 'ProjectModule' })
@@ -54,7 +54,21 @@ export default class ProjectModule extends VuexModule {
   @Action
   public async cancelJoinRequest(projectParticipationId: string) {
     await axios.delete(`/project-participations/${projectParticipationId}`)
+    await this.context.dispatch('loadProjects')
+  }
 
+  @Action
+  public async declineInvitation(projectParticipationId: string) {
+    await axios.delete(`/project-participations/${projectParticipationId}`)
+    await this.context.dispatch('loadProjects')
+  }
+
+  @Action
+  public async acceptInvitation(projectParticipationId: string) {
+    await axios.put('/project-participations', {
+      id: projectParticipationId,
+      status: ProjectParticipationStatus.Active,
+    })
     await this.context.dispatch('loadProjects')
   }
 

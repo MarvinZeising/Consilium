@@ -14,7 +14,7 @@
           dark
           class="warning"
         >
-          <span v-t="'project.noprojects'" />
+          <span v-t="'project.noProjects'" />
         </v-list-item>
         <v-list-item
           three-line
@@ -27,29 +27,23 @@
             <v-list-item-subtitle v-t="'project.participationStatus.' + getParticipationStatus(project.id)" />
           </v-list-item-content>
 
-          <v-list-item-action grow>
-            <v-layout align-center justify-center>
-              <v-btn
-                v-if="isStatusInvited(project.id)"
-                text
-                class="mt-2"
-                @click=""
-              >
-                Handle
-              </v-btn>
-              <CancelJoinRequestDialog
-                v-else-if="isStatusRequested(project.id)"
-                :projectParticipationId="getParticipationId(project.id)"
-              />
-              <v-btn
-                v-else
-                icon
-                class="mt-2"
-                @click=""
-              >
-                <v-icon>edit</v-icon>
-              </v-btn>
-            </v-layout>
+          <v-list-item-action>
+            <HandleProjectInvitation
+              v-if="isStatusInvited(project.id)"
+              :projectParticipationId="getParticipationId(project.id)"
+            />
+            <CancelJoinRequestDialog
+              v-else-if="isStatusRequested(project.id)"
+              :projectParticipationId="getParticipationId(project.id)"
+            />
+            <v-btn
+              v-else
+              icon
+              class="mt-2"
+              @click=""
+            >
+              <v-icon>edit</v-icon>
+            </v-btn>
           </v-list-item-action>
         </v-list-item>
       </v-list>
@@ -74,12 +68,14 @@ import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../store/modules/projects'
 import JoinProjectDialog from '../components/dialogs/JoinProjectDialog.vue'
 import CancelJoinRequestDialog from '../components/dialogs/CancelJoinRequestDialog.vue'
+import HandleProjectInvitation from '../components/dialogs/HandleProjectInvitation.vue'
 import { Project, ProjectParticipationStatus } from '../models/definitions'
 
 @Component({
   components: {
     JoinProjectDialog,
     CancelJoinRequestDialog,
+    HandleProjectInvitation,
   }
 })
 export default class ProjectalProjects extends Vue {
