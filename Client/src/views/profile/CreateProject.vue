@@ -88,7 +88,7 @@
             <v-btn
               @click="createProject"
               color="primary"
-              v-t="'project.createButton'"
+              v-t="'project.createSubmit'"
             />
             <v-btn
               text

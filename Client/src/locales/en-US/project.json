@@ -1,4 +1,6 @@
 {
+  "projects": "My Projects",
+  "projectsDescription": "Here you see all the project you have access to. You can request admission to an existing or create a new project.",
   "nameMustEqual": "Project name must be this Project's name",
   "news": "News",
   "delete": "Delete this Project",
@@ -12,5 +14,18 @@
   "create": "Create a new Project",
   "createDescription1": "Are you the Coordinator of an event/a project?",
   "createDescription2": "Then you can create a new Project and invite all the Publishers to it.",
-  "createButton": "Create Project"
+  "createSubmit": "Create Project",
+  "join": "Join an existing project",
+  "joinDescription": "You can request admission to an existing project. A project administrator will have to accept your request. In order to request, you need to have the project id. Ask a project administrator for the id.",
+  "joinSubmit": "Request admission",
+  "cancelRequest": "Cancel this admission request",
+  "cancelRequestDescription": "Are you sure you want to cancel this admission request?",
+  "cancelRequestSubmit": "Cancel admission request",
+  "cancelRequestOtherButton": "Close dialog",
+  "participationStatus": {
+    "Invited": "You received an invitation to join this project",
+    "Requested": "You requested admission to this project",
+    "Active": "Active",
+    "Inactive": "Inactive"
+  }
 }

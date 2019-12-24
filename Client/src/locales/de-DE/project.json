@@ -1,4 +1,6 @@
 {
+  "projects": "Meine Projekte",
+  "projectsDescription": "Hier siehst du alle Projekte an denen du teilnimmst. Du kannst die Teilnahme an weiteren Projekten anfragen oder selbst ein neues Projekt erstellen.",
   "nameMustEqual": "Der Projektname muss dem Namen dieses Projekts entsprechen",
   "news": "Neuigkeiten",
   "delete": "Dieses Projekt löschen",
@@ -12,5 +14,18 @@
   "create": "Neues Projekt erstellen",
   "createDescription1": "Bist du der Koordinator eines Events oder Projekts?",
   "createDescription2": "Dann kannst du ein Projekt erstellen und die Verkündiger einladen teilzunehmen.",
-  "createButton": "Projekt erstellen"
+  "createSubmit": "Projekt erstellen",
+  "join": "Einem Projekt beitreten",
+  "joinDescription": "Du kannst anfragen, ob du einem Projekt beitreten darfst. Danach musst du warten bis ein Projekt Administrator diese Anfrage akzeptiert oder ablehnt. Um die Teilnahme anzufragen brauchst du die ID des Projektes. Du kannst sie bei einem der Projekt Administratoren erfragen.",
+  "joinSubmit": "Teilnahme anfragen",
+  "cancelRequest": "Diese Anfrage abbrechen",
+  "cancelRequestDescription": "Bist du dir sicher, dass du diese Anfrage abbrechen möchtest?",
+  "cancelRequestSubmit": "Anfrage abbrechen",
+  "cancelRequestOtherButton": "Dialog schließen",
+  "participationStatus": {
+    "Invited": "Du hast eine Einladung für dieses Projekt bekommen",
+    "Requested": "Du hast die Teilnahme an diesem Projekt angefragt",
+    "Active": "Aktiv",
+    "Inactive": "Inaktiv"
+  }
 }

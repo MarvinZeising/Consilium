@@ -38,8 +38,6 @@ export default class PersonModule extends VuexModule {
       } else {
         this.context.dispatch('activatePerson', persons[0].id)
       }
-
-      // this.context.dispatch('loadProjects')
     }
   }
 
@@ -95,14 +93,15 @@ export default class PersonModule extends VuexModule {
     return personId
   }
 
-  @Action({ commit: 'setActivePersonId' })
+  @Action
   public async activatePerson(personId: string | null) {
+    this.context.commit('setActivePersonId', personId)
+
     if (personId) {
-      this.context.dispatch('loadProjects', personId)
+      this.context.dispatch('loadProjects')
     } else {
       this.context.dispatch('clearProjects')
     }
-    return personId
   }
 
   @Mutation

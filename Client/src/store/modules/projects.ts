@@ -25,7 +25,9 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Action
-  public async loadProjects(personId: string) {
+  public async loadProjects() {
+    const personId = this.context.getters.getActivePerson.id
+
     const response = await axios.get(`/project-participations/${personId}`)
     const projectParticipations: ProjectParticipation[] = response.data
 
@@ -38,6 +40,22 @@ export default class ProjectModule extends VuexModule {
 
     this.context.commit('setParticipations', projectParticipations)
     this.context.commit('setProjects', projects)
+  }
+
+  @Action
+  public async joinProject(projectId: string) {
+    const personId = this.context.getters.getActivePerson.id
+
+    await axios.post('/project-participations/request', { personId, projectId })
+
+    await this.context.dispatch('loadProjects')
+  }
+
+  @Action
+  public async cancelJoinRequest(projectParticipationId: string) {
+    await axios.delete(`/project-participations/${projectParticipationId}`)
+
+    await this.context.dispatch('loadProjects')
   }
 
   @MutationAction({ mutate: ['projects'] })
