@@ -8,12 +8,13 @@
       flat
       class="ma-2 mb-5"
     >
-      <v-card-text class="grey--text">
-        {{ $t('knowledgeBase.topicsDescription') }}
-      </v-card-text>
+      <v-card-text
+        class="grey--text"
+        v-t="'knowledgeBase.topicsDescription'"
+      />
       <v-list>
         <v-list-item
-          class="grey lighten-3 grey--text text--darken-2"
+          class="warning"
           v-if="getTopics.length === 0"
         >
           <span v-t="'knowledgeBase.noTopics'" />
@@ -72,7 +73,7 @@ import DeleteTopicDialog from './dialogs/DeleteTopicDialog.vue'
     DeleteTopicDialog,
   }
 })
-export default class Topics extends Vue {
+export default class SettingsTopics extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private get getTopics() {

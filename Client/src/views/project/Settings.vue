@@ -4,7 +4,7 @@
 
       <SettingsGeneral />
 
-      <Topics />
+      <SettingsTopics />
 
       <!--//* Danger Zone -->
       <v-flex xs12 sm10 md8 lg6 xl4>
@@ -34,14 +34,14 @@ import ProjectModule from '../../store/projects'
 import { Project, Topic } from '../../models/definitions'
 import KnowledgeBaseModule from '../../store/knowledgeBase'
 import SettingsGeneral from '../../components/SettingsGeneral.vue'
-import Topics from '../../components/Topics.vue'
+import SettingsTopics from '../../components/SettingsTopics.vue'
 import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vue'
 
 @Component({
   components: {
     SettingsGeneral,
     DeleteProjectDialog,
-    Topics,
+    SettingsTopics,
   }
 })
 export default class Settings extends Vue {
