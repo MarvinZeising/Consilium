@@ -67,16 +67,16 @@ async function init() {
       if (!error.response) {
         router.push({ name: 'serverException' })
       }
-    } finally {
-      new Vue({
-        vuetify,
-        store,
-        router,
-        i18n,
-        render: (h) => h(App)
-      }).$mount('#app')
     }
   }
+
+  new Vue({
+    vuetify,
+    store,
+    router,
+    i18n,
+    render: (h) => h(App)
+  }).$mount('#app')
 }
 
 init()
