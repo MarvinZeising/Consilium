@@ -1,5 +1,8 @@
 <template>
-  <v-dialog v-model="deletePersonDialog" persistent max-width="600px">
+  <v-dialog
+    v-model="deletePersonDialog"
+    max-width="600px"
+  >
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
