@@ -2,44 +2,7 @@
   <v-container fluid>
     <v-layout wrap>
 
-      <!--//* Main Heading -->
-      <v-flex xs12 sm10 md8 lg6 xl4>
-        <h2
-          class="headline mb-3"
-          v-t="'core.general'"
-        />
-        <v-card
-          flat
-          class="ma-2 mb-5"
-        >
-          <v-card-text>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'core.name'"
-            />
-            <p class="subtitle-1">
-              {{ getProject.name }}
-            </p>
-
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'core.email'"
-            />
-            <p class="subtitle-1 mb-0">
-              {{ getProject.email }}
-            </p>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              text
-              :to="{ name: 'updateGeneral' }"
-              v-t="'core.edit'"
-            />
-          </v-card-actions>
-        </v-card>
-      </v-flex>
+      <SettingsGeneral />
 
       <Topics />
 
@@ -70,11 +33,13 @@ import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '@/store/modules/projects'
 import { Project, Topic } from '@/models/definitions'
 import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
+import SettingsGeneral from '../../components/SettingsGeneral.vue'
 import Topics from '../../components/Topics.vue'
 import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vue'
 
 @Component({
   components: {
+    SettingsGeneral,
     DeleteProjectDialog,
     Topics,
   }

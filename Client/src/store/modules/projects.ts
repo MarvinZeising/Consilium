@@ -2,13 +2,19 @@ import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction, getModule } from 'vuex-module-decorators'
 import { Project, ProjectParticipation, ProjectParticipationStatus } from '../../models/definitions'
 import PersonModule from './persons'
+import router from '@/router'
 
 @Module({ name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
   public projects: Project[] = []
   public participations: ProjectParticipation[] = []
 
-  public get getProjects(): Project[] {
+  public get getActiveProject() {
+    const projectId = router.currentRoute.params.projectId
+    return this.projects.find((x: Project) => x.id === projectId)
+  }
+
+  public get getProjects() {
     return this.projects.sort((a, b) => {
       if (a.name < b.name) {
         return -1
@@ -22,6 +28,11 @@ export default class ProjectModule extends VuexModule {
 
   public get getParticipations(): ProjectParticipation[] {
     return this.participations
+  }
+
+  @Action
+  public getProject(projectId: string) {
+    return this.projects.find((x: Project) => x.id === projectId)
   }
 
   @Action
