@@ -51,6 +51,10 @@ const router = new VueRouter({
     name: 'settings',
     component: () => import('./views/project/Settings.vue'),
   }, {
+    path: '/project/:projectId/persons',
+    name: 'persons',
+    component: () => import('./views/project/Persons.vue'),
+  }, {
     path: '/profile/personal',
     name: 'personal',
     component: () => import('./views/profile/Personal.vue'),
