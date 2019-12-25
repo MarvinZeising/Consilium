@@ -152,6 +152,7 @@
           :key="i"
           :to="{ name: action[1] }"
         >
+          <v-list-item-icon />
           <v-list-item-content>
             <v-list-item-title v-t="action[0]" />
           </v-list-item-content>
