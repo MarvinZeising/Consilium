@@ -48,6 +48,7 @@
                     type="email"
                     :label="$t('core.email')"
                     :rules="emailRules"
+                    autocomplete="username"
                     filled
                   />
                 </v-form>
@@ -78,6 +79,7 @@
                     :type="passwordShow ? 'text' : 'password'"
                     :rules="passwordRules"
                     :hint="$t('account.signUpForm.passwordRuleHint')"
+                    autocomplete="new-password"
                     name="password"
                     filled
                     required
@@ -94,6 +96,8 @@
                     :type="passwordRepeatShow ? 'text' : 'password'"
                     :rules="passwordRepeatRules"
                     name="passwordRepeat"
+                    autocomplete="new-password"
+                    auto
                     filled
                     required
                     @click:append="passwordRepeatShow = !passwordRepeatShow"

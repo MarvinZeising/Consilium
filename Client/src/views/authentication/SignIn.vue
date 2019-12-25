@@ -23,6 +23,7 @@
                 :rules="emailRules"
                 name="email"
                 prepend-inner-icon="person"
+                autocomplete="username"
                 filled
                 required
               />
@@ -34,6 +35,7 @@
                 :rules="passwordRules"
                 name="password"
                 prepend-inner-icon="lock"
+                autocomplete="current-password"
                 filled
                 required
                 @click:append="passwordShow = !passwordShow"
