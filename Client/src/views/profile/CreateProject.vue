@@ -1,5 +1,5 @@
 <template>
-  <v-container class="createProject">
+  <v-container fluid>
     <h1
       class="headline mb-4"
       v-t="'project.create'"

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="createPerson">
+  <v-container fluid>
     <h1
       class="headline mb-4"
       v-t="'person.create'"
