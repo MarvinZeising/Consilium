@@ -80,16 +80,7 @@ export default class DeleteProjectDialog extends Vue {
     ]
   }
 
-  @Watch('$route')
-  private async onRouteChanged(val: string, oldVal: string) {
-    await this.loadProject()
-  }
-
   private async created() {
-    await this.loadProject()
-  }
-
-  private async loadProject() {
     const projectId = this.$route.params.projectId
     const project = this.projectModule.getProjects.filter((x: Project) => x.id === projectId)[0]
     if (project) {

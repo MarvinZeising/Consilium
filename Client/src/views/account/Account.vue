@@ -22,11 +22,7 @@
         >
           <v-card-text>
             <v-layout column>
-              <v-btn
-                :to="{ name: 'updateAccountPassword' }"
-                class="mb-4"
-                v-t="'account.changePassword'"
-              />
+              <UpdatePasswordDialog />
 
               <DeleteAccountDialog />
             </v-layout>
@@ -46,6 +42,7 @@ import AccountGeneral from '../../components/AccountGeneral.vue'
 import AccountInterface from '../../components/AccountInterface.vue'
 import AccountPersons from '../../components/AccountPersons.vue'
 import DeleteAccountDialog from '../../components/dialogs/DeleteAccountDialog.vue'
+import UpdatePasswordDialog from '../../components/dialogs/UpdatePasswordDialog.vue'
 import UserModule from '../../store/modules/users'
 
 @Component({
@@ -54,6 +51,7 @@ import UserModule from '../../store/modules/users'
     AccountInterface,
     DeleteAccountDialog,
     AccountPersons,
+    UpdatePasswordDialog,
   }
 })
 export default class Account extends Vue {

@@ -75,10 +75,6 @@ const router = new VueRouter({
     name: 'createPerson',
     component: () => import('./views/account/CreatePerson.vue'),
   }, {
-    path: '/account/update-password',
-    name: 'updateAccountPassword',
-    component: () => import('./views/account/UpdateAccountPassword.vue'),
-  }, {
     path: '/token',
     name: 'token',
     component: () => import('./views/authentication/Token.vue'),
