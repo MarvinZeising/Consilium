@@ -25,7 +25,7 @@
 
       <v-spacer />
 
-      <div v-if="isSignedIn">
+      <div v-if="this.userModule.getUser">
         <v-menu
           v-model="accountMenu"
           left
@@ -43,18 +43,23 @@
           <v-card style="min-width:300px; text-align:center;">
             <v-card-text class="text-center">
               <div class="mb-3">
-                <span class="subtitle-2">You're signed in with</span>
+                <span
+                  class="subtitle-2"
+                  v-t="'account.signedInWith'"
+                />
                 <br>
-                <span class="subtitle-1 text--primary">marvin.zeising@gmail.com</span>
+                <span
+                  class="subtitle-1 text--primary"
+                  v-text="userModule.getUser.email"
+                />
               </div>
               <v-btn
                 outlined
                 rounded
                 :to="{ name: 'account' }"
                 style="border-color:grey;"
-              >
-                Manage account
-              </v-btn>
+                v-t="'account.manage'"
+              />
             </v-card-text>
             <v-divider />
             <v-card-actions class="d-flex justify-center">
@@ -62,9 +67,8 @@
                 text
                 @click.stop="signOut"
                 style="border-color:grey lighten-2;"
-              >
-                Sign out
-              </v-btn>
+                v-t="'account.signOut'"
+              />
             </v-card-actions>
             <v-divider />
             <v-card-text>
@@ -72,24 +76,22 @@
                 text
                 x-small
                 :to="{ name: 'termsOfUse' }"
-              >
-                Terms of Use
-              </v-btn>
+                v-t="'navbar.termsOfUse'"
+              />
               <v-icon x-small>fiber_manual_record</v-icon>
               <v-btn
                 text
                 x-small
                 :to="{ name: 'privacyPolicy' }"
-              >
-                Privacy Policy
-              </v-btn>
+                v-t="'navbar.privacyPolicy'"
+              />
             </v-card-text>
           </v-card>
         </v-menu>
       </div>
 
       <v-menu
-        v-if="!isSignedIn"
+        v-if="!this.userModule.getUser"
         v-model="languageMenu"
         left
         bottom
@@ -145,10 +147,6 @@ export default class Navbar extends Vue {
 
   private language: string = ''
   private languages: string[] = []
-
-  private get isSignedIn() {
-    return this.userModule.getUser !== null
-  }
 
   private async created() {
     this.language = this.$i18n.locale
