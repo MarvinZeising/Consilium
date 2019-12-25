@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
-import { Person, Gender } from '@/models/definitions'
+import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
+import router from '../../router'
+import { Person, Gender, Project } from '../../models/definitions'
 
 @Module({ name: 'PersonModule' })
 export default class PersonModule extends VuexModule {
@@ -98,9 +99,15 @@ export default class PersonModule extends VuexModule {
     this.context.commit('setActivePersonId', personId)
 
     if (personId) {
-      this.context.dispatch('loadProjects')
+      await this.context.dispatch('loadProjects')
+
+      const projectId = router.currentRoute.params.projectId
+      if (projectId !== undefined
+          && !this.context.getters.getProjects.find((x: Project) => x.id === projectId)) {
+        router.push({ name: 'home' })
+      }
     } else {
-      this.context.dispatch('clearProjects')
+      await this.context.dispatch('clearProjects')
     }
   }
 
