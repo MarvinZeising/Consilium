@@ -12,7 +12,7 @@
           <v-icon>fingerprint</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>{{ $t('navbar.signIn') }}</v-list-item-title>
+          <v-list-item-title>{{ $t('account.signIn') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -22,7 +22,7 @@
           <v-icon>person_add</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>{{ $t('navbar.signUp') }}</v-list-item-title>
+          <v-list-item-title>{{ $t('account.signUp') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 

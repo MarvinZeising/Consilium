@@ -1,4 +1,7 @@
 {
+  "profile": "Profile",
+  "personal": "Personal",
+  "configureProjects": "Configure Projects",
   "description1": "You can have multiple persons connected to your Account.",
   "description2": "That way, you can manage the shifts for yourself and others (e.g. your spouse, parents, children, friends, etc)",
   "firstname": "Firstname",

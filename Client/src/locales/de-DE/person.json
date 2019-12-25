@@ -1,4 +1,7 @@
 {
+  "profile": "Profil",
+  "personal": "Persönliches",
+  "configureProjects": "Projekte konfigurieren",
   "description1": "Du kannst für deinen Benutzer mehrere Personen anlegen.",
   "description2": "Dadurch kannst du die Schichten von dir und anderen Personen verwalten (z.B. deinem Ehepartner, Eltern, Kindern, Freunden, etc.)",
   "firstname": "Vorname",

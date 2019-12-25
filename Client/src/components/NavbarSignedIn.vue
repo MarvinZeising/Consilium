@@ -67,7 +67,7 @@
           <v-icon>home</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title v-t="'navbar.home'"/>
+          <v-list-item-title v-t="'core.home'"/>
         </v-list-item-content>
       </v-list-item>
 
@@ -87,7 +87,7 @@
         <v-list-item :to="{ name: 'calendar', params: { projectId: project.id }}">
           <v-list-item-icon />
           <v-list-item-content>
-            <v-list-item-title v-t="'navbar.calendar'" />
+            <v-list-item-title v-t="'project.calendar'" />
           </v-list-item-content>
         </v-list-item>
 
@@ -98,7 +98,7 @@
         >
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title v-t="'navbar.knowledgeBase'" />
+              <v-list-item-title v-t="'project.knowledgeBase'" />
             </v-list-item-content>
           </template>
 
@@ -119,14 +119,14 @@
         >
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title v-t="'navbar.administration'" />
+              <v-list-item-title v-t="'project.administration'" />
             </v-list-item-content>
           </template>
 
           <v-list-item
             v-for="(action, j) in project.adminActions"
             :key="j"
-            :to="{ name: action[2], params: { projectId: project.id }}"
+            :to="{ name: action[1], params: { projectId: project.id }}"
           >
             <v-list-item-content>
               <v-list-item-title v-t="action[0]" />
@@ -143,18 +143,15 @@
       >
         <template v-slot:activator>
           <v-list-item-content>
-            <v-list-item-title v-t="'navbar.profile'" />
+            <v-list-item-title v-t="'person.profile'" />
           </v-list-item-content>
         </template>
 
         <v-list-item
           v-for="(action, i) in profileActions"
           :key="i"
-          :to="{ name: action[2] }"
+          :to="{ name: action[1] }"
         >
-          <v-list-item-icon>
-            <v-icon v-text="action[1]" />
-          </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title v-t="action[0]" />
           </v-list-item-content>
@@ -184,12 +181,12 @@ export default class NavbarSignedIn extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private profileActions: any[] = [
-    ['navbar.personal', 'account_circle', 'personal'],
+    ['person.personal', 'personal'],
     //// ['Spiritual', 'assignment_turned_in', 'configureProjects'],
     //// administrationAvailability', 'event_available', 'configureProjects'],
     //// ['Account', 'lock', 'configureProjects'],
     //// ['Notifications', 'notifications', 'configureProjects'],
-    ['navbar.configureProjects', 'settings', 'configureProjects']
+    ['person.configureProjects', 'configureProjects']
   ]
 
   private get getProjects(): Project[] {
@@ -198,8 +195,8 @@ export default class NavbarSignedIn extends Vue {
         return topic.projectId === project.id
       })
       project.adminActions = [
-        ['navbar.settings', 'settings', 'settings'],
-        //// ['User Management', 'group', 'settings'],
+        ['project.settings', 'settings'],
+        ['person.persons', 'persons'],
         //// ['Categories', 'label', 'settings'],
         //// ['Teams', 'supervisor_account', 'settings'],
         //// ['Meeting Points', 'location_on', 'settings'],

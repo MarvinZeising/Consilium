@@ -1,4 +1,5 @@
 {
+  "home": "Startseite",
   "edit": "Bearbeiten",
   "save": "Speichern",
   "delete": "Löschen",
@@ -20,5 +21,7 @@
   "fieldMax": "Dieses Feld darf maximal {count} Zeichen lang sein",
   "fieldCamelCase": "Dieses Feld muss mit einem Großbuchstaben anfangen",
   "general": "Generelles",
-  "dangerZone": "Gefahrenzone"
+  "dangerZone": "Gefahrenzone",
+  "termsOfUse": "Nutzungsbedingungen",
+  "privacyPolicy": "Datenschutzerklärung"
 }

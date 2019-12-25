@@ -22,16 +22,16 @@
               <div class="pa-3 text-xs-center">
                 <h2
                   class="headline"
-                  v-t="'account.signUp.fullTitle'"
+                  v-t="'account.signUpForm.title'"
                 />
-                <p v-t="'account.signUp.description1'" />
-                <p v-t="'account.signUp.description2'" />
+                <p v-t="'account.signUpForm.description1'" />
+                <p v-t="'account.signUpForm.description2'" />
                 <p>
-                  {{ $t('account.signUp.hint1') }}
+                  {{ $t('account.signUpForm.hint1') }}
                   <br>
-                  {{ $t('account.signUp.hint2') }}
+                  {{ $t('account.signUpForm.hint2') }}
                 </p>
-                <p v-t="'account.signUp.signInHint'" />
+                <p v-t="'account.signUpForm.signInHint'" />
               </div>
             </v-window-item>
 
@@ -73,7 +73,7 @@
                 >
                   <p
                     class="grey--text text--darken-1"
-                    v-t="'account.signUp.passwordDescription'"
+                    v-t="'account.signUpForm.passwordDescription'"
                   />
                   <v-text-field
                     v-model="password"
@@ -81,7 +81,7 @@
                     :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
                     :type="passwordShow ? 'text' : 'password'"
                     :rules="passwordRules"
-                    :hint="$t('account.signUp.passwordRuleHint')"
+                    :hint="$t('account.signUpForm.passwordRuleHint')"
                     name="password"
                     filled
                     required
@@ -89,7 +89,7 @@
                   />
                   <p
                     class="grey--text text--darken-1"
-                    v-t="'account.signUp.passwordRepeatDescription'"
+                    v-t="'account.signUpForm.passwordRepeatDescription'"
                   />
                   <v-text-field
                     v-model="passwordRepeat"
@@ -111,14 +111,14 @@
               <div class="pa-3 text-xs-center">
                 <h2
                   class="headline"
-                  v-t="'account.signUp.success'"
+                  v-t="'account.signUpForm.success'"
                 />
                 <p>
-                  {{ $t('account.signUp.successDescription1') }}
+                  {{ $t('account.signUpForm.successDescription1') }}
                   <br>
-                  {{ $t('account.signUp.successDescription2') }}
+                  {{ $t('account.signUpForm.successDescription2') }}
                   <br>
-                  {{ $t('account.signUp.successDescription3') }}
+                  {{ $t('account.signUpForm.successDescription3') }}
                 </p>
               </div>
             </v-window-item>
@@ -131,7 +131,7 @@
               v-if="step === 0"
               text
               :to="{ name: 'signIn' }"
-              v-t="'account.signUp.signInLink'"
+              v-t="'account.signUpForm.signInLink'"
             />
             <v-btn
               v-if="step !== 0"
@@ -208,8 +208,8 @@ export default class SignUp extends Vue {
   private get currentTitle() {
     switch (this.step) {
       case 0: return ''
-      case 1: return i18n.t('account.signUp.email')
-      case 2: return i18n.t('account.signUp.password')
+      case 1: return i18n.t('account.signUpForm.email')
+      case 2: return i18n.t('account.signUpForm.password')
       default: return ''
     }
   }

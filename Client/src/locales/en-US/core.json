@@ -1,4 +1,5 @@
 {
+  "home": "Home",
   "edit": "Edit",
   "save": "Save",
   "delete": "Delete",
@@ -20,5 +21,7 @@
   "fieldMax": "This field must not have more than {count} characters",
   "fieldCamelCase": "Name must begin with an uppercase letter",
   "general": "General",
-  "dangerZone": "Danger Zone"
+  "dangerZone": "Danger Zone",
+  "termsOfUse": "Terms of Use",
+  "privacyPolicy": "Privacy Policy"
 }

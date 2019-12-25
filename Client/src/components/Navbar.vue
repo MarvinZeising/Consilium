@@ -76,14 +76,14 @@
                 text
                 x-small
                 :to="{ name: 'termsOfUse' }"
-                v-t="'navbar.termsOfUse'"
+                v-t="'core.termsOfUse'"
               />
               <v-icon x-small>fiber_manual_record</v-icon>
               <v-btn
                 text
                 x-small
                 :to="{ name: 'privacyPolicy' }"
-                v-t="'navbar.privacyPolicy'"
+                v-t="'core.privacyPolicy'"
               />
             </v-card-text>
           </v-card>
