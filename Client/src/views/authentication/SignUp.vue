@@ -19,11 +19,7 @@
 
           <v-window v-model="step">
             <v-window-item :value="0">
-              <div class="pa-3 text-xs-center">
-                <h2
-                  class="headline"
-                  v-t="'account.signUpForm.title'"
-                />
+              <div class="pa-4 text-xs-center">
                 <p v-t="'account.signUpForm.description1'" />
                 <p v-t="'account.signUpForm.description2'" />
                 <p>
@@ -207,7 +203,7 @@ export default class SignUp extends Vue {
 
   private get currentTitle() {
     switch (this.step) {
-      case 0: return ''
+      case 0: return i18n.t('account.signUpForm.title')
       case 1: return i18n.t('account.signUpForm.email')
       case 2: return i18n.t('account.signUpForm.password')
       default: return ''
