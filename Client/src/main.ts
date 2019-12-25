@@ -56,10 +56,6 @@ async function init() {
       await personModule.initPersonModule()
       await knowledgeBaseModule.initKnowledgeBaseModule()
 
-      if (userModule.getUser) {
-        vuetify.framework.theme.dark = userModule.getUser.theme === 'dark'
-      }
-
       if (router.currentRoute.name === 'serverException') {
         router.push({ name: 'home' })
       }

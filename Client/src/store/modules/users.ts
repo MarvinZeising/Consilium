@@ -3,6 +3,7 @@ import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import SHA512 from 'crypto-js/sha512'
 import { User, Theme } from '@/models/definitions'
 import i18n from '@/i18n'
+import vuetify from '@/plugins/vuetify'
 
 @Module({ name: 'UserModule' })
 export default class UserModule extends VuexModule {
@@ -17,14 +18,7 @@ export default class UserModule extends VuexModule {
     const response = await axios.get(`/users`)
 
     this.context.commit('setUser', response.data)
-    this.context.dispatch('updateLocale')
-  }
-
-  @Action
-  public async updateLocale() {
-    if (this.user) {
-      i18n.locale = this.user.language
-    }
+    this.context.commit('applyTheme')
   }
 
   @Action
@@ -96,7 +90,8 @@ export default class UserModule extends VuexModule {
       user.theme = accountInterface.theme === 'light' ? Theme.Light : Theme.Dark
     }
     this.context.commit('setUser', user)
-    this.context.dispatch('updateLocale')
+    this.context.commit('applyLocale')
+    this.context.commit('applyTheme')
   }
 
   @Action
@@ -117,21 +112,35 @@ export default class UserModule extends VuexModule {
       await axios.delete(`/users`)
 
       this.context.dispatch('signOut', null)
+      this.context.commit('applyTheme')
     }
   }
 
-  @Action({ commit: 'setUser'})
+  @Action
   public async signOut() {
     localStorage.removeItem('user')
-    this.context.dispatch('clearPersons', [])
-    this.context.dispatch('clearProjects', [])
-    this.context.dispatch('clearKnowledgeBases', [])
-    return null
+    await this.context.dispatch('clearPersons', [])
+    await this.context.dispatch('clearProjects', [])
+    await this.context.dispatch('clearKnowledgeBases', [])
+    this.context.commit('setUser', null)
+    this.context.commit('applyTheme')
   }
 
   @Mutation
   protected setUser(user: User | null) {
     this.user = user
+  }
+
+  @Mutation
+  protected applyLocale() {
+    if (this.user) {
+      i18n.locale = this.user.language
+    }
+  }
+
+  @Mutation
+  protected applyTheme() {
+    vuetify.framework.theme.dark = this.user?.theme === Theme.Dark
   }
 
 }
