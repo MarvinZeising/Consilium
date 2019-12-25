@@ -65,7 +65,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import ProjectModule from '../store/modules/projects'
+import ProjectModule from '../store/projects'
 import JoinProjectDialog from '../components/dialogs/JoinProjectDialog.vue'
 import CancelJoinRequestDialog from '../components/dialogs/CancelJoinRequestDialog.vue'
 import HandleProjectInvitation from '../components/dialogs/HandleProjectInvitation.vue'

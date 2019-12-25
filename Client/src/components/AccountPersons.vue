@@ -50,8 +50,8 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import PersonModule from '../store/modules/persons'
-import UserModule from '../store/modules/users'
+import PersonModule from '../store/persons'
+import UserModule from '../store/users'
 import { Person } from '../models/definitions'
 
 @Component

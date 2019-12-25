@@ -43,7 +43,7 @@ import AccountInterface from '../../components/AccountInterface.vue'
 import AccountPersons from '../../components/AccountPersons.vue'
 import DeleteAccountDialog from '../../components/dialogs/DeleteAccountDialog.vue'
 import UpdatePasswordDialog from '../../components/dialogs/UpdatePasswordDialog.vue'
-import UserModule from '../../store/modules/users'
+import UserModule from '../../store/users'
 
 @Component({
   components: {

@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import ProjectModule from '../../store/modules/projects'
+import ProjectModule from '../../store/projects'
 import { Project } from '../../models/definitions'
 import PersonsPending from '../../components/PersonsPending.vue'
 

@@ -1,25 +1,20 @@
 import Vue from 'vue'
+import axios from 'axios'
+import { getModule } from 'vuex-module-decorators'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
+import store from './plugins/vuex'
 import router from './router'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import store from './store'
-import axios from 'axios'
-import { getModule } from 'vuex-module-decorators'
-import AlertModule from './store/modules/alerts'
-import UserModule from './store/modules/users'
-import PersonModule from './store/modules/persons'
-import ProjectModule from './store/modules/projects'
-import KnowledgeBaseModule from './store/modules/knowledgeBase'
 import i18n from './i18n'
 
+import AlertModule from './store/alerts'
+import UserModule from './store/users'
+
 async function init() {
-  const alertModule = getModule(AlertModule, store)
-  const userModule = getModule(UserModule, store)
-  const personModule = getModule(PersonModule, store)
-  const projectModule = getModule(ProjectModule, store)
-  const knowledgeBaseModule = getModule(KnowledgeBaseModule, store)
+  const alertModule = getModule(AlertModule)
+  const userModule = getModule(UserModule)
 
   Vue.config.productionTip = false
 
@@ -53,8 +48,6 @@ async function init() {
     // keep in sync with modules/users.ts
     try {
       await userModule.initUserModule()
-      await personModule.initPersonModule()
-      await knowledgeBaseModule.initKnowledgeBaseModule()
 
       if (router.currentRoute.name === 'serverException') {
         router.push({ name: 'home' })

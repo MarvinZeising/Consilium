@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
-import { Topic } from '../../models/definitions'
+import store from '../plugins/vuex'
+import { Topic } from '../models/definitions'
 
-@Module({ name: 'KnowledgeBaseModule' })
+@Module({ dynamic: true, store, name: 'KnowledgeBaseModule' })
 export default class KnowledgeBaseModule extends VuexModule {
   public topics: Topic[] = []
 
@@ -47,7 +48,7 @@ export default class KnowledgeBaseModule extends VuexModule {
     this.context.commit('removeTopic', topicId)
 
     for (const t of this.allTopics.filter((x: Topic) => x.order > topic.order)) {
-      this.context.dispatch('moveTopicDown', t.id)
+      await this.context.dispatch('moveTopicDown', t.id)
     }
   }
 
@@ -56,10 +57,10 @@ export default class KnowledgeBaseModule extends VuexModule {
     for (const topic of this.allTopics) {
       if (topic.order === currentOrder - 1) {
         topic.order++
-        this.context.dispatch('changeTopic', topic)
+        await this.context.dispatch('changeTopic', topic)
       } else if (topic.order === currentOrder) {
         topic.order--
-        this.context.dispatch('changeTopic', topic)
+        await this.context.dispatch('changeTopic', topic)
         break
       }
     }
@@ -70,10 +71,10 @@ export default class KnowledgeBaseModule extends VuexModule {
     for (const topic of this.allTopics) {
       if (topic.order === currentOrder) {
         topic.order++
-        this.context.dispatch('changeTopic', topic)
+        await this.context.dispatch('changeTopic', topic)
       } else if (topic.order === currentOrder + 1) {
         topic.order--
-        this.context.dispatch('changeTopic', topic)
+        await this.context.dispatch('changeTopic', topic)
         break
       }
     }

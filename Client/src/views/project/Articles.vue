@@ -26,7 +26,7 @@
 import axios from 'axios'
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
+import KnowledgeBaseModule from '../../store/knowledgeBase'
 import { Topic, Article } from '../../models/definitions'
 
 @Component

@@ -167,12 +167,12 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
-import { Person, Project, Topic } from '@/models/definitions'
+import { Person, Project, Topic } from '../models/definitions'
 import { getModule } from 'vuex-module-decorators'
-import UserModule from '@/store/modules/users'
-import PersonModule from '@/store/modules/persons'
-import ProjectModule from '@/store/modules/projects'
-import KnowledgeBaseModule from '../store/modules/knowledgeBase'
+import UserModule from '../store/users'
+import PersonModule from '../store/persons'
+import ProjectModule from '../store/projects'
+import KnowledgeBaseModule from '../store/knowledgeBase'
 
 @Component
 export default class NavbarSignedIn extends Vue {

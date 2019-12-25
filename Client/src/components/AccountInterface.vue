@@ -108,7 +108,7 @@ import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../i18n'
-import UserModule from '../store/modules/users'
+import UserModule from '../store/users'
 
 @Component
 export default class AccountInterface extends Vue {

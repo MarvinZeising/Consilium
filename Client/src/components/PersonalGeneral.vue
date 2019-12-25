@@ -118,7 +118,7 @@ import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../i18n'
 import { Person, Gender } from '../models/definitions'
-import PersonModule from '../store/modules/persons'
+import PersonModule from '../store/persons'
 
 @Component
 export default class PersonalGeneral extends Vue {

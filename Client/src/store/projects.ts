@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { Module, VuexModule, Mutation, Action, MutationAction, getModule } from 'vuex-module-decorators'
-import { Project, ProjectParticipation, ProjectParticipationStatus } from '../../models/definitions'
-import PersonModule from './persons'
-import router from '@/router'
+import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
+import { Project, ProjectParticipation, ProjectParticipationStatus } from '../models/definitions'
+import store from '../plugins/vuex'
+import router from '../router'
 
-@Module({ name: 'ProjectModule' })
+@Module({ dynamic: true, store, name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
   public projects: Project[] = []
   public participations: ProjectParticipation[] = []

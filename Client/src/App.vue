@@ -32,8 +32,8 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import Navbar from './components/Navbar.vue'
-import AlertModule from './store/modules/alerts'
-import UserModule from './store/modules/users'
+import AlertModule from './store/alerts'
+import UserModule from './store/users'
 
 @Component({
   components: { Navbar }

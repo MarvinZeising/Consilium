@@ -62,11 +62,11 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
-import ProjectModule from '@/store/modules/projects'
+import ProjectModule from '../../store/projects'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '../../models/definitions'
 import { VForm } from 'vuetify/lib'
-import i18n from '@/i18n'
+import i18n from '../../i18n'
 
 @Component
 export default class DeleteProjectDialog extends Vue {

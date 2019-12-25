@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import SHA512 from 'crypto-js/sha512'
-import { User, Theme } from '@/models/definitions'
-import i18n from '@/i18n'
-import vuetify from '@/plugins/vuetify'
+import { User, Theme } from '../models/definitions'
+import i18n from '../i18n'
+import vuetify from '../plugins/vuetify'
+import store from '../plugins/vuex'
 
-@Module({ name: 'UserModule' })
+@Module({ dynamic: true, store, name: 'UserModule' })
 export default class UserModule extends VuexModule {
   public user: User | null = null
 
@@ -19,6 +20,8 @@ export default class UserModule extends VuexModule {
 
     this.context.commit('setUser', response.data)
     this.context.commit('applyTheme')
+
+    this.context.dispatch('loadPersons')
   }
 
   @Action
@@ -46,7 +49,6 @@ export default class UserModule extends VuexModule {
 
       // keep in sync with main.ts (and with action SignOut in here)
       await this.context.dispatch('initUserModule', credentials.email)
-      await this.context.dispatch('initPersonModule')
       await this.context.dispatch('initKnowledgeBaseModule')
 
       return true
@@ -111,7 +113,7 @@ export default class UserModule extends VuexModule {
     if (this.getUser) {
       await axios.delete(`/users`)
 
-      this.context.dispatch('signOut', null)
+      await this.context.dispatch('signOut', null)
       this.context.commit('applyTheme')
     }
   }

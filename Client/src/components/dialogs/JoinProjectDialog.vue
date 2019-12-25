@@ -51,8 +51,8 @@
 <script lang="ts">
 import { getModule } from 'vuex-module-decorators'
 import { Vue, Component } from 'vue-property-decorator'
-import i18n from '@/i18n'
-import ProjectModule from '../../store/modules/projects'
+import i18n from '../../i18n'
+import ProjectModule from '../../store/projects'
 import { Topic } from '../../models/definitions'
 
 @Component

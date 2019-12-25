@@ -59,8 +59,8 @@
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import i18n from '@/i18n'
-import PersonModule from '../../store/modules/persons'
+import i18n from '../../i18n'
+import PersonModule from '../../store/persons'
 import { Person } from '../../models/definitions'
 
 @Component

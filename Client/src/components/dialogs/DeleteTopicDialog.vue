@@ -63,8 +63,8 @@ import { getModule } from 'vuex-module-decorators'
 import { Project, Topic } from '../../models/definitions'
 import { Component, Watch, Prop, Vue } from 'vue-property-decorator'
 import { VForm } from 'vuetify/lib'
-import i18n from '@/i18n'
-import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
+import i18n from '../../i18n'
+import KnowledgeBaseModule from '../../store/knowledgeBase'
 
 @Component
 export default class DeleteProjectDialog extends Vue {

@@ -45,11 +45,11 @@
 </template>
 
 <script lang="ts">
-import KnowledgeBaseModule from '@/store/modules/knowledgeBase'
+import KnowledgeBaseModule from '../../store/knowledgeBase'
 import { getModule } from 'vuex-module-decorators'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Topic } from '../../models/definitions'
-import i18n from '@/i18n'
+import i18n from '../../i18n'
 
 @Component
 export default class NewTopicDialog extends Vue {

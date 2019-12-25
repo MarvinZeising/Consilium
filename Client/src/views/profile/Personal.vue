@@ -30,7 +30,7 @@
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { Person } from '../../models/definitions'
-import PersonModule from '../../store/modules/persons'
+import PersonModule from '../../store/persons'
 import PersonalGeneral from '../../components/PersonalGeneral.vue'
 import DeletePersonDialog from '../../components/dialogs/DeletePersonDialog.vue'
 

@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
-import router from '../../router'
-import { Person, Gender, Project } from '../../models/definitions'
+import router from '../router'
+import { Person, Gender, Project } from '../models/definitions'
+import store from '../plugins/vuex'
 
-@Module({ name: 'PersonModule' })
+@Module({ dynamic: true, store, name: 'PersonModule' })
 export default class PersonModule extends VuexModule {
   public activePersonId: string | null = null
   public persons: Person[] = []
@@ -17,7 +18,7 @@ export default class PersonModule extends VuexModule {
  }
 
   @Action
-  public async initPersonModule() {
+  public async loadPersons() {
     const response = await axios.get('/persons')
 
     if (response.data && response.data.length > 0) {
@@ -45,7 +46,7 @@ export default class PersonModule extends VuexModule {
   @Action
   public async clearPersons() {
     this.context.commit('setPersons', [])
-    this.context.dispatch('activatePerson', null)
+    await this.context.dispatch('activatePerson', null)
   }
 
   @Action
@@ -63,7 +64,7 @@ export default class PersonModule extends VuexModule {
       Gender.Male)
 
     this.context.commit('insertPerson', newPerson)
-    this.context.dispatch('activatePerson', newPerson.id)
+    await this.context.dispatch('activatePerson', newPerson.id)
   }
 
   @Action({ commit: 'setGeneral' })
@@ -88,7 +89,7 @@ export default class PersonModule extends VuexModule {
 
     const otherPerson = this.persons.find((x: Person) => x.id !== personId)
     if (otherPerson) {
-      this.context.dispatch('activatePerson', otherPerson.id)
+      await this.context.dispatch('activatePerson', otherPerson.id)
     }
 
     return personId
@@ -99,7 +100,7 @@ export default class PersonModule extends VuexModule {
     this.context.commit('setActivePersonId', personId)
 
     if (personId) {
-      await this.context.dispatch('loadProjects')
+      this.context.dispatch('loadProjects')
 
       const projectId = router.currentRoute.params.projectId
       if (projectId !== undefined

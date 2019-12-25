@@ -73,9 +73,9 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule, Action } from 'vuex-module-decorators'
 import colors from 'vuetify/es5/util/colors'
-import i18n from '@/i18n'
-import UserModule from '@/store/modules/users'
-import ProjectModule from '@/store/modules/projects'
+import i18n from '../../i18n'
+import UserModule from '../../store/users'
+import ProjectModule from '../../store/projects'
 
 @Component
 export default class SignIn extends Vue {

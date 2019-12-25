@@ -13,7 +13,7 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import UserModule from '@/store/modules/users'
+import UserModule from '../../store/users'
 
 @Component
 export default class SignOut extends Vue {

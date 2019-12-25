@@ -96,8 +96,8 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import i18n from '@/i18n'
-import UserModule from '../../store/modules/users'
+import i18n from '../../i18n'
+import UserModule from '../../store/users'
 
 @Component
 export default class UpdatePasswordDialog extends Vue {

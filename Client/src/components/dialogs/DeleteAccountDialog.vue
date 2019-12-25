@@ -62,12 +62,12 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import ProjectModule from '@/store/modules/projects'
-import UserModule from '@/store/modules/users'
+import ProjectModule from '../../store/projects'
+import UserModule from '../../store/users'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '../../models/definitions'
 import { VForm } from 'vuetify/lib'
-import i18n from '@/i18n'
+import i18n from '../../i18n'
 
 @Component
 export default class DeleteAccountDialog extends Vue {

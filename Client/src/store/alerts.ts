@@ -1,6 +1,7 @@
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
+import store from '../plugins/vuex'
 
-@Module({ name: 'AlertModule' })
+@Module({ dynamic: true, store, name: 'AlertModule' })
 export default class AlertModule extends VuexModule {
   public snackbar: any = {}
 

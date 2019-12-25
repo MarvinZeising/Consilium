@@ -30,9 +30,9 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import ProjectModule from '@/store/modules/projects'
-import { Project, Topic } from '@/models/definitions'
-import KnowledgeBaseModule from '../../store/modules/knowledgeBase'
+import ProjectModule from '../../store/projects'
+import { Project, Topic } from '../../models/definitions'
+import KnowledgeBaseModule from '../../store/knowledgeBase'
 import SettingsGeneral from '../../components/SettingsGeneral.vue'
 import Topics from '../../components/Topics.vue'
 import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vue'

@@ -46,8 +46,8 @@
 <script lang="ts">
 import { getModule } from 'vuex-module-decorators'
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import i18n from '@/i18n'
-import ProjectModule from '../../store/modules/projects'
+import i18n from '../../i18n'
+import ProjectModule from '../../store/projects'
 
 @Component
 export default class HandleProjectInvitationDialog extends Vue {
