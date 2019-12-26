@@ -76,7 +76,7 @@
         v-for="(project, i) in getProjects"
         :key="i"
         prepend-icon="extension"
-        value="true"
+        value="false"
       >
         <template v-slot:activator>
           <v-list-item-content>
@@ -140,6 +140,7 @@
       <v-list-group
         v-if="personModule.getActivePerson"
         prepend-icon="person"
+        value="false"
       >
         <template v-slot:activator>
           <v-list-item-content>
