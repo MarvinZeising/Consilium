@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-layout wrap>
 
-      <PersonsPending />
+      <PersonsInvitations />
 
     </v-layout>
   </v-container>
@@ -13,11 +13,11 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../../store/projects'
 import { Project } from '../../models/definitions'
-import PersonsPending from '../../components/PersonsPending.vue'
+import PersonsInvitations from '../../components/PersonsInvitations.vue'
 
 @Component({
   components: {
-    PersonsPending,
+    PersonsInvitations,
   }
 })
 export default class Persons extends Vue {

@@ -34,5 +34,9 @@
     "Requested": "You requested admission to this project",
     "Active": "Active",
     "Inactive": "Inactive"
-  }
+  },
+  "invitations": "Invitations",
+  "invitationsDescription": "You can invite persons to join this project. Here you can see all open invitations that have not yet been accepted or declined by the person.",
+  "noInvitations": "No open invitations",
+  "invitePerson": "Invite a person"
 }

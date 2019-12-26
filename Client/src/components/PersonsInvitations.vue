@@ -2,37 +2,39 @@
   <v-flex xs12 sm10 md8 lg6 xl4>
     <h2
       class="headline mb-3"
-      v-t="'person.persons'"
+      v-t="'project.invitations'"
     />
     <v-card flat class="ma-2 mb-5">
       <v-card-text
         class="grey--text"
-        v-t="'project.personsDescription'"
+        v-t="'project.invitationsDescription'"
       />
       <v-list>
         <v-list-item
-          v-if="getPersons.length === 0"
+          v-if="getInvitations.length === 0"
           dark
           class="warning"
         >
-          <span v-t="'project.noPersons'" />
+          <span v-t="'project.noInvitations'" />
         </v-list-item>
         <v-list-item
-          v-for="(person, index) in getPersons"
+          v-for="(participation, index) in getInvitations"
           :key="index"
+          three-line
         >
           <v-list-item-content>
-            <v-list-item-title v-text="person.fullName()" />
+            <v-list-item-title v-text="getPerson(participation.personId).fullName()" />
+            <v-list-item-subtitle>Role: Administrator</v-list-item-subtitle>
+            <v-list-item-subtitle>Invited on Dec 12, 2019</v-list-item-subtitle>
           </v-list-item-content>
 
           <v-list-item-action>
             <v-btn
-              icon
-              class="ma-0"
+              text
+              class="mt-2"
               @click=""
-            >
-              <v-icon color="grey">settings</v-icon>
-            </v-btn>
+              v-t="'core.edit'"
+            />
           </v-list-item-action>
         </v-list-item>
       </v-list>
@@ -50,23 +52,22 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
-import { Person } from '../models/definitions'
+import { Person, ProjectParticipationStatus, Gender } from '../models/definitions'
 
 @Component
-export default class PersonsPending extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+export default class PersonsInvitations extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
-  private getPersons() {
+  private get getInvitations() {
     const projectId = this.$route.params.projectId
-    const participation = this.getProjectParticipation(projectId)
-    return participation?.status || 'none'
+
+    return this.projectModule.getParticipations
+      .filter((p) => p.projectId === projectId && p.status === ProjectParticipationStatus.Invited)
   }
 
-  private getProjectParticipation(projectId: string) {
-    return this.projectModule.getParticipations.find((p) => p.projectId === projectId)
+  private  getPerson(personId: string) {
+    return this.projectModule.getPersons.find((x: Person) => x.id === personId)
   }
 
 }
