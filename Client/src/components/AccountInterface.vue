@@ -116,15 +116,6 @@ export default class AccountInterface extends Vue {
 
   private editMode: boolean = false
 
-  private toggleEditMode() {
-    this.editMode = !this.editMode
-
-    if (this.editMode) {
-      this.language = this.userModule.getUser?.language || ''
-      this.theme = this.userModule.getUser?.theme || ''
-    }
-  }
-
   private language: string = this.userModule.getUser?.language || ''
   private languageValues: any[] = i18n.availableLocales.map((lang) => {
     return {
@@ -137,6 +128,15 @@ export default class AccountInterface extends Vue {
     { value: 'light', name: i18n.t('account.light') },
     { value: 'dark', name: i18n.t('account.dark') },
   ]
+
+  private toggleEditMode() {
+    this.editMode = !this.editMode
+
+    if (this.editMode) {
+      this.language = this.userModule.getUser?.language || ''
+      this.theme = this.userModule.getUser?.theme || ''
+    }
+  }
 
   private async save() {
     const form: any = this.$refs.form

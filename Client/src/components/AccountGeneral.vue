@@ -111,6 +111,13 @@ export default class AccountGeneral extends Vue {
 
   private editMode: boolean = false
 
+  private id: string = this.userModule.getUser?.id || ''
+  private email: string = this.userModule.getUser?.email || ''
+  private emailRules: any[] = [
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid'),
+  ]
+
   private toggleEditMode() {
     this.editMode = !this.editMode
 
@@ -119,13 +126,6 @@ export default class AccountGeneral extends Vue {
       this.email = this.userModule.getUser?.email || ''
     }
   }
-
-  private id: string = this.userModule.getUser?.id || ''
-  private email: string = this.userModule.getUser?.email || ''
-  private emailRules: any[] = [
-    (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid'),
-  ]
 
   private async save() {
     const form: any = this.$refs.form

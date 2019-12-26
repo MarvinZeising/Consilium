@@ -102,15 +102,6 @@ export default class SettingsGeneral extends Vue {
 
   private editMode: boolean = false
 
-  private toggleEditMode() {
-    this.editMode = !this.editMode
-
-    if (this.editMode) {
-      this.name = this.projectModule.getActiveProject?.name || ''
-      this.email = this.projectModule.getActiveProject?.email || ''
-    }
-  }
-
   private name: string = this.projectModule.getActiveProject?.name || ''
   private nameRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
@@ -122,6 +113,15 @@ export default class SettingsGeneral extends Vue {
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid')
   ]
+
+  private toggleEditMode() {
+    this.editMode = !this.editMode
+
+    if (this.editMode) {
+      this.name = this.projectModule.getActiveProject?.name || ''
+      this.email = this.projectModule.getActiveProject?.email || ''
+    }
+  }
 
   private async save() {
     const form: any = this.$refs.form

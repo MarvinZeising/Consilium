@@ -126,16 +126,6 @@ export default class PersonalGeneral extends Vue {
 
   private editMode: boolean = false
 
-  private toggleEditMode() {
-    this.editMode = !this.editMode
-
-    if (this.editMode) {
-      this.firstname = this.personModule.getActivePerson?.firstname || ''
-      this.lastname = this.personModule.getActivePerson?.lastname || ''
-      this.gender = this.personModule.getActivePerson?.gender || ''
-    }
-  }
-
   private firstname: string = this.personModule.getActivePerson?.firstname || ''
   private lastname: string = this.personModule.getActivePerson?.lastname || ''
   private nameRules: any[] = [
@@ -148,6 +138,16 @@ export default class PersonalGeneral extends Vue {
     { value: 'male', name: i18n.t('person.male') },
     { value: 'female', name: i18n.t('person.female') },
   ]
+
+  private toggleEditMode() {
+    this.editMode = !this.editMode
+
+    if (this.editMode) {
+      this.firstname = this.personModule.getActivePerson?.firstname || ''
+      this.lastname = this.personModule.getActivePerson?.lastname || ''
+      this.gender = this.personModule.getActivePerson?.gender || ''
+    }
+  }
 
   private async save() {
     const form: any = this.$refs.form
