@@ -4,6 +4,8 @@
 
       <PersonsInvitations />
 
+      <PersonsRequests />
+
     </v-layout>
   </v-container>
 </template>
@@ -14,10 +16,12 @@ import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../../store/projects'
 import { Project } from '../../models/definitions'
 import PersonsInvitations from '../../components/PersonsInvitations.vue'
+import PersonsRequests from '../../components/PersonsRequests.vue'
 
 @Component({
   components: {
     PersonsInvitations,
+    PersonsRequests,
   }
 })
 export default class Persons extends Vue {

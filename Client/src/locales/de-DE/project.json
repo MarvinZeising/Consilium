@@ -38,5 +38,10 @@
   "invitations": "Einladungen",
   "invitationsDescription": "Du kannst Personen einladen an diesem Projekt teilzunehmen. Hier kannst du alle offenen Einladungen sehen, die von den betreffenden Personen noch nicht angenommen oder abgelehnt wurden.",
   "noInvitations": "Keine offenen Einladungen",
-  "invitePerson": "Eine Person einladen"
+  "invitePerson": "Eine Person einladen",
+  "requests": "Anfragen",
+  "requestsDescription": "Falls erlaubt, können Personen Teilnahme am Projekt anfragen. Hier kannst du alle offenen Anfragen sehen, die noch von keinem Administrator angenommen oder abgelehnt wurden.",
+  "noRequests": "Keine offenen Anfragen",
+  "requestsAllowed": "Teilnahme kann angefragt werden",
+  "requestsNotAllowed": "Teilnahme kann nicht angefragt werden"
 }
