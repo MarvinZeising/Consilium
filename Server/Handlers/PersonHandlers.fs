@@ -13,6 +13,13 @@ module PersonHandlers =
 
     let private validatePersonName = validateName 20
 
+    let getPerson personId (ctx: HttpContext) =
+        result {
+            let! userId = Authentication.getUserId ctx
+
+            return! getPerson personId userId ctx
+        }
+
     let getPersons (ctx: HttpContext) =
         result {
             let! userId = Authentication.getUserId ctx

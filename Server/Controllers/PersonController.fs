@@ -10,6 +10,8 @@ module PersonController =
 
     let routes : HttpFunc -> HttpContext -> HttpFuncResult = choose [
 
+        GET >=> routef "/persons/%s" (handlePayload getPerson)
+
         GET >=> route "/persons" >=> (handleRequest getPersons)
 
         POST >=> route "/persons"

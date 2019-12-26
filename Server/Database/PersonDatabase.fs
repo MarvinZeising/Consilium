@@ -22,6 +22,13 @@ module PersonDatabase =
         |]
         collection.UpdateOne(filter, updateBuilder)
 
+    let getPerson personId userId =
+        builder.And [|
+            builder.Eq((fun x -> x.UserId), userId)
+            builder.Eq((fun x -> x.Id), personId)
+        |]
+        |> findPerson
+
     let getPersons userId =
         builder.Eq((fun x -> x.UserId), userId)
         |> findPersons
