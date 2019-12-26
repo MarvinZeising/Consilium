@@ -19,6 +19,7 @@ export default class UserModule extends VuexModule {
     const response = await axios.get(`/users`)
 
     this.context.commit('setUser', response.data)
+    this.context.commit('applyLocale')
     this.context.commit('applyTheme')
 
     this.context.dispatch('loadPersons')
