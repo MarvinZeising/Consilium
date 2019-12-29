@@ -29,3 +29,4 @@ Server/app
 Client/app
 .dtbcache
 .vs/Consilium/xs/UserPrefs.xml
+*.bak
