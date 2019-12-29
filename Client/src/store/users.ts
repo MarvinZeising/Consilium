@@ -16,7 +16,7 @@ export default class UserModule extends VuexModule {
 
   @Action
   public async initUserModule() {
-    const response = await axios.get(`/users`)
+    const response = await axios.get(`/users/current`)
 
     this.context.commit('setUser', response.data)
     this.context.commit('applyLocale')
@@ -35,7 +35,7 @@ export default class UserModule extends VuexModule {
   public async signIn(credentials: { email: string, password: string }) {
     await this.context.dispatch('signOut')
 
-    const response: any = await axios.post('/authenticate', {
+    const response: any = await axios.post('/users/authenticate', {
       email: credentials.email,
       password: hashPassword(credentials.password),
     }).catch(() => false)
@@ -48,9 +48,7 @@ export default class UserModule extends VuexModule {
       }))
       axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`
 
-      // keep in sync with main.ts (and with action SignOut in here)
       await this.context.dispatch('initUserModule', credentials.email)
-      await this.context.dispatch('initKnowledgeBaseModule')
 
       return true
     }
@@ -75,12 +73,9 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  public async updateEmail(email: string) {
+  public async updateGeneral(email: string) {
     if (this.user) {
-      await axios.put('/users/email', {
-        email,
-      })
-
+      await axios.put('/users', { email })
       await this.context.dispatch('signOut')
     }
   }
@@ -133,7 +128,6 @@ export default class UserModule extends VuexModule {
     await this.context.dispatch('clearProjects', [])
     await this.context.dispatch('clearKnowledgeBases', [])
     this.context.commit('setUser', null)
-    this.context.commit('applyTheme')
   }
 
   @Mutation

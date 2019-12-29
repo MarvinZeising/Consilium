@@ -18,7 +18,7 @@ async function init() {
 
   Vue.config.productionTip = false
 
-  axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:5000'
+  axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:5000/api'
   axios.defaults.timeout = 5000
   axios.interceptors.response.use(
     (response) => {
@@ -45,7 +45,6 @@ async function init() {
     const user = JSON.parse(userItem)
     axios.defaults.headers.common.Authorization = `Bearer ${user.token}`
 
-    // keep in sync with modules/users.ts
     try {
       await userModule.initUserModule()
 
