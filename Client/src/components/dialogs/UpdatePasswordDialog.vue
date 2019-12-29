@@ -11,7 +11,10 @@
       />
     </template>
     <v-card>
-      <v-form v-model="valid">
+      <v-form
+        v-model="valid"
+        ref="form"
+      >
         <v-card-title>
           <span
             class="headline"
@@ -96,6 +99,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import UserModule from '../../store/users'
 
@@ -121,15 +125,22 @@ export default class UpdatePasswordDialog extends Vue {
     const projectId = this.$route.params.projectId
 
     if (this.valid) {
-      await this.userModule.updatePassword({
-        old: this.currentPassword,
-        new: this.newPassword,
-      })
-      // TODO: add error handling
+      try {
+        await this.userModule.updatePassword({
+          old: this.currentPassword,
+          new: this.newPassword,
+        })
 
-      this.dialog = false
+        this.dialog = false
 
-      this.$router.push({ name: 'home' })
+        this.$router.push({ name: 'home' })
+      } catch (e) {
+        const thisPassword = this.currentPassword
+        this.passwordRules.push((v: string) => v !== thisPassword || i18n.t('account.passwordWrong'))
+
+        const form: any = this.$refs.form
+        form.validate()
+      }
     }
   }
 

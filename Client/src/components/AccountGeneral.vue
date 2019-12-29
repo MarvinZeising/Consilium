@@ -18,7 +18,7 @@
       >
         <v-layout wrap>
 
-          <v-flex xs6>
+          <v-flex xs12>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.id'"
@@ -115,7 +115,7 @@ export default class AccountGeneral extends Vue {
   private email: string = this.userModule.getUser?.email || ''
   private emailRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid'),
+    (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid'),
   ]
 
   private toggleEditMode() {
@@ -132,11 +132,17 @@ export default class AccountGeneral extends Vue {
     const userId = this.userModule.getUser?.id || ''
 
     if (form.validate()) {
-      await this.userModule.updateEmail(this.email)
-      // TODO: check that email is correct
-      // TODO: maybe by sending an email to verify the new one
+      try {
+        await this.userModule.updateGeneral(this.email)
+        // TODO: check that email is correct
+        // TODO: maybe by sending an email to verify the new one
 
-      this.$router.push({ name: 'signIn' })
+        this.$router.push({ name: 'signIn' })
+      } catch (e) {
+        const thisEmail = this.email
+        this.emailRules.push((v: string) => v !== thisEmail || i18n.t('account.emailUnique'))
+        form.validate()
+      }
     }
   }
 }

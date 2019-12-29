@@ -48,6 +48,7 @@
           />
           <v-btn
             :disabled="!valid"
+            :loading="loading"
             type="submit"
             text
             color="error"
@@ -74,6 +75,7 @@ export default class DeleteAccountDialog extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
 
   private valid: any = false
+  private loading: boolean = false
   private deleteAccountDialog: boolean = false
   private accountEmail: string = ''
   private email: string = ''
@@ -93,6 +95,8 @@ export default class DeleteAccountDialog extends Vue {
   }
 
   private async deleteAccount() {
+    this.loading = true
+
     await this.userModule.deleteAccount()
 
     this.deleteAccountDialog = false
