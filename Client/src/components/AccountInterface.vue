@@ -53,7 +53,14 @@
             :label="$t('language.language')"
             filled
             required
-          ></v-select>
+          >
+            <template v-slot:selection="{ item }">
+              <span>{{ $t('language.' + item.value) }}</span>
+            </template>
+            <template v-slot:item="{ item }">
+              <span>{{ $t('language.' + item.value) }}</span>
+            </template>
+          </v-select>
           <p class="caption mb-5" style="margin-top:-20px;">
             <i>
               {{ $t('account.translationHelp') }}
@@ -70,7 +77,14 @@
             :label="$t('account.theme')"
             filled
             required
-          ></v-select>
+          >
+            <template v-slot:selection="{ item }">
+              <span>{{ $t('account.' + item.value) }}</span>
+            </template>
+            <template v-slot:item="{ item }">
+              <span>{{ $t('account.' + item.value) }}</span>
+            </template>
+          </v-select>
 
         </v-form>
       </v-card-text>
@@ -117,17 +131,13 @@ export default class AccountInterface extends Vue {
   private editMode: boolean = false
 
   private language: string = this.userModule.getUser?.language || ''
-  private languageValues: any[] = i18n.availableLocales.map((lang) => {
-    return {
-      value: lang,
-      name: i18n.t(`language.${lang}`)
-    }
+  private languageValues: any[] = i18n.availableLocales.map((value) => {
+    return { value }
   })
   private theme: string = this.userModule.getUser?.theme || ''
-  private themeValues: any[] = [
-    { value: 'light', name: i18n.t('account.light') },
-    { value: 'dark', name: i18n.t('account.dark') },
-  ]
+  private themeValues: any[] = [ 'light', 'dark' ].map((value) => {
+    return { value }
+  })
 
   private toggleEditMode() {
     this.editMode = !this.editMode

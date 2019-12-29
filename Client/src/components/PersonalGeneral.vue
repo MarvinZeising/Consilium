@@ -80,7 +80,14 @@
             :label="$t('person.gender')"
             filled
             required
-          ></v-select>
+          >
+            <template v-slot:selection="{ item }">
+              <span>{{ $t('person.' + item.value) }}</span>
+            </template>
+            <template v-slot:item="{ item }">
+              <span>{{ $t('person.' + item.value) }}</span>
+            </template>
+          </v-select>
         </v-form>
       </v-card-text>
 
@@ -134,10 +141,9 @@ export default class PersonalGeneral extends Vue {
     (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
   ]
   private gender: string = this.personModule.getActivePerson?.gender || 'male'
-  private genderValues: any[] = [
-    { value: 'male', name: i18n.t('person.male') },
-    { value: 'female', name: i18n.t('person.female') },
-  ]
+  private genderValues: any[] = [ 'male', 'female' ].map((value) => {
+    return { value }
+  })
 
   private toggleEditMode() {
     this.editMode = !this.editMode

@@ -100,7 +100,7 @@
         <template v-slot:activator="{ on }">
           <v-toolbar-items style="margin-right:-16px;">
             <v-btn text v-on="on">
-              <span v-t="'language.' + language" />
+              <span v-t="'language.' + $i18n.locale" />
               <v-icon>arrow_drop_down</v-icon>
             </v-btn>
           </v-toolbar-items>
