@@ -1,11 +1,11 @@
 {
   "topics": "Knowledge Base - Topics",
   "topicsDescription": "You can add your own knowledge base for this project. Inform the publishers about routes, places, legal information or anything else that could be interesting for them while being a part of this project. Here, you can define the topics. They are displayed in the navigation bar on the left. Within these topics, you can then add articles.",
-  "createTopic": "Add Topic",
-  "renameTopic": "Rename Topic",
-  "deleteTopic": "Delete Topic",
+  "createTopic": "Add topic",
+  "renameTopic": "Rename topic",
+  "deleteTopic": "Delete topic",
   "deleteTopicDescription": "This will delete the topic and all articles created for this topic.",
   "deleteTopicHint": "Enter the topic name to continue",
-  "topicNameMustEqual": "Name must be this Topic's name",
+  "topicNameMustEqual": "Name must be this topic's name",
   "noTopics": "You didn't create any topics, yet."
 }
