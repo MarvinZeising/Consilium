@@ -8,18 +8,18 @@
         >
           <v-card-title class="title font-weight-regular justify-space-between">
             <span>{{ currentTitle }}</span>
-            <v-avatar
-              color="primary lighten-2"
-              class="subtitle-1 white--text"
-              size="24"
-              v-text="step"
-              v-if="step > 0 && step < 3"
-            />
+            <span
+              class="subtitle-1"
+              v-if="step > 0 && step < 4"
+            >
+              Step {{step}} of 3
+            </span>
           </v-card-title>
 
           <v-window v-model="step">
+
             <v-window-item :value="0">
-              <div class="pa-4 text-xs-center">
+              <v-card-text>
                 <p v-t="'account.signUpForm.description1'" />
                 <p v-t="'account.signUpForm.description2'" />
                 <p>
@@ -28,20 +28,16 @@
                   {{ $t('account.signUpForm.hint2') }}
                 </p>
                 <p v-t="'account.signUpForm.signInHint'" />
-              </div>
+              </v-card-text>
             </v-window-item>
 
             <v-window-item :value="1">
               <v-card-text>
-
                 <v-form
                   ref="emailForm"
                   v-model="emailValid"
                 >
-                  <p
-                    class="grey--text text--darken-1"
-                    v-t="'account.emailDescription'"
-                  />
+                  <p v-t="'account.emailDescription'" />
                   <v-text-field
                     v-model="email"
                     name="email"
@@ -57,21 +53,16 @@
                   v-if="emailAlreadyExists"
                   v-t="'account.emailUnique'"
                 />
-
               </v-card-text>
             </v-window-item>
 
             <v-window-item :value="2">
               <v-card-text>
-
                 <v-form
                   ref="passwordForm"
                   v-model="passwordValid"
                 >
-                  <p
-                    class="grey--text text--darken-1"
-                    v-t="'account.signUpForm.passwordDescription'"
-                  />
+                  <p v-t="'account.signUpForm.passwordDescription'" />
                   <v-text-field
                     v-model="password"
                     :label="$t('account.password')"
@@ -85,10 +76,7 @@
                     required
                     @click:append="passwordShow = !passwordShow"
                   />
-                  <p
-                    class="grey--text text--darken-1"
-                    v-t="'account.signUpForm.passwordRepeatDescription'"
-                  />
+                  <p v-t="'account.signUpForm.passwordRepeatDescription'" />
                   <v-text-field
                     v-model="passwordRepeat"
                     :label="$t('account.passwordRepeat')"
@@ -103,16 +91,62 @@
                     @click:append="passwordRepeatShow = !passwordRepeatShow"
                   />
                 </v-form>
-
               </v-card-text>
             </v-window-item>
 
             <v-window-item :value="3">
-              <div class="pa-3 text-xs-center">
-                <h2
-                  class="headline"
-                  v-t="'account.signUpForm.success'"
+              <v-card-text>
+                <v-form
+                  ref="interfaceForm"
+                  v-model="interfaceValid"
+                >
+                  <p v-t="'account.signUpForm.interfaceDescription'" />
+                  <p v-t="'account.languageDescription'" />
+                  <v-select
+                    v-model="$i18n.locale"
+                    :items="languageValues"
+                    item-text="name"
+                    item-value="value"
+                    :label="$t('language.language')"
+                    filled
+                    required
+                  >
+                    <template v-slot:selection="{ item }">
+                      <span>{{ $t('language.' + item.value) }}</span>
+                    </template>
+                    <template v-slot:item="{ item }">
+                      <span>{{ $t('language.' + item.value) }}</span>
+                    </template>
+                  </v-select>
+                  <p v-t="'account.themeDescription'" />
+                  <v-select
+                    v-model="theme"
+                    :items="themeValues"
+                    item-text="name"
+                    item-value="value"
+                    :label="$t('account.theme')"
+                    @change="toggleTheme"
+                    filled
+                    required
+                  >
+                    <template v-slot:selection="{ item }">
+                      <span>{{ $t('account.' + item.value) }}</span>
+                    </template>
+                    <template v-slot:item="{ item }">
+                      <span>{{ $t('account.' + item.value) }}</span>
+                    </template>
+                  </v-select>
+                </v-form>
+                <span
+                  class="red--text"
+                  v-if="emailAlreadyExists"
+                  v-t="'account.emailUnique'"
                 />
+              </v-card-text>
+            </v-window-item>
+
+            <v-window-item :value="4">
+              <div class="pa-3 text-xs-center">
                 <p>
                   {{ $t('account.signUpForm.successDescription1') }}
                   <br>
@@ -122,11 +156,12 @@
                 </p>
               </div>
             </v-window-item>
+
           </v-window>
 
           <v-divider />
 
-          <v-card-actions v-if="step < 3">
+          <v-card-actions v-if="step < 4">
             <v-btn
               v-if="step === 0"
               text
@@ -141,25 +176,26 @@
             />
             <v-spacer />
             <v-btn
-              :disabled="(step === 1 && (!emailValid || nextLoading)) || (step === 2 && !passwordValid)"
+              :disabled="(step === 1 && (!emailValid || nextLoading)) || (step === 2 && !passwordValid) || (step === 3 && !interfaceValid)"
               color="primary"
               @click="next"
+              :loading="nextLoading"
             >
               <span
                 v-if="step === 0"
                 v-t="'core.start'"
               />
               <span
-                v-if="!nextLoading && step > 0 && step < 3"
+                v-else-if="step < 3"
                 v-t="'core.next'"
               />
-              <v-progress-circular
-                v-if="nextLoading"
-                indeterminate
-                color="primary"
+              <span
+                v-else
+                v-t="'core.done'"
               />
             </v-btn>
           </v-card-actions>
+
         </v-card>
       </v-flex>
     </v-layout>
@@ -185,7 +221,7 @@ export default class SignUp extends Vue {
   private emailAlreadyExists: boolean = false
   private emailRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid'),
+    (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid'),
   ]
 
   private password: string = ''
@@ -205,11 +241,22 @@ export default class SignUp extends Vue {
     ]
   }
 
+  private interfaceValid: any = false
+  private languageValues: any[] = i18n.availableLocales.map((value) => {
+    return { value }
+  })
+  private theme: any = this.$vuetify.theme.dark ? 'dark' : 'light'
+  private themeValues: any[] = [ 'light', 'dark' ].map((value) => {
+    return { value }
+  })
+
   private get currentTitle() {
     switch (this.step) {
       case 0: return i18n.t('account.signUpForm.title')
       case 1: return i18n.t('account.signUpForm.email')
       case 2: return i18n.t('account.signUpForm.password')
+      case 3: return i18n.t('account.signUpForm.interface')
+      case 4: return i18n.t('account.signUpForm.success')
       default: return ''
     }
   }
@@ -235,22 +282,29 @@ export default class SignUp extends Vue {
         break
       }
       case 2: {
-        const form: any = this.$refs.passwordForm
-
-        if (form.validate()) {
-          await this.userModule.signUp({
-            email: this.email,
-            password: this.password
-          })
-          this.step++
-        }
+        this.theme = this.$vuetify.theme.dark ? 'dark' : 'light'
+        this.step++
         break
       }
       case 3: {
+        await this.userModule.signUp({
+          email: this.email,
+          password: this.password,
+          language: this.$i18n.locale,
+          theme: this.theme,
+        })
+        this.step++
+        break
+      }
+      case 4: {
         this.$router.push({ name: 'signIn' })
         break
       }
     }
+  }
+
+  private toggleTheme() {
+    this.$vuetify.theme.dark = this.theme === 'dark'
   }
 
 }

@@ -59,10 +59,17 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  public async signUp(credentials: { email: string, password: string }) {
+  public async signUp(credentials: {
+    email: string,
+    password: string,
+    language: string,
+    theme: string
+  }) {
     await axios.post('/users', {
       email: credentials.email,
       password: hashPassword(credentials.password),
+      language: credentials.language,
+      theme: credentials.theme,
     })
     return true
   }
