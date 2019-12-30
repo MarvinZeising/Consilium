@@ -29,3 +29,4 @@ Client/app
 .dtbcache
 .vs/Consilium/xs/UserPrefs.xml
 *.bak
+internal_log.txt
