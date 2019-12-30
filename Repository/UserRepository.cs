@@ -5,9 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using Contracts;
 using Entities;
-using Entities.DataTransferObjects;
 using Entities.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 

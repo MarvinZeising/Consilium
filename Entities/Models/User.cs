@@ -17,7 +17,7 @@ namespace Entities.Models
         public string Email { get; set; }
 
         [Required]
-        [Column("password_hash")]
+        [Column("password_hash")] // TODO: remove the underscores
         public byte[] PasswordHash { get; set; }
 
         [Required]

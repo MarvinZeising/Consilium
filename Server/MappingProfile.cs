@@ -12,6 +12,7 @@ namespace Server
             CreateMap<CreateUserDto, User>();
 
             CreateMap<Person, PersonDto>();
+            CreateMap<CreatePersonDto, Person>();
         }
     }
 }
