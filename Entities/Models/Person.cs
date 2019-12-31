@@ -18,9 +18,9 @@ namespace Entities.Models
         public Guid UserId { get; set; }
         public User User { get; set; }
 
-        // [ForeignKey(nameof(User))]
+        [ForeignKey(nameof(Congregation))]
         public Guid? CongregationId { get; set; }
-        // public User User { get; set; }
+        public Congregation Congregation { get; set; }
 
         [Required]
         [MaxLength(40)]
