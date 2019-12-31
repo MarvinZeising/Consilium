@@ -46,7 +46,7 @@ async function init() {
     axios.defaults.headers.common.Authorization = `Bearer ${user.token}`
 
     try {
-      await userModule.initUserModule()
+      await userModule.initStore()
 
       if (router.currentRoute.name === 'serverException') {
         router.push({ name: 'home' })
