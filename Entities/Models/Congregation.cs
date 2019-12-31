@@ -19,7 +19,7 @@ namespace Entities.Models
         public string Number { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreateTime { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; } = DateTime.UtcNow;
