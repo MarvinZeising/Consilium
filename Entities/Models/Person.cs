@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Entities.Validators;
 
 namespace Entities.Models
 {
@@ -30,7 +31,7 @@ namespace Entities.Models
         public string Lastname { get; set; }
 
         [Required]
-        [MaxLength(6)]
+        [ValidGender]
         public string Gender { get; set; }
 
         public ICollection<Participation> Participations { get; set; }
