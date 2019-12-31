@@ -86,21 +86,19 @@ namespace Server.Controllers
             }
         }
 
-        [HttpDelete]
-        public IActionResult DeleteUser()
+        [HttpDelete("{personId}")]
+        public IActionResult DeletePerson(Guid personId)
         {
             try
             {
-                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
-
-                _db.User.Delete(new User { Id = new Guid(userId) });
+                _db.Person.Delete(new Person { Id = personId });
                 _db.Save();
 
                 return NoContent();
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in DeleteUser: {e.Message}");
+                _logger.LogError($"ERROR in DeletePerson: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
