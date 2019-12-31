@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Entities.Validators;
 
 namespace Entities.Models
 {
@@ -27,6 +28,7 @@ namespace Entities.Models
         public Role Role { get; set; }
 
         [Required]
+        [ValidParticipationStatus]
         public string Status { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
