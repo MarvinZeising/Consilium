@@ -33,7 +33,6 @@ namespace Entities.Models
         [MaxLength(6)]
         public string Gender { get; set; }
 
-        [Column("create_time")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreateTime { get; set; } = DateTime.UtcNow;
     }

@@ -17,11 +17,9 @@ namespace Entities.Models
         public string Email { get; set; }
 
         [Required]
-        [Column("password_hash")] // TODO: remove the underscores
         public byte[] PasswordHash { get; set; }
 
         [Required]
-        [Column("password_salt")]
         public byte[] PasswordSalt { get; set; }
 
         [Required]
@@ -32,7 +30,6 @@ namespace Entities.Models
         [MaxLength(40)]
         public string Theme { get; set; }
 
-        [Column("create_time")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreateTime { get; set; } = DateTime.UtcNow;
 
