@@ -17,7 +17,7 @@
           style="border-color:#f00;"
         >
           <v-card-text>
-            <DeletePersonDialog :personId="personModule.getActivePerson.id" />
+            <DeletePersonDialog :personId="personModule.getActivePersonId" />
           </v-card-text>
         </v-card>
       </v-flex>

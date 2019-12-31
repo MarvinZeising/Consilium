@@ -15,7 +15,11 @@ export default class PersonModule extends VuexModule {
 
   public get getActivePerson(): Person | undefined {
     return this.persons.find((x) => x.id === this.activePersonId)
- }
+  }
+
+  public get getActivePersonId(): string | undefined {
+    return this.getActivePerson?.id
+  }
 
   @Action
   public async loadPersons() {

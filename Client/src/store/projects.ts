@@ -29,10 +29,6 @@ export default class ProjectModule extends VuexModule {
     })
   }
 
-  public get getPersons() {
-    return this.persons
-  }
-
   public get getParticipations(): ProjectParticipation[] {
     return this.participations
   }
@@ -49,7 +45,7 @@ export default class ProjectModule extends VuexModule {
 
   @Action
   public async loadProjects() {
-    const personId = this.context.getters.getActivePerson.id
+    const personId = this.context.getters.getActivePersonId
 
     const response = await axios.get(`/project-participations/${personId}`)
     const projectParticipations: ProjectParticipation[] = response.data
@@ -78,7 +74,7 @@ export default class ProjectModule extends VuexModule {
 
   @Action
   public async joinProject(projectId: string) {
-    const personId = this.context.getters.getActivePerson.id
+    const personId = this.context.getters.getActivePersonId
 
     await axios.post('/project-participations/request', { personId, projectId })
 
