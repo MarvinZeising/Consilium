@@ -13,7 +13,7 @@ namespace Entities.Models
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        [MaxLength(100)]
+        [ValidEmail]
         public string Email { get; set; }
 
         [Required]

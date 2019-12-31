@@ -16,7 +16,7 @@ namespace Entities.Models
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [ValidEmail]
         public string Email { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
