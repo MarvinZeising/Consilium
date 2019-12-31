@@ -13,9 +13,6 @@ import AlertModule from './store/alerts'
 import UserModule from './store/users'
 
 async function init() {
-  const alertModule = getModule(AlertModule)
-  const userModule = getModule(UserModule)
-
   Vue.config.productionTip = false
 
   axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:5000/api'
@@ -40,6 +37,9 @@ async function init() {
       return Promise.reject(error)
     })
 
+  const alertModule = getModule(AlertModule)
+  const userModule = getModule(UserModule)
+
   const userItem = localStorage.getItem('user')
   if (userItem) {
     const user = JSON.parse(userItem)
@@ -57,14 +57,14 @@ async function init() {
       }
     }
   }
-
-  new Vue({
-    vuetify,
-    store,
-    router,
-    i18n,
-    render: (h) => h(App)
-  }).$mount('#app')
 }
+
+new Vue({
+  vuetify,
+  store,
+  router,
+  i18n,
+  render: (h) => h(App)
+}).$mount('#app')
 
 init()
