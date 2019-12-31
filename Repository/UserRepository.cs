@@ -6,6 +6,7 @@ using System.Text;
 using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -91,9 +92,15 @@ namespace Repository
             return true;
         }
 
-        public User GetUserById(Guid id)
+        public User GetUserById(Guid id, bool includePersons = false)
         {
-            return FindByCondition(x => x.Id == id).SingleOrDefault();
+            var query = FindByCondition(x => x.Id == id);
+
+            if (includePersons) {
+                query = query.Include(x => x.Persons);
+            }
+
+            return query.SingleOrDefault();
         }
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

@@ -22,28 +22,32 @@ export default class PersonModule extends VuexModule {
   }
 
   @Action
-  public async loadPersons() {
-    const response = await axios.get('/persons')
+  public async loadPersons(rawPersons?: Person[]) {
+    if (rawPersons === undefined) {
+      const response = await axios.get('/persons')
+      rawPersons = response.data
+    }
+    if (rawPersons === undefined) {
+      rawPersons = []
+    }
 
-    if (response.data && response.data.length > 0) {
-      const currentlyActivePerson = this.persons.find((x) => x.id === this.activePersonId)
+    const persons = rawPersons.map((data: Person) => {
+      return new Person(
+        data.id,
+        data.firstname,
+        data.lastname,
+        data.gender,
+      )
+    })
 
-      const persons = response.data.map((data: Person) => {
-        return new Person(
-          data.id,
-          data.firstname,
-          data.lastname,
-          data.gender,
-        )
-      })
+    const currentlyActivePerson = this.persons.find((x) => x.id === this.activePersonId)
 
-      this.context.commit('setPersons', persons)
+    this.context.commit('setPersons', persons)
 
-      if (currentlyActivePerson && persons.includes(currentlyActivePerson)) {
-        this.context.dispatch('activatePerson', currentlyActivePerson.id)
-      } else {
-        this.context.dispatch('activatePerson', persons[0].id)
-      }
+    if (currentlyActivePerson && persons.includes(currentlyActivePerson)) {
+      await this.context.dispatch('activatePerson', currentlyActivePerson.id)
+    } else {
+      await this.context.dispatch('activatePerson', persons[0].id)
     }
   }
 

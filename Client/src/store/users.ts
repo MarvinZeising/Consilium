@@ -22,7 +22,7 @@ export default class UserModule extends VuexModule {
     this.context.commit('applyLocale')
     this.context.commit('applyTheme')
 
-    this.context.dispatch('loadPersons')
+    this.context.dispatch('loadPersons', response.data.persons)
   }
 
   @Action

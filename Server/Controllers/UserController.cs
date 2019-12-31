@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Contracts;
@@ -104,7 +103,7 @@ namespace Server.Controllers
             try
             {
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
-                var user = _db.User.GetUserById(new Guid(userId));
+                var user = _db.User.GetUserById(new Guid(userId), includePersons: true);
 
                 return Ok(_mapper.Map<UserDto>(user));
             }
