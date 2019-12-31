@@ -15,7 +15,6 @@ namespace Entities.Models
         [MaxLength(40)]
         public string Name { get; set; }
 
-        [Required]
         [MaxLength(10)]
         public string Number { get; set; }
 
