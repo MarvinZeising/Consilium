@@ -63,7 +63,9 @@ export default class AccountPersons extends Vue {
   }
 
   private editPerson(personId: string) {
-    this.personModule.activatePerson(personId)
+    if (this.personModule.getActivePersonId !== personId) {
+      this.personModule.activatePerson(personId)
+    }
     this.$router.push({ name: 'personal' })
   }
 
