@@ -1,47 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models
 {
-    [Table("user")]
-    public class User
+    [Table("role")]
+    public class Role
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        [MaxLength(100)]
-        public string Email { get; set; }
-
-        [Required]
-        public byte[] PasswordHash { get; set; }
-
-        [Required]
-        public byte[] PasswordSalt { get; set; }
+        [ForeignKey(nameof(Project))]
+        public Guid ProjectId { get; set; }
+        public Project Project { get; set; }
 
         [Required]
         [MaxLength(40)]
-        public string Language { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        [MaxLength(40)]
-        public string Theme { get; set; }
+        public bool KnowledgeBaseRead { get; set; }
 
-        public ICollection<Person> Persons { get; set; }
+        [Required]
+        public bool KnowledgeBaseWrite { get; set; }
+
+        [Required]
+        public bool ParticipantsRead { get; set; }
+
+        [Required]
+        public bool ParticipantsWrite { get; set; }
+
+        [Required]
+        public bool SettingsRead { get; set; }
+
+        [Required]
+        public bool SettingsWrite { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreateTime { get; set; } = DateTime.UtcNow;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; } = DateTime.UtcNow;
-    }
-
-    public enum InterfaceLanguage
-    {
-        enUS,
-        deDE
     }
 }

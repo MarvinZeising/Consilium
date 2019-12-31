@@ -33,7 +33,12 @@ namespace Entities.Models
         [MaxLength(6)]
         public string Gender { get; set; }
 
+        public ICollection<Participation> Participations { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreateTime { get; set; } = DateTime.UtcNow;
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime LastUpdatedTime { get; set; } = DateTime.UtcNow;
     }
 }
