@@ -14,7 +14,6 @@ namespace Entities.DataTransferObjects
         public string Lastname { get; set; }
 
         [Required]
-        [MaxLength(10)]
         [ValidGender]
         public string Gender { get; set; }
     }

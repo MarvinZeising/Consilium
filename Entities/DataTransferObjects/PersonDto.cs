@@ -10,6 +10,6 @@ namespace Entities.DataTransferObjects
         public string Lastname { get; set; }
         public string Gender { get; set; }
         public Guid CongregationId { get; set; }
-        public DateTime CreateTime { get; set; }
+        public DateTime CreatedTime { get; set; }
     }
 }
