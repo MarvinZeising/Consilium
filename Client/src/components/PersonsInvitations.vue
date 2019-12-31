@@ -67,7 +67,7 @@ export default class PersonsInvitations extends Vue {
   }
 
   private  getPerson(personId: string) {
-    return this.projectModule.getPersons.find((x: Person) => x.id === personId)
+    return this.projectModule.getProjectPersons.find((x: Person) => x.id === personId)
   }
 
 }

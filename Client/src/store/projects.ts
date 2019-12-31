@@ -29,6 +29,10 @@ export default class ProjectModule extends VuexModule {
     })
   }
 
+  public get getProjectPersons() {
+    return this.persons
+  }
+
   public get getParticipations(): ProjectParticipation[] {
     return this.participations
   }
