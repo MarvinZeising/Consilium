@@ -18,6 +18,13 @@
       >
         <v-layout wrap>
 
+          <v-flex xs12>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.id'"
+            />
+            <p class="subtitle-1 grey--text">{{ personModule.getActivePersonId }}</p>
+          </v-flex>
           <v-flex xs6>
             <p
               class="caption mb-0 grey--text"
@@ -25,7 +32,6 @@
             />
             <p class="subtitle-1">{{ personModule.getActivePerson.firstname }}</p>
           </v-flex>
-
           <v-flex xs6>
             <p
               class="caption mb-0 grey--text"
@@ -33,7 +39,6 @@
             />
             <p class="subtitle-1">{{ personModule.getActivePerson.lastname }}</p>
           </v-flex>
-
           <v-flex xs6>
             <p
               class="caption mb-0 grey--text"
@@ -50,27 +55,25 @@
 
       <!-- //* UPDATE -->
       <v-card-text v-else>
-        <v-form ref="form">
+        <v-form v-model="valid" ref="form">
           <p v-t="'person.firstnameDescription'" />
           <v-text-field
             v-model="firstname"
             :label="$t('person.firstname')"
             :rules="nameRules"
-            counter="20"
+            counter="40"
             filled
             required
           />
-
           <p v-t="'person.lastnameDescription'" />
           <v-text-field
             v-model="lastname"
             :label="$t('person.lastname')"
             :rules="nameRules"
-            counter="20"
+            counter="40"
             filled
             required
           />
-
           <p v-t="'person.genderDescription'" />
           <v-select
             v-model="gender"
@@ -109,6 +112,8 @@
         <v-btn
           text
           v-if="editMode"
+          :disabled="!valid"
+          :loading="loading"
           color="primary"
           @click="save"
           v-t="'core.save'"
@@ -131,14 +136,16 @@ import PersonModule from '../store/persons'
 export default class PersonalGeneral extends Vue {
   private personModule: PersonModule = getModule(PersonModule, this.$store)
 
+  private valid: any = false
   private editMode: boolean = false
+  private loading: boolean = false
 
   private firstname: string = this.personModule.getActivePerson?.firstname || ''
   private lastname: string = this.personModule.getActivePerson?.lastname || ''
   private nameRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => v.length <= 20 || i18n.t('core.fieldMax', { count: 20 }),
-    (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
+    (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
+    (v: string) => v.trim().length >= 2 || i18n.t('core.fieldMin', { count: 2 }),
   ]
   private gender: string = this.personModule.getActivePerson?.gender || 'male'
   private genderValues: any[] = [ 'male', 'female' ].map((value) => {
@@ -160,13 +167,14 @@ export default class PersonalGeneral extends Vue {
     const personId = this.personModule.getActivePerson?.id || ''
 
     if (form.validate()) {
+      this.loading = true
+
       await this.personModule.updatePersonGeneral({
         id: personId,
         firstname: this.firstname,
         lastname: this.lastname,
         gender: this.gender,
       })
-      // TODO: add error handling
 
       this.toggleEditMode()
     }

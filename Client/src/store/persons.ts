@@ -82,8 +82,7 @@ export default class PersonModule extends VuexModule {
     lastname: string,
     gender: string,
   }) {
-    await axios.put(`/persons`, {
-      id: person.id,
+    await axios.put(`/persons/${person.id}`, {
       firstname: person.firstname,
       lastname: person.lastname,
       gender: person.gender,

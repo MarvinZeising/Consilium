@@ -53,13 +53,13 @@ namespace Server.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in SignIn: {e.Message}");
+                _logger.LogError($"ERROR in CreatePerson: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpPut]
-        public IActionResult UpdateGeneral([FromBody] UpdateUserGeneralDto dto)
+        [HttpPut("{personId}")]
+        public IActionResult UpdateGeneral(Guid personId, [FromBody] UpdatePersonGeneralDto dto)
         {
             try
             {
@@ -68,12 +68,13 @@ namespace Server.Controllers
                     return BadRequest();
                 }
 
-                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
-                var user = _db.User.GetUserById(new Guid(userId));
+                var person = _db.Person.GetPersonById(personId);
 
-                user.Email = dto.Email;
+                person.Firstname = dto.Firstname;
+                person.Lastname = dto.Lastname;
+                person.Gender = dto.Gender;
 
-                _db.User.Update(user);
+                _db.Person.Update(person);
                 _db.Save();
 
                 return NoContent();
