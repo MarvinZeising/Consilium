@@ -50,12 +50,5 @@ import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vu
 })
 export default class Settings extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-
-  public get getProject(): Project {
-    const projectId = this.$route.params.projectId
-    const projects = this.projectModule.getProjects.filter((project) => project.id === projectId)
-    return projects.length > 0 ? projects[0] : new Project('', 'Loading', 'Loading')
-  }
-
 }
 </script>
