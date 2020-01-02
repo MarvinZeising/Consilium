@@ -43,5 +43,10 @@
   "requestsDescription": "Falls erlaubt, können Personen Teilnahme am Projekt anfragen. Hier kannst du alle offenen Anfragen sehen, die noch von keinem Administrator angenommen oder abgelehnt wurden.",
   "noRequests": "Keine offenen Anfragen",
   "requestsAllowed": "Teilnahme kann angefragt werden",
-  "requestsNotAllowed": "Teilnahme kann nicht angefragt werden"
+  "requestsNotAllowed": "Teilnahme kann nicht angefragt werden",
+  "roles": "Rollen",
+  "rolesDescription": "Um Kontrolle darüber zu haben, welche Teilnehmer des Projektes was sehen und bearbeiten dürfen, gibt es Rollen. Jeder Teilnehmer hat eine Rolle. Die Rolle regelt, welche verschiedenen Bereiche des Projektes die Teilnehmer sehen oder sogar bearbeiten dürfen. Standardmäßig wird eine 'Administrator' Rolle erstellt.",
+  "noRoles": "Lade Rollen...",
+  "createRole": "Rolle hinzufügen",
+  "xParticipants": "Niemand hat diese Rolle | 1 Teilnehmer hat diese Rolle | {count} Teilnehmer haben diese Rolle"
 }

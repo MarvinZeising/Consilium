@@ -1,8 +1,14 @@
 import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
-import { Project, ProjectParticipation, ProjectParticipationStatus, Person } from '../models/definitions'
 import store from '../plugins/vuex'
 import router from '../router'
+import {
+  Project,
+  ProjectParticipation,
+  ProjectParticipationStatus,
+  Person,
+  Role
+} from '../models/definitions'
 
 @Module({ dynamic: true, store, name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
@@ -11,6 +17,7 @@ export default class ProjectModule extends VuexModule {
   // * for the active project
   public participations: ProjectParticipation[] = []
   public participants: Person[] = []
+  public roles: Role[] = []
 
   public get getActiveProject() {
     const projectId = router.currentRoute.params.projectId
@@ -36,6 +43,9 @@ export default class ProjectModule extends VuexModule {
   public get getParticipants() {
     return this.participants
   }
+
+  public get getRoles() {
+    return this.roles
   }
 
   @Action
@@ -58,28 +68,27 @@ export default class ProjectModule extends VuexModule {
     const projects: Project[] = []
     for (const projectParticipation of projectParticipations) {
       if (projectParticipation.project) {
-        const project: Project = new Project(
+        projects.push(new Project(
           projectParticipation.project.id,
           projectParticipation.project.name,
-          projectParticipation.project.email)
-        projects.push(project)
+          projectParticipation.project.email))
       }
-
-      // const personResponse = await axios.get(`/persons/${projectParticipation.personId}`)
-      // const person = new Person(
-      //   personResponse.data.id,
-      //   personResponse.data.firstname,
-      //   personResponse.data.lastname,
-      //   personResponse.data.gender,
-      // )
-      // persons.push(person)
     }
 
     this.context.commit('setParticipations', projectParticipations)
     this.context.commit('setProjects', projects)
+  }
 
-    // TODO: load participants on persons (participants) route
-    // this.context.commit('setParticipants', persons)
+  @Action({ commit: 'setRoles' })
+  public async loadRoles(projectId: string) {
+    const response = await axios.get(`/projects/${projectId}/roles`)
+    return response.data
+  }
+
+  @Action({ commit: 'setParticipations' })
+  public async loadParticipations(projectId: string) {
+    const response = await axios.get(`/projects/${projectId}/participations`)
+    return response.data
   }
 
   @Action
@@ -165,6 +174,11 @@ export default class ProjectModule extends VuexModule {
   @Mutation
   public async setParticipations(participations: ProjectParticipation[]) {
     this.participations = participations
+  }
+
+  @Mutation
+  public async setRoles(roles: Role[]) {
+    this.roles = roles
   }
 
   @Mutation

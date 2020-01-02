@@ -6,6 +6,8 @@
 
       <SettingsTopics />
 
+      <SettingsRoles />
+
       <!--//* Danger Zone -->
       <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
@@ -35,6 +37,7 @@ import { Project, Topic } from '../../models/definitions'
 import KnowledgeBaseModule from '../../store/knowledgeBase'
 import SettingsGeneral from '../../components/SettingsGeneral.vue'
 import SettingsTopics from '../../components/SettingsTopics.vue'
+import SettingsRoles from '../../components/SettingsRoles.vue'
 import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vue'
 
 @Component({
@@ -42,6 +45,7 @@ import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vu
     SettingsGeneral,
     DeleteProjectDialog,
     SettingsTopics,
+    SettingsRoles,
   }
 })
 export default class Settings extends Vue {
