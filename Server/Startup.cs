@@ -72,7 +72,7 @@ namespace Server
                         var userId = context.Principal.FindFirstValue(ClaimTypes.Sid);
                         var email = context.Principal.FindFirstValue(ClaimTypes.Email);
                         var db = context.HttpContext.RequestServices.GetRequiredService<IRepositoryWrapper>();
-                        var user = db.User.GetUserById(new Guid(userId));
+                        var user = db.User.GetById(new Guid(userId));
                         if (user == null || user.Email != email)
                         {
                             context.Fail("Unauthorized");

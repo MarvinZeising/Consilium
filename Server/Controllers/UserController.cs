@@ -103,7 +103,7 @@ namespace Server.Controllers
             try
             {
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
-                var user = _db.User.GetUserById(new Guid(userId), includePersons: true);
+                var user = _db.User.GetById(new Guid(userId), includePersons: true);
 
                 return Ok(_mapper.Map<UserDto>(user));
             }
@@ -125,7 +125,7 @@ namespace Server.Controllers
                 }
 
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
-                var user = _db.User.GetUserById(new Guid(userId));
+                var user = _db.User.GetById(new Guid(userId));
 
                 user.Email = dto.Email;
 
@@ -152,7 +152,7 @@ namespace Server.Controllers
                 }
 
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
-                var user = _db.User.GetUserById(new Guid(userId));
+                var user = _db.User.GetById(new Guid(userId));
 
                 user.Language = dto.Language;
                 user.Theme = dto.Theme;

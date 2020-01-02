@@ -68,7 +68,7 @@ namespace Server.Controllers
                     return BadRequest();
                 }
 
-                var person = _db.Person.GetPersonById(personId);
+                var person = _db.Person.GetById(personId);
 
                 person.Firstname = dto.Firstname;
                 person.Lastname = dto.Lastname;
