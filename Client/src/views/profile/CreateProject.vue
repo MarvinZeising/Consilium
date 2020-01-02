@@ -89,6 +89,7 @@
               @click="createProject"
               color="primary"
               v-t="'project.createSubmit'"
+              :loading="loading"
             />
             <v-btn
               text
@@ -119,6 +120,7 @@ export default class CreateProject extends Vue {
 
   private activeStep: number = 1
   private valid: boolean = false
+  private loading: boolean = false
 
   private name: string = ''
   private nameRules: any[] = [
@@ -146,6 +148,8 @@ export default class CreateProject extends Vue {
   }
 
   private async createProject() {
+    this.loading = true
+
     const form: any = this.$refs.form
 
     if (form.validate()) {
@@ -165,6 +169,8 @@ export default class CreateProject extends Vue {
         this.$router.push({ name: 'home' })
       }
     }
+
+    this.loading = false
   }
 
 }
