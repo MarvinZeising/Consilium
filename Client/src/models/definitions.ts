@@ -104,6 +104,40 @@ class ProjectParticipation {
   }
 }
 
+class Role {
+  public id: string
+  public projectId: string
+  public name: string
+  public knowledgeBaseRead: boolean
+  public knowledgeBaseWrite: boolean
+  public participantsRead: boolean
+  public participantsWrite: boolean
+  public settingsRead: boolean
+  public settingsWrite: boolean
+
+  constructor(
+    id: string,
+    projectId: string,
+    name: string,
+    knowledgeBaseRead: boolean,
+    knowledgeBaseWrite: boolean,
+    participantsRead: boolean,
+    participantsWrite: boolean,
+    settingsRead: boolean,
+    settingsWrite: boolean
+  ) {
+    this.id = id
+    this.projectId = projectId
+    this.name = name
+    this.knowledgeBaseRead = knowledgeBaseRead
+    this.knowledgeBaseWrite = knowledgeBaseWrite
+    this.participantsRead = participantsRead
+    this.participantsWrite = participantsWrite
+    this.settingsRead = settingsRead
+    this.settingsWrite = settingsWrite
+  }
+}
+
 class Topic {
   public id: string
   public projectId: string
@@ -140,6 +174,7 @@ export {
   Project,
   ProjectParticipation,
   ProjectParticipationStatus,
+  Role,
   Topic,
   Article,
 }
