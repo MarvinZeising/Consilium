@@ -1,6 +1,9 @@
 <template>
 
-  <v-flex xs12 sm10 md8 lg6 xl4>
+  <v-flex
+    v-if="canView"
+    xs12 sm10 md8 lg6 xl4
+  >
     <h2
       class="headline mb-3"
       v-t="'core.general'"
@@ -93,7 +96,7 @@
       </v-card-text>
 
       <!-- //* ACTIONS -->
-      <v-card-actions>
+      <v-card-actions v-if="canEdit">
         <v-spacer />
         <v-btn
           text
@@ -126,11 +129,13 @@ import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../i18n'
 import ProjectModule from '../store/projects'
+import PersonModule from '../store/persons'
 import moment from 'moment'
 
 @Component
 export default class SettingsGeneral extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
 
   private loading: boolean = true
   private editMode: boolean = false
@@ -146,6 +151,14 @@ export default class SettingsGeneral extends Vue {
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid')
   ]
+
+  private get canView() {
+    return this.personModule.getActiveRole?.settingsRead === true
+  }
+
+  private get canEdit() {
+    return this.personModule.getActiveRole?.settingsWrite === true
+  }
 
   private formatDateTime(datetime: string) {
     return moment(datetime).format('ddd, MMM Do YYYY, h:mm a')

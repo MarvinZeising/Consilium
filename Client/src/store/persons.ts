@@ -21,7 +21,12 @@ export default class PersonModule extends VuexModule {
     return this.getActivePerson?.id
   }
 
-    }
+  public get getActiveRole() {
+    return this.getActivePerson
+      ?.participations
+      ?.find((x) => x.projectId === router.currentRoute.params.projectId)
+      ?.role
+  }
 
   @Action
   public async loadPersons(rawPersons: Person[]) {
