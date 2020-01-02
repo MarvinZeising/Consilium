@@ -31,6 +31,30 @@ namespace Server.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("{projectId}")]
+        public ActionResult<ProjectDto> GetProject(Guid projectId)
+        {
+            try
+            {
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
+                var persons = _db.Person
+                    .FindByCondition(x => x.UserId == new Guid(userId))
+                    .ToList();
+                // TODO: check permissions
+
+                var project = _db.Project
+                    .FindByCondition(x => x.Id == projectId)
+                    .SingleOrDefault();
+
+                return Ok(_mapper.Map<ProjectDto>(project));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in GetProject: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpGet("{projectId}/roles")]
         public ActionResult<IEnumerable<RoleDto>> GetProjectRoles(Guid projectId)
         {
