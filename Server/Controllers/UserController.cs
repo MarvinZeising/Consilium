@@ -86,9 +86,7 @@ namespace Server.Controllers
 
                 var createdUser = _db.User.Register(user, dto.Password);
 
-                var response = _mapper.Map<UserDto>(createdUser);
-
-                return Ok(response);
+                return base.Ok(_mapper.Map<UserDto>(createdUser));
             }
             catch (Exception e)
             {

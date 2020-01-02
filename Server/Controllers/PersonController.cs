@@ -47,9 +47,7 @@ namespace Server.Controllers
                 _db.Person.Create(person);
                 _db.Save();
 
-                var response = _mapper.Map<PersonDto>(person);
-
-                return Ok(response);
+                return base.Ok(_mapper.Map<PersonDto>(person));
             }
             catch (Exception e)
             {
