@@ -48,5 +48,5 @@
   "rolesDescription": "In order to give you control over who is permitted to do what in your project, there are roles. Each participant is assigned to a role. For every role, you can define the read and write permissions of certain areas of your project. By default, an 'Administrator' role is created.",
   "noRoles": "Loading roles...",
   "createRole": "Add role",
-  "xParticipants": "No participant has this role | 1 participant has this role | {count} participants have this role"
+  "xParticipants": "Not assigned | Assigned to 1 participant | Assigned to {count} participants"
 }
