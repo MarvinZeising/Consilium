@@ -10,7 +10,7 @@ export default class ProjectModule extends VuexModule {
 
   // * for the active project
   public participations: ProjectParticipation[] = []
-  public persons: Person[] = []
+  public participants: Person[] = []
 
   public get getActiveProject() {
     const projectId = router.currentRoute.params.projectId
@@ -29,12 +29,13 @@ export default class ProjectModule extends VuexModule {
     })
   }
 
-  public get getProjectPersons() {
-    return this.persons
+  public get getParticipations() {
+    return this.participations
   }
 
-  public get getParticipations(): ProjectParticipation[] {
-    return this.participations
+  public get getParticipants() {
+    return this.participants
+  }
   }
 
   @Action
@@ -44,7 +45,7 @@ export default class ProjectModule extends VuexModule {
 
   @Action
   public getPerson(personId: string) {
-    return this.persons.find((x: Person) => x.id === personId)
+    return this.participants.find((x: Person) => x.id === personId)
   }
 
   @Action
@@ -116,7 +117,7 @@ export default class ProjectModule extends VuexModule {
     return { projects: [] }
   }
 
-  @Action({ commit: 'setNameAndEmail' })
+  @Action({ commit: 'setGeneral' })
   public async updateProjectGeneral(project: Project) {
     await axios.put(`/projects/${project.id}`, {
       name: project.name,
@@ -158,7 +159,7 @@ export default class ProjectModule extends VuexModule {
 
   @Mutation
   public async setParticipants(persons: Person[]) {
-    this.persons = persons
+    this.participants = persons
   }
 
   @Mutation
@@ -167,7 +168,7 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  protected setNameAndEmail(project: Project) {
+  protected setGeneral(project: Project) {
     this.projects = this.projects.map((x: Project) => {
       if (x.id === project.id) {
         x.name = project.name
