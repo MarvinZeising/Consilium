@@ -170,44 +170,44 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
 import { Person, Project, Topic } from '../models/definitions'
 import { getModule } from 'vuex-module-decorators'
-import UserModule from '../store/users'
 import PersonModule from '../store/persons'
-import ProjectModule from '../store/projects'
 import KnowledgeBaseModule from '../store/knowledgeBase'
 
 @Component
 export default class NavbarSignedIn extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private profileActions: any[] = [
     ['person.personal', 'personal'],
     //// ['Spiritual', 'assignment_turned_in', 'configureProjects'],
     //// administrationAvailability', 'event_available', 'configureProjects'],
-    //// ['Account', 'lock', 'configureProjects'],
     //// ['Notifications', 'notifications', 'configureProjects'],
     ['person.configureProjects', 'configureProjects']
   ]
 
-  private get getProjects(): Project[] {
-    return this.projectModule.getProjects.map((project: any) => {
-      project.topics = this.knowledgeBaseModule.allTopics.filter((topic: Topic) => {
-        return topic.projectId === project.id
-      })
-      project.adminActions = [
-        ['project.settings', 'settings'],
-        ['person.persons', 'persons'],
-        //// ['Categories', 'label', 'settings'],
-        //// ['Teams', 'supervisor_account', 'settings'],
-        //// ['Meeting Points', 'location_on', 'settings'],
-        //// ['Notifications', 'notifications', 'settings'],
-        //// ['Reports', 'message', 'settings'],
-        //// ['Statistics', 'show_chart', 'settings'],
-        //// ['Notes', 'edit', 'settings']
-      ]
-      return project
+  private get getProjects() {
+    const participations = this.personModule.getActivePerson?.participations || []
+
+    return participations.map((data: any) => {
+      return {
+        id: data.project.id,
+        name: data.project.name,
+        topics: this.knowledgeBaseModule.allTopics.filter((topic: Topic) => {
+          return topic.projectId === data.id
+        }),
+        adminActions: [
+          ['project.settings', 'settings'],
+          ['person.persons', 'persons'],
+          //// ['Categories', 'label', 'settings'],
+          //// ['Teams', 'supervisor_account', 'settings'],
+          //// ['Meeting Points', 'location_on', 'settings'],
+          //// ['Notifications', 'notifications', 'settings'],
+          //// ['Reports', 'message', 'settings'],
+          //// ['Statistics', 'show_chart', 'settings'],
+          //// ['Notes', 'edit', 'settings']
+        ],
+      }
     })
   }
 
