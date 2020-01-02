@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Entities.Validators;
 
 namespace Entities.Models
 {
@@ -17,7 +18,7 @@ namespace Entities.Models
         public Project Project { get; set; }
 
         [Required]
-        [MaxLength(40)]
+        [ValidName]
         public string Name { get; set; }
 
         [Required]

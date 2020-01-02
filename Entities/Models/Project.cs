@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Entities.Validators;
@@ -14,12 +15,14 @@ namespace Entities.Models
 
         [Required]
         [MinLength(3)]
-        [MaxLength(40)]
+        [ValidName]
         public string Name { get; set; }
 
         [Required]
         [ValidEmail]
         public string Email { get; set; }
+
+        public ICollection<Participation> Participants { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; } = DateTime.UtcNow;

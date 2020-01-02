@@ -23,11 +23,11 @@ namespace Entities.Models
         public Congregation Congregation { get; set; }
 
         [Required]
-        [MaxLength(40)]
+        [ValidName]
         public string Firstname { get; set; }
 
         [Required]
-        [MaxLength(40)]
+        [ValidName]
         public string Lastname { get; set; }
 
         [Required]

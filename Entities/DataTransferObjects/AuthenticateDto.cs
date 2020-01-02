@@ -6,7 +6,6 @@ namespace Entities.DataTransferObjects
     public class AuthenticateDto
     {
         [Required]
-        [MaxLength(100)]
         [ValidEmail]
         public string Email { get; set; }
 

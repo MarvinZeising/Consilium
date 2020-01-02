@@ -6,11 +6,11 @@ namespace Entities.DataTransferObjects
     public class UpdatePersonGeneralDto
     {
         [Required]
-        [MaxLength(40)]
+        [ValidName]
         public string Firstname { get; set; }
 
         [Required]
-        [MaxLength(40)]
+        [ValidName]
         public string Lastname { get; set; }
 
         [Required]
