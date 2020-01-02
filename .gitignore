@@ -30,3 +30,4 @@ Client/app
 .vs/Consilium/xs/UserPrefs.xml
 *.bak
 internal_log.txt
+.vs

@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using NLog;
 using Repository;
 using Microsoft.IdentityModel.Logging;
+using Newtonsoft.Json;
 
 namespace Server
 {
@@ -84,7 +85,10 @@ namespace Server
 
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
             services.AddCors(options =>
             {
