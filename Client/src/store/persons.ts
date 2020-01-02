@@ -21,23 +21,32 @@ export default class PersonModule extends VuexModule {
     return this.getActivePerson?.id
   }
 
-  @Action
-  public async loadPersons(rawPersons?: Person[]) {
-    if (rawPersons === undefined) {
-      const response = await axios.get('/persons')
-      rawPersons = response.data
-    }
-    if (rawPersons === undefined) {
-      rawPersons = []
     }
 
-    const persons = rawPersons.map((data: Person) => {
+  @Action
+  public async loadPersons(rawPersons: Person[]) {
+    const persons = rawPersons.map((rawPerson: Person) => {
+      const participations = rawPerson.participations.map((x) => {
+        const participation = new ProjectParticipation(
+          x.id,
+          x.personId,
+          x.projectId,
+          x.roleId,
+          x.status,
+          x.createdTime,
+          x.lastUpdatedTime)
+
+        participation.project = x.project
+        participation.role = x.role
+        return participation
+      })
+
       return new Person(
-        data.id,
-        data.firstname,
-        data.lastname,
-        data.gender,
-      )
+        rawPerson.id,
+        rawPerson.firstname,
+        rawPerson.lastname,
+        rawPerson.gender,
+        participations)
     })
 
     const currentlyActivePerson = this.persons.find((x) => x.id === this.activePersonId)
