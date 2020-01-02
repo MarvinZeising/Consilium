@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System;
 using AutoMapper;
 using Contracts;
@@ -116,6 +114,16 @@ namespace Server.Controllers
         {
             try
             {
+                // TODO: delete topics
+                // TODO: delete articles
+                // TODO: delete shifts
+
+                var participations = _db.Participation.FindByCondition(x => x.ProjectId == projectId).ToList();
+                _db.Participation.Delete(participations);
+
+                var roles = _db.Role.FindByCondition(x => x.ProjectId == projectId).ToList();
+                _db.Role.Delete(roles);
+
                 _db.Project.Delete(new Project { Id = projectId });
                 _db.Save();
 

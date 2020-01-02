@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Contracts;
@@ -40,6 +41,11 @@ namespace Repository
         public void Delete(T entity)
         {
             RepositoryContext.Set<T>().Remove(entity);
+        }
+
+        public void Delete(IEnumerable<T> entities)
+        {
+            RepositoryContext.Set<T>().RemoveRange(entities);
         }
 
         public void Save()
