@@ -31,7 +31,6 @@
             <v-btn
               text
               class="mt-2"
-              @click=""
               v-t="'core.handle'"
             />
           </v-list-item-action>

@@ -32,7 +32,6 @@
             <v-btn
               text
               class="mt-2"
-              @click=""
               v-t="'core.edit'"
             />
           </v-list-item-action>

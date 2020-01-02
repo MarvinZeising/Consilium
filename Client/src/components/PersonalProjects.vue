@@ -40,7 +40,6 @@
               v-else
               icon
               class="mt-2"
-              @click=""
             >
               <v-icon>edit</v-icon>
             </v-btn>

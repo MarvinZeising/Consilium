@@ -9,15 +9,15 @@ export default class PersonModule extends VuexModule {
   public activePersonId: string | null = null
   public persons: Person[] = []
 
-  public get getPersons(): Person[] {
+  public get getPersons() {
     return this.persons
   }
 
-  public get getActivePerson(): Person | undefined {
+  public get getActivePerson() {
     return this.persons.find((x) => x.id === this.activePersonId)
   }
 
-  public get getActivePersonId(): string | undefined {
+  public get getActivePersonId() {
     return this.getActivePerson?.id
   }
 
