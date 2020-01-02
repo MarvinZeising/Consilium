@@ -18,6 +18,14 @@
       >
         <v-layout wrap>
 
+          <v-flex xs12>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.id'"
+            />
+            <p class="subtitle-1 grey--text">{{ projectModule.getActiveProject.id }}</p>
+          </v-flex>
+
           <v-flex xs6>
             <p
               class="caption mb-0 grey--text"
@@ -32,6 +40,26 @@
               v-t="'core.email'"
             />
             <p class="subtitle-1">{{ projectModule.getActiveProject.email }}</p>
+          </v-flex>
+
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.createdTime'"
+            />
+            <p class="subtitle-1 grey--text">
+              {{ formatDateTime(projectModule.getActiveProject.createdTime) }}
+            </p>
+          </v-flex>
+
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.lastUpdatedTime'"
+            />
+            <p class="subtitle-1 grey--text">
+              {{ formatDateTime(projectModule.getActiveProject.lastUpdatedTime) }}
+            </p>
           </v-flex>
 
         </v-layout>
@@ -95,6 +123,7 @@ import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../i18n'
 import ProjectModule from '../store/projects'
+import moment from 'moment'
 
 @Component
 export default class SettingsGeneral extends Vue {
@@ -114,6 +143,11 @@ export default class SettingsGeneral extends Vue {
     (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid')
   ]
 
+  private formatDateTime(datetime: string) {
+    return moment(datetime).format('ddd, MMM Do YYYY, h:mm a')
+    // TODO: store date format string in db
+    // TODO: set moment language
+  }
   private toggleEditMode() {
     this.editMode = !this.editMode
 

@@ -24,5 +24,7 @@
   "general": "Generelles",
   "dangerZone": "Gefahrenzone",
   "termsOfUse": "Nutzungsbedingungen",
-  "privacyPolicy": "Datenschutzerklärung"
+  "privacyPolicy": "Datenschutzerklärung",
+  "createdTime": "Erstellt am",
+  "lastUpdatedTime": "Zuletzt geändert am"
 }
