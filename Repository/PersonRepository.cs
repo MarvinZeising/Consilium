@@ -14,7 +14,7 @@ namespace Repository
         {
         }
 
-        public Person GetPersonById(Guid personId, bool includeParticipations = false)
+        public Person GetById(Guid personId, bool includeParticipations = false)
         {
             var query = FindByCondition(x => x.Id == personId);
 

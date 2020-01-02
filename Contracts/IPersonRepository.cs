@@ -5,6 +5,6 @@ namespace Contracts
 {
     public interface IPersonRepository : IRepositoryBase<Person>
     {
-        Person GetPersonById(Guid id, bool includeParticipations = false);
+        Person GetById(Guid id, bool includeParticipations = false);
     }
 }
