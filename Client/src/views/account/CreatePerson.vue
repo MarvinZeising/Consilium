@@ -134,6 +134,7 @@ export default class CreatePerson extends Vue {
   private nameRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
+    (v: string) => v.trim().length >= 2 || i18n.t('core.fieldMin', { count: 2 }),
     (v: string) => v.charAt(0) === v.charAt(0).toUpperCase() || i18n.t('core.fieldCamelCase')
   ]
 
