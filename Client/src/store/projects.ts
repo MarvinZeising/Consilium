@@ -121,12 +121,23 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Action({ commit: 'insertProject' })
-  public async createProject(project: Project): Promise<Project> {
+  public async createProject(project: {
+    name: string,
+    email: string,
+    personId: string
+  }): Promise<Project> {
     const response = await axios.post('/projects', {
       name: project.name,
-      email: project.email
+      email: project.email,
+      personId: this.context.getters.getActivePersonId,
     })
-    return response.data
+
+    const newProject = new Project(
+      response.data.id,
+      response.data.name,
+      response.data.email)
+
+    return newProject
   }
 
   @Action({ commit: 'removeProject' })

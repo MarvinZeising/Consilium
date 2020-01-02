@@ -110,10 +110,12 @@ import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
+import PersonModule from '../../store/persons'
 
 @Component
 export default class CreateProject extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
 
   private activeStep: number = 1
   private valid: boolean = false
@@ -147,14 +149,21 @@ export default class CreateProject extends Vue {
     const form: any = this.$refs.form
 
     if (form.validate()) {
-      const newProject = await this.projectModule.createProject({
-        id: '',
-        name: this.name,
-        email: this.email
-      })
+      const personId = this.personModule.getActivePersonId
+      if (personId !== undefined) {
+        const newProject = await this.projectModule.createProject({
+          name: this.name,
+          email: this.email,
+          personId,
+        })
 
-      // TODO: change to project overview route (or first steps to configure the project)
-      this.$router.push(`/project/${newProject.id}/calendar`)
+        this.$router.push({
+          name: 'settings',
+          params: { projectId: newProject.id }
+        })
+      } else {
+        this.$router.push({ name: 'home' })
+      }
     }
   }
 
