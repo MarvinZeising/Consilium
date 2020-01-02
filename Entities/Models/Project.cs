@@ -22,12 +22,12 @@ namespace Entities.Models
         [ValidEmail]
         public string Email { get; set; }
 
-        public ICollection<Participation> Participants { get; set; }
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; } = DateTime.UtcNow;
+
+        public ICollection<Participation> Participants { get; set; }
     }
 }

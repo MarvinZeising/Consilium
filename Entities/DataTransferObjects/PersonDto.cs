@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Entities.DataTransferObjects
 {
@@ -11,5 +12,6 @@ namespace Entities.DataTransferObjects
         public string Gender { get; set; }
         public Guid CongregationId { get; set; }
         public DateTime CreatedTime { get; set; }
+        public ICollection<ParticipationDto> Participations { get; set; }
     }
 }
