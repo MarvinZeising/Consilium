@@ -1,5 +1,7 @@
-﻿using Contracts;
+﻿using System;
+using Contracts;
 using Entities;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 
 namespace Repository
@@ -85,7 +87,19 @@ namespace Repository
 
         public void Save()
         {
-            _repositoryContext.SaveChanges();
+            using (IDbContextTransaction transaction = _repositoryContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    _repositoryContext.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    throw e;
+                }
+            }
         }
     }
 }
