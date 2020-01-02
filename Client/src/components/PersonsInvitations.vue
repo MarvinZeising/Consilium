@@ -52,7 +52,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../store/projects'
-import { Person, ProjectParticipationStatus, Gender } from '../models/definitions'
+import { Person, ParticipationStatus, Gender } from '../models/definitions'
 
 @Component
 export default class PersonsInvitations extends Vue {
@@ -62,7 +62,7 @@ export default class PersonsInvitations extends Vue {
     const projectId = this.$route.params.projectId
 
     return this.projectModule.getParticipations
-      .filter((p) => p.projectId === projectId && p.status === ProjectParticipationStatus.Invited)
+      .filter((p) => p.projectId === projectId && p.status === ParticipationStatus.Invited)
   }
 
   private  getPerson(personId: string) {

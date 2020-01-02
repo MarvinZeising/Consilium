@@ -47,7 +47,7 @@ export default class CancelJoinRequestDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   @Prop(String)
-  private readonly projectParticipationId?: string
+  private readonly participationId?: string
 
   private form: any = null
   private dialog: any = null
@@ -56,8 +56,8 @@ export default class CancelJoinRequestDialog extends Vue {
   private async cancelJoinRequest() {
     this.loading = true
 
-    if (this.projectParticipationId) {
-      await this.projectModule.cancelJoinRequest(this.projectParticipationId)
+    if (this.participationId) {
+      await this.projectModule.cancelJoinRequest(this.participationId)
     }
 
     this.dialog = false

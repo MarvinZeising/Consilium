@@ -4,8 +4,8 @@ import store from '../plugins/vuex'
 import router from '../router'
 import {
   Project,
-  ProjectParticipation,
-  ProjectParticipationStatus,
+  Participation,
+  ParticipationStatus,
   Person,
   Role
 } from '../models/definitions'
@@ -15,7 +15,7 @@ export default class ProjectModule extends VuexModule {
   public projects: Project[] = []
 
   // * for the active project
-  public participations: ProjectParticipation[] = []
+  public participations: Participation[] = []
   public participants: Person[] = []
   public roles: Role[] = []
 
@@ -88,22 +88,22 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Action
-  public async cancelJoinRequest(projectParticipationId: string) {
-    await axios.delete(`/project-participations/${projectParticipationId}`)
+  public async cancelJoinRequest(participationId: string) {
+    await axios.delete(`/project-participations/${participationId}`)
     await this.context.dispatch('loadProjects') // TODO: do manually
   }
 
   @Action
-  public async declineInvitation(projectParticipationId: string) {
-    await axios.delete(`/project-participations/${projectParticipationId}`)
+  public async declineInvitation(participationId: string) {
+    await axios.delete(`/project-participations/${participationId}`)
     await this.context.dispatch('loadProjects') // TODO: do manually
   }
 
   @Action
-  public async acceptInvitation(projectParticipationId: string) {
+  public async acceptInvitation(participationId: string) {
     await axios.put('/project-participations', {
-      id: projectParticipationId,
-      status: ProjectParticipationStatus.Active,
+      id: participationId,
+      status: ParticipationStatus.Active,
     })
     await this.context.dispatch('loadProjects') // TODO: do manually
   }
@@ -182,7 +182,7 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public async setParticipations(participations: ProjectParticipation[]) {
+  public async setParticipations(participations: Participation[]) {
     this.participations = participations
   }
 

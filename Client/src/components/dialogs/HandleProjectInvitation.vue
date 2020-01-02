@@ -54,7 +54,7 @@ export default class HandleProjectInvitationDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   @Prop(String)
-  private readonly projectParticipationId?: string
+  private readonly participationId?: string
 
   private form: any = null
   private dialog: any = null
@@ -63,8 +63,8 @@ export default class HandleProjectInvitationDialog extends Vue {
   private async acceptInvitation() {
     this.loading = true
 
-    if (this.projectParticipationId) {
-      await this.projectModule.acceptInvitation(this.projectParticipationId)
+    if (this.participationId) {
+      await this.projectModule.acceptInvitation(this.participationId)
     }
 
     this.dialog = false
@@ -73,8 +73,8 @@ export default class HandleProjectInvitationDialog extends Vue {
   private async declineInvitation() {
     this.loading = true
 
-    if (this.projectParticipationId) {
-      await this.projectModule.declineInvitation(this.projectParticipationId)
+    if (this.participationId) {
+      await this.projectModule.declineInvitation(this.participationId)
     }
 
     this.dialog = false

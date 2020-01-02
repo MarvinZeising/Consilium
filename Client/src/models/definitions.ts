@@ -27,14 +27,14 @@ class Person {
   public firstname: string
   public lastname: string
   public gender: Gender
-  public participations: ProjectParticipation[]
+  public participations: Participation[]
 
   constructor(
     id: string,
     firstname: string,
     lastname: string,
     gender: Gender,
-    participations: ProjectParticipation[]
+    participations: Participation[]
   ) {
     this.id = id
     this.firstname = firstname
@@ -53,7 +53,7 @@ class Project {
   public id: string
   public name: string
   public email: string
-  public participations?: ProjectParticipation[]
+  public participations?: Participation[]
   public roles?: Role[]
   public createdTime: string
   public lastUpdatedTime: string
@@ -67,19 +67,19 @@ class Project {
   }
 }
 
-enum ProjectParticipationStatus {
+enum ParticipationStatus {
   Invited = 'Invited',
   Requested = 'Requested',
   Active = 'Active',
   Inactive = 'Inactive',
 }
 
-class ProjectParticipation {
+class Participation {
   public id: string
   public personId: string
   public projectId: string
   public roleId: string
-  public status: ProjectParticipationStatus
+  public status: ParticipationStatus
   public createdTime: string
   public lastUpdatedTime: string
   public project?: Project
@@ -90,7 +90,7 @@ class ProjectParticipation {
     personId: string,
     projectId: string,
     roleId: string,
-    status: ProjectParticipationStatus,
+    status: ParticipationStatus,
     createdTime: string,
     lastUpdatedTime: string,
   ) {
@@ -172,8 +172,8 @@ export {
   Person,
   Gender,
   Project,
-  ProjectParticipation,
-  ProjectParticipationStatus,
+  Participation,
+  ParticipationStatus,
   Role,
   Topic,
   Article,

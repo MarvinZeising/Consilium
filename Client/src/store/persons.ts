@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import router from '../router'
-import { Person, Gender, Project, ProjectParticipation } from '../models/definitions'
+import { Person, Gender, Project, Participation } from '../models/definitions'
 import store from '../plugins/vuex'
 
 @Module({ dynamic: true, store, name: 'PersonModule' })
@@ -32,7 +32,7 @@ export default class PersonModule extends VuexModule {
   public async loadPersons(rawPersons: Person[]) {
     const persons = rawPersons.map((rawPerson: Person) => {
       const participations = rawPerson.participations.map((x) => {
-        const participation = new ProjectParticipation(
+        const participation = new Participation(
           x.id,
           x.personId,
           x.projectId,
