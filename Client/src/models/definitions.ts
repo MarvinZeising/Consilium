@@ -78,22 +78,29 @@ class ProjectParticipation {
   public id: string
   public personId: string
   public projectId: string
-  public createdDate: string
+  public roleId: string
   public status: ProjectParticipationStatus
+  public createdTime: string
+  public lastUpdatedTime: string
   public project?: Project
+  public role?: Role
 
   constructor(
     id: string,
     personId: string,
     projectId: string,
-    createdDate: string,
-    status: ProjectParticipationStatus
+    roleId: string,
+    status: ProjectParticipationStatus,
+    createdTime: string,
+    lastUpdatedTime: string,
   ) {
     this.id = id
     this.personId = personId
     this.projectId = projectId
-    this.createdDate = createdDate
+    this.roleId = roleId
     this.status = status
+    this.createdTime = createdTime
+    this.lastUpdatedTime = lastUpdatedTime
   }
 }
 
