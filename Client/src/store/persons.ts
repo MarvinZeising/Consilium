@@ -107,7 +107,7 @@ export default class PersonModule extends VuexModule {
     this.context.commit('setActivePersonId', personId)
 
     if (personId) {
-      this.context.dispatch('loadProjects')
+      await this.context.dispatch('loadProjects')
 
       const projectId = router.currentRoute.params.projectId
       if (projectId !== undefined
