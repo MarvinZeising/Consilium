@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import router from '../router'
-import { Person, Gender, Project } from '../models/definitions'
+import { Person, Gender, Project, ProjectParticipation } from '../models/definitions'
 import store from '../plugins/vuex'
 
 @Module({ dynamic: true, store, name: 'PersonModule' })
@@ -78,7 +78,8 @@ export default class PersonModule extends VuexModule {
       response.data.id,
       response.data.firstname,
       response.data.lastname,
-      Gender.Male)
+      Gender.Male,
+      [])
 
     this.context.commit('insertPerson', newPerson)
     await this.context.dispatch('activatePerson', newPerson.id)

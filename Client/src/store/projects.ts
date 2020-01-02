@@ -114,7 +114,11 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Action({ commit: 'setGeneral' })
-  public async updateProjectGeneral(project: Project) {
+  public async updateProjectGeneral(project: {
+    id: string,
+    name: string,
+    email: string
+  }) {
     await axios.put(`/projects/${project.id}`, {
       name: project.name,
       email: project.email
@@ -137,7 +141,9 @@ export default class ProjectModule extends VuexModule {
     const newProject = new Project(
       response.data.id,
       response.data.name,
-      response.data.email)
+      response.data.email,
+      '',
+      '')
 
     return newProject
   }
