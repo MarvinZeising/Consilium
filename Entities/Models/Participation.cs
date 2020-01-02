@@ -5,7 +5,7 @@ using Entities.Validators;
 
 namespace Entities.Models
 {
-    [Table("particiaption")]
+    [Table("participation")]
     public class Participation
     {
         [Key]

@@ -9,6 +9,9 @@ namespace Repository
         private RepositoryContext _repositoryContext;
         private IUserRepository _user;
         private IPersonRepository _person;
+        private IProjectRepository _project;
+        private IParticipationRepository _participation;
+        private IRoleRepository _role;
 
         public IUserRepository User
         {
@@ -31,6 +34,42 @@ namespace Repository
                     _person = new PersonRepository(_repositoryContext);
                 }
                 return _person;
+            }
+        }
+
+        public IProjectRepository Project
+        {
+            get
+            {
+                if (_project == null)
+                {
+                    _project = new ProjectRepository(_repositoryContext);
+                }
+                return _project;
+            }
+        }
+
+        public IParticipationRepository Participation
+        {
+            get
+            {
+                if (_participation == null)
+                {
+                    _participation = new ParticipationRepository(_repositoryContext);
+                }
+                return _participation;
+            }
+        }
+
+        public IRoleRepository Role
+        {
+            get
+            {
+                if (_role == null)
+                {
+                    _role = new RoleRepository(_repositoryContext);
+                }
+                return _role;
             }
         }
 
