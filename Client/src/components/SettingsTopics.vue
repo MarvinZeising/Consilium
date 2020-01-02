@@ -13,10 +13,7 @@
         v-t="'knowledgeBase.topicsDescription'"
       />
       <v-list>
-        <v-list-item
-          class="warning"
-          v-if="getTopics.length === 0"
-        >
+        <v-list-item v-if="getTopics.length === 0">
           <span v-t="'knowledgeBase.noTopics'" />
         </v-list-item>
         <v-list-item
