@@ -27,12 +27,20 @@ class Person {
   public firstname: string
   public lastname: string
   public gender: Gender
+  public participations: ProjectParticipation[]
 
-  constructor(id: string, firstname: string, lastname: string, gender: Gender) {
+  constructor(
+    id: string,
+    firstname: string,
+    lastname: string,
+    gender: Gender,
+    participations: ProjectParticipation[]
+  ) {
     this.id = id
     this.firstname = firstname
     this.lastname = lastname
     this.gender = gender
+    this.participations = participations
   }
 
   public fullName() {
