@@ -6,7 +6,7 @@
       v-t="'core.general'"
     />
     <v-card
-      v-if="projectModule.getActiveProject"
+      :loading="loading"
       flat
       class="ma-2 mb-5"
     >
@@ -16,7 +16,10 @@
         v-if="!editMode"
         class="text--primary"
       >
-        <v-layout wrap>
+        <v-layout
+          v-if="projectModule.getActiveProject"
+          wrap
+        >
 
           <v-flex xs12>
             <p
@@ -129,6 +132,7 @@ import moment from 'moment'
 export default class SettingsGeneral extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
+  private loading: boolean = true
   private editMode: boolean = false
 
   private name: string = this.projectModule.getActiveProject?.name || ''
@@ -148,6 +152,14 @@ export default class SettingsGeneral extends Vue {
     // TODO: store date format string in db
     // TODO: set moment language
   }
+
+  private async created() {
+    const projectId = this.$route.params.projectId
+    await this.projectModule.loadProject(projectId)
+
+    this.loading = false
+  }
+
   private toggleEditMode() {
     this.editMode = !this.editMode
 
