@@ -7,6 +7,8 @@ using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Entities.Enums;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Server.Controllers
 {
@@ -27,6 +29,52 @@ namespace Server.Controllers
             _db = db;
             _logger = logger;
             _mapper = mapper;
+        }
+
+        [HttpGet("{projectId}/roles")]
+        public ActionResult<IEnumerable<RoleDto>> GetProjectRoles(Guid projectId)
+        {
+            try
+            {
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
+                var persons = _db.Person
+                    .FindByCondition(x => x.UserId == new Guid(userId))
+                    .ToList(); // TODO: add permission check
+
+                var roles = _db.Role
+                    .FindByCondition(x => x.ProjectId == projectId)
+                    .ToList();
+
+                return Ok(_mapper.Map<IEnumerable<RoleDto>>(roles));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in GetProjectRoles: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("{projectId}/participations")]
+        public ActionResult<IEnumerable<ParticipationDto>> GetProjectParticipations(Guid projectId)
+        {
+            try
+            {
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
+                var persons = _db.Person
+                    .FindByCondition(x => x.UserId == new Guid(userId))
+                    .ToList(); // TODO: add permission check
+
+                var participations = _db.Participation
+                    .FindByCondition(x => x.ProjectId == projectId)
+                    .ToList();
+
+                return Ok(_mapper.Map<IEnumerable<ParticipationDto>>(participations));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in GetProjectParticipations: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]
