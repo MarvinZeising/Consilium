@@ -53,11 +53,17 @@ class Project {
   public id: string
   public name: string
   public email: string
+  public participations?: ProjectParticipation[]
+  public roles?: Role[]
+  public createdTime: string
+  public lastUpdatedTime: string
 
-  constructor(id: string, name: string, email: string) {
+  constructor(id: string, name: string, email: string, createdTime: string, lastUpdatedTime: string) {
     this.id = id
     this.name = name
     this.email = email
+    this.createdTime = createdTime
+    this.lastUpdatedTime = lastUpdatedTime
   }
 }
 
