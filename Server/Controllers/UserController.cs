@@ -7,6 +7,7 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Controllers
 {
@@ -92,7 +93,12 @@ namespace Server.Controllers
             try
             {
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
-                var user = _db.User.GetById(new Guid(userId), includePersons: true);
+
+                var user = _db.User
+                    .FindByCondition(x => x.Id == new Guid(userId))
+                    .Include(x => x.Persons).ThenInclude(x => x.Participations).ThenInclude(x => x.Project)
+                    .Include(x => x.Persons).ThenInclude(x => x.Participations).ThenInclude(x => x.Role)
+                    .SingleOrDefault();
 
                 return Ok(_mapper.Map<UserDto>(user));
             }

@@ -31,28 +31,6 @@ namespace Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{personId}/participations")]
-        public ActionResult<IEnumerable<ParticipationDto>> GetPersonParticipations(Guid personId)
-        {
-            try
-            {
-                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
-                if (!_db.Person.BelongsToUser(personId, userId)) return Forbid();
-
-                var participations = _db.Participation
-                    .FindByCondition(x => x.PersonId == personId)
-                    .Include(x => x.Project)
-                    .ToList();
-
-                return Ok(_mapper.Map<IEnumerable<ParticipationDto>>(participations));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"ERROR in GetPersonParticipations: {e.Message}");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
         [HttpPost]
         public IActionResult CreatePerson([FromBody] CreatePersonDto dto)
         {
