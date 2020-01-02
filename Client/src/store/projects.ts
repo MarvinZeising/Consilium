@@ -59,24 +59,11 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Action
-  public async loadProjects() {
-    const personId = this.context.getters.getActivePersonId
+  public async loadProject(projectId: string) {
+    const response = await axios.get(`/projects/${projectId}`)
+    const project: Project = response.data
 
-    const response = await axios.get(`/persons/${personId}/participations`)
-    const projectParticipations: ProjectParticipation[] = response.data
-
-    const projects: Project[] = []
-    for (const projectParticipation of projectParticipations) {
-      if (projectParticipation.project) {
-        projects.push(new Project(
-          projectParticipation.project.id,
-          projectParticipation.project.name,
-          projectParticipation.project.email))
-      }
-    }
-
-    this.context.commit('setParticipations', projectParticipations)
-    this.context.commit('setProjects', projects)
+    this.context.commit('addProject', project)
   }
 
   @Action({ commit: 'setRoles' })
@@ -97,19 +84,19 @@ export default class ProjectModule extends VuexModule {
 
     await axios.post('/project-participations/request', { personId, projectId })
 
-    await this.context.dispatch('loadProjects')
+    await this.context.dispatch('loadProjects') // TODO: do manually
   }
 
   @Action
   public async cancelJoinRequest(projectParticipationId: string) {
     await axios.delete(`/project-participations/${projectParticipationId}`)
-    await this.context.dispatch('loadProjects')
+    await this.context.dispatch('loadProjects') // TODO: do manually
   }
 
   @Action
   public async declineInvitation(projectParticipationId: string) {
     await axios.delete(`/project-participations/${projectParticipationId}`)
-    await this.context.dispatch('loadProjects')
+    await this.context.dispatch('loadProjects') // TODO: do manually
   }
 
   @Action
@@ -118,7 +105,7 @@ export default class ProjectModule extends VuexModule {
       id: projectParticipationId,
       status: ProjectParticipationStatus.Active,
     })
-    await this.context.dispatch('loadProjects')
+    await this.context.dispatch('loadProjects') // TODO: do manually
   }
 
   @MutationAction({ mutate: ['projects'] })
@@ -164,6 +151,23 @@ export default class ProjectModule extends VuexModule {
   @Mutation
   public async setProjects(projects: Project[]) {
     this.projects = projects
+  }
+
+  @Mutation
+  public async addProject(project: Project) {
+    if (this.projects.filter((x) => x.id === project.id).length > 0) {
+      this.projects = this.projects.map((p) => {
+        if (p.id === project.id) {
+          p.name = project.name
+          p.email = project.email
+          p.createdTime = project.createdTime
+          p.lastUpdatedTime = project.lastUpdatedTime
+        }
+        return p
+      })
+    } else {
+      this.projects.push(project)
+    }
   }
 
   @Mutation

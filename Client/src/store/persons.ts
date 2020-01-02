@@ -106,15 +106,7 @@ export default class PersonModule extends VuexModule {
   public async activatePerson(personId: string | null) {
     this.context.commit('setActivePersonId', personId)
 
-    if (personId) {
-      await this.context.dispatch('loadProjects')
-
-      const projectId = router.currentRoute.params.projectId
-      if (projectId !== undefined
-          && !this.context.getters.getProjects.find((x: Project) => x.id === projectId)) {
-        router.push({ name: 'home' })
-      }
-    } else {
+    if (!personId) {
       await this.context.dispatch('clearProjects')
     }
   }
