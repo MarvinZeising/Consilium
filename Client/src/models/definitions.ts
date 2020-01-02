@@ -66,6 +66,7 @@ class ProjectParticipation {
   public projectId: string
   public createdDate: string
   public status: ProjectParticipationStatus
+  public project?: Project
 
   constructor(
     id: string,

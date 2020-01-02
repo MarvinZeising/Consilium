@@ -51,29 +51,34 @@ export default class ProjectModule extends VuexModule {
   public async loadProjects() {
     const personId = this.context.getters.getActivePersonId
 
-    const response = await axios.get(`/project-participations/${personId}`)
+    const response = await axios.get(`/persons/${personId}/participations`)
     const projectParticipations: ProjectParticipation[] = response.data
 
     const projects: Project[] = []
-    const persons: Person[] = []
     for (const projectParticipation of projectParticipations) {
-      const projectResponse = await axios.get(`/projects/${projectParticipation.projectId}`)
-      const project: Project = projectResponse.data
-      projects.push(project)
+      if (projectParticipation.project) {
+        const project: Project = new Project(
+          projectParticipation.project.id,
+          projectParticipation.project.name,
+          projectParticipation.project.email)
+        projects.push(project)
+      }
 
-      const personResponse = await axios.get(`/persons/${projectParticipation.personId}`)
-      const person = new Person(
-        personResponse.data.id,
-        personResponse.data.firstname,
-        personResponse.data.lastname,
-        personResponse.data.gender,
-      )
-      persons.push(person)
+      // const personResponse = await axios.get(`/persons/${projectParticipation.personId}`)
+      // const person = new Person(
+      //   personResponse.data.id,
+      //   personResponse.data.firstname,
+      //   personResponse.data.lastname,
+      //   personResponse.data.gender,
+      // )
+      // persons.push(person)
     }
 
     this.context.commit('setParticipations', projectParticipations)
     this.context.commit('setProjects', projects)
-    this.context.commit('setPersons', persons)
+
+    // TODO: load participants on persons (participants) route
+    // this.context.commit('setParticipants', persons)
   }
 
   @Action
@@ -152,7 +157,7 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public async setPersons(persons: Person[]) {
+  public async setParticipants(persons: Person[]) {
     this.persons = persons
   }
 
