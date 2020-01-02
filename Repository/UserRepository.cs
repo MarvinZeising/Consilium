@@ -92,7 +92,7 @@ namespace Repository
             return true;
         }
 
-        public User GetUserById(Guid id, bool includePersons = false)
+        public User GetById(Guid id, bool includePersons = false)
         {
             var query = FindByCondition(x => x.Id == id);
 
