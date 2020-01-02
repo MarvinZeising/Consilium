@@ -16,6 +16,8 @@ namespace Server
 
             CreateMap<Project, ProjectDto>();
             CreateMap<CreateProjectDto, Project>();
+
+            CreateMap<Participation, ParticipationDto>();
         }
     }
 }

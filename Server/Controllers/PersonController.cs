@@ -6,6 +6,9 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Server.Controllers
 {
@@ -26,6 +29,32 @@ namespace Server.Controllers
             _db = db;
             _logger = logger;
             _mapper = mapper;
+        }
+
+        [HttpGet("{personId}/participations")]
+        public ActionResult<IEnumerable<ParticipationDto>> GetPersonParticipations(Guid personId)
+        {
+            try
+            {
+                var person = _db.Person.GetById(personId);
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
+                if (person.UserId != new Guid(userId))
+                {
+                    return Forbid();
+                }
+
+                var participations = _db.Participation
+                    .FindByCondition(x => x.PersonId == personId)
+                    .Include(x => x.Project)
+                    .ToList();
+
+                return Ok(_mapper.Map<IEnumerable<ParticipationDto>>(participations));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in GetPersonParticipations: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]
