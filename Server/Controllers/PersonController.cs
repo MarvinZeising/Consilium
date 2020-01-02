@@ -69,9 +69,9 @@ namespace Server.Controllers
                 var person = _db.Person.GetById(personId);
 
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
-                if (!person.UserId.Equals(userId))
+                if (person.UserId != new Guid(userId))
                 {
-                    return BadRequest();
+                    return Forbid();
                 }
 
                 person.Firstname = dto.Firstname;
