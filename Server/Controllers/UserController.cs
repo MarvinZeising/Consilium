@@ -51,16 +51,10 @@ namespace Server.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
+                if (!ModelState.IsValid) return BadRequest();
 
                 var token = _db.User.Authenticate(dto.Email, dto.Password);
-                if (token == null)
-                {
-                    return BadRequest();
-                }
+                if (token == null) return BadRequest();
 
                 return Ok(token);
             }
@@ -77,10 +71,7 @@ namespace Server.Controllers
         {
             try
             {
-                if (dto == null || !ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
+                if (!ModelState.IsValid) return BadRequest();
 
                 var user = _mapper.Map<User>(dto);
 
@@ -117,10 +108,7 @@ namespace Server.Controllers
         {
             try
             {
-                if (dto == null || !ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
+                if (!ModelState.IsValid) return BadRequest();
 
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
                 var user = _db.User.GetById(new Guid(userId));
@@ -144,10 +132,7 @@ namespace Server.Controllers
         {
             try
             {
-                if (dto == null || !ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
+                if (!ModelState.IsValid) return BadRequest();
 
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
                 var user = _db.User.GetById(new Guid(userId));
@@ -172,18 +157,12 @@ namespace Server.Controllers
         {
             try
             {
-                if (dto == null || !ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
+                if (!ModelState.IsValid) return BadRequest();
 
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
 
                 var success = _db.User.ChangePassword(new Guid(userId), dto.OldPassword, dto.NewPassword);
-                if (success)
-                {
-                    return NoContent();
-                }
+                if (success) return NoContent();
 
                 return BadRequest();
             }

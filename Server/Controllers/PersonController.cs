@@ -36,12 +36,8 @@ namespace Server.Controllers
         {
             try
             {
-                var person = _db.Person.GetById(personId);
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
-                if (person.UserId != new Guid(userId))
-                {
-                    return Forbid();
-                }
+                if (!_db.Person.BelongsToUser(personId, userId)) return Forbid();
 
                 var participations = _db.Participation
                     .FindByCondition(x => x.PersonId == personId)
@@ -62,10 +58,7 @@ namespace Server.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
+                if (!ModelState.IsValid) return BadRequest();
 
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
                 var person = _mapper.Map<Person>(dto);
@@ -90,18 +83,12 @@ namespace Server.Controllers
         {
             try
             {
-                if (dto == null || !ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
-
-                var person = _db.Person.GetById(personId);
+                if (!ModelState.IsValid) return BadRequest();
 
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
-                if (person.UserId != new Guid(userId))
-                {
-                    return Forbid();
-                }
+                if (!_db.Person.BelongsToUser(personId, userId)) return Forbid();
+
+                var person = _db.Person.GetById(personId);
 
                 person.Firstname = dto.Firstname;
                 person.Lastname = dto.Lastname;
@@ -124,15 +111,10 @@ namespace Server.Controllers
         {
             try
             {
-                var person = _db.Person.GetById(personId);
-
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
-                if (person.UserId != new Guid(userId))
-                {
-                    return Forbid();
-                }
+                if (!_db.Person.BelongsToUser(personId, userId)) return Forbid();
 
-                _db.Person.Delete(person);
+                _db.Person.Delete(new Person { Id = personId });
                 _db.Save();
 
                 return NoContent();

@@ -39,7 +39,8 @@ namespace Server.Controllers
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
                 var persons = _db.Person
                     .FindByCondition(x => x.UserId == new Guid(userId))
-                    .ToList(); // TODO: add permission check
+                    .ToList();
+                // TODO: check permissions
 
                 var roles = _db.Role
                     .FindByCondition(x => x.ProjectId == projectId)
@@ -62,7 +63,8 @@ namespace Server.Controllers
                 var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
                 var persons = _db.Person
                     .FindByCondition(x => x.UserId == new Guid(userId))
-                    .ToList(); // TODO: add permission check
+                    .ToList();
+                // TODO: check permissions
 
                 var participations = _db.Participation
                     .FindByCondition(x => x.ProjectId == projectId)
@@ -82,16 +84,10 @@ namespace Server.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
+                if (!ModelState.IsValid) return BadRequest();
 
                 var person = _db.Person.FindByCondition(x => x.Id == dto.PersonId).SingleOrDefault();
-                if (person == null)
-                {
-                    return BadRequest();
-                }
+                if (person == null) return BadRequest();
 
                 var project = _mapper.Map<Project>(dto);
                 _db.Project.Create(project);
@@ -135,10 +131,8 @@ namespace Server.Controllers
         {
             try
             {
-                if (dto == null || !ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
+                if (!ModelState.IsValid) return BadRequest();
+                // TODO: check permissions
 
                 var project = _db.Project.GetById(projectId);
 
@@ -162,6 +156,8 @@ namespace Server.Controllers
         {
             try
             {
+                // TODO: check permissions
+
                 // TODO: delete topics
                 // TODO: delete articles
                 // TODO: delete shifts
