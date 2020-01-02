@@ -111,7 +111,7 @@ export default class SettingsGeneral extends Vue {
   private email: string = this.projectModule.getActiveProject?.email || ''
   private emailRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid')
+    (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid')
   ]
 
   private toggleEditMode() {

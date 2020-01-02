@@ -91,7 +91,7 @@ export default class SignIn extends Vue {
   private email: string = ''
   private emailRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid')
+    (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid')
   ]
 
   private password: string = ''

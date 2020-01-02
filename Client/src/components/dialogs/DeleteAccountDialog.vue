@@ -82,7 +82,7 @@ export default class DeleteAccountDialog extends Vue {
   private get emailRules() {
     return [
       (v: string) => !!v || i18n.t('core.fieldRequired'),
-      (v: string) => /.+@.+/.test(v) || i18n.t('core.emailInvalid'),
+      (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid'),
       (v: string) => v === this.accountEmail || i18n.t('account.emailMustEqual')
     ]
   }
