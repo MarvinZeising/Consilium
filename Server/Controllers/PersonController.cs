@@ -70,6 +70,12 @@ namespace Server.Controllers
 
                 var person = _db.Person.GetById(personId);
 
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
+                if (!person.UserId.Equals(userId))
+                {
+                    return BadRequest();
+                }
+
                 person.Firstname = dto.Firstname;
                 person.Lastname = dto.Lastname;
                 person.Gender = dto.Gender;
@@ -91,7 +97,15 @@ namespace Server.Controllers
         {
             try
             {
-                _db.Person.Delete(new Person { Id = personId });
+                var person = _db.Person.GetById(personId);
+
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
+                if (person.UserId != new Guid(userId))
+                {
+                    return Forbid();
+                }
+
+                _db.Person.Delete(person);
                 _db.Save();
 
                 return NoContent();
