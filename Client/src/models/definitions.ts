@@ -116,6 +116,7 @@ class Role {
   public rolesWrite: boolean
   public settingsRead: boolean
   public settingsWrite: boolean
+  public editable: boolean
 
   constructor(
     id: string,
@@ -128,7 +129,8 @@ class Role {
     rolesRead: boolean,
     rolesWrite: boolean,
     settingsRead: boolean,
-    settingsWrite: boolean
+    settingsWrite: boolean,
+    editable: boolean
   ) {
     this.id = id
     this.projectId = projectId
@@ -141,6 +143,7 @@ class Role {
     this.rolesWrite = rolesWrite
     this.settingsRead = settingsRead
     this.settingsWrite = settingsWrite
+    this.editable = editable
   }
 }
 

@@ -31,6 +31,7 @@
           </v-list-item-content>
           <v-list-item-action>
             <v-btn
+              v-if="role.editable"
               icon
               class="ma-0"
               @click="editRole(role.id)"

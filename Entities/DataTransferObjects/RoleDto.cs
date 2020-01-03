@@ -15,6 +15,7 @@ namespace Entities.DataTransferObjects
         public bool RolesWrite { get; set; }
         public bool SettingsRead { get; set; }
         public bool SettingsWrite { get; set; }
+        public bool Editable { get; set; }
         public DateTime CreatedTime { get; set; }
         public DateTime LastUpdatedTime { get; set; }
         public ProjectDto Project { get; set; }

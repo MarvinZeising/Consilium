@@ -119,6 +119,7 @@ namespace Server.Controllers
                     RolesWrite = true,
                     SettingsRead = true,
                     SettingsWrite = true,
+                    Editable = false,
                 };
                 _db.Role.Create(role);
 

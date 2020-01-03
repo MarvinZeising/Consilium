@@ -45,6 +45,9 @@ namespace Entities.Models
         [Required]
         public bool SettingsWrite { get; set; }
 
+        [Required]
+        public bool Editable { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
 
