@@ -9,7 +9,10 @@
       <SettingsRoles />
 
       <!--//* Danger Zone -->
-      <v-flex xs12 sm10 md8 lg6 xl4>
+      <v-flex
+        v-if="canView"
+        xs12 sm10 md8 lg6 xl4
+      >
         <h2
           class="headline mb-3"
           v-t="'core.dangerZone'"
@@ -33,6 +36,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../../store/projects'
+import PersonModule from '../../store/persons'
 import { Project, Topic } from '../../models/definitions'
 import KnowledgeBaseModule from '../../store/knowledgeBase'
 import SettingsGeneral from '../../components/SettingsGeneral.vue'
@@ -50,5 +54,11 @@ import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vu
 })
 export default class Settings extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
+
+  private get canView() {
+    return this.personModule.getActiveRole?.settingsWrite === true
+  }
+
 }
 </script>
