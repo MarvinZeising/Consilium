@@ -105,6 +105,32 @@ export default class ProjectModule extends VuexModule {
     return response.data
   }
 
+  @Action({ commit: 'changeRole' })
+  public async updateRole(data: {
+    roleId: string,
+    name: string,
+    settings: string,
+    roles: string,
+    participants: string,
+    knowledgeBase: string,
+  }) {
+    const response = await axios.put('/projects/roles', {
+      personId: this.context.getters.getActivePersonId,
+      projectId: router.currentRoute.params.projectId,
+      roleId: data.roleId,
+      name: data.name,
+      settingsRead: data.settings !== 'none',
+      settingsWrite: data.settings === 'write',
+      rolesRead: data.roles !== 'none',
+      rolesWrite: data.roles === 'write',
+      participantsRead: data.participants !== 'none',
+      participantsWrite: data.participants === 'write',
+      knowledgeBaseRead: data.knowledgeBase !== 'none',
+      knowledgeBaseWrite: data.knowledgeBase === 'write',
+    })
+    return response.data
+  }
+
   @Action
   public async joinProject(projectId: string) {
     const personId = this.context.getters.getActivePersonId
@@ -222,6 +248,24 @@ export default class ProjectModule extends VuexModule {
   @Mutation
   protected addRole(role: Role) {
     this.roles.push(role)
+  }
+
+  @Mutation
+  protected changeRole(role: Role) {
+    this.roles = this.roles.map((x) => {
+      if (x.id === role.id) {
+        x.name = role.name
+        x.settingsRead = role.settingsRead
+        x.settingsWrite = role.settingsWrite
+        x.rolesRead = role.rolesRead
+        x.rolesWrite = role.rolesWrite
+        x.participantsRead = role.participantsRead
+        x.participantsWrite = role.participantsWrite
+        x.knowledgeBaseRead = role.knowledgeBaseRead
+        x.knowledgeBaseWrite = role.knowledgeBaseWrite
+      }
+      return x
+    })
   }
 
   @Mutation

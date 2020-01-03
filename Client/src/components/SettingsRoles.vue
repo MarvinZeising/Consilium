@@ -1,5 +1,8 @@
 <template>
-  <v-flex xs12 sm10 md8 lg6 xl4>
+  <v-flex
+    v-if="canView"
+    xs12 sm10 md8 lg6 xl4
+  >
     <h2
       class="headline mb-3"
       v-t="'project.role.roles'"
@@ -27,17 +30,20 @@
         >
           <v-list-item-content>
             <v-list-item-title v-text="role.name" />
-            <v-list-item-subtitle v-text="getNumberOfPermits(role.id)" />
+            <v-list-item-subtitle>
+              {{
+                $tc('project.role.xParticipants', getPermitCount(role.id), {
+                  count: getPermitCount(role.id)
+                })
+              }}
+            </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn
-              v-if="role.editable"
-              icon
-              class="ma-0"
-              @click="editRole(role.id)"
-            >
-              <v-icon>edit</v-icon>
-            </v-btn>
+            <UpdateRoleDialog
+              v-if="canEdit"
+              :role="role"
+              :canBeDeleted="getPermitCount(role.id) === 0"
+            />
           </v-list-item-action>
         </v-list-item>
       </v-list>
@@ -55,11 +61,13 @@ import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../store/projects'
 import { Role } from '../models/definitions'
 import CreateRoleDialog from '../components/dialogs/CreateRoleDialog.vue'
+import UpdateRoleDialog from '../components/dialogs/UpdateRoleDialog.vue'
 import PersonModule from '../store/persons'
 
 @Component({
   components: {
     CreateRoleDialog,
+    UpdateRoleDialog,
   }
 })
 export default class SettingsRoles extends Vue {
@@ -84,12 +92,8 @@ export default class SettingsRoles extends Vue {
     this.loading = false
   }
 
-  private editRole(roleId: string) {
-  }
-
-  private getNumberOfPermits(roleId: string) {
-    const count = this.projectModule.getParticipations.filter((x) => x.roleId === roleId).length
-    return this.$tc('project.xParticipants', count, { count })
+  private getPermitCount(roleId: string) {
+    return this.projectModule.getParticipations.filter((x) => x.roleId === roleId).length
   }
 
 }
