@@ -9,6 +9,7 @@ import {
   Person,
   Role
 } from '../models/definitions'
+import KnowledgeBaseModule from './knowledgeBase'
 
 @Module({ dynamic: true, store, name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
@@ -78,6 +79,30 @@ export default class ProjectModule extends VuexModule {
   public async loadParticipations(projectId: string) {
     const personId = this.context.getters.getActivePersonId
     const response = await axios.get(`/projects/${projectId}/${personId}/participations`)
+    return response.data
+  }
+
+  @Action({ commit: 'addRole' })
+  public async createRole(data: {
+    name: string,
+    settings: string,
+    roles: string,
+    participants: string,
+    knowledgeBase: string,
+  }) {
+    const response = await axios.post('/projects/roles', {
+      personId: this.context.getters.getActivePersonId,
+      projectId: router.currentRoute.params.projectId,
+      name: data.name,
+      settingsRead: data.settings !== 'none',
+      settingsWrite: data.settings === 'write',
+      rolesRead: data.roles !== 'none',
+      rolesWrite: data.roles === 'write',
+      participantsRead: data.participants !== 'none',
+      participantsWrite: data.participants === 'write',
+      knowledgeBaseRead: data.knowledgeBase !== 'none',
+      knowledgeBaseWrite: data.knowledgeBase === 'write',
+    })
     return response.data
   }
 
@@ -181,18 +206,23 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public async setParticipants(persons: Person[]) {
+  protected setParticipants(persons: Person[]) {
     this.participants = persons
   }
 
   @Mutation
-  public async setParticipations(participations: Participation[]) {
+  protected setParticipations(participations: Participation[]) {
     this.participations = participations
   }
 
   @Mutation
-  public async setRoles(roles: Role[]) {
+  protected setRoles(roles: Role[]) {
     this.roles = roles
+  }
+
+  @Mutation
+  protected addRole(role: Role) {
+    this.roles.push(role)
   }
 
   @Mutation
