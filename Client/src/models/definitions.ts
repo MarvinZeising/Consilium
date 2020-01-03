@@ -112,6 +112,8 @@ class Role {
   public knowledgeBaseWrite: boolean
   public participantsRead: boolean
   public participantsWrite: boolean
+  public rolesRead: boolean
+  public rolesWrite: boolean
   public settingsRead: boolean
   public settingsWrite: boolean
 
@@ -123,6 +125,8 @@ class Role {
     knowledgeBaseWrite: boolean,
     participantsRead: boolean,
     participantsWrite: boolean,
+    rolesRead: boolean,
+    rolesWrite: boolean,
     settingsRead: boolean,
     settingsWrite: boolean
   ) {
@@ -133,6 +137,8 @@ class Role {
     this.knowledgeBaseWrite = knowledgeBaseWrite
     this.participantsRead = participantsRead
     this.participantsWrite = participantsWrite
+    this.rolesRead = rolesRead
+    this.rolesWrite = rolesWrite
     this.settingsRead = settingsRead
     this.settingsWrite = settingsWrite
   }

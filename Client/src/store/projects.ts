@@ -60,7 +60,8 @@ export default class ProjectModule extends VuexModule {
 
   @Action
   public async loadProject(projectId: string) {
-    const response = await axios.get(`/projects/${projectId}`)
+    const personId = this.context.getters.getActivePersonId
+    const response = await axios.get(`/projects/${projectId}/${personId}`)
     const project: Project = response.data
 
     this.context.commit('addProject', project)
@@ -68,13 +69,15 @@ export default class ProjectModule extends VuexModule {
 
   @Action({ commit: 'setRoles' })
   public async loadRoles(projectId: string) {
-    const response = await axios.get(`/projects/${projectId}/roles`)
+    const personId = this.context.getters.getActivePersonId
+    const response = await axios.get(`/projects/${projectId}/${personId}/roles`)
     return response.data
   }
 
   @Action({ commit: 'setParticipations' })
   public async loadParticipations(projectId: string) {
-    const response = await axios.get(`/projects/${projectId}/participations`)
+    const personId = this.context.getters.getActivePersonId
+    const response = await axios.get(`/projects/${projectId}/${personId}/participations`)
     return response.data
   }
 
