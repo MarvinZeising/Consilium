@@ -20,6 +20,7 @@ namespace Server
             CreateMap<Participation, ParticipationDto>();
 
             CreateMap<Role, RoleDto>();
+            CreateMap<CreateRoleDto, Role>();
         }
     }
 }

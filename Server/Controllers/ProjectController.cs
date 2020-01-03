@@ -72,6 +72,30 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPost("roles")]
+        public IActionResult CreateRole([FromBody] CreateRoleDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(dto.PersonId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(dto.PersonId, dto.ProjectId)?.RolesWrite != true) return Forbid();
+
+                var role = _mapper.Map<Role>(dto);
+                role.Editable = true;
+
+                _db.Role.Create(role);
+                _db.Save();
+
+                return base.Ok(_mapper.Map<RoleDto>(role));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in CreateRole: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpGet("{projectId}/{personId}/participations")]
         public ActionResult<IEnumerable<ParticipationDto>> GetProjectParticipations(Guid projectId, Guid personId)
         {
@@ -134,8 +158,7 @@ namespace Server.Controllers
 
                 _db.Save();
 
-                var response = _mapper.Map<ProjectDto>(project);
-                return Ok(response);
+                return base.Ok(_mapper.Map<ProjectDto>(project));
             }
             catch (Exception e)
             {
