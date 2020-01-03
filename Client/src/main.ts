@@ -12,8 +12,18 @@ import i18n from './i18n'
 import AlertModule from './store/alerts'
 import UserModule from './store/users'
 
+function logLoading(text: string) {
+  const div = document.createElement('div')
+  div.appendChild(document.createTextNode(text))
+  document.getElementById('loading')?.appendChild(div)
+}
+
+logLoading('Configuring Vue')
+
 async function init() {
   Vue.config.productionTip = false
+
+  logLoading('Configuring Axios')
 
   axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:5000/api'
   axios.defaults.timeout = 5000
@@ -37,13 +47,22 @@ async function init() {
       return Promise.reject(error)
     })
 
+  logLoading('Initializing notification system')
+
   const alertModule = getModule(AlertModule)
+
+  logLoading('Initializing user management')
+
   const userModule = getModule(UserModule)
+
+  logLoading('Checking if you\'re already signed in')
 
   const userItem = localStorage.getItem('user')
   if (userItem) {
     const user = JSON.parse(userItem)
     axios.defaults.headers.common.Authorization = `Bearer ${user.token}`
+
+    logLoading('Loading your account data')
 
     try {
       await userModule.initStore()
@@ -57,14 +76,16 @@ async function init() {
       }
     }
   }
-}
 
-new Vue({
-  vuetify,
-  store,
-  router,
-  i18n,
-  render: (h) => h(App)
-}).$mount('#app')
+  logLoading('Starting Vue')
+
+  new Vue({
+    vuetify,
+    store,
+    router,
+    i18n,
+    render: (h) => h(App)
+  }).$mount('#app')
+}
 
 init()
