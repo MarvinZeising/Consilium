@@ -9,7 +9,6 @@ import {
   Person,
   Role
 } from '../models/definitions'
-import KnowledgeBaseModule from './knowledgeBase'
 
 @Module({ dynamic: true, store, name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
@@ -227,7 +226,7 @@ export default class ProjectModule extends VuexModule {
 
   @Mutation
   protected setGeneral(project: Project) {
-    this.projects = this.projects.map((x: Project) => {
+    this.projects = this.projects.map((x) => {
       if (x.id === project.id) {
         x.name = project.name
         x.email = project.email
@@ -243,7 +242,7 @@ export default class ProjectModule extends VuexModule {
 
   @Mutation
   protected removeProject(projectId: string) {
-    this.projects = this.projects.filter((x: Project) => x.id !== projectId)
+    this.projects = this.projects.filter((x) => x.id !== projectId)
   }
 
 }

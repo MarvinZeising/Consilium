@@ -44,20 +44,9 @@
   "noRequests": "No pending requests",
   "requestsAllowed": "Participation can be requested",
   "requestsNotAllowed": "Participation can not be requested",
-  "role": {
-    "description": "In order to give you control over who is permitted to do what in your project, there are roles. Each participant is assigned to a role. For every role, you can define the read and write permissions of certain areas of your project. By default, an 'Administrator' role is created.",
-    "loading": "Loading roles...",
-    "create": "Add Role",
-    "createDescription": "Here you can create a new role for your project. Afterwards, you can assign participants of your project to this role.",
-    "nameDescription": "The name of this role",
-    "xParticipants": "Not assigned | Assigned to 1 participant | Assigned to {count} participants",
-    "settings": "Settings",
-    "settingsDescription": "Settings. Read allows to read general project settings. Write allows to change them. CAUTION: It also allows to delete the whole project.",
-    "roles": "Roles",
-    "rolesDescription": "Roles. Read allows to see the defined roles and what roles participants are assigned to. Write allows to edit roles and role assignments to participants.",
-    "participants": "Participants",
-    "participantsDescription": "Participants. Read allows to see the list of participants. Write allows to edit participants' data, as well as to invite persons and accept/decline project join requests.",
-    "knowledgeBase": "Knowledge Base",
-    "knowledgeBaseDescription": "Knowledge Base. Read allows to see the knowledge base and read everything. Write allows to define topics and edit articles."
-  }
+  "roles": "Roles",
+  "rolesDescription": "In order to give you control over who is permitted to do what in your project, there are roles. Each participant is assigned to a role. For every role, you can define the read and write permissions of certain areas of your project. By default, an 'Administrator' role is created.",
+  "noRoles": "Loading roles...",
+  "createRole": "Add role",
+  "xParticipants": "Not assigned | Assigned to 1 participant | Assigned to {count} participants"
 }

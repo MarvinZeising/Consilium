@@ -1,8 +1,5 @@
 <template>
-  <v-flex
-    v-if="canView"
-    xs12 sm10 md8 lg6 xl4
-  >
+  <v-flex xs12 sm10 md8 lg6 xl4>
     <h2
       class="headline mb-3"
       v-t="'project.role.roles'"
@@ -34,7 +31,7 @@
           </v-list-item-content>
           <v-list-item-action>
             <v-btn
-              v-if="role.editable && canEdit"
+              v-if="role.editable"
               icon
               class="ma-0"
               @click="editRole(role.id)"
@@ -92,7 +89,7 @@ export default class SettingsRoles extends Vue {
 
   private getNumberOfPermits(roleId: string) {
     const count = this.projectModule.getParticipations.filter((x) => x.roleId === roleId).length
-    return this.$tc('project.role.xParticipants', count, { count })
+    return this.$tc('project.xParticipants', count, { count })
   }
 
 }

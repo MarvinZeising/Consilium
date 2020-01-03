@@ -177,6 +177,7 @@ export default class CreateRoleDialog extends Vue {
         knowledgeBase: this.knowledgeBase,
       })
 
+      this.loading = false
       this.dialog = false
     }
   }

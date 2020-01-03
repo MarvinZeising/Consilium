@@ -44,20 +44,9 @@
   "noRequests": "Keine offenen Anfragen",
   "requestsAllowed": "Teilnahme kann angefragt werden",
   "requestsNotAllowed": "Teilnahme kann nicht angefragt werden",
-  "role": {
-    "description": "Um Kontrolle darüber zu haben, welche Teilnehmer des Projektes was sehen und bearbeiten dürfen, gibt es Rollen. Jeder Teilnehmer hat eine Rolle. Die Rolle regelt, welche verschiedenen Bereiche des Projektes die Teilnehmer sehen oder sogar bearbeiten dürfen. Standardmäßig wird eine 'Administrator' Rolle erstellt.",
-    "loading": "Lade Rollen...",
-    "create": "Rolle hinzufügen",
-    "createDescription": "Hier kannst du eine neue Rolle für dieses Projekt erstellen. Danach kannst du Teilnehmern dieses Projektes die neue Rolle zuweisen.",
-    "nameDescription": "Der Name der Rolle",
-    "xParticipants": "Niemand hat diese Rolle | 1 Teilnehmer hat diese Rolle | {count} Teilnehmer haben diese Rolle",
-    "settings": "Einstellungen",
-    "settingsDescription": "Einstellungen. Lesen erlaubt das Sehen der allgemeinen Einstellungen. Bearbeiten erlaubt sie zu bearbeiten. ACHTUNG: Es erlaubt auch das gesamte Projekt zu löschen.",
-    "roles": "Rollen",
-    "rolesDescription": "Rollen. Lesen erlaubt das Sehen der angelegten Rollen, sowie welchem Teilnehmer welche Rolle zugewiesen ist. Bearbeiten erlaubt es Rollen zu bearbeiten und Teilnehmern Rollen zuzuweisen.",
-    "participants": "Teilnehmer",
-    "participantsDescription": "Teilnehmer. Lesen erlaubt das Sehen der Teilnehmerliste. Bearbeiten erlaubt das Bearbeiten der Teilnehmerdaten, sowie das Einladen von Personen zum Projekt und das Akzeptieren/Ablehnen von Projekt-Beitrittsanfragen.",
-    "knowledgeBase": "Informationen",
-    "knowledgeBaseDescription": "Informationen. Lesen erlaubt das Sehen des Informationscenters und das Lesen aller angelegten Artikel. Bearbeiten erlaubt das Bearbeiten der Themen und der Artikel innerhalb eines Themas."
-  }
+  "roles": "Rollen",
+  "rolesDescription": "Um Kontrolle darüber zu haben, welche Teilnehmer des Projektes was sehen und bearbeiten dürfen, gibt es Rollen. Jeder Teilnehmer hat eine Rolle. Die Rolle regelt, welche verschiedenen Bereiche des Projektes die Teilnehmer sehen oder sogar bearbeiten dürfen. Standardmäßig wird eine 'Administrator' Rolle erstellt.",
+  "noRoles": "Lade Rollen...",
+  "createRole": "Rolle hinzufügen",
+  "xParticipants": "Niemand hat diese Rolle | 1 Teilnehmer hat diese Rolle | {count} Teilnehmer haben diese Rolle"
 }
