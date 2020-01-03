@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Entities.Enums;
 using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace Server.Controllers
 {
@@ -31,16 +30,13 @@ namespace Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{projectId}")]
-        public ActionResult<ProjectDto> GetProject(Guid projectId)
+        [HttpGet("{projectId}/{personId}")]
+        public ActionResult<ProjectDto> GetProject(Guid projectId, Guid personId)
         {
             try
             {
-                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
-                var persons = _db.Person
-                    .FindByCondition(x => x.UserId == new Guid(userId))
-                    .ToList();
-                // TODO: check permissions
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetParticipation(personId, projectId) == null) return Forbid();
 
                 var project = _db.Project
                     .FindByCondition(x => x.Id == projectId)
@@ -55,16 +51,13 @@ namespace Server.Controllers
             }
         }
 
-        [HttpGet("{projectId}/roles")]
-        public ActionResult<IEnumerable<RoleDto>> GetProjectRoles(Guid projectId)
+        [HttpGet("{projectId}/{personId}/roles")]
+        public ActionResult<IEnumerable<RoleDto>> GetProjectRoles(Guid projectId, Guid personId)
         {
             try
             {
-                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
-                var persons = _db.Person
-                    .FindByCondition(x => x.UserId == new Guid(userId))
-                    .ToList();
-                // TODO: check permissions
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.RolesRead != true) return Forbid();
 
                 var roles = _db.Role
                     .FindByCondition(x => x.ProjectId == projectId)
@@ -79,16 +72,13 @@ namespace Server.Controllers
             }
         }
 
-        [HttpGet("{projectId}/participations")]
-        public ActionResult<IEnumerable<ParticipationDto>> GetProjectParticipations(Guid projectId)
+        [HttpGet("{projectId}/{personId}/participations")]
+        public ActionResult<IEnumerable<ParticipationDto>> GetProjectParticipations(Guid projectId, Guid personId)
         {
             try
             {
-                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
-                var persons = _db.Person
-                    .FindByCondition(x => x.UserId == new Guid(userId))
-                    .ToList();
-                // TODO: check permissions
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsRead != true) return Forbid();
 
                 var participations = _db.Participation
                     .FindByCondition(x => x.ProjectId == projectId)
@@ -109,6 +99,7 @@ namespace Server.Controllers
             try
             {
                 if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(dto.PersonId, HttpContext)) return Forbid();
 
                 var person = _db.Person.FindByCondition(x => x.Id == dto.PersonId).SingleOrDefault();
                 if (person == null) return BadRequest();
@@ -124,6 +115,8 @@ namespace Server.Controllers
                     KnowledgeBaseWrite = true,
                     ParticipantsRead = true,
                     ParticipantsWrite = true,
+                    RolesRead = true,
+                    RolesWrite = true,
                     SettingsRead = true,
                     SettingsWrite = true,
                 };
@@ -156,7 +149,8 @@ namespace Server.Controllers
             try
             {
                 if (!ModelState.IsValid) return BadRequest();
-                // TODO: check permissions
+                if (!_db.Person.BelongsToUser(dto.PersonId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(dto.PersonId, projectId)?.SettingsWrite != true) return Forbid();
 
                 var project = _db.Project.GetById(projectId);
 
@@ -175,12 +169,13 @@ namespace Server.Controllers
             }
         }
 
-        [HttpDelete("{projectId}")]
-        public IActionResult DeleteProject(Guid projectId)
+        [HttpDelete("{projectId}/{personId}")]
+        public IActionResult DeleteProject(Guid projectId, Guid personId)
         {
             try
             {
-                // TODO: check permissions
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.SettingsWrite != true) return Forbid();
 
                 // TODO: delete topics
                 // TODO: delete articles

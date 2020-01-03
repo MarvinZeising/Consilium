@@ -11,6 +11,8 @@ namespace Entities.DataTransferObjects
         public bool KnowledgeBaseWrite { get; set; }
         public bool ParticipantsRead { get; set; }
         public bool ParticipantsWrite { get; set; }
+        public bool RolesRead { get; set; }
+        public bool RolesWrite { get; set; }
         public bool SettingsRead { get; set; }
         public bool SettingsWrite { get; set; }
         public DateTime CreatedTime { get; set; }

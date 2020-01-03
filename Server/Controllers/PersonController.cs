@@ -6,9 +6,6 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Server.Controllers
 {
@@ -62,9 +59,7 @@ namespace Server.Controllers
             try
             {
                 if (!ModelState.IsValid) return BadRequest();
-
-                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
-                if (!_db.Person.BelongsToUser(personId, userId)) return Forbid();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
                 var person = _db.Person.GetById(personId);
 
@@ -89,8 +84,7 @@ namespace Server.Controllers
         {
             try
             {
-                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid).Value;
-                if (!_db.Person.BelongsToUser(personId, userId)) return Forbid();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
                 _db.Person.Delete(new Person { Id = personId });
                 _db.Save();

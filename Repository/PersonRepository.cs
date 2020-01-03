@@ -4,6 +4,8 @@ using Contracts;
 using Entities;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Repository
 {
@@ -14,8 +16,9 @@ namespace Repository
         {
         }
 
-        public bool BelongsToUser(Guid personId, string userId)
+        public bool BelongsToUser(Guid personId, HttpContext context)
         {
+            var userId = context.User.FindFirst(ClaimTypes.Sid).Value;
             var person = GetById(personId);
             return person?.UserId == new Guid(userId);
         }
@@ -30,5 +33,6 @@ namespace Repository
 
             return query.SingleOrDefault();
         }
+
     }
 }

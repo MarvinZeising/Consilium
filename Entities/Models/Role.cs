@@ -34,6 +34,12 @@ namespace Entities.Models
         public bool ParticipantsWrite { get; set; }
 
         [Required]
+        public bool RolesRead { get; set; }
+
+        [Required]
+        public bool RolesWrite { get; set; }
+
+        [Required]
         public bool SettingsRead { get; set; }
 
         [Required]
