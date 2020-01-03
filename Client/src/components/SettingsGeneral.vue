@@ -194,7 +194,6 @@ export default class SettingsGeneral extends Vue {
         name: this.name,
         email: this.email
       })
-      // TODO: add error handling
       // TODO: check that email is correct
       // TODO: maybe by sending an email to verify the new one
 

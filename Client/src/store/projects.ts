@@ -123,6 +123,7 @@ export default class ProjectModule extends VuexModule {
     email: string
   }) {
     await axios.put(`/projects/${project.id}`, {
+      personId: this.context.getters.getActivePersonId,
       name: project.name,
       email: project.email
     })
