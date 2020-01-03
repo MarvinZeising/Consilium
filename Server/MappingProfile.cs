@@ -21,6 +21,7 @@ namespace Server
 
             CreateMap<Role, RoleDto>();
             CreateMap<CreateRoleDto, Role>();
+            CreateMap<UpdateRoleDto, Role>();
         }
     }
 }

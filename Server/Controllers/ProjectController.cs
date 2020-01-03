@@ -96,6 +96,44 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPut("roles")]
+        public IActionResult UpdateRole([FromBody] UpdateRoleDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(dto.PersonId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(dto.PersonId, dto.ProjectId)?.RolesWrite != true) return Forbid();
+
+                Role role;
+
+                var roleFromDb = _db.Role.FindByCondition(x => x.Id == dto.RoleId).SingleOrDefault();
+                if (roleFromDb?.Editable == true)
+                {
+                    role = _mapper.Map<Role>(dto);
+                    role.Id = dto.RoleId;
+                    role.Editable = true;
+                }
+                else
+                {
+                    role = roleFromDb;
+                    role.Id = dto.RoleId;
+                    role.Name = dto.Name;
+                    role.Editable = false;
+                }
+
+                _db.Role.Update(role);
+                _db.Save();
+
+                return base.Ok(_mapper.Map<RoleDto>(role));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateRole: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpGet("{projectId}/{personId}/participations")]
         public ActionResult<IEnumerable<ParticipationDto>> GetProjectParticipations(Guid projectId, Guid personId)
         {
