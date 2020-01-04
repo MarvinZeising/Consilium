@@ -3,10 +3,9 @@
     v-if="canView"
     xs12 sm10 md8 lg6 xl4
   >
-    <h2
-      class="headline mb-3"
-      v-t="'project.role.roles'"
-    />
+    <h2 class="headline mb-3">
+      {{ $tc('project.role.roles', 2) }}
+    </h2>
     <v-card
       flat
       class="ma-2 mb-5"

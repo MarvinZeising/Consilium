@@ -57,7 +57,7 @@
     "xParticipants": "Niemand hat diese Rolle | 1 Teilnehmer hat diese Rolle | {count} Teilnehmer haben diese Rolle",
     "settings": "Einstellungen",
     "settingsDescription": "Einstellungen. Lesen erlaubt das Sehen der allgemeinen Einstellungen. Bearbeiten erlaubt sie zu bearbeiten. ACHTUNG: Es erlaubt auch das gesamte Projekt zu löschen.",
-    "roles": "Rollen",
+    "roles": "Rolle | Rollen",
     "rolesDescription": "Rollen. Lesen erlaubt das Sehen der angelegten Rollen, sowie welchem Teilnehmer welche Rolle zugewiesen ist. Bearbeiten erlaubt es Rollen zu bearbeiten und Teilnehmern Rollen zuzuweisen.",
     "participants": "Teilnehmer",
     "participantsDescription": "Teilnehmer. Lesen erlaubt das Sehen der Teilnehmerliste. Bearbeiten erlaubt das Bearbeiten der Teilnehmerdaten, sowie das Einladen von Personen zum Projekt und das Akzeptieren/Ablehnen von Projekt-Beitrittsanfragen.",

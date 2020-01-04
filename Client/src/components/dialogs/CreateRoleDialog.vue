@@ -63,7 +63,7 @@
             :items="permissionValues"
             item-text="name"
             item-value="value"
-            :label="$t('project.role.roles')"
+            :label="$tc('project.role.roles', 2)"
             filled
             required
           >

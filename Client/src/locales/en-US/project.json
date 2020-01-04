@@ -57,7 +57,7 @@
     "xParticipants": "Not assigned | Assigned to 1 participant | Assigned to {count} participants",
     "settings": "Settings",
     "settingsDescription": "Settings. Read allows to read general project settings. Write allows to change them. CAUTION: It also allows to delete the whole project.",
-    "roles": "Roles",
+    "roles": "Role | Roles",
     "rolesDescription": "Roles. Read allows to see the defined roles and what roles participants are assigned to. Write allows to edit roles and role assignments to participants.",
     "participants": "Participants",
     "participantsDescription": "Participants. Read allows to see the list of participants. Write allows to edit participants' data, as well as to invite persons and accept/decline project join requests.",
