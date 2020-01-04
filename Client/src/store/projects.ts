@@ -17,7 +17,6 @@ export default class ProjectModule extends VuexModule {
   // * for the active project
   public participations: Participation[] = []
   public participants: Person[] = []
-  public roles: Role[] = []
 
   public get getActiveProject() {
     const projectId = router.currentRoute.params.projectId
@@ -45,7 +44,7 @@ export default class ProjectModule extends VuexModule {
   }
 
   public get getRoles() {
-    return this.roles
+    return this.getActiveProject?.roles
   }
 
   @Action
@@ -242,17 +241,29 @@ export default class ProjectModule extends VuexModule {
 
   @Mutation
   protected setRoles(roles: Role[]) {
-    this.roles = roles
+    this.projects = this.projects.map((project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.roles = roles
+      }
+      return project
+    })
   }
 
   @Mutation
   protected addRole(role: Role) {
-    this.roles.push(role)
+    this.projects = this.projects.map((project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.roles?.push(role)
+      }
+      return project
+    })
   }
 
   @Mutation
   protected changeRole(role: Role) {
-    this.roles = this.roles.map((x) => {
+    this.projects = this.projects.map((project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.roles = project.roles?.map((x) => {
       if (x.id === role.id) {
         x.name = role.name
         x.settingsRead = role.settingsRead
@@ -265,6 +276,9 @@ export default class ProjectModule extends VuexModule {
         x.knowledgeBaseWrite = role.knowledgeBaseWrite
       }
       return x
+    })
+  }
+      return project
     })
   }
 
