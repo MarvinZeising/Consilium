@@ -158,6 +158,7 @@ export default class CreateProject extends Vue {
           name: this.name,
           email: this.email,
         })
+        // TODO: add unique name check on server side and add error handling here
 
         this.$router.push({
           name: 'settings',
