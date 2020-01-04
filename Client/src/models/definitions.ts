@@ -51,8 +51,8 @@ class Project {
   public id: string
   public name: string
   public email: string
-  public participations?: Participation[]
-  public roles?: Role[]
+  public participations: Participation[] = []
+  public roles: Role[] = []
   public createdTime: string
   public lastUpdatedTime: string
 
