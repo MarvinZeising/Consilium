@@ -44,7 +44,17 @@ export default class ProjectModule extends VuexModule {
   }
 
   public get getRoles() {
-    return this.getActiveProject?.roles
+    return this.getActiveProject?.roles?.sort((a, b) => {
+      if (!a.editable) {
+        return -1
+      } else if (a.name < b.name) {
+        return -1
+      } else if (a.name > b.name) {
+        return 1
+      } else {
+        return 0
+      }
+    })
   }
 
   @Action
