@@ -51,6 +51,8 @@
     "createDescription": "Here you can create a new role for your project. Afterwards, you can assign participants of your project to this role.",
     "update": "Update Role",
     "updateDescription": "Here you can update the role. This will instantly affect all participants that have been assigned to this role. In order to delete a role, it must not be assigned to anyone. The default 'Administrator' role can only be renamed, nothing more.",
+    "delete": "Delete Role",
+    "deleteDescription": "Do you really want to delete this role?",
     "nameDescription": "The name of this role",
     "xParticipants": "Not assigned | Assigned to 1 participant | Assigned to {count} participants",
     "settings": "Settings",

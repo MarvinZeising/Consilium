@@ -118,13 +118,9 @@
 
         </v-card-text>
         <v-card-actions>
-          <v-btn
+          <DeleteRoleDialog
             v-if="canBeDeleted && role.editable"
-            text
-            color="error"
-            @click="remove"
-            :loading="loadingDelete"
-            v-t="'core.delete'"
+            :roleId="role.id"
           />
           <v-spacer />
           <v-btn
@@ -154,9 +150,14 @@ import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
 import PersonModule from '../../store/persons'
-import { Role } from '@/models/definitions'
+import { Role } from '../../models/definitions'
+import DeleteRoleDialog from './DeleteRoleDialog.vue'
 
-@Component
+@Component({
+  components: {
+    DeleteRoleDialog,
+  },
+})
 export default class UpdateRoleDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)

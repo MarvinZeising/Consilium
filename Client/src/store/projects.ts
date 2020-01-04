@@ -130,6 +130,15 @@ export default class ProjectModule extends VuexModule {
     return response.data
   }
 
+  @Action({ commit: 'removeRole' })
+  public async deleteRole(roleId: string) {
+    const personId = this.context.getters.getActivePersonId
+    const projectId = router.currentRoute.params.projectId
+
+    await axios.delete(`/projects/${projectId}/${personId}/roles/${roleId}`)
+    return roleId
+  }
+
   @Action
   public async joinProject(projectId: string) {
     const personId = this.context.getters.getActivePersonId
@@ -264,20 +273,30 @@ export default class ProjectModule extends VuexModule {
     this.projects = this.projects.map((project) => {
       if (project.id === router.currentRoute.params.projectId) {
         project.roles = project.roles?.map((x) => {
-      if (x.id === role.id) {
-        x.name = role.name
-        x.settingsRead = role.settingsRead
-        x.settingsWrite = role.settingsWrite
-        x.rolesRead = role.rolesRead
-        x.rolesWrite = role.rolesWrite
-        x.participantsRead = role.participantsRead
-        x.participantsWrite = role.participantsWrite
-        x.knowledgeBaseRead = role.knowledgeBaseRead
-        x.knowledgeBaseWrite = role.knowledgeBaseWrite
+          if (x.id === role.id) {
+            x.name = role.name
+            x.settingsRead = role.settingsRead
+            x.settingsWrite = role.settingsWrite
+            x.rolesRead = role.rolesRead
+            x.rolesWrite = role.rolesWrite
+            x.participantsRead = role.participantsRead
+            x.participantsWrite = role.participantsWrite
+            x.knowledgeBaseRead = role.knowledgeBaseRead
+            x.knowledgeBaseWrite = role.knowledgeBaseWrite
+          }
+          return x
+        })
       }
-      return x
+      return project
     })
   }
+
+  @Mutation
+  protected removeRole(roleId: string) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.roles = project.roles?.filter((x) => x.id !== roleId)
+      }
       return project
     })
   }
