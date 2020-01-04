@@ -184,6 +184,7 @@ export default class ProjectModule extends VuexModule {
     return roleId
   }
 
+  // ? do we need all these???
   @Action
   public async joinProject(projectId: string) {
     const personId = this.context.getters.getActivePersonId
@@ -225,11 +226,16 @@ export default class ProjectModule extends VuexModule {
     name: string,
     email: string
   }) {
-    await axios.put(`/projects/${project.id}`, {
-      personId: this.context.getters.getActivePersonId,
+    const personId = this.context.getters.getActivePersonId
+    await axios.put(`/persons/${personId}/projects/${project.id}`, {
       name: project.name,
       email: project.email
     })
+
+    // ? this is to make the navbar show the updated project name
+    // TODO: only reload person participations instead of everything
+    await this.context.dispatch('initStore')
+
     return project
   }
 
@@ -237,27 +243,32 @@ export default class ProjectModule extends VuexModule {
   public async createProject(project: {
     name: string,
     email: string,
-    personId: string
   }): Promise<Project> {
-    const response = await axios.post('/projects', {
+    const personId = this.context.getters.getActivePersonId
+    const response = await axios.post(`/persons/${personId}/projects`, {
       name: project.name,
       email: project.email,
-      personId: this.context.getters.getActivePersonId,
     })
 
-    const newProject = new Project(
+    // TODO: only reload person participations instead of everything
+    await this.context.dispatch('initStore')
+
+    return new Project(
       response.data.id,
       response.data.name,
       response.data.email,
-      '',
-      '')
-
-    return newProject
+      response.data.createdTime,
+      response.data.lastUpdatedTime)
   }
 
   @Action({ commit: 'removeProject' })
   public async deleteProject(projectId: string) {
-    await axios.delete(`/projects/${projectId}`)
+    const personId = this.context.getters.getActivePersonId
+    await axios.delete(`/persons/${personId}/projects/${projectId}`)
+
+    // TODO: only reload person participations instead of everything
+    await this.context.dispatch('initStore')
+
     return projectId
   }
 

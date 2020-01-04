@@ -7,9 +7,6 @@ namespace Entities.DataTransferObjects
     public class CreateProjectDto
     {
         [Required]
-        public Guid PersonId { get; set; }
-
-        [Required]
         [ValidName]
         public string Name { get; set; }
 

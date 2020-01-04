@@ -7,13 +7,12 @@ using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Entities.Enums;
-using System.Collections.Generic;
 
 namespace Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/projects")]
+    [Route("api/persons/{personId}/projects")]
     public class ProjectController : ControllerBase
     {
         private readonly IRepositoryWrapper _db;
@@ -30,8 +29,8 @@ namespace Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{projectId}/{personId}")]
-        public ActionResult<ProjectDto> GetProject(Guid projectId, Guid personId)
+        [HttpGet("{projectId}")]
+        public ActionResult<ProjectDto> GetProject(Guid personId, Guid projectId)
         {
             try
             {
@@ -52,14 +51,14 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProject([FromBody] CreateProjectDto dto)
+        public IActionResult CreateProject(Guid personId, [FromBody] CreateProjectDto dto)
         {
             try
             {
                 if (!ModelState.IsValid) return BadRequest();
-                if (!_db.Person.BelongsToUser(dto.PersonId, HttpContext)) return Forbid();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
-                var person = _db.Person.FindByCondition(x => x.Id == dto.PersonId).SingleOrDefault();
+                var person = _db.Person.FindByCondition(x => x.Id == personId).SingleOrDefault();
                 if (person == null) return BadRequest();
 
                 var project = _mapper.Map<Project>(dto);
@@ -84,7 +83,7 @@ namespace Server.Controllers
                 var participation = new Participation
                 {
                     ProjectId = project.Id,
-                    PersonId = dto.PersonId,
+                    PersonId = personId,
                     RoleId = role.Id,
                     Status = nameof(ParticipationStatus.Active),
                 };
@@ -102,13 +101,13 @@ namespace Server.Controllers
         }
 
         [HttpPut("{projectId}")]
-        public IActionResult UpdateProjectGeneral(Guid projectId, [FromBody] UpdateProjectGeneralDto dto)
+        public IActionResult UpdateProjectGeneral(Guid personId, Guid projectId, [FromBody] UpdateProjectGeneralDto dto)
         {
             try
             {
                 if (!ModelState.IsValid) return BadRequest();
-                if (!_db.Person.BelongsToUser(dto.PersonId, HttpContext)) return Forbid();
-                if (_db.Participation.GetRole(dto.PersonId, projectId)?.SettingsWrite != true) return Forbid();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.SettingsWrite != true) return Forbid();
 
                 var project = _db.Project.GetById(projectId);
 
@@ -127,8 +126,8 @@ namespace Server.Controllers
             }
         }
 
-        [HttpDelete("{projectId}/{personId}")]
-        public IActionResult DeleteProject(Guid projectId, Guid personId)
+        [HttpDelete("{projectId}")]
+        public IActionResult DeleteProject(Guid personId, Guid projectId)
         {
             try
             {
