@@ -87,7 +87,7 @@ namespace Server.Controllers
                 _db.Role.Create(role);
                 _db.Save();
 
-                return base.Ok(_mapper.Map<RoleDto>(role));
+                return Ok(_mapper.Map<RoleDto>(role));
             }
             catch (Exception e)
             {
@@ -125,11 +125,40 @@ namespace Server.Controllers
                 _db.Role.Update(role);
                 _db.Save();
 
-                return base.Ok(_mapper.Map<RoleDto>(role));
+                return Ok(_mapper.Map<RoleDto>(role));
             }
             catch (Exception e)
             {
                 _logger.LogError($"ERROR in UpdateRole: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("{projectId}/{personId}/roles/{roleId}")]
+        public IActionResult DeleteRole(Guid projectId, Guid personId, Guid roleId)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.RolesWrite != true) return Forbid();
+
+                var role = _db.Role.FindByCondition(x => x.Id == roleId).SingleOrDefault();
+                if (role?.Editable != true)
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    _db.Role.Delete(role);
+                    _db.Save();
+                }
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in DeleteRole: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -196,7 +225,7 @@ namespace Server.Controllers
 
                 _db.Save();
 
-                return base.Ok(_mapper.Map<ProjectDto>(project));
+                return Ok(_mapper.Map<ProjectDto>(project));
             }
             catch (Exception e)
             {
