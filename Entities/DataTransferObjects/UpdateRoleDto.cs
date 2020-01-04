@@ -7,15 +7,6 @@ namespace Entities.DataTransferObjects
     public class UpdateRoleDto
     {
         [Required]
-        public Guid PersonId { get; set; }
-
-        [Required]
-        public Guid ProjectId { get; set; }
-
-        [Required]
-        public Guid RoleId { get; set; }
-
-        [Required]
         [ValidName]
         public string Name { get; set; }
 

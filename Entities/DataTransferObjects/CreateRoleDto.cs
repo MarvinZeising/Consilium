@@ -7,12 +7,6 @@ namespace Entities.DataTransferObjects
     public class CreateRoleDto
     {
         [Required]
-        public Guid PersonId { get; set; }
-
-        [Required]
-        public Guid ProjectId { get; set; }
-
-        [Required]
         [ValidName]
         public string Name { get; set; }
 

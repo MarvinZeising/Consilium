@@ -69,7 +69,7 @@ export default class ProjectModule extends VuexModule {
   @Action({ commit: 'setRoles' })
   public async loadRoles(projectId: string) {
     const personId = this.context.getters.getActivePersonId
-    const response = await axios.get(`/projects/${projectId}/${personId}/roles`)
+    const response = await axios.get(`/persons/${personId}/projects/${projectId}/roles`)
     return response.data
   }
 
@@ -88,9 +88,10 @@ export default class ProjectModule extends VuexModule {
     participants: string,
     knowledgeBase: string,
   }) {
-    const response = await axios.post('/projects/roles', {
-      personId: this.context.getters.getActivePersonId,
-      projectId: router.currentRoute.params.projectId,
+    const personId = this.context.getters.getActivePersonId
+    const projectId = router.currentRoute.params.projectId
+
+    const response = await axios.post(`/persons/${personId}/projects/${projectId}/roles`, {
       name: data.name,
       settingsRead: data.settings !== 'none',
       settingsWrite: data.settings === 'write',
@@ -113,10 +114,10 @@ export default class ProjectModule extends VuexModule {
     participants: string,
     knowledgeBase: string,
   }) {
-    const response = await axios.put('/projects/roles', {
-      personId: this.context.getters.getActivePersonId,
-      projectId: router.currentRoute.params.projectId,
-      roleId: data.roleId,
+    const personId = this.context.getters.getActivePersonId
+    const projectId = router.currentRoute.params.projectId
+
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/roles/${data.roleId}`, {
       name: data.name,
       settingsRead: data.settings !== 'none',
       settingsWrite: data.settings === 'write',
@@ -135,7 +136,7 @@ export default class ProjectModule extends VuexModule {
     const personId = this.context.getters.getActivePersonId
     const projectId = router.currentRoute.params.projectId
 
-    await axios.delete(`/projects/${projectId}/${personId}/roles/${roleId}`)
+    await axios.delete(`/persons/${personId}/projects/${projectId}/roles/${roleId}`)
     return roleId
   }
 
