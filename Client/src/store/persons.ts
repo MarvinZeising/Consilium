@@ -31,7 +31,13 @@ export default class PersonModule extends VuexModule {
   @Action
   public async loadPersons(rawPersons: Person[]) {
     const persons = rawPersons.map((rawPerson: Person) => {
-      const participations = rawPerson.participations.map((x) => {
+      const person = new Person(
+        rawPerson.id,
+        rawPerson.firstname,
+        rawPerson.lastname,
+        rawPerson.gender)
+
+      person.participations = rawPerson.participations.map((x) => {
         const participation = new Participation(
           x.id,
           x.personId,
@@ -46,12 +52,7 @@ export default class PersonModule extends VuexModule {
         return participation
       })
 
-      return new Person(
-        rawPerson.id,
-        rawPerson.firstname,
-        rawPerson.lastname,
-        rawPerson.gender,
-        participations)
+      return person
     })
 
     const currentlyActivePerson = this.persons.find((x) => x.id === this.activePersonId)
@@ -83,8 +84,7 @@ export default class PersonModule extends VuexModule {
       response.data.id,
       response.data.firstname,
       response.data.lastname,
-      Gender.Male,
-      [])
+      Gender.Male)
 
     this.context.commit('insertPerson', newPerson)
     await this.context.dispatch('activatePerson', newPerson.id)

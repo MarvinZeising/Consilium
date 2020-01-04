@@ -153,12 +153,10 @@ export default class CreateProject extends Vue {
     const form: any = this.$refs.form
 
     if (form.validate()) {
-      const personId = this.personModule.getActivePersonId
-      if (personId !== undefined) {
+      if (this.personModule.getActivePersonId) {
         const newProject = await this.projectModule.createProject({
           name: this.name,
           email: this.email,
-          personId,
         })
 
         this.$router.push({
