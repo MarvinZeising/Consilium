@@ -17,7 +17,7 @@
         v-t="'project.role.description'"
       />
       <v-list>
-        <v-list-item v-if="projectModule.getRoles.length === 0">
+        <v-list-item v-if="!projectModule.getRoles || projectModule.getRoles.length === 0">
           <span v-t="'project.role.loading'" />
         </v-list-item>
         <v-list-item
