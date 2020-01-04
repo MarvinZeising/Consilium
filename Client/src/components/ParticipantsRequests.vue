@@ -9,21 +9,17 @@
         class="grey--text"
         v-t="'project.requestsDescription'"
       />
-      <v-list>
-        <v-list-item
-          v-if="getRequests.length === 0"
-          dark
-          class="warning"
-        >
+      <v-list v-if="projectModule.getRequests">
+        <v-list-item v-if="projectModule.getRequests.length === 0">
           <span v-t="'project.noRequests'" />
         </v-list-item>
         <v-list-item
-          v-for="(participation, index) in getRequests"
+          v-for="(participation, index) in projectModule.getRequests"
           :key="index"
           two-line
         >
           <v-list-item-content>
-            <v-list-item-title v-text="getPerson(participation.personId).fullName()" />
+            <v-list-item-title v-text="getPerson(participation.personId)" />
             <v-list-item-subtitle>Requested on Dec 12, 2019</v-list-item-subtitle>
           </v-list-item-content>
 
@@ -66,12 +62,12 @@ export default class ParticipantsRequests extends Vue {
   private get getRequests() {
     const projectId = this.$route.params.projectId
 
-    return this.projectModule.getParticipations
-      .filter((p) => p.projectId === projectId && p.status === ParticipationStatus.Requested)
+    return this.projectModule.getRequests
   }
 
   private  getPerson(personId: string) {
-    return this.projectModule.getParticipations.find((x) => x.id === personId)
+    return 'Stinkemarv'
+    // return this.projectModule..find((x) => x.id === personId)
   }
 
 }

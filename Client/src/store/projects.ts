@@ -14,10 +14,6 @@ import {
 export default class ProjectModule extends VuexModule {
   public projects: Project[] = []
 
-  // * for the active project
-  public participations: Participation[] = []
-  public participants: Person[] = []
-
   public get getActiveProject() {
     const projectId = router.currentRoute.params.projectId
     return this.projects.find((x: Project) => x.id === projectId)
@@ -35,12 +31,17 @@ export default class ProjectModule extends VuexModule {
     })
   }
 
-  public get getParticipations() {
-    return this.participations
+  public get getInvitations() {
+    return this.getActiveProject?.participations?.filter((x) => x.status === ParticipationStatus.Invited)
+  }
+
+  public get getRequests() {
+    return this.getActiveProject?.participations?.filter((x) => x.status === ParticipationStatus.Requested)
   }
 
   public get getParticipants() {
-    return this.participants
+    return this.getActiveProject?.participations?.filter((x) =>
+      x.status === ParticipationStatus.Active || x.status === ParticipationStatus.Inactive)
   }
 
   public get getRoles() {
@@ -57,36 +58,47 @@ export default class ProjectModule extends VuexModule {
     })
   }
 
-  @Action
-  public getProject(projectId: string) {
-    return this.projects.find((x: Project) => x.id === projectId)
-  }
-
-  @Action
-  public getPerson(personId: string) {
-    return this.participants.find((x: Person) => x.id === personId)
-  }
-
-  @Action
+  @Action({ commit: 'addProject' })
   public async loadProject(projectId: string) {
     const personId = this.context.getters.getActivePersonId
-    const response = await axios.get(`/projects/${projectId}/${personId}`)
-    const project: Project = response.data
-
-    this.context.commit('addProject', project)
+    const response = await axios.get(`/persons/${personId}/projects/${projectId}`)
+    return new Project(
+      response.data.id,
+      response.data.name,
+      response.data.email,
+      response.data.createdTime,
+      response.data.lastUpdatedTime)
   }
 
   @Action({ commit: 'setRoles' })
-  public async loadRoles(projectId: string) {
+  public async loadRoles() {
+    const projectId = router.currentRoute.params.projectId
     const personId = this.context.getters.getActivePersonId
     const response = await axios.get(`/persons/${personId}/projects/${projectId}/roles`)
     return response.data
   }
 
-  @Action({ commit: 'setParticipations' })
-  public async loadParticipations(projectId: string) {
+  @Action({ commit: 'setInvitations' })
+  public async loadInvitations() {
+    const projectId = router.currentRoute.params.projectId
     const personId = this.context.getters.getActivePersonId
-    const response = await axios.get(`/projects/${projectId}/${personId}/participations`)
+    const response = await axios.get(`/persons/${personId}/projects/${projectId}/invitations`)
+    return response.data
+  }
+
+  @Action({ commit: 'setParticipants' })
+  public async loadParticipants() {
+    const projectId = router.currentRoute.params.projectId
+    const personId = this.context.getters.getActivePersonId
+    const response = await axios.get(`/persons/${personId}/projects/${projectId}/participations`)
+    return response.data
+  }
+
+  @Action({ commit: 'setRequests' })
+  public async loadRequests() {
+    const projectId = router.currentRoute.params.projectId
+    const personId = this.context.getters.getActivePersonId
+    const response = await axios.get(`/persons/${personId}/projects/${projectId}/requests`)
     return response.data
   }
 
@@ -113,6 +125,28 @@ export default class ProjectModule extends VuexModule {
       knowledgeBaseWrite: data.knowledgeBase === 'write',
     })
     return response.data
+  }
+
+  @Action({ commit: 'addInvitation' })
+  public async createInvitation(data: {
+    personId: string,
+    roleId: string
+  }) {
+    const personId = this.context.getters.getActivePersonId
+    const projectId = router.currentRoute.params.projectId
+
+    const response = await axios.post(`/persons/${personId}/projects/${projectId}/invitations`, {
+      personId: data.personId,
+      roleId: data.roleId,
+    })
+    return new Participation(
+      response.data.id,
+      response.data.personId,
+      response.data.projectId,
+      response.data.roleId,
+      response.data.status,
+      response.data.createdTime,
+      response.data.lastUpdatedTime)
   }
 
   @Action({ commit: 'changeRole' })
@@ -250,13 +284,39 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  protected setParticipants(persons: Person[]) {
-    this.participants = persons
+  protected setInvitations(participations: Participation[]) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.participations = project.participations?.filter((x) => x.status !== ParticipationStatus.Invited)
+        project.participations?.push(...participations)
+      }
+      return project
+    })
   }
 
   @Mutation
-  protected setParticipations(participations: Participation[]) {
-    this.participations = participations
+  protected setRequests(participations: Participation[]) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.participations = project.participations?.filter((x) => x.status !== ParticipationStatus.Requested)
+        project.participations?.push(...participations)
+      }
+      return project
+    })
+  }
+
+  @Mutation
+  protected setParticipants(participations: Participation[]) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.participations = project.participations?.filter((x) =>
+          x.status !== ParticipationStatus.Active &&
+          x.status !== ParticipationStatus.Inactive)
+
+        project.participations?.push(...participations)
+      }
+      return project
+    })
   }
 
   @Mutation
@@ -274,6 +334,16 @@ export default class ProjectModule extends VuexModule {
     this.projects = this.projects.map((project) => {
       if (project.id === router.currentRoute.params.projectId) {
         project.roles?.push(role)
+      }
+      return project
+    })
+  }
+
+  @Mutation
+  protected addInvitation(participation: Participation) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.participations?.push(participation)
       }
       return project
     })

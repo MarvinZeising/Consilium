@@ -1,0 +1,134 @@
+<template>
+  <v-dialog
+    v-model="dialog"
+    max-width="600px"
+  >
+    <template v-slot:activator="{ on }">
+      <v-btn
+        v-on="on"
+        text
+        v-t="'project.participant.invite'"
+      />
+    </template>
+    <v-card>
+      <v-form
+        v-model="valid"
+        ref="form"
+      >
+        <v-card-title>
+          <span
+            class="headline"
+            v-t="'project.participant.invite'"
+          />
+        </v-card-title>
+        <v-card-text>
+          <p
+            class="subtitle-1"
+            v-t="'project.participant.inviteDescription'"
+          />
+          <p
+            class="subtitle-1"
+            v-t="'project.participant.idDescription'"
+          />
+          <v-text-field
+            v-model="personId"
+            :rules="personIdRules"
+            :label="$t('core.id')"
+            filled
+            required
+          />
+          <p v-t="'project.participant.roleDescription'" />
+          <v-select
+            v-model="roleId"
+            :items="roleValues"
+            :rules="roleRules"
+            item-text="name"
+            item-value="value"
+            :label="$tc('project.role.roles', 1)"
+            :loading="loadingRoles"
+            filled
+            required
+          />
+
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            text
+            @click.stop="dialog = false"
+            v-t="'core.cancel'"
+          />
+          <v-btn
+            :disabled="!valid"
+            type="submit"
+            :loading="loading"
+            text
+            color="primary"
+            @click.stop="save"
+            v-t="'core.save'"
+          />
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import { VForm } from 'vuetify/lib'
+import i18n from '../../i18n'
+import ProjectModule from '../../store/projects'
+
+@Component
+export default class CreateInvitationDialog extends Vue {
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+
+  private dialog: any = false
+  private valid: any = null
+  private loading: boolean = false
+  private loadingRoles: boolean = true
+
+  private personId: string = ''
+  private personIdRules: any[] = [
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+    (v: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v) || i18n.t('core.fieldInvalidGuid'),
+  ]
+  private roleId: string = ''
+  private roleValues: any = []
+  private roleRules: any[] = [
+    (v: string) => !!v || i18n.t('core.fieldRequired'),
+  ]
+
+  private async created() {
+    await this.projectModule.loadRoles();
+
+    this.roleValues = this.projectModule.getRoles?.map((role) => {
+      return {
+        value: role.id,
+        name: role.name,
+      }
+    })
+
+    this.loadingRoles = false
+  }
+
+  private async save() {
+    const projectId = this.$route.params.projectId
+
+    if (this.valid) {
+      this.loading = true
+
+      const response = await this.projectModule.createInvitation({
+        personId: this.personId,
+        roleId: this.roleId
+      })
+      console.log(response)
+
+      this.loading = false
+      this.dialog = false
+    }
+  }
+
+}
+</script>

@@ -81,14 +81,14 @@ export default class SettingsRoles extends Vue {
 
   private async created() {
     const projectId = this.$route.params.projectId
-    await this.projectModule.loadRoles(projectId)
-    await this.projectModule.loadParticipations(projectId)
+    await this.projectModule.loadRoles()
+    await this.projectModule.loadParticipants()
 
     this.loading = false
   }
 
   private getPermitCount(roleId: string) {
-    return this.projectModule.getParticipations.filter((x) => x.roleId === roleId).length
+    return this.projectModule.getParticipants?.filter((x) => x.roleId === roleId).length
   }
 
 }
