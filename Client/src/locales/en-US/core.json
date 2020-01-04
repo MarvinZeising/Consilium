@@ -20,6 +20,7 @@
   "name": "Name",
   "email": "Email",
   "emailInvalid": "Email must be valid",
+  "fieldInvalidGuid": "This is not a valid ID",
   "fieldRequired": "This field is required",
   "fieldMin": "This field has to have at least {count} characters",
   "fieldMax": "This field must not have more than {count} characters",

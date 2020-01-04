@@ -20,6 +20,13 @@
   "createDescription1": "Bist du der Koordinator eines Events oder Projekts?",
   "createDescription2": "Dann kannst du ein Projekt erstellen und die Verkündiger einladen teilzunehmen.",
   "createSubmit": "Projekt erstellen",
+  "participants": "Teilehmer",
+  "participant": {
+    "invite": "Jemanden einladen",
+    "inviteDescription": "Du kannst eine Person zu diesem Projekt einladen. Die eingeladene Person muss die Einladung annehmen oder ablehnen. Um eine Person einzuladen musst du ID der Person erfragen. Die Person findet sie unter 'Profil / Persönliches / Generelles'",
+    "idDescription": "Die ID der Person",
+    "roleDescription": "Die Rolle, die der Person zugewiesen wird"
+  },
   "join": "Einem Projekt beitreten",
   "joinDescription": "Du kannst anfragen, ob du einem Projekt beitreten darfst. Danach musst du warten bis ein Projekt Administrator diese Anfrage akzeptiert oder ablehnt. Um die Teilnahme anzufragen brauchst du die ID des Projektes. Du kannst sie bei einem der Projekt Administratoren erfragen.",
   "joinSubmit": "Teilnahme anfragen",
@@ -30,15 +37,14 @@
   "handleInvitation": "Einladung beantworten",
   "handleInvitationDescription": "Du kannst die Einladung annehmen oder ablehnen. Falls du sie annimmst, stimmst du damit zu, dass die Projekt-Administratoren deine Personendaten sehen, verwenden und ändern dürfen.",
   "participationStatus": {
-    "Invited": "Du hast eine Einladung für dieses Projekt bekommen",
-    "Requested": "Du hast die Teilnahme an diesem Projekt angefragt",
-    "Active": "Aktiv",
-    "Inactive": "Inaktiv"
+    "invited": "Du hast eine Einladung für dieses Projekt bekommen",
+    "requested": "Du hast die Teilnahme an diesem Projekt angefragt",
+    "active": "Aktiv",
+    "inactive": "Inaktiv"
   },
   "invitations": "Einladungen",
   "invitationsDescription": "Du kannst Personen einladen an diesem Projekt teilzunehmen. Hier kannst du alle offenen Einladungen sehen, die von den betreffenden Personen noch nicht angenommen oder abgelehnt wurden.",
   "noInvitations": "Keine offenen Einladungen",
-  "invitePerson": "Eine Person einladen",
   "requests": "Anfragen",
   "requestsDescription": "Falls erlaubt, können Personen Teilnahme am Projekt anfragen. Hier kannst du alle offenen Anfragen sehen, die noch von keinem Administrator angenommen oder abgelehnt wurden.",
   "noRequests": "Keine offenen Anfragen",

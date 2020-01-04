@@ -20,6 +20,7 @@
   "name": "Name",
   "email": "Email-Adresse",
   "emailInvalid": "Die Email-Addresse muss gültig sein",
+  "fieldInvalidGuid": "Dies ist keine gültige ID",
   "fieldRequired": "Dies ist ein Pflichtfeld",
   "fieldMin": "Dieses Feld muss mindestens {count} Zeichen lang sein",
   "fieldMax": "Dieses Feld darf maximal {count} Zeichen lang sein",
