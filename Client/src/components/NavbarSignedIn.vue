@@ -71,70 +71,72 @@
         </v-list-item-content>
       </v-list-item>
 
-      <!--//* Projects -->
-      <v-list-group
-        v-for="(project, i) in getProjects"
-        :key="i"
-        prepend-icon="extension"
-        value="false"
-      >
-        <template v-slot:activator>
-          <v-list-item-content>
-            <v-list-item-title v-text="project.name" />
-          </v-list-item-content>
-        </template>
-
-        <v-list-item :to="{ name: 'calendar', params: { projectId: project.id }}">
-          <v-list-item-icon />
-          <v-list-item-content>
-            <v-list-item-title v-t="'project.calendar'" />
-          </v-list-item-content>
-        </v-list-item>
-
+      <div v-if="personModule.getActivePerson">
+        <!--//* Projects -->
         <v-list-group
-          v-if="project.topics.length > 0"
-          no-action
-          sub-group
+          v-for="(participation, i) in personModule.getActivePerson.participations"
+          :key="i"
+          prepend-icon="extension"
+          value="false"
         >
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title v-t="'project.knowledgeBase'" />
+              <v-list-item-title v-text="participation.project.name" />
             </v-list-item-content>
           </template>
 
-          <v-list-item
-            v-for="(topic, j) in project.topics"
-            :key="j"
-            :to="{ name: 'topic', params: { projectId: project.id, topicId: topic.id }}"
-          >
+          <v-list-item :to="{ name: 'calendar', params: { projectId: participation.project.id }}">
+            <v-list-item-icon />
             <v-list-item-content>
-              <v-list-item-title v-text="topic.name" />
+              <v-list-item-title v-t="'project.calendar'" />
             </v-list-item-content>
           </v-list-item>
-        </v-list-group>
 
-        <v-list-group
-          no-action
-          sub-group
-        >
-          <template v-slot:activator>
-            <v-list-item-content>
-              <v-list-item-title v-t="'project.administration'" />
-            </v-list-item-content>
-          </template>
-
-          <v-list-item
-            v-for="(action, j) in project.adminActions"
-            :key="j"
-            :to="{ name: action[1], params: { projectId: project.id }}"
+          <v-list-group
+            v-if="getTopics(participation.project).length > 0"
+            no-action
+            sub-group
           >
-            <v-list-item-content>
-              <v-list-item-title v-t="action[0]" />
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-group>
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title v-t="'project.knowledgeBase'" />
+              </v-list-item-content>
+            </template>
 
-      </v-list-group>
+            <v-list-item
+              v-for="(topic, j) in getTopics(participation.project)"
+              :key="j"
+              :to="{ name: 'topic', params: { projectId: participation.project.id, topicId: topic.id }}"
+            >
+              <v-list-item-content>
+                <v-list-item-title v-text="topic.name" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+
+          <v-list-group
+            no-action
+            sub-group
+          >
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title v-t="'project.administration'" />
+              </v-list-item-content>
+            </template>
+
+            <v-list-item
+              v-for="(action, j) in getAdminActions(participation.project)"
+              :key="j"
+              :to="{ name: action[1], params: { projectId: participation.project.id }}"
+            >
+              <v-list-item-content>
+                <v-list-item-title v-t="action[0]" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+
+        </v-list-group>
+      </div>
 
       <!--//* Profile -->
       <v-list-group
@@ -168,7 +170,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
-import { Person, Project, Topic } from '../models/definitions'
+import { Person, Project, Topic, Participation } from '../models/definitions'
 import { getModule } from 'vuex-module-decorators'
 import PersonModule from '../store/persons'
 import KnowledgeBaseModule from '../store/knowledgeBase'
@@ -186,29 +188,25 @@ export default class NavbarSignedIn extends Vue {
     ['person.configureProjects', 'configureProjects']
   ]
 
-  private get getProjects() {
-    const participations = this.personModule.getActivePerson?.participations || []
-
-    return participations.map((data: any) => {
-      return {
-        id: data.project.id,
-        name: data.project.name,
-        topics: this.knowledgeBaseModule.allTopics.filter((topic: Topic) => {
-          return topic.projectId === data.id
-        }),
-        adminActions: [
-          ['project.settings', 'settings'],
-          ['project.participants', 'participants'],
-          //// ['Categories', 'label', 'settings'],
-          //// ['Teams', 'supervisor_account', 'settings'],
-          //// ['Meeting Points', 'location_on', 'settings'],
-          //// ['Notifications', 'notifications', 'settings'],
-          //// ['Reports', 'message', 'settings'],
-          //// ['Statistics', 'show_chart', 'settings'],
-          //// ['Notes', 'edit', 'settings']
-        ],
-      }
+  private getTopics(project: Project) {
+    return this.knowledgeBaseModule.allTopics.filter((topic: Topic) => {
+      return topic.projectId === project.id
     })
+  }
+
+  private getAdminActions() {
+    // TODO: do some permission checks and only display the ones one has access to
+    return [
+      ['project.settings', 'settings'],
+      ['project.participants', 'participants'],
+      //// ['Categories', 'label', 'settings'],
+      //// ['Teams', 'supervisor_account', 'settings'],
+      //// ['Meeting Points', 'location_on', 'settings'],
+      //// ['Notifications', 'notifications', 'settings'],
+      //// ['Reports', 'message', 'settings'],
+      //// ['Statistics', 'show_chart', 'settings'],
+      //// ['Notes', 'edit', 'settings']
+    ]
   }
 
 }
