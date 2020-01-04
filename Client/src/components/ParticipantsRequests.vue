@@ -58,7 +58,7 @@ import ProjectModule from '../store/projects'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
 
 @Component
-export default class PersonsRequests extends Vue {
+export default class ParticipantsRequests extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private requestsAllowed: any = true

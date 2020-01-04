@@ -198,7 +198,7 @@ export default class NavbarSignedIn extends Vue {
         }),
         adminActions: [
           ['project.settings', 'settings'],
-          ['person.persons', 'persons'],
+          ['project.participants', 'participants'],
           //// ['Categories', 'label', 'settings'],
           //// ['Teams', 'supervisor_account', 'settings'],
           //// ['Meeting Points', 'location_on', 'settings'],

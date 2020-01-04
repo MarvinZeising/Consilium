@@ -39,10 +39,7 @@
       </v-list>
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          text
-          v-t="'project.invitePerson'"
-        />
+        <CreateInvitationDialog />
       </v-card-actions>
     </v-card>
   </v-flex>
@@ -53,9 +50,14 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../store/projects'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
+import CreateInvitationDialog from './dialogs/CreateInvitationDialog.vue'
 
-@Component
-export default class PersonsInvitations extends Vue {
+@Component({
+  components: {
+    CreateInvitationDialog,
+  }
+})
+export default class ParticipantsInvitations extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private get getInvitations() {

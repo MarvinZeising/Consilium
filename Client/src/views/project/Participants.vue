@@ -2,9 +2,9 @@
   <v-container fluid>
     <v-layout wrap>
 
-      <PersonsInvitations />
+      <ParticipantsInvitations />
 
-      <PersonsRequests />
+      <ParticipantsRequests />
 
     </v-layout>
   </v-container>
@@ -15,16 +15,16 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../../store/projects'
 import { Project } from '../../models/definitions'
-import PersonsInvitations from '../../components/PersonsInvitations.vue'
-import PersonsRequests from '../../components/PersonsRequests.vue'
+import ParticipantsInvitations from '../../components/ParticipantsInvitations.vue'
+import ParticipantsRequests from '../../components/ParticipantsRequests.vue'
 
 @Component({
   components: {
-    PersonsInvitations,
-    PersonsRequests,
+    ParticipantsInvitations,
+    ParticipantsRequests,
   }
 })
-export default class Persons extends Vue {
+export default class Participants extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 }
 </script>
