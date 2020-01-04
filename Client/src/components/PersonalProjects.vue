@@ -65,6 +65,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../store/projects'
+import PersonModule from '../store/persons'
 import JoinProjectDialog from '../components/dialogs/JoinProjectDialog.vue'
 import CancelJoinRequestDialog from '../components/dialogs/CancelJoinRequestDialog.vue'
 import HandleProjectInvitation from '../components/dialogs/HandleProjectInvitation.vue'
@@ -77,8 +78,9 @@ import { Project, ParticipationStatus } from '../models/definitions'
     HandleProjectInvitation,
   }
 })
-export default class ProjectalProjects extends Vue {
+export default class PersonalProjects extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
 
   private get getProjects() {
     return this.projectModule.getProjects
@@ -102,7 +104,7 @@ export default class ProjectalProjects extends Vue {
   }
 
   private getParticipation(projectId: string) {
-    return this.projectModule.getParticipations.find((p) => p.projectId === projectId)
+    return this.personModule.getActivePerson?.participations.find((x) => x.projectId === projectId)
   }
 
 }
