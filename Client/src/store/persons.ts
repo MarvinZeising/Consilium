@@ -121,9 +121,9 @@ export default class PersonModule extends VuexModule {
   public async activatePerson(personId: string | null) {
     this.context.commit('setActivePersonId', personId)
 
-    if (!personId) {
-      await this.context.dispatch('clearProjects')
-    } else if (this.getActivePerson?.participations) {
+    await this.context.dispatch('clearProjects')
+
+    if (this.getActivePerson?.participations) {
       for (const participation of this.getActivePerson?.participations) {
         await this.context.dispatch('loadProject', participation.projectId)
       }
