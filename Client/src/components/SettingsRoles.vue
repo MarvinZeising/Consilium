@@ -16,12 +16,8 @@
         class="grey--text"
         v-t="'project.role.description'"
       />
-      <v-list two-line>
-        <v-list-item
-          v-if="projectModule.getRoles.length === 0"
-          dark
-          class="warning"
-        >
+      <v-list>
+        <v-list-item v-if="projectModule.getRoles.length === 0">
           <span v-t="'project.role.loading'" />
         </v-list-item>
         <v-list-item
