@@ -32,14 +32,14 @@
           <v-spacer />
           <v-btn
             text
-            @click="renameTopicDialog = false"
+            @click.stop="renameTopicDialog = false"
             v-t="'core.close'"
           />
           <v-btn
             :disabled="topicName == ''"
             text
             color="primary"
-            @click="renameTopic"
+            @click.stop="renameTopic"
             v-t="'core.save'"
             type="submit"
           />

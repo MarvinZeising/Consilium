@@ -95,20 +95,20 @@
         <v-btn
           text
           v-if="!editMode"
-          @click="toggleEditMode"
+          @click.stop="toggleEditMode"
           v-t="'core.edit'"
         />
         <v-btn
           text
           v-if="editMode"
-          @click="toggleEditMode"
+          @click.stop="toggleEditMode"
           v-t="'core.cancel'"
         />
         <v-btn
           text
           v-if="editMode"
           color="primary"
-          @click="save"
+          @click.stop="save"
           v-t="'core.save'"
         />
       </v-card-actions>

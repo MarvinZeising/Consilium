@@ -116,7 +116,7 @@
           <v-spacer />
           <v-btn
             text
-            @click="dialog = false"
+            @click.stop="dialog = false"
             v-t="'core.cancel'"
           />
           <v-btn
@@ -125,7 +125,7 @@
             :loading="loading"
             text
             color="primary"
-            @click="save"
+            @click.stop="save"
             v-t="'core.save'"
           />
         </v-card-actions>

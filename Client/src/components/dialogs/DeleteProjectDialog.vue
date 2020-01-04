@@ -43,7 +43,7 @@
           <v-spacer />
           <v-btn
             text
-            @click="deleteProjectDialog = false"
+            @click.stop="deleteProjectDialog = false"
             v-t="'core.cancel'"
           />
           <v-btn
@@ -51,7 +51,7 @@
             type="submit"
             text
             color="error"
-            @click="deleteProject"
+            @click.stop="deleteProject"
             v-t="'core.delete'"
           />
         </v-card-actions>

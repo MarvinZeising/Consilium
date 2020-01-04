@@ -60,13 +60,13 @@
 
             <v-btn
               :disabled="!valid"
-              @click="validateStep"
+              @click.stop="validateStep"
               color="primary"
               v-t="'core.next'"
             />
             <v-btn
               text
-              @click="goBack"
+              @click.stop="goBack"
               v-t="'core.cancel'"
             />
           </v-stepper-content>
@@ -97,13 +97,13 @@
             />
 
             <v-btn
-              @click="createPerson"
+              @click.stop="createPerson"
               color="primary"
               v-t="'person.create'"
             />
             <v-btn
               text
-              @click="activeStep = 1"
+              @click.stop="activeStep = 1"
               v-t="'core.back'"
             />
           </v-stepper-content>

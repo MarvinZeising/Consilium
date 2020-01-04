@@ -109,7 +109,7 @@
           <v-list-item
             v-for="language in languages"
             :key="language"
-            @click="updateLanguage(language)"
+            @click.stop="updateLanguage(language)"
           >
             <v-list-item-title v-t="'language.' + language" />
           </v-list-item>

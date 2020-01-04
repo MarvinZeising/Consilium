@@ -9,7 +9,7 @@
       sm4 xs12
       class="text-sm-left text-xs-center"
     >
-      <v-btn @click="$refs.calendar.prev()">
+      <v-btn @click.stop="$refs.calendar.prev()">
         <v-icon dark left>keyboard_arrow_left</v-icon>
         Prev
       </v-btn>
@@ -32,7 +32,7 @@
       sm4 xs12
       class="text-sm-right text-xs-center"
     >
-      <v-btn @click="$refs.calendar.next()">
+      <v-btn @click.stop="$refs.calendar.next()">
         Next
         <v-icon right dark>keyboard_arrow_right</v-icon>
       </v-btn>

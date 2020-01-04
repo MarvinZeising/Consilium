@@ -28,7 +28,7 @@
             <v-btn
               icon
               class="ma-0"
-              @click="editPerson(person.id)"
+              @click.stop="editPerson(person.id)"
             >
               <v-icon color="grey">edit</v-icon>
             </v-btn>

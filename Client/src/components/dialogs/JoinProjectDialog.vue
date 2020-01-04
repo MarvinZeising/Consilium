@@ -31,7 +31,7 @@
           <v-spacer />
           <v-btn
             text
-            @click="dialog = false"
+            @click.stop="dialog = false"
             v-t="'core.close'"
           />
           <v-btn

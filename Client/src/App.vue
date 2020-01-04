@@ -20,7 +20,7 @@
       <v-btn
         dark
         text
-        @click="alertModule.getSnackbar.show = false"
+        @click.stop="alertModule.getSnackbar.show = false"
       >
         Close
       </v-btn>

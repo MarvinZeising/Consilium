@@ -27,14 +27,14 @@
           <v-spacer />
           <v-btn
             text
-            @click="newTopicDialog = false"
+            @click.stop="newTopicDialog = false"
             v-t="'core.close'"
           />
           <v-btn
             :disabled="topicName == ''"
             text
             color="primary"
-            @click="createTopic"
+            @click.stop="createTopic"
             v-t="'core.save'"
             type="submit"
           />

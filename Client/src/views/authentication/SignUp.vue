@@ -171,14 +171,14 @@
             <v-btn
               v-if="step !== 0"
               text
-              @click="step--"
+              @click.stop="step--"
               v-t="'core.back'"
             />
             <v-spacer />
             <v-btn
               :disabled="(step === 1 && (!emailValid || nextLoading)) || (step === 2 && !passwordValid) || (step === 3 && !interfaceValid)"
               color="primary"
-              @click="next"
+              @click.stop="next"
               :loading="nextLoading"
             >
               <span

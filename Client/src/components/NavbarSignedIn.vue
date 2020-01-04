@@ -30,7 +30,7 @@
         <v-list-item
           v-for="(person, i) in personModule.getPersons"
           :key="i"
-          @click="personModule.activatePerson(person.id)"
+          @click.stop="personModule.activatePerson(person.id)"
         >
           <v-list-item-title>
             <v-icon left>person</v-icon>

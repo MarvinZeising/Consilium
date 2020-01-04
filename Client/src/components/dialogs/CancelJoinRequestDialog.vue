@@ -20,14 +20,14 @@
       <v-card-actions>
         <v-btn
           text
-          @click="dialog = false"
+          @click.stop="dialog = false"
           v-t="'project.cancelRequestOtherButton'"
         />
         <v-spacer></v-spacer>
         <v-btn
           text
           color="primary"
-          @click="cancelJoinRequest"
+          @click.stop="cancelJoinRequest"
           v-t="'project.cancelRequestSubmit'"
           :loading="loading"
         />

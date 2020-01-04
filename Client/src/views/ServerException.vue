@@ -11,7 +11,7 @@
     <v-btn
       class="mt-3"
       color="warning"
-      @click="tryAgainNow"
+      @click.stop="tryAgainNow"
     >
       Try again now
     </v-btn>

@@ -30,7 +30,7 @@
           <v-spacer />
           <v-btn
             text
-            @click="dialog = false"
+            @click.stop="dialog = false"
             v-t="'core.cancel'"
           />
           <v-btn
@@ -38,7 +38,7 @@
             type="submit"
             text
             color="error"
-            @click="deleteRole"
+            @click.stop="deleteRole"
             v-t="'core.delete'"
           />
         </v-card-actions>

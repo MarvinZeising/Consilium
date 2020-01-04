@@ -20,21 +20,21 @@
       <v-card-actions>
         <v-btn
           text
-          @click="dialog = false"
+          @click.stop="dialog = false"
           v-t="'core.cancel'"
         />
         <v-spacer></v-spacer>
         <v-btn
           text
           color="error"
-          @click="declineInvitation"
+          @click.stop="declineInvitation"
           v-t="'core.decline'"
           :loading="loading"
         />
         <v-btn
           text
           color="primary"
-          @click="acceptInvitation"
+          @click.stop="acceptInvitation"
           v-t="'core.accept'"
           :loading="loading"
         />

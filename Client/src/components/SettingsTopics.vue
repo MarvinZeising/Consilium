@@ -29,7 +29,7 @@
               v-if="index > 0"
               icon
               class="ma-0"
-              @click="knowledgeBaseModule.moveTopicUp(topic.order)"
+              @click.stop="knowledgeBaseModule.moveTopicUp(topic.order)"
             >
               <v-icon color="grey">expand_less</v-icon>
             </v-btn>
@@ -37,7 +37,7 @@
               v-if="index < getTopics.length - 1"
               icon
               class="ma-0"
-              @click="knowledgeBaseModule.moveTopicDown(topic.order)"
+              @click.stop="knowledgeBaseModule.moveTopicDown(topic.order)"
             >
               <v-icon color="grey">expand_more</v-icon>
             </v-btn>

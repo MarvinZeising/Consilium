@@ -4,7 +4,7 @@
       <template v-for="(article, index) in articles">
         <v-list-item
           :key="article.title"
-          @click=""
+          @click.stop=""
         >
           <v-list-item-content>
             <v-list-item-title v-html="article.title"></v-list-item-title>

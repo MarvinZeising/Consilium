@@ -100,13 +100,13 @@
         <v-btn
           text
           v-if="!editMode"
-          @click="toggleEditMode"
+          @click.stop="toggleEditMode"
           v-t="'core.edit'"
         />
         <v-btn
           text
           v-if="editMode"
-          @click="toggleEditMode"
+          @click.stop="toggleEditMode"
           v-t="'core.cancel'"
         />
         <v-btn
@@ -115,7 +115,7 @@
           :disabled="!valid"
           :loading="loading"
           color="primary"
-          @click="save"
+          @click.stop="save"
           v-t="'core.save'"
         />
       </v-card-actions>
