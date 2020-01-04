@@ -119,7 +119,6 @@ namespace Server.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.RolesWrite != true) return Forbid();
 

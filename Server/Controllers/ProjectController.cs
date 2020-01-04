@@ -51,27 +51,6 @@ namespace Server.Controllers
             }
         }
 
-        [HttpGet("{projectId}/{personId}/participations")]
-        public ActionResult<IEnumerable<ParticipationDto>> GetProjectParticipations(Guid projectId, Guid personId)
-        {
-            try
-            {
-                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsRead != true) return Forbid();
-
-                var participations = _db.Participation
-                    .FindByCondition(x => x.ProjectId == projectId)
-                    .ToList();
-
-                return Ok(_mapper.Map<IEnumerable<ParticipationDto>>(participations));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"ERROR in GetProjectParticipations: {e.Message}");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
         [HttpPost]
         public IActionResult CreateProject([FromBody] CreateProjectDto dto)
         {
