@@ -123,6 +123,10 @@ export default class PersonModule extends VuexModule {
 
     if (!personId) {
       await this.context.dispatch('clearProjects')
+    } else if (this.getActivePerson?.participations) {
+      for (const participation of this.getActivePerson?.participations) {
+        await this.context.dispatch('loadProject', participation.projectId)
+      }
     }
   }
 
