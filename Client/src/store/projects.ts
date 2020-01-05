@@ -31,12 +31,16 @@ export default class ProjectModule extends VuexModule {
     })
   }
 
+  public get getAllParticipations() {
+    return this.getActiveProject?.participations
+  }
+
   public get getInvitations() {
-    return this.getActiveProject?.participations?.filter((x) => x.status === ParticipationStatus.Invited)
+    return this.getAllParticipations?.filter((x) => x.status === ParticipationStatus.Invited)
   }
 
   public get getRequests() {
-    return this.getActiveProject?.participations?.filter((x) => x.status === ParticipationStatus.Requested)
+    return this.getAllParticipations?.filter((x) => x.status === ParticipationStatus.Requested)
   }
 
   public get getParticipants() {

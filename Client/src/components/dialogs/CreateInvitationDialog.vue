@@ -110,6 +110,11 @@ export default class CreateInvitationDialog extends Vue {
       }
     })
 
+    this.personIdRules.push((v: string) => {
+      const allParticipantIds = this.projectModule.getAllParticipations?.map((x) => x.personId)
+      return !allParticipantIds?.includes(v) || this.$t('project.invitation.duplicate')
+    })
+
     this.loadingRoles = false
   }
 
@@ -119,11 +124,10 @@ export default class CreateInvitationDialog extends Vue {
     if (this.valid) {
       this.loading = true
 
-      const response = await this.projectModule.createInvitation({
+      await this.projectModule.createInvitation({
         personId: this.personId,
         roleId: this.roleId
       })
-      console.log(response)
 
       this.loading = false
       this.dialog = false
