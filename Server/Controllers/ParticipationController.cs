@@ -8,6 +8,7 @@ using Entities.Enums;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Controllers
 {
@@ -39,7 +40,11 @@ namespace Server.Controllers
                 if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
 
                 var participations = _db.Participation
-                    .FindByCondition(x => x.ProjectId == projectId && x.Status.Equals(ParticipationStatus.Invited))
+                    .FindByCondition(
+                        x => x.ProjectId == projectId
+                        && x.Status.Equals(ParticipationStatus.Invited.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                    .Include(x => x.Person)
+                    .Include(x => x.Role)
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ParticipationDto>>(participations));
@@ -60,7 +65,11 @@ namespace Server.Controllers
                 if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
 
                 var participations = _db.Participation
-                    .FindByCondition(x => x.ProjectId == projectId && x.Status.Equals(ParticipationStatus.Requested))
+                    .FindByCondition(
+                        x => x.ProjectId == projectId
+                        && x.Status.Equals(ParticipationStatus.Requested.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                    .Include(x => x.Person)
+                    .Include(x => x.Role)
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ParticipationDto>>(participations));
@@ -83,8 +92,8 @@ namespace Server.Controllers
                 var participations = _db.Participation
                     .FindByCondition(x =>
                         x.ProjectId == projectId
-                        && (x.Status.Equals(ParticipationStatus.Active)
-                            || x.Status.Equals(ParticipationStatus.Inactive)))
+                        && (x.Status.Equals(ParticipationStatus.Active.ToString(), StringComparison.CurrentCultureIgnoreCase)
+                            || x.Status.Equals(ParticipationStatus.Inactive.ToString(), StringComparison.CurrentCultureIgnoreCase)))
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ParticipationDto>>(participations));
