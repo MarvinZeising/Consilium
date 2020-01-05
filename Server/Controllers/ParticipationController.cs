@@ -114,6 +114,12 @@ namespace Server.Controllers
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
 
+                var person = _db.Person.FindByCondition(x => x.Id == dto.PersonId).SingleOrDefault();
+                if (person == null) return BadRequest();
+
+                var role = _db.Role.FindByCondition(x => x.Id == dto.RoleId && x.ProjectId == projectId).SingleOrDefault();
+                if (role == null) return BadRequest();
+
                 var participation = _mapper.Map<Participation>(dto);
                 participation.ProjectId = projectId;
                 participation.Status = ParticipationStatus.Invited.ToString();
@@ -125,7 +131,7 @@ namespace Server.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in CreateParticipation: {e.Message}");
+                _logger.LogError($"ERROR in CreateInvitation: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
