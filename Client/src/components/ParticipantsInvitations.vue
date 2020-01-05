@@ -2,7 +2,7 @@
   <v-flex xs12 sm10 md8 lg6 xl4>
     <h2
       class="headline mb-3"
-      v-t="'project.invitations'"
+      v-t="'project.invitation.invitations'"
     />
     <v-card
       flat
@@ -11,11 +11,11 @@
     >
       <v-card-text
         class="grey--text"
-        v-t="'project.invitationsDescription'"
+        v-t="'project.invitation.description'"
       />
       <v-list v-if="projectModule.getInvitations">
         <v-list-item v-if="projectModule.getInvitations.length === 0">
-          <span v-t="'project.noInvitations'" />
+          <span v-t="'project.invitation.noInvitations'" />
         </v-list-item>
         <v-list-item
           v-for="(participation, index) in projectModule.getInvitations"
@@ -27,7 +27,6 @@
             <v-list-item-subtitle v-text="getRoleText(participation.role.name)" />
             <v-list-item-subtitle v-text="getCreationText(participation.createdTime)" />
           </v-list-item-content>
-
           <v-list-item-action>
             <v-btn
               text

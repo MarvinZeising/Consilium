@@ -42,9 +42,14 @@
     "active": "Aktiv",
     "inactive": "Inaktiv"
   },
-  "invitations": "Einladungen",
-  "invitationsDescription": "Du kannst Personen einladen an diesem Projekt teilzunehmen. Hier kannst du alle offenen Einladungen sehen, die von den betreffenden Personen noch nicht angenommen oder abgelehnt wurden.",
-  "noInvitations": "Keine offenen Einladungen",
+  "invitation": {
+    "invitations": "Einladungen",
+    "description": "Du kannst Personen einladen an diesem Projekt teilzunehmen. Hier kannst du alle offenen Einladungen sehen, die von den betreffenden Personen noch nicht angenommen oder abgelehnt wurden.",
+    "noInvitations": "Keine offenen Einladungen",
+    "roleName": "Rolle: {name}",
+    "invitedOn": "Eingeladen am {date}",
+    "duplicate": "Diese Person ist entweder schon Teilnehmer oder hat eine offene Einladung/Teilnahme-Anfrage"
+  },
   "requests": "Anfragen",
   "requestsDescription": "Falls erlaubt, können Personen Teilnahme am Projekt anfragen. Hier kannst du alle offenen Anfragen sehen, die noch von keinem Administrator angenommen oder abgelehnt wurden.",
   "noRequests": "Keine offenen Anfragen",

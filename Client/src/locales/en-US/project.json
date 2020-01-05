@@ -42,9 +42,14 @@
     "active": "Active",
     "inactive": "Inactive"
   },
-  "invitations": "Invitations",
-  "invitationsDescription": "You can invite persons to join this project. Here you can see all open invitations that have not yet been accepted or declined by the person.",
-  "noInvitations": "No pending invitations",
+  "invitation": {
+    "invitations": "Invitations",
+    "description": "You can invite persons to join this project. Here you can see all open invitations that have not yet been accepted or declined by the person.",
+    "noInvitations": "No pending invitations",
+    "roleName": "Role: {name}",
+    "invitedOn": "Invited on {date}",
+    "duplicate": "This person is either already participating, or has an open invitation or join request."
+  },
   "requests": "Requests",
   "requestsDescription": "If allowed below, persons can request participation for the project. Here you can see all open requests that have not yet been accepted or declined by an administrator.",
   "noRequests": "No pending requests",
