@@ -31,6 +31,12 @@ namespace Entities.Models
         [ValidTheme]
         public string Theme { get; set; }
 
+        [Required]
+        public string DateFormat { get; set; }
+
+        [Required]
+        public string TimeFormat { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
 
