@@ -66,10 +66,10 @@ class Project {
 }
 
 enum ParticipationStatus {
-  Invited = 'Invited',
-  Requested = 'Requested',
-  Active = 'Active',
-  Inactive = 'Inactive',
+  Invited = 'invited',
+  Requested = 'requested',
+  Active = 'active',
+  Inactive = 'inactive',
 }
 
 class Participation {
