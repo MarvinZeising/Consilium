@@ -212,7 +212,6 @@ export default class ProjectModule extends VuexModule {
 
   @Action({ commit: 'setGeneral' })
   public async updateProjectGeneral(project: {
-    id: string,
     name: string,
     email: string
   }) {

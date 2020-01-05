@@ -196,10 +196,7 @@ export default class SettingsGeneral extends Vue {
     const userName = this.projectModule.getActiveProject?.name || ''
 
     if (form.validate()) {
-      const projectId = this.$route.params.projectId
-
       await this.projectModule.updateProjectGeneral({
-        id: projectId,
         name: this.name,
         email: this.email
       })
