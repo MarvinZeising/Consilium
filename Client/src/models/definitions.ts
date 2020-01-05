@@ -105,7 +105,7 @@ class Participation {
       data.personId,
       data.projectId,
       data.roleId,
-      data.status,
+      data.status.toLowerCase(),
       data.createdTime,
       data.lastUpdatedTime)
     participation.role = data.role ? Role.create(data.role) : undefined
