@@ -64,6 +64,7 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import ProjectModule from '../../store/projects'
+import InvitationModule from '../../store/invitations'
 import DeleteInvitationDialog from './DeleteInvitationDialog.vue'
 import i18n from '../../i18n'
 import { Participation } from '../../models/definitions'
@@ -75,6 +76,7 @@ import { Participation } from '../../models/definitions'
 })
 export default class UpdateInvitationDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
 
   @Prop(Participation)
   private readonly participation?: Participation
@@ -111,7 +113,7 @@ export default class UpdateInvitationDialog extends Vue {
     if (this.valid && this.participation) {
       this.loading = true
 
-      await this.projectModule.updateInvitation({
+      await this.invitationModule.updateInvitation({
         participationId: this.participation?.id,
         roleId: this.roleId
       })

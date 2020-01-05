@@ -51,13 +51,13 @@
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
-import ProjectModule from '../../store/projects'
+import InvitationModule from '../../store/invitations'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '../../models/definitions'
 
 @Component
 export default class DeleteInvitationDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
 
   @Prop(String)
   private readonly participationId?: string
@@ -70,7 +70,7 @@ export default class DeleteInvitationDialog extends Vue {
     if (this.participationId) {
       this.loading = true
 
-      await this.projectModule.cancelInvitation(this.participationId)
+      await this.invitationModule.cancelInvitation(this.participationId)
     }
 
     this.dialog = false

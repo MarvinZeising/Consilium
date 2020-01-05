@@ -79,10 +79,12 @@ import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
+import InvitationModule from '../../store/invitations'
 
 @Component
 export default class CreateInvitationDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
 
   private dialog: any = false
   private valid: any = null
@@ -124,7 +126,7 @@ export default class CreateInvitationDialog extends Vue {
     if (this.valid) {
       this.loading = true
 
-      await this.projectModule.createInvitation({
+      await this.invitationModule.createInvitation({
         personId: this.personId,
         roleId: this.roleId
       })

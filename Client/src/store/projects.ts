@@ -11,7 +11,8 @@ export default class ProjectModule extends VuexModule {
   private get resolvePersonAndProject() {
     const personId = this.getPersonId
     const projectId = this.getProjectId
-    return { personId, projectId }
+    const project = this.getActiveProject
+    return { personId, projectId, project }
   }
 
   public get getProjectId() {
@@ -40,10 +41,6 @@ export default class ProjectModule extends VuexModule {
 
   public get getAllParticipations() {
     return this.getActiveProject?.participations
-  }
-
-  public get getInvitations() {
-    return this.getAllParticipations?.filter((x) => x.status === ParticipationStatus.Invited)
   }
 
   public get getRequests() {
@@ -82,13 +79,6 @@ export default class ProjectModule extends VuexModule {
     return response.data.map((x: any) => Role.create(x))
   }
 
-  @Action({ commit: 'setInvitations' })
-  public async loadInvitations() {
-    const { personId, projectId } = this.resolvePersonAndProject
-    const response = await axios.get(`/persons/${personId}/projects/${projectId}/invitations`)
-    return response.data.map((x: any) => Participation.create(x))
-  }
-
   @Action({ commit: 'setParticipants' })
   public async loadParticipants() {
     const { personId, projectId } = this.resolvePersonAndProject
@@ -125,20 +115,6 @@ export default class ProjectModule extends VuexModule {
       knowledgeBaseWrite: data.knowledgeBase === 'write',
     })
     return Role.create(response.data)
-  }
-
-  @Action({ commit: 'addInvitation' })
-  public async createInvitation(data: {
-    personId: string,
-    roleId: string
-  }) {
-    const { personId, projectId } = this.resolvePersonAndProject
-
-    const response = await axios.post(`/persons/${personId}/projects/${projectId}/invitations`, {
-      personId: data.personId,
-      roleId: data.roleId,
-    })
-    return Participation.create(response.data)
   }
 
   @Action({ commit: 'changeRole' })
@@ -206,28 +182,6 @@ export default class ProjectModule extends VuexModule {
   }
 
 
-
-
-  @Action({ commit: 'changeInvitation' })
-  public async updateInvitation(data: {
-    participationId: string,
-    roleId: string
-  }) {
-    const { personId, projectId } = this.resolvePersonAndProject
-
-    const response = await axios.put(`/persons/${personId}/projects/${projectId}/invitations/${data.participationId}`, {
-      roleId: data.roleId,
-    })
-    return Participation.create(response.data)
-  }
-
-  @Action({ commit: 'removeInvitation' })
-  public async cancelInvitation(participationId: string) {
-    const { personId, projectId } = this.resolvePersonAndProject
-
-    await axios.delete(`/persons/${personId}/projects/${projectId}/invitations/${participationId}`)
-    return participationId
-  }
 
   @MutationAction({ mutate: ['projects'] })
   public async clearProjects() {
@@ -301,17 +255,6 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  protected setInvitations(participations: Participation[]) {
-    this.projects = this.projects.map((project) => {
-      if (project.id === router.currentRoute.params.projectId) {
-        project.participations = project.participations?.filter((x) => x.status !== ParticipationStatus.Invited)
-        project.participations?.push(...participations)
-      }
-      return project
-    })
-  }
-
-  @Mutation
   protected setRequests(participations: Participation[]) {
     this.projects = this.projects.map((project) => {
       if (project.id === router.currentRoute.params.projectId) {
@@ -357,16 +300,6 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  protected addInvitation(participation: Participation) {
-    this.projects = this.projects.map((project) => {
-      if (project.id === router.currentRoute.params.projectId) {
-        project.participations?.push(participation)
-      }
-      return project
-    })
-  }
-
-  @Mutation
   protected changeRole(role: Role) {
     this.projects = this.projects.map((project: Project) => {
       if (project.id === router.currentRoute.params.projectId) {
@@ -390,31 +323,10 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  protected changeInvitation(participation: Participation) {
-    this.projects = this.projects.map((project: Project) => {
-      if (project.id === router.currentRoute.params.projectId) {
-        project.participations = project.participations?.filter((x) => x.id !== participation.id)
-        project.participations?.push(participation)
-      }
-      return project
-    })
-  }
-
-  @Mutation
   protected removeRole(roleId: string) {
     this.projects = this.projects.map((project: Project) => {
       if (project.id === router.currentRoute.params.projectId) {
         project.roles = project.roles?.filter((x) => x.id !== roleId)
-      }
-      return project
-    })
-  }
-
-  @Mutation
-  protected removeInvitation(participationId: string) {
-    this.projects = this.projects.map((project) => {
-      if (project.id === router.currentRoute.params.projectId) {
-        project.participations = project.participations?.filter((x) => x.id !== participationId)
       }
       return project
     })
@@ -434,6 +346,13 @@ export default class ProjectModule extends VuexModule {
   @Mutation
   protected insertProject(project: Project) {
     this.projects.push(project)
+  }
+
+  @Mutation
+  protected updateProject(project: Project) {
+    this.projects = this.projects.map((x) => {
+      return x.id === project.id ? project : x
+    })
   }
 
   @Mutation
