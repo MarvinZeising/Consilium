@@ -9,19 +9,32 @@ class User {
       data.id,
       data.email,
       data.language,
-      data.theme)
+      data.theme,
+      data.dateFormat,
+      data.timeFormat)
   }
 
   public id: string
   public email: string
   public language: string
   public theme: Theme
+  public dateFormat: string = ''
+  public timeFormat: string = ''
 
-  constructor(id: string, email: string, language?: string, theme?: string) {
+  constructor(
+    id: string,
+    email: string,
+    language: string,
+    theme: string,
+    dateFormat: string,
+    timeFormat: string
+  ) {
     this.id = id
     this.email = email
-    this.language = language || 'en-US'
+    this.language = language
     this.theme = theme === 'dark' ? Theme.Dark : Theme.Light
+    this.dateFormat = dateFormat
+    this.timeFormat = timeFormat
   }
 }
 

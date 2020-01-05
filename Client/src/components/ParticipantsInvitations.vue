@@ -45,6 +45,7 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
 import InvitationModule from '../store/invitations'
+import UserModule from '../store/users'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
 import CreateInvitationDialog from './dialogs/CreateInvitationDialog.vue'
 import UpdateInvitationDialog from './dialogs/UpdateInvitationDialog.vue'
@@ -57,6 +58,7 @@ import UpdateInvitationDialog from './dialogs/UpdateInvitationDialog.vue'
 })
 export default class ParticipantsInvitations extends Vue {
   private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
+  private userModule: UserModule = getModule(UserModule, this.$store)
 
   private loading: boolean = true
 
@@ -80,9 +82,13 @@ export default class ParticipantsInvitations extends Vue {
   }
 
   private getCreationText(createdTime: string) {
-    return this.$t('project.invitation.invitedOn', {
-      date: moment(createdTime).format('ddd, MMM Do YYYY, h:mm a')
-    })
+    const user = this.userModule.getUser
+    if (user) {
+      return this.$t('project.invitation.invitedOn', {
+        date: moment(createdTime).format(`${user?.dateFormat}, ${user?.timeFormat}`)
+      })
+    }
+    return ''
   }
 
 }

@@ -37,6 +37,28 @@
             <p class="subtitle-1">{{ $t(`account.${userModule.getUser.theme}`) }}</p>
           </v-flex>
 
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'account.dateFormat'"
+            />
+            <p
+              class="subtitle-1"
+              v-text="getTodayFormatted(userModule.getUser.dateFormat)"
+            />
+          </v-flex>
+
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'account.timeFormat'"
+            />
+            <p
+              class="subtitle-1"
+              v-text="getTodayFormatted(userModule.getUser.timeFormat)"
+            />
+          </v-flex>
+
         </v-layout>
       </v-card-text>
 
@@ -86,6 +108,42 @@
             </template>
           </v-select>
 
+          <p v-t="'account.dateFormatDescription'" />
+          <v-select
+            v-model="dateFormat"
+            :items="dateFormatValues"
+            item-text="name"
+            item-value="value"
+            :label="$t('account.dateFormat')"
+            filled
+            required
+          >
+            <template v-slot:selection="{ item }">
+              <span v-text="getTodayFormatted(item.value)" />
+            </template>
+            <template v-slot:item="{ item }">
+              <span v-text="getTodayFormatted(item.value)" />
+            </template>
+          </v-select>
+
+          <p v-t="'account.timeFormatDescription'" />
+          <v-select
+            v-model="timeFormat"
+            :items="timeFormatValues"
+            item-text="name"
+            item-value="value"
+            :label="$t('account.timeFormat')"
+            filled
+            required
+          >
+            <template v-slot:selection="{ item }">
+              <span v-text="getTodayFormatted(item.value)" />
+            </template>
+            <template v-slot:item="{ item }">
+              <span v-text="getTodayFormatted(item.value)" />
+            </template>
+          </v-select>
+
         </v-form>
       </v-card-text>
 
@@ -123,6 +181,7 @@ import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../i18n'
 import UserModule from '../store/users'
+import moment from 'moment'
 
 @Component
 export default class AccountInterface extends Vue {
@@ -130,14 +189,34 @@ export default class AccountInterface extends Vue {
 
   private editMode: boolean = false
 
+  private dateFormat: string = this.userModule.getUser?.dateFormat || ''
+  private dateFormatValues: any[] = [
+    'ddd, MMM Do YYYY',
+    'dd, MMM Do YYYY',
+    'MMM Do YYYY',
+    'YYYY-MM-DD',
+    'YYYY-DD-MM',
+    'MM-DD-YYYY',
+    'DD-MM-YYYY',
+    'MM.DD.YYYY',
+    'DD.MM.YYYY',
+    'D.M.YYYY',
+    'D. MMM YYYY',
+    'dd, D. MMM YYYY',
+    'ddd, D. MMM YYYY',
+  ].map((value) => { return { value } })
+  private timeFormat: string = 'h:mm a'
+  private timeFormatValues: any[] = [
+    'h:mm a',
+    'h:mm A',
+    'H:mm [hours]',
+    'h:mm [Uhr]',
+    'H:mm [Uhr]',
+  ].map((value) => { return { value } })
   private language: string = this.userModule.getUser?.language || ''
-  private languageValues: any[] = i18n.availableLocales.map((value) => {
-    return { value }
-  })
+  private languageValues: any[] = i18n.availableLocales.map((value) => { return { value } })
   private theme: string = this.userModule.getUser?.theme || ''
-  private themeValues: any[] = [ 'light', 'dark' ].map((value) => {
-    return { value }
-  })
+  private themeValues: any[] = [ 'light', 'dark' ].map((value) => { return { value } })
 
   private toggleEditMode() {
     this.editMode = !this.editMode
@@ -146,6 +225,10 @@ export default class AccountInterface extends Vue {
       this.language = this.userModule.getUser?.language || ''
       this.theme = this.userModule.getUser?.theme || ''
     }
+  }
+
+  private getTodayFormatted(format: string) {
+    return moment().format(format)
   }
 
   private async save() {

@@ -127,15 +127,17 @@
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
+import moment from 'moment'
 import i18n from '../i18n'
 import ProjectModule from '../store/projects'
 import PersonModule from '../store/persons'
-import moment from 'moment'
+import UserModule from '../store/users'
 
 @Component
 export default class SettingsGeneral extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private userModule: UserModule = getModule(UserModule, this.$store)
 
   private loading: boolean = true
   private editMode: boolean = false
@@ -161,9 +163,11 @@ export default class SettingsGeneral extends Vue {
   }
 
   private formatDateTime(datetime: string) {
-    return moment(datetime).format('ddd, MMM Do YYYY, h:mm a')
-    // TODO: store date format string in db
-    // TODO: set moment language
+    const user = this.userModule.getUser
+    if (user) {
+      return moment(datetime).format(`${user?.dateFormat}, ${user?.timeFormat}`)
+    }
+    return ''
   }
 
   @Watch('$route')
