@@ -7,7 +7,7 @@
       <v-btn
         v-on="on"
         text
-        v-t="'project.participant.invite'"
+        v-t="'project.invitation.invite'"
       />
     </template>
     <v-card>
@@ -18,17 +18,17 @@
         <v-card-title>
           <span
             class="headline"
-            v-t="'project.participant.invite'"
+            v-t="'project.invitation.invite'"
           />
         </v-card-title>
         <v-card-text>
           <p
             class="subtitle-1"
-            v-t="'project.participant.inviteDescription'"
+            v-t="'project.invitation.inviteDescription'"
           />
           <p
             class="subtitle-1"
-            v-t="'project.participant.idDescription'"
+            v-t="'project.invitation.idDescription'"
           />
           <v-text-field
             v-model="personId"
@@ -37,7 +37,7 @@
             filled
             required
           />
-          <p v-t="'project.participant.roleDescription'" />
+          <p v-t="'project.invitation.roleDescription'" />
           <v-select
             v-model="roleId"
             :items="roleValues"

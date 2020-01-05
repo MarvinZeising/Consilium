@@ -19,7 +19,7 @@
         <v-card-title>
           <span
             class="headline"
-            v-t="'project.participant.invite'"
+            v-t="'project.invitation.invite'"
           />
         </v-card-title>
         <v-card-text>

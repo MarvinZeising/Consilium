@@ -22,10 +22,6 @@
   "createSubmit": "Projekt erstellen",
   "participants": "Teilehmer",
   "participant": {
-    "invite": "Jemanden einladen",
-    "inviteDescription": "Du kannst eine Person zu diesem Projekt einladen. Die eingeladene Person muss die Einladung annehmen oder ablehnen. Um eine Person einzuladen musst du ID der Person erfragen. Die Person findet sie unter 'Profil / Persönliches / Generelles'",
-    "idDescription": "Die ID der Person",
-    "roleDescription": "Die Rolle, die der Person zugewiesen wird"
   },
   "join": "Einem Projekt beitreten",
   "joinDescription": "Du kannst anfragen, ob du einem Projekt beitreten darfst. Danach musst du warten bis ein Projekt Administrator diese Anfrage akzeptiert oder ablehnt. Um die Teilnahme anzufragen brauchst du die ID des Projektes. Du kannst sie bei einem der Projekt Administratoren erfragen.",
@@ -43,6 +39,10 @@
     "inactive": "Inaktiv"
   },
   "invitation": {
+    "invite": "Jemanden einladen",
+    "inviteDescription": "Du kannst eine Person zu diesem Projekt einladen. Die eingeladene Person muss die Einladung annehmen oder ablehnen. Um eine Person einzuladen musst du ID der Person erfragen. Die Person findet sie unter 'Profil / Persönliches / Generelles'",
+    "idDescription": "Die ID der Person",
+    "roleDescription": "Die Rolle, die der Person zugewiesen wird",
     "invitations": "Einladungen",
     "description": "Du kannst Personen einladen an diesem Projekt teilzunehmen. Hier kannst du alle offenen Einladungen sehen, die von den betreffenden Personen noch nicht angenommen oder abgelehnt wurden.",
     "noInvitations": "Keine offenen Einladungen",
