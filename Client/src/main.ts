@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+
 import { getModule } from 'vuex-module-decorators'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
@@ -18,12 +19,8 @@ function logLoading(text: string) {
   document.getElementById('loading')?.appendChild(div)
 }
 
-logLoading('Configuring Vue')
-
 async function init() {
   Vue.config.productionTip = false
-
-  logLoading('Configuring Axios')
 
   axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:5000/api'
   axios.defaults.timeout = 5000
@@ -47,22 +44,15 @@ async function init() {
       return Promise.reject(error)
     })
 
-  logLoading('Initializing notification system')
-
   const alertModule = getModule(AlertModule)
-
-  logLoading('Initializing user management')
-
   const userModule = getModule(UserModule)
-
-  logLoading('Checking if you\'re already signed in')
 
   const userItem = localStorage.getItem('user')
   if (userItem) {
     const user = JSON.parse(userItem)
     axios.defaults.headers.common.Authorization = `Bearer ${user.token}`
 
-    logLoading('Loading your account data')
+    logLoading('Signing you in...')
 
     try {
       await userModule.initStore()
@@ -76,8 +66,6 @@ async function init() {
       }
     }
   }
-
-  logLoading('Starting Vue')
 
   new Vue({
     vuetify,
