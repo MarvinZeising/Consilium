@@ -127,7 +127,13 @@ namespace Server.Controllers
                 _db.Participation.Create(participation);
                 _db.Save();
 
-                return Ok(_mapper.Map<ParticipationDto>(participation));
+                var insertedParticipation = _db.Participation
+                    .FindByCondition(x => x.Id == participation.Id)
+                    .Include(x => x.Person)
+                    .Include(x => x.Role)
+                    .SingleOrDefault();
+
+                return Ok(_mapper.Map<ParticipationDto>(insertedParticipation));
             }
             catch (Exception e)
             {
@@ -136,75 +142,66 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPut("invitations/{participationId}")]
+        public IActionResult UpdateInvitation(Guid personId, Guid projectId, Guid participationId, [FromBody] UpdateInvitationDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
 
+                var role = _db.Role.FindByCondition(x => x.Id == dto.RoleId && x.ProjectId == projectId).SingleOrDefault();
+                if (role == null) return BadRequest();
 
+                var participation = _db.Participation
+                    .FindByCondition(x => x.Id == participationId && x.ProjectId == projectId)
+                    .SingleOrDefault();
+                if (participation == null) return BadRequest();
 
+                participation.RoleId = dto.RoleId;
 
+                _db.Participation.Update(participation);
+                _db.Save();
 
+                var updatedParticipation = _db.Participation
+                    .FindByCondition(x => x.Id == participationId)
+                    .Include(x => x.Person)
+                    .Include(x => x.Role)
+                    .SingleOrDefault();
 
-// ? COPIED FROM ROLES
+                return Ok(_mapper.Map<ParticipationDto>(updatedParticipation));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateInvitation: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
-        // [HttpPut("participations/{participationId}")]
-        // public IActionResult UpdateParticipation(Guid personId, Guid projectId, Guid participationId, [FromBody] UpdateParticipationDto dto)
-        // {
-        //     try
-        //     {
-        //         if (!ModelState.IsValid) return BadRequest();
-        //         if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-        //         if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
+        [HttpDelete("invitations/{participationId}")]
+        public IActionResult DeleteInvitation(Guid personId, Guid projectId, Guid participationId)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
 
-        //         Participation participation;
+                var participation = _db.Participation
+                    .FindByCondition(x => x.Id == participationId && x.ProjectId == projectId)
+                    .SingleOrDefault();
 
-        //         var participationFromDb = _db.Participation.FindByCondition(x => x.Id == participationId).SingleOrDefault();
-        //         if (participationFromDb?.Editable == true)
-        //         {
-        //             participation = _mapper.Map<Participation>(dto);
-        //             participation.Editable = true;
-        //         }
-        //         else
-        //         {
-        //             participation = participationFromDb;
-        //             participation.Name = dto.Name;
-        //             participation.Editable = false;
-        //         }
+                _db.Participation.Delete(participation);
+                _db.Save();
 
-        //         participation.Id = participationId;
-        //         participation.ProjectId = projectId;
-
-        //         _db.Participation.Update(participation);
-        //         _db.Save();
-
-        //         return Ok(_mapper.Map<ParticipationDto>(participation));
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         _logger.LogError($"ERROR in UpdateParticipation: {e.Message}");
-        //         return StatusCode(500, "Internal server error");
-        //     }
-        // }
-
-        // [HttpDelete("participations/{participationId}")]
-        // public IActionResult DeleteParticipation(Guid personId, Guid projectId, Guid participationId)
-        // {
-        //     try
-        //     {
-        //         if (!ModelState.IsValid) return BadRequest();
-        //         if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-        //         if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
-
-        //         var participation = _db.Participation.FindByCondition(x => x.Id == participationId).SingleOrDefault();
-
-        //         _db.Participation.Delete(participation);
-        //         _db.Save();
-
-        //         return Ok();
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         _logger.LogError($"ERROR in DeleteParticipation: {e.Message}");
-        //         return StatusCode(500, "Internal server error");
-        //     }
-        // }
-
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in DeleteInvitation: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }
