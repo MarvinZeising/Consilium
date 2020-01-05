@@ -122,7 +122,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
 import { Project } from '../models/definitions'
@@ -148,7 +148,16 @@ export default class Navbar extends Vue {
   private language: string = ''
   private languages: string[] = []
 
+  @Watch('$route')
+  private async onRouteChanged(val: string, oldVal: string) {
+    await this.init()
+  }
+
   private async created() {
+    this.init()
+  }
+
+  private async init() {
     this.language = this.$i18n.locale
     this.languages = this.$i18n.availableLocales
 

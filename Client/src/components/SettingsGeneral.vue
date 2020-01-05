@@ -166,7 +166,16 @@ export default class SettingsGeneral extends Vue {
     // TODO: set moment language
   }
 
+  @Watch('$route')
+  private async onRouteChanged(val: string, oldVal: string) {
+    await this.init()
+  }
+
   private async created() {
+    this.init()
+  }
+
+  private async init() {
     const projectId = this.$route.params.projectId
     await this.projectModule.loadProject(projectId)
 

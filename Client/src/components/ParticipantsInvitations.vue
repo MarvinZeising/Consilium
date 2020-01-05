@@ -62,7 +62,16 @@ export default class ParticipantsInvitations extends Vue {
 
   private loading: boolean = true
 
+  @Watch('$route')
+  private async onRouteChanged(val: string, oldVal: string) {
+    await this.init()
+  }
+
   private async created() {
+    this.init()
+  }
+
+  private async init() {
     await this.projectModule.loadInvitations();
 
     this.loading = false

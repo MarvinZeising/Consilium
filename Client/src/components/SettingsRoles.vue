@@ -79,7 +79,16 @@ export default class SettingsRoles extends Vue {
     return this.personModule.getActiveRole?.rolesWrite === true
   }
 
+  @Watch('$route')
+  private async onRouteChanged(val: string, oldVal: string) {
+    await this.init()
+  }
+
   private async created() {
+    this.init()
+  }
+
+  private async init() {
     const projectId = this.$route.params.projectId
     await this.projectModule.loadRoles()
     await this.projectModule.loadParticipants()
