@@ -22,6 +22,7 @@
   "createSubmit": "Projekt erstellen",
   "participants": "Teilehmer",
   "participant": {
+    "participants": "Teilnehmer"
   },
   "join": "Einem Projekt beitreten",
   "joinDescription": "Du kannst anfragen, ob du einem Projekt beitreten darfst. Danach musst du warten bis ein Projekt Administrator diese Anfrage akzeptiert oder ablehnt. Um die Teilnahme anzufragen brauchst du die ID des Projektes. Du kannst sie bei einem der Projekt Administratoren erfragen.",

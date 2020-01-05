@@ -22,6 +22,7 @@
   "createSubmit": "Create project",
   "participants": "Participants",
   "participant": {
+    "participants": "Participant | Participants"
   },
   "join": "Join an existing project",
   "joinDescription": "You can request admission to an existing project. A project administrator will have to accept your request. In order to request, you need to have the project id. Ask a project administrator for the id.",
