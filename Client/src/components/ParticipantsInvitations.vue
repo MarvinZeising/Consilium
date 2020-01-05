@@ -23,9 +23,9 @@
           three-line
         >
           <v-list-item-content>
-            <v-list-item-title v-text="getPerson(participation.personId)" />
-            <v-list-item-subtitle>Role: Administrator</v-list-item-subtitle>
-            <v-list-item-subtitle>Invited on Dec 12, 2019</v-list-item-subtitle>
+            <v-list-item-title v-text="participation.person.fullName()" />
+            <v-list-item-subtitle v-text="getRoleText(participation.role.name)" />
+            <v-list-item-subtitle v-text="getCreationText(participation.createdTime)" />
           </v-list-item-content>
 
           <v-list-item-action>
@@ -48,6 +48,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import moment from 'moment'
 import ProjectModule from '../store/projects'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
 import CreateInvitationDialog from './dialogs/CreateInvitationDialog.vue'
@@ -75,6 +76,16 @@ export default class ParticipantsInvitations extends Vue {
     await this.projectModule.loadInvitations();
 
     this.loading = false
+  }
+
+  private getRoleText(roleName: string) {
+    return this.$t('project.invitation.roleName', { name: roleName })
+  }
+
+  private getCreationText(createdTime: string) {
+    return this.$t('project.invitation.invitedOn', {
+      date: moment(createdTime).format('ddd, MMM Do YYYY, h:mm a')
+    })
   }
 
   private  getPerson(personId: string) {
