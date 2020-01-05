@@ -63,11 +63,11 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
-import ProjectModule from '../../store/projects'
-import InvitationModule from '../../store/invitations'
-import DeleteInvitationDialog from './DeleteInvitationDialog.vue'
 import i18n from '../../i18n'
-import { Participation } from '../../models/definitions'
+import InvitationModule from '../../store/invitations'
+import RoleModule from '@/store/roles'
+import DeleteInvitationDialog from './DeleteInvitationDialog.vue'
+import { Participation, Role } from '../../models/definitions'
 
 @Component({
   components: {
@@ -75,8 +75,8 @@ import { Participation } from '../../models/definitions'
   }
 })
 export default class UpdateInvitationDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
+  private roleModule: RoleModule = getModule(RoleModule, this.$store)
 
   @Prop(Participation)
   private readonly participation?: Participation
@@ -93,9 +93,9 @@ export default class UpdateInvitationDialog extends Vue {
   ]
 
   private async created() {
-    await this.projectModule.loadRoles();
+    await this.roleModule.loadRoles();
 
-    this.roleValues = this.projectModule.getRoles?.map((role) => {
+    this.roleValues = this.roleModule.getRoles?.map((role: Role) => {
       return {
         value: role.id,
         name: role.name,

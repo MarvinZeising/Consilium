@@ -148,8 +148,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
-import ProjectModule from '../../store/projects'
 import PersonModule from '../../store/persons'
+import RoleModule from '../../store/roles'
 import { Role } from '../../models/definitions'
 import DeleteRoleDialog from './DeleteRoleDialog.vue'
 
@@ -159,8 +159,8 @@ import DeleteRoleDialog from './DeleteRoleDialog.vue'
   },
 })
 export default class UpdateRoleDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private roleModule: RoleModule = getModule(RoleModule, this.$store)
 
   @Prop(Object)
   private readonly role?: Role
@@ -210,7 +210,7 @@ export default class UpdateRoleDialog extends Vue {
     if (this.valid && this.role) {
       this.loading = true
 
-      await this.projectModule.updateRole({
+      await this.roleModule.updateRole({
         roleId: this.role.id,
         name: this.name,
         settings: this.settings,
@@ -220,19 +220,6 @@ export default class UpdateRoleDialog extends Vue {
       })
 
       this.loading = false
-      this.dialog = false
-    }
-  }
-
-  private async remove() {
-    const projectId = this.$route.params.projectId
-
-    if (this.valid && this.role) {
-      this.loadingDelete = true
-
-      // await this.projectModule.deleteRole(this.role.id)
-
-      this.loadingDelete = false
       this.dialog = false
     }
   }

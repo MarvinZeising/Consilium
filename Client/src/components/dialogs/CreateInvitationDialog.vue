@@ -80,11 +80,14 @@ import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
 import InvitationModule from '../../store/invitations'
+import RoleModule from '../../store/roles'
+import { Role } from '@/models/definitions'
 
 @Component
 export default class CreateInvitationDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
+  private roleModule: RoleModule = getModule(RoleModule, this.$store)
 
   private dialog: any = false
   private valid: any = null
@@ -103,9 +106,9 @@ export default class CreateInvitationDialog extends Vue {
   ]
 
   private async created() {
-    await this.projectModule.loadRoles();
+    await this.roleModule.loadRoles();
 
-    this.roleValues = this.projectModule.getRoles?.map((role) => {
+    this.roleValues = this.roleModule.getRoles?.map((role: Role) => {
       return {
         value: role.id,
         name: role.name,

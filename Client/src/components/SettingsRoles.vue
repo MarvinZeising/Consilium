@@ -16,11 +16,11 @@
         v-t="'project.role.description'"
       />
       <v-list>
-        <v-list-item v-if="!projectModule.getRoles || projectModule.getRoles.length === 0">
+        <v-list-item v-if="!roleModule.getRoles || roleModule.getRoles.length === 0">
           <span v-t="'project.role.loading'" />
         </v-list-item>
         <v-list-item
-          v-for="(role, index) in projectModule.getRoles"
+          v-for="(role, index) in roleModule.getRoles"
           :key="index"
         >
           <v-list-item-content>
@@ -58,6 +58,7 @@ import { Role } from '../models/definitions'
 import CreateRoleDialog from '../components/dialogs/CreateRoleDialog.vue'
 import UpdateRoleDialog from '../components/dialogs/UpdateRoleDialog.vue'
 import PersonModule from '../store/persons'
+import RoleModule from '@/store/roles'
 
 @Component({
   components: {
@@ -68,6 +69,7 @@ import PersonModule from '../store/persons'
 export default class SettingsRoles extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private roleModule: RoleModule = getModule(RoleModule, this.$store)
 
   private loading: boolean = true
 
@@ -90,7 +92,7 @@ export default class SettingsRoles extends Vue {
 
   private async init() {
     const projectId = this.$route.params.projectId
-    await this.projectModule.loadRoles()
+    await this.roleModule.loadRoles()
     await this.projectModule.loadParticipants()
 
     this.loading = false

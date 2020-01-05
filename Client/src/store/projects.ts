@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
 import router from '../router'
-import { Project, Participation, ParticipationStatus, Role } from '../models/definitions'
+import { Project, Participation, ParticipationStatus } from '../models/definitions'
 
 @Module({ dynamic: true, store, name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
@@ -52,31 +52,10 @@ export default class ProjectModule extends VuexModule {
       x.status === ParticipationStatus.Active || x.status === ParticipationStatus.Inactive)
   }
 
-  public get getRoles() {
-    return this.getActiveProject?.roles?.sort((a, b) => {
-      if (!a.editable) {
-        return -1
-      } else if (a.name < b.name) {
-        return -1
-      } else if (a.name > b.name) {
-        return 1
-      } else {
-        return 0
-      }
-    })
-  }
-
   @Action({ commit: 'addProject' })
   public async loadProject(projectId: string) {
     const response = await axios.get(`/persons/${this.getPersonId}/projects/${projectId}`)
     return Project.create(response.data)
-  }
-
-  @Action({ commit: 'setRoles' })
-  public async loadRoles() {
-    const { personId, projectId } = this.resolvePersonAndProject
-    const response = await axios.get(`/persons/${personId}/projects/${projectId}/roles`)
-    return response.data.map((x: any) => Role.create(x))
   }
 
   @Action({ commit: 'setParticipants' })
@@ -91,63 +70,6 @@ export default class ProjectModule extends VuexModule {
     const { personId, projectId } = this.resolvePersonAndProject
     const response = await axios.get(`/persons/${personId}/projects/${projectId}/requests`)
     return response.data.map((x: any) => Participation.create(x))
-  }
-
-  @Action({ commit: 'addRole' })
-  public async createRole(data: {
-    name: string,
-    settings: string,
-    roles: string,
-    participants: string,
-    knowledgeBase: string,
-  }) {
-    const { personId, projectId } = this.resolvePersonAndProject
-
-    const response = await axios.post(`/persons/${personId}/projects/${projectId}/roles`, {
-      name: data.name,
-      settingsRead: data.settings !== 'none',
-      settingsWrite: data.settings === 'write',
-      rolesRead: data.roles !== 'none',
-      rolesWrite: data.roles === 'write',
-      participantsRead: data.participants !== 'none',
-      participantsWrite: data.participants === 'write',
-      knowledgeBaseRead: data.knowledgeBase !== 'none',
-      knowledgeBaseWrite: data.knowledgeBase === 'write',
-    })
-    return Role.create(response.data)
-  }
-
-  @Action({ commit: 'changeRole' })
-  public async updateRole(data: {
-    roleId: string,
-    name: string,
-    settings: string,
-    roles: string,
-    participants: string,
-    knowledgeBase: string,
-  }) {
-    const { personId, projectId } = this.resolvePersonAndProject
-
-    const response = await axios.put(`/persons/${personId}/projects/${projectId}/roles/${data.roleId}`, {
-      name: data.name,
-      settingsRead: data.settings !== 'none',
-      settingsWrite: data.settings === 'write',
-      rolesRead: data.roles !== 'none',
-      rolesWrite: data.roles === 'write',
-      participantsRead: data.participants !== 'none',
-      participantsWrite: data.participants === 'write',
-      knowledgeBaseRead: data.knowledgeBase !== 'none',
-      knowledgeBaseWrite: data.knowledgeBase === 'write',
-    })
-    return Role.create(response.data)
-  }
-
-  @Action({ commit: 'removeRole' })
-  public async deleteRole(roleId: string) {
-    const { personId, projectId } = this.resolvePersonAndProject
-
-    await axios.delete(`/persons/${personId}/projects/${projectId}/roles/${roleId}`)
-    return roleId
   }
 
   // ? do we need all these???
@@ -274,59 +196,6 @@ export default class ProjectModule extends VuexModule {
           x.status !== ParticipationStatus.Inactive)
 
         project.participations?.push(...participations)
-      }
-      return project
-    })
-  }
-
-  @Mutation
-  protected setRoles(roles: Role[]) {
-    this.projects = this.projects.map((project) => {
-      if (project.id === router.currentRoute.params.projectId) {
-        project.roles = roles
-      }
-      return project
-    })
-  }
-
-  @Mutation
-  protected addRole(role: Role) {
-    this.projects = this.projects.map((project) => {
-      if (project.id === router.currentRoute.params.projectId) {
-        project.roles?.push(role)
-      }
-      return project
-    })
-  }
-
-  @Mutation
-  protected changeRole(role: Role) {
-    this.projects = this.projects.map((project: Project) => {
-      if (project.id === router.currentRoute.params.projectId) {
-        project.roles = project.roles?.map((x) => {
-          if (x.id === role.id) {
-            x.name = role.name
-            x.settingsRead = role.settingsRead
-            x.settingsWrite = role.settingsWrite
-            x.rolesRead = role.rolesRead
-            x.rolesWrite = role.rolesWrite
-            x.participantsRead = role.participantsRead
-            x.participantsWrite = role.participantsWrite
-            x.knowledgeBaseRead = role.knowledgeBaseRead
-            x.knowledgeBaseWrite = role.knowledgeBaseWrite
-          }
-          return x
-        })
-      }
-      return project
-    })
-  }
-
-  @Mutation
-  protected removeRole(roleId: string) {
-    this.projects = this.projects.map((project: Project) => {
-      if (project.id === router.currentRoute.params.projectId) {
-        project.roles = project.roles?.filter((x) => x.id !== roleId)
       }
       return project
     })

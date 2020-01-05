@@ -139,11 +139,11 @@ import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
-import ProjectModule from '../../store/projects'
+import RoleModule from '../../store/roles'
 
 @Component
 export default class CreateRoleDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private roleModule: RoleModule = getModule(RoleModule, this.$store)
 
   private dialog: any = false
   private valid: any = null
@@ -169,7 +169,7 @@ export default class CreateRoleDialog extends Vue {
     if (this.valid) {
       this.loading = true
 
-      await this.projectModule.createRole({
+      await this.roleModule.createRole({
         name: this.name,
         settings: this.settings,
         roles: this.roles,

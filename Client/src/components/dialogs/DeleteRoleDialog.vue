@@ -49,15 +49,15 @@
 
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
-import ProjectModule from '../../store/projects'
-import { getModule } from 'vuex-module-decorators'
-import { Project } from '../../models/definitions'
 import { VForm } from 'vuetify/lib'
+import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
+import { Project } from '../../models/definitions'
+import RoleModule from '../../store/roles'
 
 @Component
 export default class DeleteRoleDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private roleModule: RoleModule = getModule(RoleModule, this.$store)
 
   @Prop(String)
   private readonly roleId?: string
@@ -70,7 +70,7 @@ export default class DeleteRoleDialog extends Vue {
     if (this.roleId) {
       this.loading = true
 
-      await this.projectModule.deleteRole(this.roleId)
+      await this.roleModule.deleteRole(this.roleId)
     }
 
     this.dialog = false
