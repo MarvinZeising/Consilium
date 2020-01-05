@@ -28,11 +28,7 @@
             <v-list-item-subtitle v-text="getCreationText(participation.createdTime)" />
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn
-              text
-              class="mt-2"
-              v-t="'core.edit'"
-            />
+            <UpdateInvitationDialog :participation="participation" />
           </v-list-item-action>
         </v-list-item>
       </v-list>
@@ -51,10 +47,12 @@ import moment from 'moment'
 import ProjectModule from '../store/projects'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
 import CreateInvitationDialog from './dialogs/CreateInvitationDialog.vue'
+import UpdateInvitationDialog from './dialogs/UpdateInvitationDialog.vue'
 
 @Component({
   components: {
     CreateInvitationDialog,
+    UpdateInvitationDialog,
   }
 })
 export default class ParticipantsInvitations extends Vue {

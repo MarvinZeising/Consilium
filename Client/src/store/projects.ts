@@ -205,6 +205,30 @@ export default class ProjectModule extends VuexModule {
     await this.context.dispatch('loadProjects') // TODO: do manually
   }
 
+
+
+
+  @Action({ commit: 'changeInvitation' })
+  public async updateInvitation(data: {
+    participationId: string,
+    roleId: string
+  }) {
+    const { personId, projectId } = this.resolvePersonAndProject
+
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/invitations/${data.participationId}`, {
+      roleId: data.roleId,
+    })
+    return Participation.create(response.data)
+  }
+
+  @Action({ commit: 'removeInvitation' })
+  public async cancelInvitation(participationId: string) {
+    const { personId, projectId } = this.resolvePersonAndProject
+
+    await axios.delete(`/persons/${personId}/projects/${projectId}/invitations/${participationId}`)
+    return participationId
+  }
+
   @MutationAction({ mutate: ['projects'] })
   public async clearProjects() {
     return { projects: [] }
@@ -366,10 +390,31 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
+  protected changeInvitation(participation: Participation) {
+    this.projects = this.projects.map((project: Project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.participations = project.participations?.filter((x) => x.id !== participation.id)
+        project.participations?.push(participation)
+      }
+      return project
+    })
+  }
+
+  @Mutation
   protected removeRole(roleId: string) {
     this.projects = this.projects.map((project: Project) => {
       if (project.id === router.currentRoute.params.projectId) {
         project.roles = project.roles?.filter((x) => x.id !== roleId)
+      }
+      return project
+    })
+  }
+
+  @Mutation
+  protected removeInvitation(participationId: string) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.participations = project.participations?.filter((x) => x.id !== participationId)
       }
       return project
     })

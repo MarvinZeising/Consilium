@@ -48,7 +48,9 @@
     "noInvitations": "Keine offenen Einladungen",
     "roleName": "Rolle: {name}",
     "invitedOn": "Eingeladen am {date}",
-    "duplicate": "Diese Person ist entweder schon Teilnehmer oder hat eine offene Einladung/Teilnahme-Anfrage"
+    "duplicate": "Diese Person ist entweder schon Teilnehmer oder hat eine offene Einladung/Teilnahme-Anfrage",
+    "delete": "Einladung löschen",
+    "deleteDescription": "Möchtest du diese Einladung wirklich löschen?"
   },
   "requests": "Anfragen",
   "requestsDescription": "Falls erlaubt, können Personen Teilnahme am Projekt anfragen. Hier kannst du alle offenen Anfragen sehen, die noch von keinem Administrator angenommen oder abgelehnt wurden.",

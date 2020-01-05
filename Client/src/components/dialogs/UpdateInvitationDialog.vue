@@ -7,7 +7,8 @@
       <v-btn
         v-on="on"
         text
-        v-t="'project.participant.invite'"
+        class="mt-2"
+        v-t="'core.edit'"
       />
     </template>
     <v-card>
@@ -22,21 +23,6 @@
           />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'project.participant.inviteDescription'"
-          />
-          <p
-            class="subtitle-1"
-            v-t="'project.participant.idDescription'"
-          />
-          <v-text-field
-            v-model="personId"
-            :rules="personIdRules"
-            :label="$t('core.id')"
-            filled
-            required
-          />
           <p v-t="'project.participant.roleDescription'" />
           <v-select
             v-model="roleId"
@@ -49,9 +35,9 @@
             filled
             required
           />
-
         </v-card-text>
         <v-card-actions>
+          <DeleteInvitationDialog :participationId="participation.id" />
           <v-spacer />
           <v-btn
             text
@@ -59,7 +45,7 @@
             v-t="'core.cancel'"
           />
           <v-btn
-            :disabled="!valid"
+            :disabled="!valid || roleId === this.participation.roleId"
             type="submit"
             :loading="loading"
             text
@@ -74,26 +60,30 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
-import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
+import DeleteInvitationDialog from './DeleteInvitationDialog.vue'
+import i18n from '../../i18n'
+import { Participation } from '../../models/definitions'
 
-@Component
-export default class CreateInvitationDialog extends Vue {
+@Component({
+  components: {
+    DeleteInvitationDialog,
+  }
+})
+export default class UpdateInvitationDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+
+  @Prop(Participation)
+  private readonly participation?: Participation
 
   private dialog: any = false
   private valid: any = null
   private loading: boolean = false
   private loadingRoles: boolean = true
 
-  private personId: string = ''
-  private personIdRules: any[] = [
-    (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v) || i18n.t('core.fieldInvalidGuid'),
-  ]
   private roleId: string = ''
   private roleValues: any = []
   private roleRules: any[] = [
@@ -110,10 +100,7 @@ export default class CreateInvitationDialog extends Vue {
       }
     })
 
-    this.personIdRules.push((v: string) => {
-      const allParticipantIds = this.projectModule.getAllParticipations?.map((x) => x.personId)
-      return !allParticipantIds?.includes(v) || this.$t('project.invitation.duplicate')
-    })
+    this.roleId = this.participation?.roleId || ''
 
     this.loadingRoles = false
   }
@@ -121,14 +108,13 @@ export default class CreateInvitationDialog extends Vue {
   private async save() {
     const projectId = this.$route.params.projectId
 
-    if (this.valid) {
+    if (this.valid && this.participation) {
       this.loading = true
 
-      await this.projectModule.createInvitation({
-        personId: this.personId,
+      await this.projectModule.updateInvitation({
+        participationId: this.participation?.id,
         roleId: this.roleId
       })
-      // TODO: handle wrong person id
 
       this.loading = false
       this.dialog = false
