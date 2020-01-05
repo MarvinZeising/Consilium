@@ -31,27 +31,8 @@ export default class PersonModule extends VuexModule {
   @Action
   public async loadPersons(rawPersons: Person[]) {
     const persons = rawPersons.map((rawPerson: Person) => {
-      const person = new Person(
-        rawPerson.id,
-        rawPerson.firstname,
-        rawPerson.lastname,
-        rawPerson.gender)
-
-      person.participations = rawPerson.participations.map((x) => {
-        const participation = new Participation(
-          x.id,
-          x.personId,
-          x.projectId,
-          x.roleId,
-          x.status,
-          x.createdTime,
-          x.lastUpdatedTime)
-
-        participation.project = x.project
-        participation.role = x.role
-        return participation
-      })
-
+      const person = Person.create(rawPerson)
+      person.gender = rawPerson.gender
       return person
     })
 
@@ -79,12 +60,7 @@ export default class PersonModule extends VuexModule {
       lastname: person.lastname,
       gender: Gender.Male,
     })
-
-    const newPerson = new Person(
-      response.data.id,
-      response.data.firstname,
-      response.data.lastname,
-      Gender.Male)
+    const newPerson = Person.create(response.data)
 
     this.context.commit('insertPerson', newPerson)
     await this.context.dispatch('activatePerson', newPerson.id)

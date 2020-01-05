@@ -62,12 +62,7 @@ export default class ProjectModule extends VuexModule {
   public async loadProject(projectId: string) {
     const personId = this.context.getters.getActivePersonId
     const response = await axios.get(`/persons/${personId}/projects/${projectId}`)
-    return new Project(
-      response.data.id,
-      response.data.name,
-      response.data.email,
-      response.data.createdTime,
-      response.data.lastUpdatedTime)
+    return Project.create(response.data)
   }
 
   @Action({ commit: 'setRoles' })
@@ -75,7 +70,7 @@ export default class ProjectModule extends VuexModule {
     const projectId = router.currentRoute.params.projectId
     const personId = this.context.getters.getActivePersonId
     const response = await axios.get(`/persons/${personId}/projects/${projectId}/roles`)
-    return response.data
+    return response.data.map((x: any) => Role.create(x))
   }
 
   @Action({ commit: 'setInvitations' })
@@ -83,7 +78,7 @@ export default class ProjectModule extends VuexModule {
     const projectId = router.currentRoute.params.projectId
     const personId = this.context.getters.getActivePersonId
     const response = await axios.get(`/persons/${personId}/projects/${projectId}/invitations`)
-    return response.data
+    return response.data.map((x: any) => Participation.create(x))
   }
 
   @Action({ commit: 'setParticipants' })
@@ -91,7 +86,7 @@ export default class ProjectModule extends VuexModule {
     const projectId = router.currentRoute.params.projectId
     const personId = this.context.getters.getActivePersonId
     const response = await axios.get(`/persons/${personId}/projects/${projectId}/participations`)
-    return response.data
+    return response.data.map((x: any) => Participation.create(x))
   }
 
   @Action({ commit: 'setRequests' })
@@ -99,7 +94,7 @@ export default class ProjectModule extends VuexModule {
     const projectId = router.currentRoute.params.projectId
     const personId = this.context.getters.getActivePersonId
     const response = await axios.get(`/persons/${personId}/projects/${projectId}/requests`)
-    return response.data
+    return response.data.map((x: any) => Participation.create(x))
   }
 
   @Action({ commit: 'addRole' })
@@ -124,7 +119,7 @@ export default class ProjectModule extends VuexModule {
       knowledgeBaseRead: data.knowledgeBase !== 'none',
       knowledgeBaseWrite: data.knowledgeBase === 'write',
     })
-    return response.data
+    return Role.create(response.data)
   }
 
   @Action({ commit: 'addInvitation' })
@@ -139,14 +134,7 @@ export default class ProjectModule extends VuexModule {
       personId: data.personId,
       roleId: data.roleId,
     })
-    return new Participation(
-      response.data.id,
-      response.data.personId,
-      response.data.projectId,
-      response.data.roleId,
-      response.data.status,
-      response.data.createdTime,
-      response.data.lastUpdatedTime)
+    return Participation.create(response.data)
   }
 
   @Action({ commit: 'changeRole' })
@@ -172,7 +160,7 @@ export default class ProjectModule extends VuexModule {
       knowledgeBaseRead: data.knowledgeBase !== 'none',
       knowledgeBaseWrite: data.knowledgeBase === 'write',
     })
-    return response.data
+    return Role.create(response.data)
   }
 
   @Action({ commit: 'removeRole' })
@@ -253,12 +241,7 @@ export default class ProjectModule extends VuexModule {
     // TODO: only reload person participations instead of everything
     await this.context.dispatch('initStore')
 
-    return new Project(
-      response.data.id,
-      response.data.name,
-      response.data.email,
-      response.data.createdTime,
-      response.data.lastUpdatedTime)
+    return Project.create(response.data)
   }
 
   @Action({ commit: 'removeProject' })
