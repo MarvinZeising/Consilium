@@ -159,7 +159,6 @@ export default class CreatePerson extends Vue {
         lastname: this.lastname
       })
 
-      // TODO: change to person overview route (or first steps to configure the person)
       this.$router.push({ name: 'personal' })
     }
   }

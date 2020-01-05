@@ -121,8 +121,7 @@ export default class ProjectModule extends VuexModule {
       email: project.email
     })
 
-    // ? this is to make the navbar show the updated project name
-    // TODO: only reload person participations instead of everything
+    // ? make the navbar show the updated project name
     await this.context.dispatch('initStore')
 
     return project
@@ -138,7 +137,6 @@ export default class ProjectModule extends VuexModule {
       email: project.email,
     })
 
-    // TODO: only reload person participations instead of everything
     await this.context.dispatch('initStore')
 
     return Project.create(response.data)
@@ -148,7 +146,6 @@ export default class ProjectModule extends VuexModule {
   public async deleteProject(projectId: string) {
     await axios.delete(`/persons/${this.getPersonId}/projects/${projectId}`)
 
-    // TODO: only reload person participations instead of everything
     await this.context.dispatch('initStore')
 
     return projectId
