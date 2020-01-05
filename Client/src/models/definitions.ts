@@ -4,16 +4,24 @@ enum Theme {
 }
 
 class User {
+  public static create(data: any) {
+    return new User(
+      data.id,
+      data.email,
+      data.language,
+      data.theme)
+  }
+
   public id: string
   public email: string
   public language: string
   public theme: Theme
 
-  constructor(id: string, email: string, language: string | null) {
+  constructor(id: string, email: string, language?: string, theme?: string) {
     this.id = id
     this.email = email
     this.language = language || 'en-US'
-    this.theme = Theme.Light
+    this.theme = theme === 'dark' ? Theme.Dark : Theme.Light
   }
 }
 
@@ -23,22 +31,31 @@ enum Gender {
 }
 
 class Person {
+  public static create(data: any) {
+    const person = new Person(
+      data.id,
+      data.firstname,
+      data.lastname)
+    if (data.participations) {
+      person.participations = data.participations.map((x: any) => Participation.create(x))
+    }
+    return person
+  }
+
   public id: string
   public firstname: string
   public lastname: string
-  public gender: Gender
+  public gender: Gender = Gender.Male
   public participations: Participation[] = []
 
   constructor(
     id: string,
     firstname: string,
     lastname: string,
-    gender: Gender,
   ) {
     this.id = id
     this.firstname = firstname
     this.lastname = lastname
-    this.gender = gender
   }
 
   public fullName() {
@@ -48,6 +65,15 @@ class Person {
 }
 
 class Project {
+  public static create(data: any) {
+    return new Project(
+      data.id,
+      data.name,
+      data.email,
+      data.createdTime,
+      data.lastUpdatedTime)
+  }
+
   public id: string
   public name: string
   public email: string
@@ -73,6 +99,21 @@ enum ParticipationStatus {
 }
 
 class Participation {
+  public static create(data: any) {
+    const participation = new Participation(
+      data.id,
+      data.personId,
+      data.projectId,
+      data.roleId,
+      data.status,
+      data.createdTime,
+      data.lastUpdatedTime)
+    participation.role = data.role ? Role.create(data.role) : undefined
+    participation.person = data.person ? Person.create(data.person) : undefined
+    participation.project = data.project ? Project.create(data.project) : undefined
+    return participation
+  }
+
   public id: string
   public personId: string
   public projectId: string
@@ -80,6 +121,7 @@ class Participation {
   public status: ParticipationStatus
   public createdTime: string
   public lastUpdatedTime: string
+  public person?: Person
   public project?: Project
   public role?: Role
 
@@ -103,6 +145,22 @@ class Participation {
 }
 
 class Role {
+  public static create(data: any) {
+    return new Role(
+      data.id,
+      data.projectId,
+      data.name,
+      data.knowledgeBaseRead,
+      data.knowledgeBaseWrite,
+      data.participantsRead,
+      data.participantsWrite,
+      data.rolesRead,
+      data.rolesWrite,
+      data.settingsRead,
+      data.settingsWrite,
+      data.editable)
+  }
+
   public id: string
   public projectId: string
   public name: string
