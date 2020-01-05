@@ -1,4 +1,6 @@
 import axios from 'axios'
+import moment from 'moment'
+import 'moment/locale/de'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import SHA512 from 'crypto-js/sha512'
 import { User, Theme } from '../models/definitions'
@@ -139,6 +141,7 @@ export default class UserModule extends VuexModule {
   protected applyLocale() {
     if (this.user) {
       i18n.locale = this.user.language
+      moment.locale(this.user.language.substr(0, 2))
     }
   }
 
