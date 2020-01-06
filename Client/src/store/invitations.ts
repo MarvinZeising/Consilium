@@ -14,16 +14,17 @@ export default class InvitationModule extends VuexModule {
   @Action
   public async loadInvitations() {
     const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    if (personId && projectId) {
+      const response = await axios.get(`/persons/${personId}/projects/${projectId}/invitations`)
+      const participations = response.data.map((x: any) => Participation.create(x))
 
-    const response = await axios.get(`/persons/${personId}/projects/${projectId}/invitations`)
-    const participations = response.data.map((x: any) => Participation.create(x))
+      if (project) {
+        project.participations = project.participations
+          ?.filter((x: Participation) => x.status !== ParticipationStatus.Invited)
+        project.participations?.push(...participations)
 
-    if (project) {
-      project.participations = project.participations
-        ?.filter((x: Participation) => x.status !== ParticipationStatus.Invited)
-      project.participations?.push(...participations)
-
-      this.context.commit('updateProject', project)
+        this.context.commit('updateProject', project)
+      }
     }
   }
 
