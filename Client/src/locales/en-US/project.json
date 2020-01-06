@@ -22,7 +22,9 @@
   "createSubmit": "Create project",
   "participants": "Participants",
   "participant": {
-    "participants": "Participant | Participants"
+    "participants": "Participant | Participants",
+    "delete": "Remove participant from project",
+    "deleteDescription": "Do you really want to remove this participant from the project? The person will still exist, but their connection to this project will be removed."
   },
   "join": "Join an existing project",
   "joinDescription": "You can request admission to an existing project. A project administrator will have to accept your request. In order to request, you need to have the project id. Ask a project administrator for the id.",

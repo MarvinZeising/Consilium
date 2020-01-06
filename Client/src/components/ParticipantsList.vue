@@ -12,7 +12,14 @@
         :items="participantModule.getParticipations"
         :items-per-page="15"
         :loading="loading"
+      >
+        <template v-slot:item.action="{ item }">
+          <DeleteParticipantDialog
+            v-if="item.person.id !== personModule.getActivePersonId"
+            :participationId="item.id"
       />
+        </template>
+      </v-data-table>
     </v-card>
   </v-flex>
 </template>
@@ -22,12 +29,19 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
 import UserModule from '../store/users'
+import PersonModule from '../store/persons'
 import ParticipantModule from '../store/participants'
+import DeleteParticipantDialog from './dialogs/DeleteParticipantDialog.vue'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
 
-@Component
+@Component({
+  components: {
+    DeleteParticipantDialog,
+  }
+})
 export default class ParticipantsList extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
   private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
 
   private loading: boolean = true

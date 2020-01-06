@@ -29,4 +29,17 @@ export default class ParticipantModule extends VuexModule {
     }
   }
 
+  @Action
+  public async deleteParticipant(participationId: string) {
+    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+
+    await axios.delete(`/persons/${personId}/projects/${projectId}/participants/${participationId}`)
+
+    if (project) {
+      project.participations = project.participations?.filter((x: Participation) => x.id !== participationId)
+
+      this.context.commit('updateProject', project)
+    }
+  }
+
 }
