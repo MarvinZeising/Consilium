@@ -136,6 +136,11 @@ export default class PersonModule extends VuexModule {
   }
 
   @Mutation
+  protected updatePerson(person: Person) {
+    this.persons = this.persons.map((x) => x.id === person.id ? person : x)
+  }
+
+  @Mutation
   protected removePerson(personId: string) {
     const person = this.persons.find((x: Person) => x.id === personId)
     if (person) {

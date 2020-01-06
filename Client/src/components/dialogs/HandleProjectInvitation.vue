@@ -47,14 +47,15 @@
 import { getModule } from 'vuex-module-decorators'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import i18n from '../../i18n'
-import ProjectModule from '../../store/projects'
+import InvitationModule from '../../store/invitations'
+import { Participation } from '../../models/definitions'
 
 @Component
 export default class HandleProjectInvitationDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
 
-  @Prop(String)
-  private readonly participationId?: string
+  @Prop(Participation)
+  private readonly participation?: Participation
 
   private form: any = null
   private dialog: any = null
@@ -63,8 +64,8 @@ export default class HandleProjectInvitationDialog extends Vue {
   private async acceptInvitation() {
     this.loading = true
 
-    if (this.participationId) {
-      await this.projectModule.acceptInvitation(this.participationId)
+    if (this.participation) {
+      await this.invitationModule.acceptInvitation(this.participation)
     }
 
     this.dialog = false
@@ -73,8 +74,8 @@ export default class HandleProjectInvitationDialog extends Vue {
   private async declineInvitation() {
     this.loading = true
 
-    if (this.participationId) {
-      await this.projectModule.declineInvitation(this.participationId)
+    if (this.participation) {
+      await this.invitationModule.declineInvitation(this.participation)
     }
 
     this.dialog = false

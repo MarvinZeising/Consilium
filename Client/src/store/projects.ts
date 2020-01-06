@@ -76,21 +76,6 @@ export default class ProjectModule extends VuexModule {
     await this.context.dispatch('loadProjects') // TODO: do manually
   }
 
-  @Action
-  public async declineInvitation(participationId: string) {
-    await axios.delete(`/project-participations/${participationId}`)
-    await this.context.dispatch('loadProjects') // TODO: do manually
-  }
-
-  @Action
-  public async acceptInvitation(participationId: string) {
-    await axios.put('/project-participations', {
-      id: participationId,
-      status: ParticipationStatus.Active,
-    })
-    await this.context.dispatch('loadProjects') // TODO: do manually
-  }
-
 
 
   @MutationAction({ mutate: ['projects'] })

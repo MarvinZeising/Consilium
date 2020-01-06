@@ -69,6 +69,34 @@ export default class InvitationModule extends VuexModule {
   }
 
   @Action
+  public async acceptInvitation(participation: Participation) {
+    const { personId, person } = this.context.getters.resolvePersonAndProject
+
+    const response = await axios.put(`/persons/${personId}/projects/${participation.projectId}/invitations/${participation.id}/accept`)
+    const updatedParticipation = Participation.create(response.data)
+
+    if (person) {
+      person.participations = person.participations?.map((x: Participation) =>
+        x.id === participation.id ? updatedParticipation : x)
+
+      this.context.commit('updatePerson', person)
+    }
+  }
+
+  @Action
+  public async declineInvitation(participation: Participation) {
+    const { personId, person } = this.context.getters.resolvePersonAndProject
+
+    await axios.put(`/persons/${personId}/projects/${participation.projectId}/invitations/${participation.id}/decline`)
+
+    if (person) {
+      person.participations = person.participations?.filter((x: Participation) => x.id !== participation.id)
+
+      this.context.commit('updatePerson', person)
+    }
+  }
+
+  @Action
   public async cancelInvitation(participationId: string) {
     const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
 

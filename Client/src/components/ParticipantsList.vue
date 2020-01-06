@@ -17,7 +17,7 @@
           <DeleteParticipantDialog
             v-if="item.person.id !== personModule.getActivePersonId"
             :participationId="item.id"
-      />
+          />
         </template>
       </v-data-table>
     </v-card>
