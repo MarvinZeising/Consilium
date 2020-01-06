@@ -181,6 +181,70 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPut("invitations/{participationId}/accept")]
+        public IActionResult AcceptInvitation(Guid personId, Guid projectId, Guid participationId)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var participation = _db.Participation
+                    .FindByCondition(x =>
+                        x.Id == participationId &&
+                        x.ProjectId == projectId &&
+                        x.PersonId == personId)
+                    .SingleOrDefault();
+                if (participation == null) return BadRequest();
+
+                participation.Status = ParticipationStatus.Active.ToString();
+
+                _db.Participation.Update(participation);
+                _db.Save();
+
+                var updatedParticipation = _db.Participation
+                    .FindByCondition(x => x.Id == participationId)
+                    .Include(x => x.Project)
+                    .Include(x => x.Role)
+                    .SingleOrDefault();
+
+                return Ok(_mapper.Map<ParticipationDto>(updatedParticipation));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in AcceptInvitation: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("invitations/{participationId}/decline")]
+        public IActionResult DeclineInvitation(Guid personId, Guid projectId, Guid participationId)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var participation = _db.Participation
+                    .FindByCondition(x =>
+                        x.Id == participationId &&
+                        x.ProjectId == projectId &&
+                        x.PersonId == personId)
+                    .SingleOrDefault();
+                if (participation == null) return BadRequest();
+
+                _db.Participation.Delete(participation);
+                _db.Save();
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in AcceptInvitation: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpDelete("invitations/{participationId}")]
         public IActionResult DeleteInvitation(Guid personId, Guid projectId, Guid participationId)
         {
