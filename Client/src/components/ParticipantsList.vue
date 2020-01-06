@@ -12,7 +12,6 @@
         :items="participants"
         :items-per-page="15"
         :loading="loading"
-        loading-text="Loading..."
       />
     </v-card>
   </v-flex>
