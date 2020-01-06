@@ -204,7 +204,9 @@ export default class AccountInterface extends Vue {
     'D. MMM YYYY',
     'dd, D. MMM YYYY',
     'ddd, D. MMM YYYY',
-  ].map((value) => { return { value } })
+  ].map((value) => {
+    return { value }
+  })
   private timeFormat: string = 'h:mm a'
   private timeFormatValues: any[] = [
     'h:mm a',
@@ -212,11 +214,17 @@ export default class AccountInterface extends Vue {
     'H:mm [hours]',
     'h:mm [Uhr]',
     'H:mm [Uhr]',
-  ].map((value) => { return { value } })
+  ].map((value) => {
+    return { value }
+  })
   private language: string = this.userModule.getUser?.language || ''
-  private languageValues: any[] = i18n.availableLocales.map((value) => { return { value } })
+  private languageValues: any[] = i18n.availableLocales.map((value) => {
+    return { value }
+  })
   private theme: string = this.userModule.getUser?.theme || ''
-  private themeValues: any[] = [ 'light', 'dark' ].map((value) => { return { value } })
+  private themeValues: any[] = [ 'light', 'dark' ].map((value) => {
+    return { value }
+  })
 
   private toggleEditMode() {
     this.editMode = !this.editMode
