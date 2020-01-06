@@ -205,5 +205,31 @@ namespace Server.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpDelete("participants/{participationId}")]
+        public IActionResult DeleteParticipant(Guid personId, Guid projectId, Guid participationId)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
+
+                var participation = _db.Participation
+                    .FindByCondition(x => x.Id == participationId && x.ProjectId == projectId)
+                    .SingleOrDefault();
+
+                _db.Participation.Delete(participation);
+                _db.Save();
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in DeleteParticipant: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
