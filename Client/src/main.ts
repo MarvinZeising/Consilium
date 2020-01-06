@@ -13,12 +13,6 @@ import i18n from './i18n'
 import AlertModule from './store/alerts'
 import UserModule from './store/users'
 
-function logLoading(text: string) {
-  const div = document.createElement('div')
-  div.appendChild(document.createTextNode(text))
-  document.getElementById('loading')?.appendChild(div)
-}
-
 async function init() {
   Vue.config.productionTip = false
 
@@ -52,7 +46,10 @@ async function init() {
     const user = JSON.parse(userItem)
     axios.defaults.headers.common.Authorization = `Bearer ${user.token}`
 
-    logLoading('Signing you in...')
+    const loadingNode = document.getElementById('loading')
+    if (loadingNode) {
+      loadingNode.innerHTML = 'Signing you in...'
+    }
 
     try {
       await userModule.initStore()
