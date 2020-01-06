@@ -30,7 +30,7 @@
         <v-list-item
           v-for="(person, i) in personModule.getPersons"
           :key="i"
-          @click="personModule.activatePerson(person.id)"
+          @click="activatePersonIfNotMe(person.id)"
         >
           <v-list-item-title>
             <v-icon left>person</v-icon>
@@ -207,6 +207,12 @@ export default class NavbarSignedIn extends Vue {
       //// ['Statistics', 'show_chart', 'settings'],
       //// ['Notes', 'edit', 'settings']
     ]
+  }
+
+  private activatePersonIfNotMe(personId: string) {
+    if (personId !== this.personModule.getActivePersonId) {
+      this.personModule.activatePerson(personId)
+    }
   }
 
 }
