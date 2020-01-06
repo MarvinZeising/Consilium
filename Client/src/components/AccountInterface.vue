@@ -247,6 +247,8 @@ export default class AccountInterface extends Vue {
       await this.userModule.updateInterface({
         language: this.language,
         theme: this.theme,
+        dateFormat: this.dateFormat,
+        timeFormat: this.timeFormat,
       })
 
       this.$vuetify.theme.dark = this.theme === 'dark'

@@ -12,5 +12,11 @@ namespace Entities.DataTransferObjects
         [Required]
         [ValidTheme]
         public string Theme { get; set; }
+
+        [Required]
+        public string DateFormat { get; set; }
+
+        [Required]
+        public string TimeFormat { get; set; }
     }
 }

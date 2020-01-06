@@ -145,6 +145,8 @@ namespace Server.Controllers
 
                 user.Language = dto.Language;
                 user.Theme = dto.Theme;
+                user.DateFormat = dto.DateFormat;
+                user.TimeFormat = dto.TimeFormat;
 
                 _db.User.Update(user);
                 _db.Save();

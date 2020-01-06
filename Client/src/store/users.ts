@@ -86,15 +86,21 @@ export default class UserModule extends VuexModule {
   public async updateInterface(accountInterface: {
     language: string,
     theme: string,
+    dateFormat: string,
+    timeFormat: string,
    }) {
     const user = this.user
     if (user) {
       await axios.put('/users/interface', {
         language: accountInterface.language,
         theme: accountInterface.theme,
+        dateFormat: accountInterface.dateFormat,
+        timeFormat: accountInterface.timeFormat,
       })
       user.language = accountInterface.language
       user.theme = accountInterface.theme === 'light' ? Theme.Light : Theme.Dark
+      user.dateFormat = accountInterface.dateFormat
+      user.timeFormat = accountInterface.timeFormat
     }
     this.context.commit('setUser', user)
     this.context.commit('applyLocale')
