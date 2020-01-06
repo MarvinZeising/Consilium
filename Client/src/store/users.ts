@@ -3,10 +3,11 @@ import moment from 'moment'
 import 'moment/locale/de'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import SHA512 from 'crypto-js/sha512'
-import { User, Theme } from '../models/definitions'
+import { User, Theme, Person } from '../models/definitions'
 import i18n from '../i18n'
 import vuetify from '../plugins/vuetify'
 import store from '../plugins/vuex'
+import { getCookie } from './_helpers'
 
 @Module({ dynamic: true, store, name: 'UserModule' })
 export default class UserModule extends VuexModule {
@@ -24,7 +25,29 @@ export default class UserModule extends VuexModule {
     this.context.commit('applyLocale')
     this.context.commit('applyTheme')
 
-    await this.context.dispatch('loadPersons', response.data.persons)
+    const persons = response.data.persons.map((rawPerson: Person) => {
+      const person = Person.create(rawPerson)
+      person.gender = rawPerson.gender
+      return person
+    })
+
+    const currentlyActivePerson = this.context.getters.getPersons
+      .find((x: Person) => x.id === this.context.getters.getActivePersonId)
+
+    this.context.commit('setPersons', persons)
+
+    if (currentlyActivePerson && persons.includes(currentlyActivePerson)) {
+      await this.context.dispatch('activatePerson', currentlyActivePerson.id)
+    } else {
+      const activePersonIdByCookie = getCookie('activePersonId')
+      const personExists = this.context.getters.getPersons.find((x: Person) => x.id === activePersonIdByCookie)
+
+      if (activePersonIdByCookie && personExists) {
+        await this.context.dispatch('activatePerson', activePersonIdByCookie)
+      } else {
+        await this.context.dispatch('activatePerson', persons[0].id)
+      }
+    }
   }
 
   @Action

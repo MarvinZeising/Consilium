@@ -96,8 +96,7 @@ namespace Server.Controllers
 
                 var user = _db.User
                     .FindByCondition(x => x.Id == new Guid(userId))
-                    .Include(x => x.Persons).ThenInclude(x => x.Participations).ThenInclude(x => x.Project)
-                    .Include(x => x.Persons).ThenInclude(x => x.Participations).ThenInclude(x => x.Role)
+                    .Include(x => x.Persons)
                     .SingleOrDefault();
 
                 return Ok(_mapper.Map<UserDto>(user));

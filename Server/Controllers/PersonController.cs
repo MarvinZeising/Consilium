@@ -6,6 +6,9 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Server.Controllers
 {
@@ -26,6 +29,28 @@ namespace Server.Controllers
             _db = db;
             _logger = logger;
             _mapper = mapper;
+        }
+
+        [HttpGet("{personId}/participations")]
+        public ActionResult<IEnumerable<ParticipationDto>> GetPersonParticipations(Guid personId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var participations = _db.Participation
+                    .FindByCondition(x => x.PersonId == personId)
+                    .Include(x => x.Project)
+                    .Include(x => x.Role)
+                    .ToList();
+
+                return Ok(_mapper.Map<IEnumerable<ParticipationDto>>(participations));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in GetCurrentUser: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]

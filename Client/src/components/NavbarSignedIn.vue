@@ -3,7 +3,7 @@
 
     <!-- //* Person -->
     <v-menu
-      v-if="personModule.getPersons.length > 1"
+      v-if="personModule.getActivePerson && personModule.getPersons.length > 1"
       transition="slide-y-transition"
       bottom
     >

@@ -3,7 +3,7 @@ import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import router from '../router'
 import { Person, Gender, Project, Participation } from '../models/definitions'
 import store from '../plugins/vuex'
-import { getCookie, setCookie } from './_helpers'
+import { setCookie } from './_helpers'
 
 @Module({ dynamic: true, store, name: 'PersonModule' })
 export default class PersonModule extends VuexModule {
@@ -27,29 +27,6 @@ export default class PersonModule extends VuexModule {
       ?.participations
       ?.find((x) => x.projectId === router.currentRoute.params.projectId)
       ?.role
-  }
-
-  @Action
-  public async loadPersons(rawPersons: Person[]) {
-    const persons = rawPersons.map((rawPerson: Person) => {
-      const person = Person.create(rawPerson)
-      person.gender = rawPerson.gender
-      return person
-    })
-
-    const currentlyActivePerson = this.persons.find((x) => x.id === this.activePersonId)
-
-    this.context.commit('setPersons', persons)
-
-    const activePersonIdByCookie = getCookie('activePersonId')
-
-    if (currentlyActivePerson && persons.includes(currentlyActivePerson)) {
-      await this.context.dispatch('activatePerson', currentlyActivePerson.id)
-    } else if (activePersonIdByCookie && this.persons.find((x) => x.id === activePersonIdByCookie)) {
-      await this.context.dispatch('activatePerson', activePersonIdByCookie)
-    } else {
-      await this.context.dispatch('activatePerson', persons[0].id)
-    }
   }
 
   @Action
@@ -100,22 +77,23 @@ export default class PersonModule extends VuexModule {
 
   @Action
   public async activatePerson(personId: string | null) {
+    this.context.commit('setActivePersonId', personId)
+
     await this.context.dispatch('clearProjects')
 
-    if (personId) {
-      const activePerson = this.persons.find((x) => x.id === personId)
-      if (activePerson?.participations) {
-        for (const projectId of activePerson?.participations.map((x) => x.projectId)) {
-          await this.context.dispatch('loadProject', {
-            projectId,
-            personId,
-          })
-        }
+    const response = await axios.get(`/persons/${personId}/participations`)
+    const participations = response.data.map((x: Participation) => Participation.create(x))
+
+    const person = this.persons.find((x) => x.id === personId)
+    if (person) {
+      person.participations = participations
+      this.context.commit('updatePerson', person)
+
+      await this.context.dispatch('clearProjects')
+      for (const participation of participations) {
+        this.context.commit('addProject', participation.project)
       }
     }
-
-    this.context.commit('setActivePersonId', personId)
-    // TODO: reload participations
   }
 
   @Mutation
