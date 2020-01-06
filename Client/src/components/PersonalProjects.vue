@@ -9,32 +9,28 @@
         {{ $t('project.projectsDescription') }}
       </v-card-text>
       <v-list>
-        <v-list-item
-          v-if="getProjects.length === 0"
-          dark
-          class="warning"
-        >
+        <v-list-item v-if="personModule.getActivePerson.participations.length === 0">
           <span v-t="'project.noProjects'" />
         </v-list-item>
         <v-list-item
-          three-line
-          v-for="(project, index) in getProjects"
+          v-for="(participation, index) in personModule.getActivePerson.participations"
           :key="index"
-          :class="isStatusInvited(project.id) ? 'warning' : isStatusRequested(project.id) ? 'info' : ''"
+          :three-line="isStatusInvited(participation.project.id) || isStatusRequested(participation.project.id)"
+          :class="isStatusInvited(participation.projectId) ? 'warning' : isStatusRequested(participation.projectId) ? 'info' : ''"
         >
           <v-list-item-content>
-            <v-list-item-title v-text="project.name" />
-            <v-list-item-subtitle v-t="'project.participationStatus.' + getParticipationStatus(project.id)" />
+            <v-list-item-title v-text="participation.project.name" />
+            <v-list-item-subtitle v-t="'project.participationStatus.' + getParticipationStatus(participation.projectId)" />
           </v-list-item-content>
 
           <v-list-item-action>
             <HandleProjectInvitation
-              v-if="isStatusInvited(project.id)"
-              :participationId="getParticipationId(project.id)"
+              v-if="isStatusInvited(participation.projectId)"
+              :participation="getParticipation(participation.projectId)"
             />
             <CancelJoinRequestDialog
-              v-else-if="isStatusRequested(project.id)"
-              :participationId="getParticipationId(project.id)"
+              v-else-if="isStatusRequested(participation.projectId)"
+              :participationId="getParticipationId(participation.projectId)"
             />
             <v-btn
               v-else
@@ -81,10 +77,6 @@ import { Project, ParticipationStatus } from '../models/definitions'
 export default class PersonalProjects extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
-
-  private get getProjects() {
-    return this.projectModule.getProjects
-  }
 
   private isStatusInvited(projectId: string) {
     return this.getParticipationStatus(projectId) === ParticipationStatus.Invited
