@@ -3,6 +3,7 @@ import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import router from '../router'
 import { Person, Gender, Project, Participation } from '../models/definitions'
 import store from '../plugins/vuex'
+import { getCookie, setCookie } from './_helpers'
 
 @Module({ dynamic: true, store, name: 'PersonModule' })
 export default class PersonModule extends VuexModule {
@@ -40,8 +41,12 @@ export default class PersonModule extends VuexModule {
 
     this.context.commit('setPersons', persons)
 
+    const activePersonIdByCookie = getCookie('activePersonId')
+
     if (currentlyActivePerson && persons.includes(currentlyActivePerson)) {
       await this.context.dispatch('activatePerson', currentlyActivePerson.id)
+    } else if (activePersonIdByCookie && this.persons.find((x) => x.id === activePersonIdByCookie)) {
+      await this.context.dispatch('activatePerson', activePersonIdByCookie)
     } else {
       await this.context.dispatch('activatePerson', persons[0].id)
     }
@@ -95,6 +100,8 @@ export default class PersonModule extends VuexModule {
 
   @Action
   public async activatePerson(personId: string | null) {
+    setCookie('activePersonId', personId || '')
+
     this.context.commit('setActivePersonId', personId)
 
     await this.context.dispatch('clearProjects')
