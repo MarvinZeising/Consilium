@@ -94,6 +94,8 @@ namespace Server.Controllers
                         x.ProjectId == projectId
                         && (x.Status.Equals(ParticipationStatus.Active.ToString(), StringComparison.CurrentCultureIgnoreCase)
                             || x.Status.Equals(ParticipationStatus.Inactive.ToString(), StringComparison.CurrentCultureIgnoreCase)))
+                    .Include(x => x.Person)
+                    .Include(x => x.Role)
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ParticipationDto>>(participations));
