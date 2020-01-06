@@ -23,14 +23,15 @@ export default class RoleModule extends VuexModule {
   @Action
   public async loadRoles() {
     const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    if (personId && projectId) {
+      const response = await axios.get(`/persons/${personId}/projects/${projectId}/roles`)
+      const roles = response.data.map((x: any) => Role.create(x))
 
-    const response = await axios.get(`/persons/${personId}/projects/${projectId}/roles`)
-    const roles = response.data.map((x: any) => Role.create(x))
+      if (project) {
+        project.roles = roles
 
-    if (project) {
-      project.roles = roles
-
-      this.context.commit('updateProject', project)
+        this.context.commit('updateProject', project)
+      }
     }
   }
 
