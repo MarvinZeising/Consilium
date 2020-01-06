@@ -53,12 +53,12 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import ProjectModule from '../store/projects'
 import { Role } from '../models/definitions'
 import CreateRoleDialog from '../components/dialogs/CreateRoleDialog.vue'
 import UpdateRoleDialog from '../components/dialogs/UpdateRoleDialog.vue'
 import PersonModule from '../store/persons'
-import RoleModule from '@/store/roles'
+import RoleModule from '../store/roles'
+import ParticipantModule from '../store/participants'
 
 @Component({
   components: {
@@ -67,9 +67,9 @@ import RoleModule from '@/store/roles'
   }
 })
 export default class SettingsRoles extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
   private roleModule: RoleModule = getModule(RoleModule, this.$store)
+  private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
 
   private loading: boolean = true
 
@@ -93,13 +93,13 @@ export default class SettingsRoles extends Vue {
   private async init() {
     const projectId = this.$route.params.projectId
     await this.roleModule.loadRoles()
-    await this.projectModule.loadParticipants()
+    await this.participantModule.loadParticipants()
 
     this.loading = false
   }
 
   private getPermitCount(roleId: string) {
-    return this.projectModule.getParticipants?.filter((x) => x.roleId === roleId).length
+    return this.participantModule.getParticipations?.filter((x) => x.roleId === roleId).length
   }
 
 }

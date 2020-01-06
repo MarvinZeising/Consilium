@@ -47,22 +47,10 @@ export default class ProjectModule extends VuexModule {
     return this.getAllParticipations?.filter((x) => x.status === ParticipationStatus.Requested)
   }
 
-  public get getParticipants() {
-    return this.getActiveProject?.participations?.filter((x) =>
-      x.status === ParticipationStatus.Active || x.status === ParticipationStatus.Inactive)
-  }
-
   @Action({ commit: 'addProject' })
   public async loadProject(projectId: string) {
     const response = await axios.get(`/persons/${this.getPersonId}/projects/${projectId}`)
     return Project.create(response.data)
-  }
-
-  @Action({ commit: 'setParticipants' })
-  public async loadParticipants() {
-    const { personId, projectId } = this.resolvePersonAndProject
-    const response = await axios.get(`/persons/${personId}/projects/${projectId}/participations`)
-    return response.data.map((x: any) => Participation.create(x))
   }
 
   @Action({ commit: 'setRequests' })
@@ -178,20 +166,6 @@ export default class ProjectModule extends VuexModule {
     this.projects = this.projects.map((project) => {
       if (project.id === router.currentRoute.params.projectId) {
         project.participations = project.participations?.filter((x) => x.status !== ParticipationStatus.Requested)
-        project.participations?.push(...participations)
-      }
-      return project
-    })
-  }
-
-  @Mutation
-  protected setParticipants(participations: Participation[]) {
-    this.projects = this.projects.map((project) => {
-      if (project.id === router.currentRoute.params.projectId) {
-        project.participations = project.participations?.filter((x) =>
-          x.status !== ParticipationStatus.Active &&
-          x.status !== ParticipationStatus.Inactive)
-
         project.participations?.push(...participations)
       }
       return project
