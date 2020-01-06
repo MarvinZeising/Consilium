@@ -1,5 +1,8 @@
 <template>
-  <v-flex xs12>
+  <v-flex
+    v-if="canView"
+    xs12
+  >
     <h2 class="headline mb-3">
       {{ $tc('project.participant.participants', 2) }}
     </h2>
@@ -13,7 +16,10 @@
         :items-per-page="15"
         :loading="loading"
       >
-        <template v-slot:item.action="{ item }">
+        <template
+          v-if="canEdit"
+          v-slot:item.action="{ item }"
+        >
           <DeleteParticipantDialog
             v-if="item.person.id !== personModule.getActivePersonId"
             :participationId="item.id"
@@ -53,16 +59,37 @@ export default class ParticipantsList extends Vue {
     { text: 'Actions', value: 'action', sortable: false },
   ]
 
+  public get canView() {
+    return this.personModule.getActiveRole?.participantsRead === true
+  }
+
+  private get canEdit() {
+    return this.personModule.getActiveRole?.participantsWrite === true
+  }
+
+  @Watch('personModule.getActivePersonId')
+  private async onPersonChanged(val: string, oldVal: string) {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
   @Watch('$route')
   private async onRouteChanged(val: string, oldVal: string) {
-    await this.init()
+    if (this.canView) {
+      await this.init()
+    }
   }
 
   private async created() {
-    this.init()
+    if (this.canView) {
+      await this.init()
+    }
   }
 
   private async init() {
+    this.loading = true
+
     await this.participantModule.loadParticipants()
 
     this.loading = false

@@ -1,5 +1,8 @@
 <template>
-  <v-flex xs12 sm10 md8 lg6 xl4>
+  <v-flex
+    v-if="canView"
+    xs12 sm10 md8 lg6 xl4
+  >
     <h2
       class="headline mb-3"
       v-t="'project.requests'"
@@ -50,25 +53,54 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../i18n'
+import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
 
 @Component
 export default class ParticipantsRequests extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
 
+  private loading: boolean = true
   private requestsAllowed: any = true
 
   private get getRequests() {
-    const projectId = this.$route.params.projectId
-
     return this.projectModule.getRequests
   }
 
-  private  getPerson(personId: string) {
-    return 'Stinkemarv'
-    // return this.projectModule..find((x) => x.id === personId)
+  private get canView() {
+    return this.personModule.getActiveRole?.participantsWrite === true
   }
+
+  @Watch('personModule.getActivePersonId')
+  private async onPersonChanged(val: string, oldVal: string) {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
+  @Watch('$route')
+  private async onRouteChanged(val: string, oldVal: string) {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
+  private async created() {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
+  private async init() {
+    this.loading = true
+
+    // await this.invitationModule.loadInvitations();
+
+    this.loading = false
+  }
+
 
 }
 </script>

@@ -1,5 +1,8 @@
 <template>
-  <v-flex xs12 sm10 md8 lg6 xl4>
+  <v-flex
+    v-if="canView"
+    xs12 sm10 md8 lg6 xl4
+  >
     <h2
       class="headline mb-3"
       v-t="'knowledgeBase.topics'"
@@ -7,6 +10,7 @@
     <v-card
       flat
       class="ma-2 mb-5"
+      :loading="loading"
     >
       <v-card-text
         class="grey--text"
@@ -55,9 +59,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import KnowledgeBaseModule from '../store/knowledgeBase'
+import PersonModule from '../store/persons'
 import { Topic } from '../models/definitions'
 import NewTopicDialog from './dialogs/NewTopicDialog.vue'
 import RenameTopicDialog from './dialogs/RenameTopicDialog.vue'
@@ -72,6 +77,41 @@ import DeleteTopicDialog from './dialogs/DeleteTopicDialog.vue'
 })
 export default class SettingsTopics extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
+
+  private loading: boolean = true
+
+  private get canView() {
+    return this.personModule.getActiveRole?.knowledgeBaseWrite === true
+  }
+
+  @Watch('personModule.getActivePersonId')
+  private async onPersonChanged(val: string, oldVal: string) {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
+  @Watch('$route')
+  private async onRouteChanged(val: string, oldVal: string) {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
+  private async created() {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
+  private async init() {
+    this.loading = true
+
+    // await this.knowledgeBaseModule.loadKnowledgeBase()
+
+    this.loading = false
+  }
 
   private get getTopics() {
     const projectId = this.$route.params.projectId

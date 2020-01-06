@@ -1,5 +1,8 @@
 <template>
-  <v-flex xs12 sm10 md8 lg6 xl4>
+  <v-flex
+    v-if="canView"
+    xs12 sm10 md8 lg6 xl4
+  >
     <h2
       class="headline mb-3"
       v-t="'project.invitation.invitations'"
@@ -44,8 +47,9 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
-import InvitationModule from '../store/invitations'
 import UserModule from '../store/users'
+import PersonModule from '../store/persons'
+import InvitationModule from '../store/invitations'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
 import CreateInvitationDialog from './dialogs/CreateInvitationDialog.vue'
 import UpdateInvitationDialog from './dialogs/UpdateInvitationDialog.vue'
@@ -57,21 +61,39 @@ import UpdateInvitationDialog from './dialogs/UpdateInvitationDialog.vue'
   }
 })
 export default class ParticipantsInvitations extends Vue {
-  private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
   private userModule: UserModule = getModule(UserModule, this.$store)
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
 
   private loading: boolean = true
 
+  private get canView() {
+    return this.personModule.getActiveRole?.participantsWrite === true
+  }
+
+  @Watch('personModule.getActivePersonId')
+  private async onPersonChanged(val: string, oldVal: string) {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
   @Watch('$route')
   private async onRouteChanged(val: string, oldVal: string) {
-    await this.init()
+    if (this.canView) {
+      await this.init()
+    }
   }
 
   private async created() {
-    this.init()
+    if (this.canView) {
+      await this.init()
+    }
   }
 
   private async init() {
+    this.loading = true
+
     await this.invitationModule.loadInvitations();
 
     this.loading = false
