@@ -100,23 +100,28 @@ export default class PersonModule extends VuexModule {
 
   @Action
   public async activatePerson(personId: string | null) {
-    setCookie('activePersonId', personId || '')
-
-    this.context.commit('setActivePersonId', personId)
-
     await this.context.dispatch('clearProjects')
 
-    // TODO: reload participations
-
-    if (this.getActivePerson?.participations) {
-      for (const participation of this.getActivePerson?.participations) {
-        await this.context.dispatch('loadProject', participation.projectId)
+    if (personId) {
+      const activePerson = this.persons.find((x) => x.id === personId)
+      if (activePerson?.participations) {
+        for (const projectId of activePerson?.participations.map((x) => x.projectId)) {
+          await this.context.dispatch('loadProject', {
+            projectId,
+            personId,
+          })
+        }
       }
     }
+
+    this.context.commit('setActivePersonId', personId)
+    // TODO: reload participations
   }
 
   @Mutation
   public setActivePersonId(personId: string | null) {
+    setCookie('activePersonId', personId || '')
+
     this.activePersonId = personId
   }
 

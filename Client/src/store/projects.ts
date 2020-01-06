@@ -11,17 +11,13 @@ export default class ProjectModule extends VuexModule {
   private get resolvePersonAndProject() {
     const personId = this.context.getters.getActivePersonId
     const person = this.context.getters.getActivePerson
-    const projectId = this.getProjectId
+    const projectId = router.currentRoute.params.projectId
     const project = this.getActiveProject
     return { personId, person, projectId, project }
   }
 
-  public get getProjectId() {
-    return router.currentRoute.params.projectId
-  }
-
   public get getActiveProject() {
-    return this.projects.find((x: Project) => x.id === this.getProjectId)
+    return this.projects.find((x: Project) => x.id === router.currentRoute.params.projectId)
   }
 
   public get getProjects() {
@@ -45,10 +41,11 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Action({ commit: 'addProject' })
-  public async loadProject(projectId: string) {
-    const { personId } = this.resolvePersonAndProject
-
-    const response = await axios.get(`/persons/${personId}/projects/${projectId}`)
+  public async loadProject(data: {
+    projectId: string,
+    personId: string
+  }) {
+    const response = await axios.get(`/persons/${data.personId}/projects/${data.projectId}`)
     return Project.create(response.data)
   }
 
@@ -97,6 +94,7 @@ export default class ProjectModule extends VuexModule {
     // ? make the navbar show the updated project name
     await this.context.dispatch('initStore')
 
+    // TODO: use update project mutation
     return project
   }
 
@@ -129,12 +127,12 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public async setProjects(projects: Project[]) {
+  public setProjects(projects: Project[]) {
     this.projects = projects
   }
 
   @Mutation
-  public async addProject(project: Project) {
+  public addProject(project: Project) {
     if (this.projects.filter((x) => x.id === project.id).length > 0) {
       this.projects = this.projects.map((p) => {
         if (p.id === project.id) {
