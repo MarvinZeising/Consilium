@@ -9,7 +9,7 @@
     >
       <v-data-table
         :headers="headers"
-        :items="participants"
+        :items="participantModule.getParticipations"
         :items-per-page="15"
         :loading="loading"
       />
@@ -32,11 +32,11 @@ export default class ParticipantsList extends Vue {
 
   private loading: boolean = true
 
-  private participants: any[] = []
   private headers: any[] = [
-    { text: 'First name', value: 'firstname' },
-    { text: 'Last name', value: 'lastname' },
-    { text: 'Role', value: 'role' },
+    { text: 'First name', value: 'person.firstname' },
+    { text: 'Last name', value: 'person.lastname' },
+    { text: 'Role', value: 'role.name' },
+    { text: 'Actions', value: 'action', sortable: false },
   ]
 
   @Watch('$route')
@@ -50,14 +50,6 @@ export default class ParticipantsList extends Vue {
 
   private async init() {
     await this.participantModule.loadParticipants()
-
-    this.participants = this.participantModule.getParticipations.map((participation) => {
-      return {
-        firstname: participation.person?.firstname,
-        lastname: participation.person?.lastname,
-        role: participation.role?.name,
-      }
-    })
 
     this.loading = false
   }
