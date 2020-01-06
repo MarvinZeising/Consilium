@@ -9,18 +9,15 @@ export default class ProjectModule extends VuexModule {
   public projects: Project[] = []
 
   private get resolvePersonAndProject() {
-    const personId = this.getPersonId
+    const personId = this.context.getters.getActivePersonId
+    const person = this.context.getters.getActivePerson
     const projectId = this.getProjectId
     const project = this.getActiveProject
-    return { personId, projectId, project }
+    return { personId, person, projectId, project }
   }
 
   public get getProjectId() {
     return router.currentRoute.params.projectId
-  }
-
-  public get getPersonId() {
-    return this.context.getters.getActivePersonId
   }
 
   public get getActiveProject() {
@@ -49,13 +46,16 @@ export default class ProjectModule extends VuexModule {
 
   @Action({ commit: 'addProject' })
   public async loadProject(projectId: string) {
-    const response = await axios.get(`/persons/${this.getPersonId}/projects/${projectId}`)
+    const { personId } = this.resolvePersonAndProject
+
+    const response = await axios.get(`/persons/${personId}/projects/${projectId}`)
     return Project.create(response.data)
   }
 
   @Action({ commit: 'setRequests' })
   public async loadRequests() {
     const { personId, projectId } = this.resolvePersonAndProject
+
     const response = await axios.get(`/persons/${personId}/projects/${projectId}/requests`)
     return response.data.map((x: any) => Participation.create(x))
   }
@@ -63,7 +63,7 @@ export default class ProjectModule extends VuexModule {
   // ? do we need all these???
   @Action
   public async joinProject(projectId: string) {
-    const personId = this.context.getters.getActivePersonId
+    const { personId } = this.resolvePersonAndProject
 
     await axios.post('/project-participations/request', { personId, projectId })
 
@@ -120,7 +120,9 @@ export default class ProjectModule extends VuexModule {
     name: string,
     email: string,
   }): Promise<Project> {
-    const response = await axios.post(`/persons/${this.getPersonId}/projects`, {
+    const { personId } = this.resolvePersonAndProject
+
+    const response = await axios.post(`/persons/${personId}/projects`, {
       name: project.name,
       email: project.email,
     })
@@ -132,7 +134,9 @@ export default class ProjectModule extends VuexModule {
 
   @Action({ commit: 'removeProject' })
   public async deleteProject(projectId: string) {
-    await axios.delete(`/persons/${this.getPersonId}/projects/${projectId}`)
+    const { personId } = this.resolvePersonAndProject
+
+    await axios.delete(`/persons/${personId}/projects/${projectId}`)
 
     await this.context.dispatch('initStore')
 
@@ -190,9 +194,7 @@ export default class ProjectModule extends VuexModule {
 
   @Mutation
   protected updateProject(project: Project) {
-    this.projects = this.projects.map((x) => {
-      return x.id === project.id ? project : x
-    })
+    this.projects = this.projects.map((x) => x.id === project.id ? project : x)
   }
 
   @Mutation

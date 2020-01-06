@@ -99,6 +99,8 @@ export default class PersonModule extends VuexModule {
 
     await this.context.dispatch('clearProjects')
 
+    // TODO: reload participations
+
     if (this.getActivePerson?.participations) {
       for (const participation of this.getActivePerson?.participations) {
         await this.context.dispatch('loadProject', participation.projectId)
