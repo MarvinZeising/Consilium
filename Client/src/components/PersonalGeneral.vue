@@ -39,7 +39,7 @@
             />
             <p class="subtitle-1">{{ personModule.getActivePerson.lastname }}</p>
           </v-flex>
-          <v-flex xs6>
+          <v-flex xs12>
             <p
               class="caption mb-0 grey--text"
               v-t="'person.gender'"
@@ -48,6 +48,26 @@
               class="subtitle-1"
               v-t="'person.' + personModule.getActivePerson.gender"
             />
+          </v-flex>
+
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.createdTime'"
+            />
+            <p class="subtitle-1 grey--text">
+              {{ userModule.getUser.formatDateTime(personModule.getActivePerson.createdTime) }}
+            </p>
+          </v-flex>
+
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.lastUpdatedTime'"
+            />
+            <p class="subtitle-1 grey--text">
+              {{ userModule.getUser.formatDateTime(personModule.getActivePerson.lastUpdatedTime) }}
+            </p>
           </v-flex>
 
         </v-layout>
@@ -130,10 +150,12 @@ import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../i18n'
 import { Person, Gender } from '../models/definitions'
+import UserModule from '../store/users'
 import PersonModule from '../store/persons'
 
 @Component
 export default class PersonalGeneral extends Vue {
+  private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
 
   private valid: any = false

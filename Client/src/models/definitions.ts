@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 enum Theme {
   Light = 'light',
   Dark = 'dark',
@@ -36,6 +38,10 @@ class User {
     this.dateFormat = dateFormat
     this.timeFormat = timeFormat
   }
+
+  public formatDateTime(datetime: string) {
+    return moment(datetime).format(`${this.dateFormat}, ${this.timeFormat}`)
+  }
 }
 
 enum Gender {
@@ -48,7 +54,10 @@ class Person {
     const person = new Person(
       data.id,
       data.firstname,
-      data.lastname)
+      data.lastname,
+      data.createdTime,
+      data.lastUpdateTime)
+
     if (data.participations) {
       person.participations = data.participations.map((x: any) => Participation.create(x))
     }
@@ -60,15 +69,21 @@ class Person {
   public lastname: string
   public gender: Gender = Gender.Male
   public participations: Participation[] = []
+  public createdTime: string
+  public lastUpdatedTime: string
 
   constructor(
     id: string,
     firstname: string,
     lastname: string,
+    createdTime: string,
+    lastUpdatedTime: string,
   ) {
     this.id = id
     this.firstname = firstname
     this.lastname = lastname
+    this.createdTime = createdTime
+    this.lastUpdatedTime = lastUpdatedTime
   }
 
   public fullName() {

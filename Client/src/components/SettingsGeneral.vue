@@ -54,7 +54,7 @@
               v-t="'core.createdTime'"
             />
             <p class="subtitle-1 grey--text">
-              {{ formatDateTime(projectModule.getActiveProject.createdTime) }}
+              {{ userModule.getUser.formatDateTime(projectModule.getActiveProject.createdTime) }}
             </p>
           </v-flex>
 
@@ -64,7 +64,7 @@
               v-t="'core.lastUpdatedTime'"
             />
             <p class="subtitle-1 grey--text">
-              {{ formatDateTime(projectModule.getActiveProject.lastUpdatedTime) }}
+              {{ userModule.getUser.formatDateTime(projectModule.getActiveProject.lastUpdatedTime) }}
             </p>
           </v-flex>
 
@@ -160,14 +160,6 @@ export default class SettingsGeneral extends Vue {
 
   private get canEdit() {
     return this.personModule.getActiveRole?.settingsWrite === true
-  }
-
-  private formatDateTime(datetime: string) {
-    const user = this.userModule.getUser
-    if (user) {
-      return moment(datetime).format(`${user?.dateFormat}, ${user?.timeFormat}`)
-    }
-    return ''
   }
 
   @Watch('personModule.getActivePersonId')
