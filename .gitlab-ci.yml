@@ -1,6 +1,6 @@
-stages:
+# stages:
 # - build
-  - test
+# - test
 
 #build:
 #  stage: build
@@ -12,10 +12,10 @@ stages:
 #    - docker build --pull -t $CI_REGISTRY_IMAGE .
 #    - docker push $CI_REGISTRY_IMAGE
 
-integration:
-  stage: test
-  image: marvinzeising/docker-compose
-  services:
-    - docker:dind
-  script:
-    - docker-compose -f .docker/integration.yml run integration
+# integration:
+#   stage: test
+#   image: marvinzeising/docker-compose
+#   services:
+#     - docker:dind
+#   script:
+#     - docker-compose -f .docker/integration.yml run integration
