@@ -8,9 +8,7 @@ export default class RoleModule extends VuexModule {
 
   public get getRoles() {
     return this.context.getters.getActiveProject?.roles?.sort((a: Role, b: Role) => {
-      if (!a.editable) {
-        return -1
-      } else if (a.name < b.name) {
+      if (a.name < b.name) {
         return -1
       } else if (a.name > b.name) {
         return 1
