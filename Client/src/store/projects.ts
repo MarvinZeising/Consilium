@@ -144,11 +144,7 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  protected setRequests(participations: Participation[]) {
     this.projects = this.projects.map((project) => {
-      if (project.id === router.currentRoute.params.projectId) {
-        project.participations = project.participations?.filter((x) => x.status !== ParticipationStatus.Requested)
-        project.participations?.push(...participations)
       }
       return project
     })
@@ -163,6 +159,14 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
+  protected setRequests(participations: Participation[]) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === router.currentRoute.params.projectId) {
+        project.participations = project.participations?.filter((x) => x.status !== ParticipationStatus.Requested)
+        project.participations?.push(...participations)
+      }
+      return project
+    })
   }
 
   @Mutation
