@@ -8,16 +8,16 @@ export default class RoleModule extends VuexModule {
 
   @Action
   public async loadRoles() {
-    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
     if (personId && projectId) {
       const response = await axios.get(`/persons/${personId}/projects/${projectId}/roles`)
       const roles = response.data.map((x: any) => Role.create(x))
 
-      if (project) {
-        project.roles = roles
-
-        this.context.commit('updateProject', project)
-      }
+      this.context.commit('upsertProjectRoles', {
+        projectId,
+        roles,
+        clearFirst: true,
+      })
     }
   }
 
@@ -29,7 +29,7 @@ export default class RoleModule extends VuexModule {
     participants: string,
     knowledgeBase: string,
   }) {
-    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
     const response = await axios.post(`/persons/${personId}/projects/${projectId}/roles`, {
       name: data.name,
@@ -44,11 +44,10 @@ export default class RoleModule extends VuexModule {
     })
     const role = Role.create(response.data)
 
-    if (project) {
-      project.roles.push(role)
-
-      this.context.commit('updateProject', project)
-    }
+    this.context.commit('upsertProjectRoles', {
+      projectId,
+      role: [role],
+    })
   }
 
   @Action
@@ -60,7 +59,7 @@ export default class RoleModule extends VuexModule {
     participants: string,
     knowledgeBase: string,
   }) {
-    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
     const response = await axios.put(`/persons/${personId}/projects/${projectId}/roles/${data.roleId}`, {
       name: data.name,
@@ -75,27 +74,22 @@ export default class RoleModule extends VuexModule {
     })
     const role = Role.create(response.data)
 
-    if (project) {
-      project.roles = project.roles?.map((x: Role) => {
-        return x.id === role.id ? role : x
-      })
-
-      this.context.commit('updateProject', project)
-    }
+    this.context.commit('upsertProjectRoles', {
+      projectId,
+      role: [role],
+    })
   }
 
   @Action
   public async deleteRole(roleId: string) {
-    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
     await axios.delete(`/persons/${personId}/projects/${projectId}/roles/${roleId}`)
 
-    if (project) {
-      project.roles = project.roles?.filter((x: Role) => x.id !== roleId)
-
-      this.context.commit('updateProject', project)
-    }
+    this.context.commit('removeProjectRoles', {
+      projectId,
+      roleId,
+    })
   }
-
 
 }

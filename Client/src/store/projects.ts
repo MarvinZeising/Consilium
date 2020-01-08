@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
 import router from '../router'
-import { Project, Participation, ParticipationStatus } from '../models/definitions'
+import { Project, Participation, ParticipationStatus, Role } from '../models/definitions'
 
 @Module({ dynamic: true, store, name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
@@ -198,11 +198,56 @@ export default class ProjectModule extends VuexModule {
       return p
     })
   }
+
+  @Mutation
+  public upsertProjectRoles({ projectId, roles, clearFirst }: {
+    projectId: string,
+    roles: Role[],
+    clearFirst: boolean,
+  }) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === projectId) {
+        if (clearFirst) {
+          project.roles = roles
+          return project
+        }
+        project.roles = project.roles.map((role) => {
+          const updatedRole = roles.find((x) => x.id === role.id)
+          if (updatedRole) {
+            role.name = updatedRole.name
+            role.knowledgeBaseRead = updatedRole.knowledgeBaseRead
+            role.knowledgeBaseWrite = updatedRole.knowledgeBaseWrite
+            role.participantsRead = updatedRole.participantsRead
+            role.participantsWrite = updatedRole.participantsWrite
+            role.rolesRead = updatedRole.rolesRead
+            role.rolesWrite = updatedRole.rolesWrite
+            role.settingsRead = updatedRole.settingsRead
+            role.settingsWrite = updatedRole.settingsWrite
+          }
+          return role
+        })
+        for (const updatedRole of roles) {
+          const roleAlreadyExists = project.roles.find((x) => x.id === updatedRole.id)
+          if (!roleAlreadyExists) {
+            project.roles.push(updatedRole)
+          }
+        }
       }
+      return project
     })
   }
 
   @Mutation
+  public removeProjectRole({ projectId, roleId }: {
+    projectId: string,
+    roleId: string,
+  }) {
+    this.projects = this.projects.map((p) => {
+      if (p.id === projectId) {
+        p.roles = p.roles.filter((x) => x.id !== roleId)
+      }
+      return p
+    })
   }
 
   @Mutation
