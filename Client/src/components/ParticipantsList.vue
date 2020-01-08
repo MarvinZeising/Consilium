@@ -10,11 +10,22 @@
       flat
       class="ma-2 mb-5"
     >
+      <!-- <v-card-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="Search"
+          single-line
+          hide-details
+        />
+      </v-card-title> -->
       <v-data-table
+        :loading="loading"
         :headers="headers"
         :items="participantModule.getParticipations"
         :items-per-page="15"
-        :loading="loading"
+        :search="search"
       >
         <template
           v-if="canEdit"
@@ -51,6 +62,7 @@ export default class ParticipantsList extends Vue {
   private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
 
   private loading: boolean = true
+  private search: string = ''
 
   private headers: any[] = [
     { text: 'First name', value: 'person.firstname' },
