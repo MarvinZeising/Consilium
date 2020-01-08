@@ -8,7 +8,7 @@ export default class KnowledgeBaseModule extends VuexModule {
   public topics: Topic[] = []
 
   public get allTopics(): Topic[] {
-    return this.topics.sort((a: Topic, b: Topic) => a.order - b.order)
+    return [...this.topics].sort((a: Topic, b: Topic) => a.order - b.order)
   }
 
   @Action
