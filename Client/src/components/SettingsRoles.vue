@@ -15,12 +15,12 @@
         class="grey--text"
         v-t="'project.role.description'"
       />
-      <v-list>
-        <v-list-item v-if="!roleModule.getRoles || roleModule.getRoles.length === 0">
+      <v-list v-if="projectModule.getActiveProject">
+        <v-list-item v-if="!projectModule.getActiveProject.roles">
           <span v-t="'project.role.loading'" />
         </v-list-item>
         <v-list-item
-          v-for="(role, index) in roleModule.getRoles"
+          v-for="(role, index) in projectModule.getActiveProject.getRoles"
           :key="index"
         >
           <v-list-item-content>

@@ -117,6 +117,19 @@ class Project {
     this.createdTime = createdTime
     this.lastUpdatedTime = lastUpdatedTime
   }
+
+  public get getRoles() {
+    return [...this.roles].sort((a, b) => {
+      if (a.name < b.name) {
+        return -1
+      } else if (a.name > b.name) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+  }
+
 }
 
 enum ParticipationStatus {

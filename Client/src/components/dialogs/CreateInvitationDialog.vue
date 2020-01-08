@@ -108,7 +108,7 @@ export default class CreateInvitationDialog extends Vue {
   private async created() {
     await this.roleModule.loadRoles();
 
-    this.roleValues = this.roleModule.getRoles?.map((role: Role) => {
+    this.roleValues = this.projectModule.getActiveProject?.getRoles.map((role: Role) => {
       return {
         value: role.id,
         name: role.name,

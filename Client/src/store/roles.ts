@@ -6,18 +6,6 @@ import { Role } from '../models/definitions'
 @Module({ dynamic: true, store, name: 'RoleModule' })
 export default class RoleModule extends VuexModule {
 
-  public get getRoles() {
-    return this.context.getters.getActiveProject?.roles?.sort((a: Role, b: Role) => {
-      if (a.name < b.name) {
-        return -1
-      } else if (a.name > b.name) {
-        return 1
-      } else {
-        return 0
-      }
-    })
-  }
-
   @Action
   public async loadRoles() {
     const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
