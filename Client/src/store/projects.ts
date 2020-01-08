@@ -40,7 +40,7 @@ export default class ProjectModule extends VuexModule {
     return this.getAllParticipations?.filter((x) => x.status === ParticipationStatus.Requested)
   }
 
-  @Action({ commit: 'addProject' })
+  @Action({ commit: 'upsertProject' })
   public async loadProject(data: {
     projectId: string,
     personId: string
@@ -75,30 +75,25 @@ export default class ProjectModule extends VuexModule {
 
 
 
-  @MutationAction({ mutate: ['projects'] })
-  public async clearProjects() {
-    return { projects: [] }
-  }
-
-  @Action({ commit: 'setGeneral' })
+  @Action
   public async updateProjectGeneral(project: {
     name: string,
     email: string
   }) {
     const { personId, projectId } = this.resolvePersonAndProject
-    await axios.put(`/persons/${personId}/projects/${projectId}`, {
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}`, {
       name: project.name,
       email: project.email
     })
+    const updatedProject = Project.create(response.data)
 
     // ? make the navbar show the updated project name
     await this.context.dispatch('initStore')
 
-    // TODO: use update project mutation
-    return project
+    this.context.commit('upsertProject', updatedProject)
   }
 
-  @Action({ commit: 'insertProject' })
+  @Action({ commit: 'upsertProject' })
   public async createProject(project: {
     name: string,
     email: string,
@@ -132,7 +127,7 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public addProject(project: Project) {
+  public upsertProject(project: Project) {
     if (this.projects.filter((x) => x.id === project.id).length > 0) {
       this.projects = this.projects.map((p) => {
         if (p.id === project.id) {
@@ -160,24 +155,14 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  protected setGeneral(project: Project) {
-    this.projects = this.projects.map((x) => {
-      if (x.id === project.id) {
-        x.name = project.name
-        x.email = project.email
       }
-      return x
     })
   }
 
   @Mutation
-  protected insertProject(project: Project) {
-    this.projects.push(project)
   }
 
   @Mutation
-  protected updateProject(project: Project) {
-    this.projects = this.projects.map((x) => x.id === project.id ? project : x)
   }
 
   @Mutation

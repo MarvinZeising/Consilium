@@ -79,8 +79,6 @@ export default class PersonModule extends VuexModule {
   public async activatePerson(personId: string | null) {
     this.context.commit('setActivePersonId', personId)
 
-    await this.context.dispatch('clearProjects')
-
     const response = await axios.get(`/persons/${personId}/participations`)
     const participations = response.data.map((x: Participation) => Participation.create(x))
 
@@ -89,9 +87,8 @@ export default class PersonModule extends VuexModule {
       person.participations = participations
       this.context.commit('updatePerson', person)
 
-      await this.context.dispatch('clearProjects')
       for (const participation of participations) {
-        this.context.commit('addProject', participation.project)
+        this.context.commit('upsertProject', participation.project)
       }
     }
   }
