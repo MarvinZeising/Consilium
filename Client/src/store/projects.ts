@@ -144,13 +144,60 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
+  public upsertProjectParticipations({ projectId, participations, clearPermanentsFirst, clearFirst }: {
+    projectId: string,
+    participations: Participation[],
+    clearPermanentsFirst: boolean,
+    clearFirst: boolean,
+  }) {
     this.projects = this.projects.map((project) => {
+      if (project.id === projectId) {
+        if (clearFirst) {
+          project.participations = participations
+          return project
+        } else if (clearPermanentsFirst) {
+          project.participations = participations.filter((x) =>
+            x.status === ParticipationStatus.Active ||
+            x.status === ParticipationStatus.Inactive)
+        }
+        project.participations = project.participations.map((x) => {
+          const updatedParticipation = participations.find((y) => y.id === x.id)
+          if (updatedParticipation) {
+            x.personId = updatedParticipation.personId
+            x.person = updatedParticipation.person
+            x.projectId = updatedParticipation.projectId
+            x.project = updatedParticipation.project
+            x.roleId = updatedParticipation.roleId
+            x.role = updatedParticipation.role
+            x.status = updatedParticipation.status
+            x.createdTime = updatedParticipation.createdTime
+            x.lastUpdatedTime = updatedParticipation.lastUpdatedTime
+          }
+          return x
+        })
+        for (const updatedParticipation of participations) {
+          const participationAlreadyExists = project.participations.find((x) => x.id === updatedParticipation.id)
+          if (!participationAlreadyExists) {
+            project.participations.push(updatedParticipation)
+          }
+        }
       }
       return project
     })
   }
 
   @Mutation
+  public removeProjectParticipation({ projectId, participationId }: {
+    projectId: string,
+    participationId: string,
+  }) {
+    this.projects = this.projects.map((p) => {
+      if (p.id === projectId) {
+        p.participations = p.participations.filter((x) => x.id !== participationId)
+      }
+      return p
+    })
+  }
       }
     })
   }

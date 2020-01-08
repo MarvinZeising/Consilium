@@ -14,33 +14,29 @@ export default class ParticipantModule extends VuexModule {
 
   @Action
   public async loadParticipants() {
-    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
     if (personId && projectId) {
       const response = await axios.get(`/persons/${personId}/projects/${projectId}/participations`)
       const participations = response.data.map((x: any) => Participation.create(x))
 
-      if (project) {
-        project.participations = project.participations?.filter((x: Participation) =>
-          x.status !== ParticipationStatus.Active &&
-          x.status !== ParticipationStatus.Inactive)
-        project.participations?.push(...participations)
-
-        this.context.commit('updateProject', project)
-      }
+      this.context.commit('upsertProjectParticipations', {
+        projectId,
+        participations,
+        clearPermanentsFirst: true,
+      })
     }
   }
 
   @Action
   public async deleteParticipant(participationId: string) {
-    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
     await axios.delete(`/persons/${personId}/projects/${projectId}/participants/${participationId}`)
 
-    if (project) {
-      project.participations = project.participations?.filter((x: Participation) => x.id !== participationId)
-
-      this.context.commit('updateProject', project)
-    }
+    this.context.commit('removeProjectParticipation', {
+      projectId,
+      participationId,
+    })
   }
 
 }
