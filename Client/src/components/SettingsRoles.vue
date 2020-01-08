@@ -57,6 +57,7 @@ import { Role } from '../models/definitions'
 import CreateRoleDialog from '../components/dialogs/CreateRoleDialog.vue'
 import UpdateRoleDialog from '../components/dialogs/UpdateRoleDialog.vue'
 import PersonModule from '../store/persons'
+import ProjectModule from '../store/projects'
 import RoleModule from '../store/roles'
 import ParticipantModule from '../store/participants'
 
@@ -68,6 +69,7 @@ import ParticipantModule from '../store/participants'
 })
 export default class SettingsRoles extends Vue {
   private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private roleModule: RoleModule = getModule(RoleModule, this.$store)
   private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
 
