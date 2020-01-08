@@ -32,7 +32,7 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpGet("email-available/{email}")]
-        public IActionResult IsEmailAvailable(string email)
+        public ActionResult<bool> IsEmailAvailable(string email)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult SignIn([FromBody] AuthenticateDto dto)
+        public ActionResult<string> SignIn([FromBody] AuthenticateDto dto)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace Server.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult SignUp([FromBody] CreateUserDto dto)
+        public ActionResult<UserDto> SignUp([FromBody] CreateUserDto dto)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace Server.Controllers
         }
 
         [HttpGet("current")]
-        public IActionResult GetCurrentUser()
+        public ActionResult<UserDto> GetCurrentUser()
         {
             try
             {
@@ -109,7 +109,7 @@ namespace Server.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateGeneral([FromBody] UpdateUserGeneralDto dto)
+        public ActionResult<UserDto> UpdateGeneral([FromBody] UpdateUserGeneralDto dto)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace Server.Controllers
                 _db.User.Update(user);
                 _db.Save();
 
-                return NoContent();
+                return Ok(_mapper.Map<UserDto>(user));
             }
             catch (Exception e)
             {
@@ -133,7 +133,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("interface")]
-        public IActionResult UpdateInterface([FromBody] UpdateUserInterfaceDto dto)
+        public ActionResult<UserDto> UpdateInterface([FromBody] UpdateUserInterfaceDto dto)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace Server.Controllers
                 _db.User.Update(user);
                 _db.Save();
 
-                return NoContent();
+                return Ok(_mapper.Map<UserDto>(user));
             }
             catch (Exception e)
             {

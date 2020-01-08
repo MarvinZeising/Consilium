@@ -54,7 +54,7 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatePerson([FromBody] CreatePersonDto dto)
+        public ActionResult<PersonDto> CreatePerson([FromBody] CreatePersonDto dto)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("{personId}")]
-        public IActionResult UpdateGeneral(Guid personId, [FromBody] UpdatePersonGeneralDto dto)
+        public ActionResult<PersonDto> UpdateGeneral(Guid personId, [FromBody] UpdatePersonGeneralDto dto)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace Server.Controllers
                 _db.Person.Update(person);
                 _db.Save();
 
-                return NoContent();
+                return Ok(_mapper.Map<PersonDto>(person));
             }
             catch (Exception e)
             {

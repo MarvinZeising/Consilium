@@ -51,7 +51,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("roles")]
-        public IActionResult CreateRole(Guid personId, Guid projectId, [FromBody] CreateRoleDto dto)
+        public ActionResult<RoleDto> CreateRole(Guid personId, Guid projectId, [FromBody] CreateRoleDto dto)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("roles/{roleId}")]
-        public IActionResult UpdateRole(Guid personId, Guid projectId, Guid roleId, [FromBody] UpdateRoleDto dto)
+        public ActionResult<RoleDto> UpdateRole(Guid personId, Guid projectId, Guid roleId, [FromBody] UpdateRoleDto dto)
         {
             try
             {

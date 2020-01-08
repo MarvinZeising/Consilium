@@ -51,7 +51,7 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProject(Guid personId, [FromBody] CreateProjectDto dto)
+        public ActionResult<ProjectDto> CreateProject(Guid personId, [FromBody] CreateProjectDto dto)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("{projectId}")]
-        public IActionResult UpdateProjectGeneral(Guid personId, Guid projectId, [FromBody] UpdateProjectGeneralDto dto)
+        public ActionResult<ProjectDto> UpdateProjectGeneral(Guid personId, Guid projectId, [FromBody] UpdateProjectGeneralDto dto)
         {
             try
             {

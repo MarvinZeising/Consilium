@@ -108,7 +108,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("invitations")]
-        public IActionResult CreateInvitation(Guid personId, Guid projectId, [FromBody] CreateInvitationDto dto)
+        public ActionResult<ParticipationDto> CreateInvitation(Guid personId, Guid projectId, [FromBody] CreateInvitationDto dto)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("invitations/{participationId}")]
-        public IActionResult UpdateInvitation(Guid personId, Guid projectId, Guid participationId, [FromBody] UpdateInvitationDto dto)
+        public ActionResult<ParticipationDto> UpdateInvitation(Guid personId, Guid projectId, Guid participationId, [FromBody] UpdateInvitationDto dto)
         {
             try
             {
@@ -182,7 +182,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("invitations/{participationId}/accept")]
-        public IActionResult AcceptInvitation(Guid personId, Guid projectId, Guid participationId)
+        public ActionResult<ParticipationDto> AcceptInvitation(Guid personId, Guid projectId, Guid participationId)
         {
             try
             {
@@ -218,7 +218,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("invitations/{participationId}/decline")]
-        public IActionResult DeclineInvitation(Guid personId, Guid projectId, Guid participationId)
+        public ActionResult<ParticipationDto> DeclineInvitation(Guid personId, Guid projectId, Guid participationId)
         {
             try
             {
