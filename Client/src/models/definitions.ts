@@ -13,15 +13,19 @@ class User {
       data.language,
       data.theme,
       data.dateFormat,
-      data.timeFormat)
+      data.timeFormat,
+      data.createdTime,
+      data.lastUpdatedTime)
   }
 
   public id: string
   public email: string
   public language: string
   public theme: Theme
-  public dateFormat: string = ''
-  public timeFormat: string = ''
+  public dateFormat: string
+  public timeFormat: string
+  public createdTime: string
+  public lastUpdatedTime: string
 
   constructor(
     id: string,
@@ -29,7 +33,9 @@ class User {
     language: string,
     theme: string,
     dateFormat: string,
-    timeFormat: string
+    timeFormat: string,
+    createdTime: string,
+    lastUpdatedTime: string
   ) {
     this.id = id
     this.email = email
@@ -37,6 +43,8 @@ class User {
     this.theme = theme === 'dark' ? Theme.Dark : Theme.Light
     this.dateFormat = dateFormat
     this.timeFormat = timeFormat
+    this.createdTime = createdTime
+    this.lastUpdatedTime = lastUpdatedTime
   }
 
   public formatDateTime(datetime: string) {

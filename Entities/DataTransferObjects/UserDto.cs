@@ -12,6 +12,7 @@ namespace Entities.DataTransferObjects
         public string DateFormat { get; set; }
         public string TimeFormat { get; set; }
         public DateTime CreatedTime { get; set; }
+        public DateTime LastUpdatedTime { get; set; }
         public IEnumerable<PersonDto> Persons { get; set; }
     }
 }

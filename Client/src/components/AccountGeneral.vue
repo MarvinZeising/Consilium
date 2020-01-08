@@ -26,12 +26,32 @@
             <p class="subtitle-1 grey--text">{{ userModule.getUser.id }}</p>
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.email'"
             />
             <p class="subtitle-1">{{ userModule.getUser.email }}</p>
+          </v-flex>
+
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.createdTime'"
+            />
+            <p class="subtitle-1 grey--text">
+              {{ userModule.getUser.formatDateTime(userModule.getUser.createdTime) }}
+            </p>
+          </v-flex>
+
+          <v-flex xs6>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'core.lastUpdatedTime'"
+            />
+            <p class="subtitle-1 grey--text">
+              {{ userModule.getUser.formatDateTime(userModule.getUser.lastUpdatedTime) }}
+            </p>
           </v-flex>
 
         </v-layout>
