@@ -32,9 +32,9 @@ namespace Entities.Models
         public string Status { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedTime { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime LastUpdatedTime { get; set; } = DateTime.UtcNow;
+        public DateTime LastUpdatedTime { get; set; }
     }
 }
