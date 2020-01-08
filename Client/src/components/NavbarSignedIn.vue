@@ -74,7 +74,7 @@
       <div v-if="personModule.getActivePerson">
         <!--//* Projects -->
         <v-list-group
-          v-for="(participation, i) in personModule.getActivePerson.participations"
+          v-for="(participation, i) in personModule.getActivePerson.getParticipations"
           :key="i"
           prepend-icon="extension"
         >

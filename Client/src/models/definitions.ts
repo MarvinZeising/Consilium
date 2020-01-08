@@ -90,6 +90,22 @@ class Person {
     return this.firstname + ' ' + this.lastname
   }
 
+  public get getParticipations() {
+    return [...this.participations].sort((a, b) => {
+      if (a.project && b.project) {
+        if (a.project.name < b.project.name) {
+          return 1
+        } else if (a.project.name > b.project.name) {
+          return -1
+        } else {
+          return 0
+        }
+      } else {
+        return 0
+      }
+    })
+  }
+
 }
 
 class Project {
