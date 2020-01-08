@@ -117,7 +117,7 @@ namespace Server.Controllers
                 _db.Project.Update(project);
                 _db.Save();
 
-                return NoContent();
+                return Ok(_mapper.Map<ProjectDto>(project));
             }
             catch (Exception e)
             {
