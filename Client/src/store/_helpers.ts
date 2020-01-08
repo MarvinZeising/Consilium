@@ -1,3 +1,5 @@
+import { SHA512 } from 'crypto-js';
+
 function setCookie(cname: string, cvalue: string) {
   const d = new Date()
   const exdays = 30
@@ -24,7 +26,11 @@ function getCookie(cname: string): string {
   return ''
 }
 
+function hashPassword(password: string) {
+  return SHA512(password + 'consilium').toString()
+}
 export {
   getCookie,
   setCookie,
+  hashPassword,
 }
