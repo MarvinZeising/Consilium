@@ -40,6 +40,11 @@ export default class ProjectModule extends VuexModule {
     return this.getAllParticipations?.filter((x) => x.status === ParticipationStatus.Requested)
   }
 
+  @MutationAction({ mutate: ['projects'] })
+  public async clearProjects() {
+    return { projects: [] }
+  }
+
   @Action({ commit: 'upsertProject' })
   public async loadProject(data: {
     projectId: string,
@@ -119,11 +124,6 @@ export default class ProjectModule extends VuexModule {
     await this.context.dispatch('initStore')
 
     return projectId
-  }
-
-  @Mutation
-  public setProjects(projects: Project[]) {
-    this.projects = projects
   }
 
   @Mutation

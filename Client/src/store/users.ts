@@ -154,9 +154,8 @@ export default class UserModule extends VuexModule {
   @Action
   public async signOut() {
     localStorage.removeItem('user')
-    await this.context.dispatch('clearPersons', [])
-    await this.context.dispatch('clearProjects', [])
-    await this.context.dispatch('clearKnowledgeBases', [])
+    await this.context.dispatch('clearPersons')
+    await this.context.dispatch('clearProjects')
     this.context.commit('setUser', null)
   }
 

@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
+import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
 import router from '../router'
-import { Person, Gender, Project, Participation } from '../models/definitions'
+import { Person, Gender, Participation } from '../models/definitions'
 import store from '../plugins/vuex'
 import { setCookie } from './_helpers'
 
@@ -29,10 +29,9 @@ export default class PersonModule extends VuexModule {
       ?.role
   }
 
-  @Action
+  @MutationAction({ mutate: ['persons', 'activePersonId'] })
   public async clearPersons() {
-    this.context.commit('setPersons', [])
-    await this.context.dispatch('activatePerson', null)
+    return { persons: [], activePersonId: null }
   }
 
   @Action
