@@ -85,7 +85,7 @@ export default class SettingsTopics extends Vue {
     return this.personModule.getActiveRole?.knowledgeBaseWrite === true
   }
 
-  @Watch('personModule.getActivePersonId')
+  @Watch('personModule.getActivePerson')
   private async onPersonChanged(val: string, oldVal: string) {
     if (this.canView) {
       await this.init()

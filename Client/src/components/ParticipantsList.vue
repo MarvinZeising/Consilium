@@ -67,7 +67,7 @@ export default class ParticipantsList extends Vue {
     return this.personModule.getActiveRole?.participantsWrite === true
   }
 
-  @Watch('personModule.getActivePersonId')
+  @Watch('personModule.getActivePerson')
   private async onPersonChanged(val: string, oldVal: string) {
     if (this.canView) {
       await this.init()

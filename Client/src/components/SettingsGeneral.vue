@@ -162,7 +162,7 @@ export default class SettingsGeneral extends Vue {
     return this.personModule.getActiveRole?.settingsWrite === true
   }
 
-  @Watch('personModule.getActivePersonId')
+  @Watch('personModule.getActivePerson')
   private async onPersonChanged(val: string, oldVal: string) {
     if (this.canView) {
       await this.init()
