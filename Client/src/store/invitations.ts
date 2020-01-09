@@ -64,10 +64,7 @@ export default class InvitationModule extends VuexModule {
     const response = await axios.put(`/persons/${personId}/projects/${invitation.projectId}/invitations/${invitation.id}/accept`)
     const updatedParticipation = Participation.create(response.data)
 
-    this.context.commit('upsertProjectInvitations', {
-      projectId: invitation.projectId,
-      invitations: [updatedParticipation],
-    })
+    this.context.commit('upsertPersonParticipations', [updatedParticipation])
   }
 
   @Action
@@ -76,10 +73,7 @@ export default class InvitationModule extends VuexModule {
 
     await axios.put(`/persons/${personId}/projects/${invitation.projectId}/invitations/${invitation.id}/decline`)
 
-    this.context.commit('removeProjectInvitation', {
-      projectId: invitation.projectId,
-      invitationId: invitation.id,
-    })
+    this.context.commit('removePersonParticipation', invitation.id)
   }
 
   @Action
