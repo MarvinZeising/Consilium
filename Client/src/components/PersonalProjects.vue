@@ -44,7 +44,7 @@
       </v-list>
       <v-card-actions>
         <v-layout wrap>
-          <JoinProjectDialog />
+          <CreateJoinRequestDialog />
           <v-spacer />
           <v-btn
             text
@@ -62,15 +62,15 @@ import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../store/projects'
 import PersonModule from '../store/persons'
-import JoinProjectDialog from '../components/dialogs/JoinProjectDialog.vue'
 import CancelJoinRequestDialog from '../components/dialogs/CancelJoinRequestDialog.vue'
+import CreateJoinRequestDialog from '../components/dialogs/CreateJoinRequestDialog.vue'
 import HandleProjectInvitation from '../components/dialogs/HandleProjectInvitation.vue'
 import { Project, ParticipationStatus } from '../models/definitions'
 
 @Component({
   components: {
-    JoinProjectDialog,
     CancelJoinRequestDialog,
+    CreateJoinRequestDialog,
     HandleProjectInvitation,
   }
 })

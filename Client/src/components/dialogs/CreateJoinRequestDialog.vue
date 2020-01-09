@@ -11,7 +11,10 @@
       />
     </template>
     <v-card>
-      <v-form v-model="form">
+      <v-form
+        ref="form"
+        v-model="form"
+      >
         <v-card-title>
           <span
             class="headline"
@@ -22,6 +25,7 @@
           <p v-t="'project.joinDescription'" />
           <v-text-field
             v-model="projectId"
+            :rules="projectRules"
             :label="$t('core.id')"
             filled
             required
@@ -36,6 +40,7 @@
           />
           <v-btn
             :disabled="projectId == ''"
+            :loading="loading"
             text
             color="primary"
             @click.stop="joinProject"
@@ -53,22 +58,36 @@ import { getModule } from 'vuex-module-decorators'
 import { Vue, Component } from 'vue-property-decorator'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
+import RequestModule from '../../store/requests'
 import { Topic } from '../../models/definitions'
 
 @Component
-export default class JoinProjectDialog extends Vue {
+export default class CreateJoinRequestDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private requestModule: RequestModule = getModule(RequestModule, this.$store)
 
   private form: any = null
   private dialog: any = null
+  private loading: boolean = false
+
   private projectId: string = ''
+  private projectRules: any[] = []
 
   private async joinProject() {
-    const projectId = this.$route.params.projectId
+    try {
+      this.loading = true
 
-    await this.projectModule.joinProject(this.projectId)
+      await this.requestModule.createRequest(this.projectId)
 
-    this.dialog = false
+      this.dialog = false
+    } catch (e) {
+      const form: any = this.$refs.form
+      const thisProjectId = this.projectId
+      this.projectRules.push((v: string) => v !== thisProjectId || i18n.t('project.request.notAllowed'))
+      form.validate()
+    } finally {
+      this.loading = false
+    }
   }
 }
 </script>
