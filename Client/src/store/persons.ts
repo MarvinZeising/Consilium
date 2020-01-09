@@ -109,9 +109,34 @@ export default class PersonModule extends VuexModule {
   }
 
   @Mutation
+  public upsertPersonParticipations(participations: Participation[]) {
+    this.persons = this.persons.map((person) => {
+      if (person.id === this.activePersonId) {
+        person.participations = person.participations.map((participation) => {
+          const updatedParticipation = participations.find((y) => y.id === participation.id)
+          if (updatedParticipation) {
+            participation.copyFrom(updatedParticipation)
+          }
+          return participation
+        })
+        for (const updatedParticipation of participations) {
+          const alreadyExists = person.participations.find((x) => x.id === updatedParticipation.id)
+          if (!alreadyExists) {
+            person.participations.push(updatedParticipation)
+          }
+        }
+      }
+      return person
+    })
   }
 
   @Mutation
+  public removePersonParticipation(participationId: string) {
+    this.persons = this.persons.map((person) => {
+      if (person.id === this.activePersonId) {
+        person.participations = person.participations.filter((x) => x.id !== participationId)
+      }
+      return person
     })
   }
 
