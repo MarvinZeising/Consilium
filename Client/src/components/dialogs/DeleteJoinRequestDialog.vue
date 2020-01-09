@@ -41,13 +41,16 @@ import { getModule } from 'vuex-module-decorators'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
+import RequestModule from '../../store/requests'
+import { Participation } from '../../models/definitions'
 
 @Component
-export default class CancelJoinRequestDialog extends Vue {
+export default class DeleteJoinRequestDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private requestModule: RequestModule = getModule(RequestModule, this.$store)
 
-  @Prop(String)
-  private readonly participationId?: string
+  @Prop(Participation)
+  private readonly participation?: Participation
 
   private form: any = null
   private dialog: any = null
@@ -56,10 +59,11 @@ export default class CancelJoinRequestDialog extends Vue {
   private async cancelJoinRequest() {
     this.loading = true
 
-    if (this.participationId) {
-      await this.projectModule.cancelJoinRequest(this.participationId)
+    if (this.participation) {
+      await this.requestModule.cancelRequest(this.participation)
     }
 
+    this.loading = false
     this.dialog = false
   }
 }

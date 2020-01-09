@@ -9,11 +9,11 @@
         {{ $t('project.projectsDescription') }}
       </v-card-text>
       <v-list>
-        <v-list-item v-if="personModule.getActivePerson.participations.length === 0">
+        <v-list-item v-if="personModule.getActivePerson.getParticipations.length === 0">
           <span v-t="'project.noProjects'" />
         </v-list-item>
         <v-list-item
-          v-for="(participation, index) in personModule.getActivePerson.participations"
+          v-for="(participation, index) in personModule.getActivePerson.getParticipations"
           :key="index"
           :three-line="isStatusInvited(participation.project.id) || isStatusRequested(participation.project.id)"
           :class="isStatusInvited(participation.projectId) ? 'warning' : isStatusRequested(participation.projectId) ? 'info' : ''"
@@ -22,15 +22,14 @@
             <v-list-item-title v-text="participation.project.name" />
             <v-list-item-subtitle v-t="'project.participationStatus.' + getParticipationStatus(participation.projectId)" />
           </v-list-item-content>
-
           <v-list-item-action>
             <HandleProjectInvitation
               v-if="isStatusInvited(participation.projectId)"
               :participation="getParticipation(participation.projectId)"
             />
-            <CancelJoinRequestDialog
+            <DeleteJoinRequestDialog
               v-else-if="isStatusRequested(participation.projectId)"
-              :participationId="getParticipationId(participation.projectId)"
+              :participation="getParticipation(participation.projectId)"
             />
             <v-btn
               v-else
@@ -62,15 +61,15 @@ import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../store/projects'
 import PersonModule from '../store/persons'
-import CancelJoinRequestDialog from '../components/dialogs/CancelJoinRequestDialog.vue'
 import CreateJoinRequestDialog from '../components/dialogs/CreateJoinRequestDialog.vue'
+import DeleteJoinRequestDialog from '../components/dialogs/DeleteJoinRequestDialog.vue'
 import HandleProjectInvitation from '../components/dialogs/HandleProjectInvitation.vue'
 import { Project, ParticipationStatus } from '../models/definitions'
 
 @Component({
   components: {
-    CancelJoinRequestDialog,
     CreateJoinRequestDialog,
+    DeleteJoinRequestDialog,
     HandleProjectInvitation,
   }
 })
@@ -84,10 +83,6 @@ export default class PersonalProjects extends Vue {
 
   private isStatusRequested(projectId: string) {
     return this.getParticipationStatus(projectId) === ParticipationStatus.Requested
-  }
-
-  private getParticipationId(projectId: string) {
-    return this.getParticipation(projectId)?.id
   }
 
   private getParticipationStatus(projectId: string) {
