@@ -71,8 +71,8 @@
         </v-list-item-content>
       </v-list-item>
 
+      <!--//* Projects -->
       <div v-if="personModule.getActivePerson">
-        <!--//* Projects -->
         <v-list-group
           v-for="(participation, i) in personModule.getActivePerson.getParticipations"
           :key="i"
@@ -103,7 +103,10 @@
           </v-list-item>
           <div v-else>
 
-            <v-list-item :to="{ name: 'calendar', params: { projectId: participation.project.id }}">
+            <v-list-item
+              v-if="canView(participation, 'calendar')"
+              :to="{ name: 'calendar', params: { projectId: participation.project.id }}"
+            >
               <v-list-item-icon />
               <v-list-item-content>
                 <v-list-item-title v-t="'project.calendar'" />
@@ -111,7 +114,7 @@
             </v-list-item>
 
             <v-list-group
-              v-if="getTopics(participation.project).length > 0"
+              v-if="canView(participation, 'topics') && getTopics(participation.project).length > 0"
               no-action
               sub-group
             >
@@ -133,6 +136,7 @@
             </v-list-group>
 
             <v-list-group
+              v-if="getAdminActions(participation).length > 0"
               no-action
               sub-group
             >
@@ -143,7 +147,7 @@
               </template>
 
               <v-list-item
-                v-for="(action, j) in getAdminActions(participation.project)"
+                v-for="(action, j) in getAdminActions(participation)"
                 :key="j"
                 :to="{ name: action[1], params: { projectId: participation.project.id }}"
               >
@@ -212,19 +216,31 @@ export default class NavbarSignedIn extends Vue {
     })
   }
 
-  private getAdminActions() {
-    // TODO: do some permission checks and only display the ones one has access to
-    return [
-      ['project.settings', 'settings'],
-      ['project.participants', 'participants'],
-      //// ['Categories', 'label', 'settings'],
-      //// ['Teams', 'supervisor_account', 'settings'],
-      //// ['Meeting Points', 'location_on', 'settings'],
-      //// ['Notifications', 'notifications', 'settings'],
-      //// ['Reports', 'message', 'settings'],
-      //// ['Statistics', 'show_chart', 'settings'],
-      //// ['Notes', 'edit', 'settings']
-    ]
+  private getAdminActions(participation: Participation) {
+    const actions = []
+    if (participation.role) {
+      if (participation.role.settingsRead ||
+          participation.role.rolesRead ||
+          participation.role.knowledgeBaseWrite) {
+        actions.push(['project.settings', 'settings'])
+      }
+      if (participation.role.participantsRead) {
+        actions.push(['project.participants', 'participants'])
+      }
+    }
+    return actions
+  }
+
+  private canView(participation: Participation, link: string) {
+    if (participation.role) {
+      if (link === 'calendar') {
+        return true
+        // TODO: return participation.role.calendarRead
+      }
+      else if (link === 'topics') {
+        return participation.role.knowledgeBaseRead
+      }
+    }
   }
 
   private isPendingParticipation(participation: Participation) {
