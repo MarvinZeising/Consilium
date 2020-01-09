@@ -32,10 +32,6 @@ export default class ProjectModule extends VuexModule {
     })
   }
 
-  public get getRequests() {
-    return this.getAllParticipations?.filter((x) => x.status === ParticipationStatus.Requested)
-  }
-
   @MutationAction({ mutate: ['projects'] })
   public async clearProjects() {
     return { projects: [] }
@@ -50,32 +46,6 @@ export default class ProjectModule extends VuexModule {
     return Project.create(response.data)
   }
 
-  @Action({ commit: 'setRequests' })
-  public async loadRequests() {
-    const { personId, projectId } = this.resolvePersonAndProject
-
-    const response = await axios.get(`/persons/${personId}/projects/${projectId}/requests`)
-    return response.data.map((x: any) => Participation.create(x))
-  }
-
-  // ? do we need all these???
-  @Action
-  public async joinProject(projectId: string) {
-    const { personId } = this.resolvePersonAndProject
-
-    await axios.post('/project-participations/request', { personId, projectId })
-
-    await this.context.dispatch('loadProjects') // TODO: do manually
-  }
-
-  @Action
-  public async cancelJoinRequest(participationId: string) {
-    await axios.delete(`/project-participations/${participationId}`)
-    await this.context.dispatch('loadProjects') // TODO: do manually
-  }
-
-
-
   @Action
   public async updateProjectGeneral(project: {
     name: string,
@@ -88,8 +58,7 @@ export default class ProjectModule extends VuexModule {
     })
     const updatedProject = Project.create(response.data)
 
-    // ? make the navbar show the updated project name
-    await this.context.dispatch('initStore')
+    await this.context.dispatch('loadNavbar')
 
     this.context.commit('upsertProject', updatedProject)
   }
@@ -196,6 +165,50 @@ export default class ProjectModule extends VuexModule {
     this.projects = this.projects.map((p) => {
       if (p.id === projectId) {
         p.participations = p.participations.filter((x) => x.id !== participationId)
+      }
+      return p
+    })
+  }
+
+
+  @Mutation
+  public upsertProjectRequests({ projectId, requests, clearFirst }: {
+    projectId: string,
+    requests: Participation[],
+    clearFirst: boolean,
+  }) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === projectId) {
+        if (clearFirst) {
+          project.requests = requests
+          return project
+        }
+        project.requests = project.requests.map((request) => {
+          const updatedRequest = requests.find((y) => y.id === request.id)
+          if (updatedRequest) {
+            request.copyFrom(updatedRequest)
+          }
+          return request
+        })
+        for (const updatedRequest of requests) {
+          const alreadyExists = project.requests.find((x) => x.id === updatedRequest.id)
+          if (!alreadyExists) {
+            project.requests.push(updatedRequest)
+          }
+        }
+      }
+      return project
+    })
+  }
+
+  @Mutation
+  public removeProjectRequest({ projectId, requestId }: {
+    projectId: string,
+    requestId: string,
+  }) {
+    this.projects = this.projects.map((p) => {
+      if (p.id === projectId) {
+        p.requests = p.requests.filter((x) => x.id !== requestId)
       }
       return p
     })
