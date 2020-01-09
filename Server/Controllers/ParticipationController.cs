@@ -144,6 +144,42 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPost("requests")]
+        public ActionResult<ParticipationDto> CreateRequest(Guid personId, Guid projectId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var project = _db.Project.FindByCondition(x => x.Id == projectId).SingleOrDefault();
+                if (project == null || !project.AllowRequests) return BadRequest();
+
+                var participation = new Participation
+                {
+                    PersonId = personId,
+                    ProjectId = projectId,
+                    RoleId = null,
+                    Status = ParticipationStatus.Requested.ToString(),
+                };
+
+                _db.Participation.Create(participation);
+                _db.Save();
+
+                var insertedParticipation = _db.Participation
+                    .FindByCondition(x => x.Id == participation.Id)
+                    .Include(x => x.Project)
+                    .Include(x => x.Role)
+                    .SingleOrDefault();
+
+                return Ok(_mapper.Map<ParticipationDto>(insertedParticipation));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in CreateRequest: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpPut("invitations/{participationId}")]
         public ActionResult<ParticipationDto> UpdateInvitation(Guid personId, Guid projectId, Guid participationId, [FromBody] UpdateInvitationDto dto)
         {
@@ -218,7 +254,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("invitations/{participationId}/decline")]
-        public ActionResult<ParticipationDto> DeclineInvitation(Guid personId, Guid projectId, Guid participationId)
+        public IActionResult DeclineInvitation(Guid personId, Guid projectId, Guid participationId)
         {
             try
             {
@@ -240,7 +276,35 @@ namespace Server.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in AcceptInvitation: {e.Message}");
+                _logger.LogError($"ERROR in DeclineInvitation: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("requests/{participationId}/cancel")]
+        public IActionResult CancelRequest(Guid personId, Guid projectId, Guid participationId)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var participation = _db.Participation
+                    .FindByCondition(x =>
+                        x.Id == participationId &&
+                        x.ProjectId == projectId &&
+                        x.PersonId == personId)
+                    .SingleOrDefault();
+                if (participation == null) return BadRequest();
+
+                _db.Participation.Delete(participation);
+                _db.Save();
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in CancelRequest: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }

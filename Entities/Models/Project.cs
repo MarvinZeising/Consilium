@@ -22,6 +22,9 @@ namespace Entities.Models
         [ValidEmail]
         public string Email { get; set; }
 
+        [Required]
+        public bool AllowRequests { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
