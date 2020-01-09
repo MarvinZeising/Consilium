@@ -9,7 +9,6 @@
     <v-card
       flat
       class="ma-2 mb-5"
-      :loading="loading"
     >
       <!-- <v-card-title>
         <v-spacer></v-spacer>
