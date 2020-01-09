@@ -27,7 +27,7 @@
         >
           <v-list-item-content>
             <v-list-item-content>
-              <v-list-item-title v-text="participation.person.fullName()" />
+              <v-list-item-title v-text="participation.person.getFullName" />
               <v-list-item-subtitle v-text="getCreationText(participation.createdTime)" />
             </v-list-item-content>
           </v-list-item-content>

@@ -102,7 +102,7 @@ class Person {
     this.lastUpdatedTime = lastUpdatedTime
   }
 
-  public fullName() {
+  public get getFullName() {
     return this.firstname + ' ' + this.lastname
   }
 

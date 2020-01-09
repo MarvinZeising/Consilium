@@ -21,7 +21,7 @@
           :key="index"
         >
           <v-list-item-content>
-            <v-list-item-title v-text="person.fullName()" />
+            <v-list-item-title v-text="person.getFullName" />
           </v-list-item-content>
 
           <v-list-item-action>

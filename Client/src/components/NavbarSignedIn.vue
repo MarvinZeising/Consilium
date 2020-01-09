@@ -16,7 +16,7 @@
           >
             <v-list-item-content>
               <v-list-item-title class="title">
-                {{ personModule.getActivePerson.fullName() }}
+                {{ personModule.getActivePerson.getFullName }}
               </v-list-item-title>
               <v-list-item-subtitle>Wuppertal-Nord</v-list-item-subtitle>
             </v-list-item-content>
@@ -34,7 +34,7 @@
         >
           <v-list-item-title>
             <v-icon left>person</v-icon>
-            <span>{{ person.fullName() }}</span>
+            <span>{{ person.getFullName }}</span>
           </v-list-item-title>
         </v-list-item>
       </v-list>
@@ -43,7 +43,7 @@
       <v-list-item two-line>
         <v-list-item-content>
           <v-list-item-title class="title">
-            {{ personModule.getActivePerson.fullName() }}
+            {{ personModule.getActivePerson.getFullName }}
           </v-list-item-title>
           <v-list-item-subtitle>Wuppertal-Nord</v-list-item-subtitle>
         </v-list-item-content>
