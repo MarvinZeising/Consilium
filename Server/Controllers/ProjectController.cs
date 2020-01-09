@@ -126,6 +126,31 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPut("{projectId}/requests")]
+        public ActionResult<ProjectDto> UpdateProjectRequestability(Guid personId, Guid projectId, [FromBody] UpdateRequestabilityDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
+
+                var project = _db.Project.GetById(projectId);
+
+                project.AllowRequests = dto.AllowRequests;
+
+                _db.Project.Update(project);
+                _db.Save();
+
+                return Ok(_mapper.Map<ProjectDto>(project));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateProjectGeneral: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpDelete("{projectId}")]
         public IActionResult DeleteProject(Guid personId, Guid projectId)
         {
