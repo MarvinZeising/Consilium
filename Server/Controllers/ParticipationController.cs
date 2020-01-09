@@ -226,7 +226,8 @@ namespace Server.Controllers
                     .FindByCondition(x =>
                         x.Id == participationId &&
                         x.ProjectId == projectId &&
-                        x.PersonId == personId)
+                        x.PersonId == personId &&
+                        x.Status == ParticipationStatus.Invited.ToString())
                     .SingleOrDefault();
                 if (participation == null) return BadRequest();
 
@@ -274,6 +275,74 @@ namespace Server.Controllers
             catch (Exception e)
             {
                 _logger.LogError($"ERROR in DeclineInvitation: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("requests/{participationId}/accept")]
+        public ActionResult<ParticipationDto> AcceptRequest(Guid personId, Guid projectId, Guid participationId, [FromBody] UpdateParticipationDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
+
+                var role = _db.Role.FindByCondition(x => x.Id == dto.RoleId && x.ProjectId == projectId).SingleOrDefault();
+                if (role == null) return BadRequest();
+
+                var participation = _db.Participation
+                    .FindByCondition(x =>
+                        x.Id == participationId &&
+                        x.ProjectId == projectId)
+                    .SingleOrDefault();
+                if (participation == null) return BadRequest();
+
+                participation.RoleId = dto.RoleId;
+                participation.Status = ParticipationStatus.Active.ToString();
+
+                _db.Participation.Update(participation);
+                _db.Save();
+
+                var updatedParticipation = _db.Participation
+                    .FindByCondition(x => x.Id == participationId)
+                    .Include(x => x.Person)
+                    .Include(x => x.Role)
+                    .SingleOrDefault();
+
+                return Ok(_mapper.Map<ParticipationDto>(updatedParticipation));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in AcceptRequest: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("requests/{participationId}/decline")]
+        public IActionResult DeclineRequest(Guid personId, Guid projectId, Guid participationId)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
+
+                var participation = _db.Participation
+                    .FindByCondition(x =>
+                        x.Id == participationId &&
+                        x.ProjectId == projectId)
+                    .SingleOrDefault();
+                if (participation == null) return BadRequest();
+
+                _db.Participation.Delete(participation);
+                _db.Save();
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in DeclineRequest: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
