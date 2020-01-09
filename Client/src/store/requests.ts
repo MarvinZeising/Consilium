@@ -64,12 +64,19 @@ export default class RequestModule extends VuexModule {
   public async acceptRequest(request: Participation) {
     const { personId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.put(`/persons/${personId}/projects/${request.projectId}/requests/${request.id}/accept`)
+    const response = await axios.put(
+      `/persons/${personId}/projects/${request.projectId}/requests/${request.id}/accept`, {
+      roleId: request.roleId,
+    })
     const updatedRequest = Participation.create(response.data)
 
-    this.context.commit('upsertProjectRequests', {
+    this.context.commit('removeProjectRequest', {
       projectId: request.projectId,
-      requests: [updatedRequest],
+      requestId: request.id,
+    })
+    this.context.commit('upsertProjectParticipations', {
+      projectId: request.projectId,
+      participations: [updatedRequest],
     })
   }
 

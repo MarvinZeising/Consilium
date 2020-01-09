@@ -31,13 +31,8 @@
               <v-list-item-subtitle v-text="getCreationText(participation.createdTime)" />
             </v-list-item-content>
           </v-list-item-content>
-
           <v-list-item-action>
-            <v-btn
-              text
-              class="mt-2"
-              v-t="'core.handle'"
-            />
+            <HandleJoinRequestDialog :participation="participation" />
           </v-list-item-action>
         </v-list-item>
       </v-list>
@@ -65,15 +60,20 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import moment from 'moment'
 import i18n from '../i18n'
 import UserModule from '../store/users'
 import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import RequestModule from '../store/requests'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
-import moment from 'moment'
+import HandleJoinRequestDialog from './dialogs/HandleJoinRequestDialog.vue'
 
-@Component
+@Component({
+  components: {
+    HandleJoinRequestDialog,
+  }
+})
 export default class ParticipantsRequests extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)

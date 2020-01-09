@@ -1,13 +1,13 @@
 <template>
   <v-dialog
     v-model="dialog"
-    max-width="400"
+    max-width="400px"
   >
     <template v-slot:activator="{ on }">
       <v-btn
+        v-on="on"
         text
         class="mt-2"
-        @click.stop="dialog = true"
         v-t="'core.handle'"
       />
     </template>
