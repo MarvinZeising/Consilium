@@ -47,6 +47,14 @@ class User {
     this.lastUpdatedTime = lastUpdatedTime
   }
 
+  public formatDate(datetime: string) {
+    return moment(datetime).format(this.dateFormat)
+  }
+
+  public formatTime(datetime: string) {
+    return moment(datetime).format(this.timeFormat)
+  }
+
   public formatDateTime(datetime: string) {
     return moment(datetime).format(`${this.dateFormat}, ${this.timeFormat}`)
   }

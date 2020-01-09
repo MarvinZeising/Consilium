@@ -36,6 +36,16 @@
   "cancelRequestOtherButton": "Close dialog",
   "handleInvitation": "Handle invitation",
   "handleInvitationDescription": "You can accept or decline this project invitation. If you accept, you thereby grant the administrators of the project to see, use, and edit your person data.",
+  "participation": {
+    "details": "Participation Details",
+    "projectName": "Project:",
+    "assignedRole": "Your assigned role:",
+    "joinedOn": "You joined this project on: ",
+    "delete": "Leave this Project",
+    "deleteHint": "Please enter the project's name to continue",
+    "deleteDescription": "Do you really want to cancel your participation with this project? If so, we'll remove all your permissions and anonymize your shift participations.",
+    "deleteWarning": "!!! This cannot be undone - everything will be gone !!!"
+  },
   "participationStatus": {
     "invited": "You received an invitation to join this project",
     "requested": "You requested admission to this project",
@@ -71,7 +81,7 @@
     "description": "In order to give you control over who is permitted to do what in your project, there are roles. Each participant is assigned to a role. For every role, you can define the read and write permissions of certain areas of your project. By default, an 'Administrator' role is created.",
     "loading": "Loading roles...",
     "create": "Add Role",
-    "createDescription": "Here you can create a new role for your project. Afterwards, you can assign participants of your project to this role.",
+    "createDescription": "Here you can create a new role for your project. Afterwards, you can assign participants of your project to this role. Be aware that participants can see the name of the role they're assigned to.",
     "update": "Update Role",
     "updateDescription": "Here you can update the role. This will instantly affect all participants that have been assigned to this role. In order to delete a role, it must not be assigned to anyone. The default 'Administrator' role can only be renamed, nothing more.",
     "delete": "Delete Role",

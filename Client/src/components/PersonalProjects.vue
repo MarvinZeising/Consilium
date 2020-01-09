@@ -31,13 +31,10 @@
               v-else-if="isStatusRequested(participation.projectId)"
               :participation="getParticipation(participation.projectId)"
             />
-            <v-btn
+            <UpdateParticipationDialog
               v-else
-              icon
-              class="mt-2"
-            >
-              <v-icon>edit</v-icon>
-            </v-btn>
+              :participation="participation"
+            />
           </v-list-item-action>
         </v-list-item>
       </v-list>
@@ -64,6 +61,7 @@ import PersonModule from '../store/persons'
 import CreateJoinRequestDialog from '../components/dialogs/CreateJoinRequestDialog.vue'
 import DeleteJoinRequestDialog from '../components/dialogs/DeleteJoinRequestDialog.vue'
 import HandleProjectInvitationDialog from '../components/dialogs/HandleProjectInvitationDialog.vue'
+import UpdateParticipationDialog from '../components/dialogs/UpdateParticipationDialog.vue'
 import { Project, ParticipationStatus } from '../models/definitions'
 
 @Component({
@@ -71,6 +69,7 @@ import { Project, ParticipationStatus } from '../models/definitions'
     CreateJoinRequestDialog,
     DeleteJoinRequestDialog,
     HandleProjectInvitationDialog,
+    UpdateParticipationDialog,
   }
 })
 export default class PersonalProjects extends Vue {

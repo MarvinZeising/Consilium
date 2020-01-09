@@ -36,6 +36,16 @@
   "cancelRequestOtherButton": "Dialog schließen",
   "handleInvitation": "Einladung beantworten",
   "handleInvitationDescription": "Du kannst die Einladung annehmen oder ablehnen. Falls du sie annimmst, stimmst du damit zu, dass die Projekt-Administratoren deine Personendaten sehen, verwenden und ändern dürfen.",
+  "participation": {
+    "details": "Teilnahme Details",
+    "projectName": "Projekt:",
+    "assignedRole": "Deine zugewiesene Rolle:",
+    "joinedOn": "Du bist Teilnehmer seit: ",
+    "delete": "Projekt verlassen",
+    "deleteHint": "Bitte gib den Namen des Projektes ein um fortzufahren",
+    "deleteDescription": "Möchtest du wirklich deine Teilnahme an diesem Projekt widerrufen? Falls ja, werden wir deine Berechtigungen entfernen und alle deine Teilnahmen an Schichten anonymisieren.",
+    "deleteWarning": "!!! Das kann nicht rückgängig gemacht werden - alles wird weg sein !!!"
+  },
   "participationStatus": {
     "invited": "Du hast eine Einladung für dieses Projekt bekommen",
     "requested": "Du hast die Teilnahme an diesem Projekt angefragt",
@@ -71,7 +81,7 @@
     "description": "Um Kontrolle darüber zu haben, welche Teilnehmer des Projektes was sehen und bearbeiten dürfen, gibt es Rollen. Jeder Teilnehmer hat eine Rolle. Die Rolle regelt, welche verschiedenen Bereiche des Projektes die Teilnehmer sehen oder sogar bearbeiten dürfen. Standardmäßig wird eine 'Administrator' Rolle erstellt.",
     "loading": "Lade Rollen...",
     "create": "Rolle hinzufügen",
-    "createDescription": "Hier kannst du eine neue Rolle für dieses Projekt erstellen. Danach kannst du Teilnehmern dieses Projektes die neue Rolle zuweisen.",
+    "createDescription": "Hier kannst du eine neue Rolle für dieses Projekt erstellen. Danach kannst du Teilnehmern dieses Projektes die neue Rolle zuweisen. Beachte, dass Teilnehmer den Namen der Rolle sehen können, die ihnen zugeteilt wurde.",
     "update": "Rolle bearbeiten",
     "updateDescription": "Hier kannst du die Rolle bearbeiten. Das wird sich sofort auf die Berechtigungen der Teilnehmer auswirken, die diese Rolle zugewiesen haben. Um eine Rolle zu löschen darf niemand dieser Rolle zugeordnet sein. Die Standardrolle 'Administrator' kann nur umbenannt werden, sonst nichts.",
     "delete": "Rolle löschen",

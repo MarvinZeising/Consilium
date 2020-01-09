@@ -33,4 +33,11 @@ export default class ParticipantModule extends VuexModule {
     })
   }
 
+  @Action
+  public async deleteParticipation(participation: Participation) {
+    await axios.delete(`/persons/${participation.personId}/projects/${participation.projectId}/participations/${participation.id}`)
+
+    this.context.commit('removePersonParticipation', participation.id)
+  }
+
 }
