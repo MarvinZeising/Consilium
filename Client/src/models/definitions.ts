@@ -114,6 +114,12 @@ class Person {
     })
   }
 
+  public copyFrom(person: Person) {
+    this.firstname = person.firstname
+    this.lastname = person.lastname
+    this.gender = person.gender
+  }
+
 }
 
 class Project {
@@ -152,6 +158,13 @@ class Project {
         return 0
       }
     })
+  }
+
+  public copyFrom(project: Project) {
+    this.name = project.name
+    this.email = project.email
+    this.createdTime = project.createdTime
+    this.lastUpdatedTime = project.lastUpdatedTime
   }
 
 }
@@ -206,6 +219,18 @@ class Participation {
     this.status = status
     this.createdTime = createdTime
     this.lastUpdatedTime = lastUpdatedTime
+  }
+
+  public copyFrom(participation: Participation) {
+    this.personId = participation.personId
+    this.person = participation.person
+    this.projectId = participation.projectId
+    this.project = participation.project
+    this.roleId = participation.roleId
+    this.role = participation.role
+    this.status = participation.status
+    this.createdTime = participation.createdTime
+    this.lastUpdatedTime = participation.lastUpdatedTime
   }
 }
 
@@ -266,6 +291,19 @@ class Role {
     this.settingsWrite = settingsWrite
     this.editable = editable
   }
+
+  public copyFrom(role: Role) {
+    this.name = role.name
+    this.knowledgeBaseRead = role.knowledgeBaseRead
+    this.knowledgeBaseWrite = role.knowledgeBaseWrite
+    this.participantsRead = role.participantsRead
+    this.participantsWrite = role.participantsWrite
+    this.rolesRead = role.rolesRead
+    this.rolesWrite = role.rolesWrite
+    this.settingsRead = role.settingsRead
+    this.settingsWrite = role.settingsWrite
+  }
+
 }
 
 class Topic {

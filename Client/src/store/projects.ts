@@ -99,13 +99,10 @@ export default class ProjectModule extends VuexModule {
 
   @Mutation
   public upsertProject(project: Project) {
-    if (this.projects.filter((x) => x.id === project.id).length > 0) {
+    if (this.projects.find((x) => x.id === project.id)) {
       this.projects = this.projects.map((p) => {
         if (p.id === project.id) {
-          p.name = project.name
-          p.email = project.email
-          p.createdTime = project.createdTime
-          p.lastUpdatedTime = project.lastUpdatedTime
+          p.copyFrom(project)
         }
         return p
       })
@@ -131,24 +128,16 @@ export default class ProjectModule extends VuexModule {
             x.status === ParticipationStatus.Active ||
             x.status === ParticipationStatus.Inactive)
         }
-        project.participations = project.participations.map((x) => {
-          const updatedParticipation = participations.find((y) => y.id === x.id)
+        project.participations = project.participations.map((participation) => {
+          const updatedParticipation = participations.find((y) => y.id === participation.id)
           if (updatedParticipation) {
-            x.personId = updatedParticipation.personId
-            x.person = updatedParticipation.person
-            x.projectId = updatedParticipation.projectId
-            x.project = updatedParticipation.project
-            x.roleId = updatedParticipation.roleId
-            x.role = updatedParticipation.role
-            x.status = updatedParticipation.status
-            x.createdTime = updatedParticipation.createdTime
-            x.lastUpdatedTime = updatedParticipation.lastUpdatedTime
+            participation.copyFrom(updatedParticipation)
           }
-          return x
+          return participation
         })
         for (const updatedParticipation of participations) {
-          const participationAlreadyExists = project.participations.find((x) => x.id === updatedParticipation.id)
-          if (!participationAlreadyExists) {
+          const alreadyExists = project.participations.find((x) => x.id === updatedParticipation.id)
+          if (!alreadyExists) {
             project.participations.push(updatedParticipation)
           }
         }
@@ -229,15 +218,7 @@ export default class ProjectModule extends VuexModule {
         project.roles = project.roles.map((role) => {
           const updatedRole = roles.find((x) => x.id === role.id)
           if (updatedRole) {
-            role.name = updatedRole.name
-            role.knowledgeBaseRead = updatedRole.knowledgeBaseRead
-            role.knowledgeBaseWrite = updatedRole.knowledgeBaseWrite
-            role.participantsRead = updatedRole.participantsRead
-            role.participantsWrite = updatedRole.participantsWrite
-            role.rolesRead = updatedRole.rolesRead
-            role.rolesWrite = updatedRole.rolesWrite
-            role.settingsRead = updatedRole.settingsRead
-            role.settingsWrite = updatedRole.settingsWrite
+            role.copyFrom(updatedRole)
           }
           return role
         })
