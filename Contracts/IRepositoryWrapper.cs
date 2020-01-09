@@ -7,6 +7,7 @@
         IProjectRepository Project { get; }
         IParticipationRepository Participation { get; }
         IRoleRepository Role { get; }
+        ICongregationRepository Congregation { get; }
         void Save();
     }
 }

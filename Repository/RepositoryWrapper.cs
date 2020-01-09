@@ -14,6 +14,7 @@ namespace Repository
         private IProjectRepository _project;
         private IParticipationRepository _participation;
         private IRoleRepository _role;
+        private ICongregationRepository _congregation;
 
         public IUserRepository User
         {
@@ -72,6 +73,18 @@ namespace Repository
                     _role = new RoleRepository(_repositoryContext);
                 }
                 return _role;
+            }
+        }
+
+        public ICongregationRepository Congregation
+        {
+            get
+            {
+                if (_congregation == null)
+                {
+                    _congregation = new CongregationRepository(_repositoryContext);
+                }
+                return _congregation;
             }
         }
 
