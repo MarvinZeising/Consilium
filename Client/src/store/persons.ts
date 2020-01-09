@@ -43,23 +43,25 @@ export default class PersonModule extends VuexModule {
     })
     const newPerson = Person.create(response.data)
 
-    this.context.commit('insertPerson', newPerson)
+    this.context.commit('upsertPerson', newPerson)
     await this.context.dispatch('activatePerson', newPerson.id)
   }
 
-  @Action({ commit: 'setGeneral' })
+  @Action
   public async updatePersonGeneral(person: {
     id: string,
     firstname: string,
     lastname: string,
     gender: string,
   }) {
-    await axios.put(`/persons/${person.id}`, {
+    const response = await axios.put(`/persons/${person.id}`, {
       firstname: person.firstname,
       lastname: person.lastname,
       gender: person.gender,
     })
-    return person
+    const updatedPerson = Person.create(response.data)
+
+    this.context.commit('upsertPerson', updatedPerson)
   }
 
   @Action({ commit: 'removePerson' })
@@ -84,12 +86,33 @@ export default class PersonModule extends VuexModule {
     const person = this.persons.find((x) => x.id === personId)
     if (person) {
       person.participations = participations
-      this.context.commit('updatePerson', person)
+      this.context.commit('upsertPerson', person)
 
       for (const participation of participations) {
         this.context.commit('upsertProject', participation.project)
       }
     }
+  }
+
+  @Mutation
+  public upsertPerson(person: Person) {
+    if (this.persons.find((x) => x.id === person.id)) {
+      this.persons = this.persons.map((p) => {
+        if (p.id === person.id) {
+          p.copyFrom(person)
+        }
+        return p
+      })
+    } else {
+      this.persons.push(person)
+    }
+  }
+
+  @Mutation
+  }
+
+  @Mutation
+    })
   }
 
   @Mutation
@@ -100,34 +123,12 @@ export default class PersonModule extends VuexModule {
   }
 
   @Mutation
-  protected setPersons(persons: Person[]) {
+  public setPersons(persons: Person[]) {
     this.persons = persons
   }
 
   @Mutation
-  protected setGeneral(person: Person) {
-    this.persons = this.persons.map((x: Person) => {
-      if (x.id === person.id) {
-        x.firstname = person.firstname
-        x.lastname = person.lastname
-        x.gender = person.gender
-      }
-      return x
-    })
-  }
-
-  @Mutation
-  protected insertPerson(person: Person) {
-    this.persons.push(person)
-  }
-
-  @Mutation
-  protected updatePerson(person: Person) {
-    this.persons = this.persons.map((x) => x.id === person.id ? person : x)
-  }
-
-  @Mutation
-  protected removePerson(personId: string) {
+  public removePerson(personId: string) {
     const person = this.persons.find((x: Person) => x.id === personId)
     if (person) {
       this.persons.splice(this.persons.indexOf(person), 1)
