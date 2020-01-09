@@ -96,7 +96,7 @@ namespace Server.Controllers
 
                 var user = _db.User
                     .FindByCondition(x => x.Id == new Guid(userId))
-                    .Include(x => x.Persons)
+                    .Include(x => x.Persons).ThenInclude(x => x.Congregation)
                     .SingleOrDefault();
 
                 return Ok(_mapper.Map<UserDto>(user));
