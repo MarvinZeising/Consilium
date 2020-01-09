@@ -182,10 +182,10 @@ class Participation {
       data.id,
       data.personId,
       data.projectId,
-      data.roleId,
       data.status.toLowerCase(),
       data.createdTime,
       data.lastUpdatedTime)
+    participation.roleId = data.roleId ? data.roleId : undefined
     participation.role = data.role ? Role.create(data.role) : undefined
     participation.person = data.person ? Person.create(data.person) : undefined
     participation.project = data.project ? Project.create(data.project) : undefined
@@ -195,7 +195,7 @@ class Participation {
   public id: string
   public personId: string
   public projectId: string
-  public roleId: string
+  public roleId?: string
   public status: ParticipationStatus
   public createdTime: string
   public lastUpdatedTime: string
@@ -207,7 +207,6 @@ class Participation {
     id: string,
     personId: string,
     projectId: string,
-    roleId: string,
     status: ParticipationStatus,
     createdTime: string,
     lastUpdatedTime: string,
@@ -215,7 +214,6 @@ class Participation {
     this.id = id
     this.personId = personId
     this.projectId = projectId
-    this.roleId = roleId
     this.status = status
     this.createdTime = createdTime
     this.lastUpdatedTime = lastUpdatedTime
