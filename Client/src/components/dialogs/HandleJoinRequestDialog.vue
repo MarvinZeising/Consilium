@@ -47,6 +47,7 @@
             @click.stop="declineRequest"
             v-t="'core.decline'"
             :loading="declining"
+            :disabled="accepting"
           />
           <v-btn
             text
@@ -54,7 +55,7 @@
             v-t="'core.accept'"
             @click.stop="acceptRequest"
             :loading="accepting"
-            :disabled="!valid"
+            :disabled="declining || !valid"
           />
         </v-card-actions>
       </v-form>

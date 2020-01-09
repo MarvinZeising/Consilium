@@ -29,14 +29,16 @@
           color="error"
           @click.stop="declineInvitation"
           v-t="'core.decline'"
-          :loading="loading"
+          :loading="declining"
+          :disabled="accepting"
         />
         <v-btn
           text
           color="primary"
           @click.stop="acceptInvitation"
           v-t="'core.accept'"
-          :loading="loading"
+          :loading="accepting"
+          :disabled="declining"
         />
       </v-card-actions>
     </v-card>
@@ -59,25 +61,28 @@ export default class HandleProjectInvitationDialog extends Vue {
 
   private form: any = null
   private dialog: any = null
-  private loading: boolean = false
+  private accepting: boolean = false
+  private declining: boolean = false
 
   private async acceptInvitation() {
-    this.loading = true
+    this.accepting = true
 
     if (this.participation) {
       await this.invitationModule.acceptInvitation(this.participation)
     }
 
+    this.accepting = false
     this.dialog = false
   }
 
   private async declineInvitation() {
-    this.loading = true
+    this.declining = true
 
     if (this.participation) {
       await this.invitationModule.declineInvitation(this.participation)
     }
 
+    this.declining = false
     this.dialog = false
   }
 
