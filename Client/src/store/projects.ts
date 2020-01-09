@@ -112,10 +112,9 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public upsertProjectParticipations({ projectId, participations, clearPermanentsFirst, clearFirst }: {
+  public upsertProjectParticipations({ projectId, participations, clearFirst }: {
     projectId: string,
     participations: Participation[],
-    clearPermanentsFirst: boolean,
     clearFirst: boolean,
   }) {
     this.projects = this.projects.map((project) => {
@@ -123,10 +122,6 @@ export default class ProjectModule extends VuexModule {
         if (clearFirst) {
           project.participations = participations
           return project
-        } else if (clearPermanentsFirst) {
-          project.participations = participations.filter((x) =>
-            x.status === ParticipationStatus.Active ||
-            x.status === ParticipationStatus.Inactive)
         }
         project.participations = project.participations.map((participation) => {
           const updatedParticipation = participations.find((y) => y.id === participation.id)
@@ -159,6 +154,48 @@ export default class ProjectModule extends VuexModule {
     })
   }
 
+  @Mutation
+  public upsertProjectInvitations({ projectId, invitations, clearFirst }: {
+    projectId: string,
+    invitations: Participation[],
+    clearFirst: boolean,
+  }) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === projectId) {
+        if (clearFirst) {
+          project.invitations = invitations
+          return project
+        }
+        project.invitations = project.invitations.map((invitation) => {
+          const updatedInvitation = invitations.find((y) => y.id === invitation.id)
+          if (updatedInvitation) {
+            invitation.copyFrom(updatedInvitation)
+          }
+          return invitation
+        })
+        for (const updatedInvitation of invitations) {
+          const alreadyExists = project.invitations.find((x) => x.id === updatedInvitation.id)
+          if (!alreadyExists) {
+            project.invitations.push(updatedInvitation)
+          }
+        }
+      }
+      return project
+    })
+  }
+
+  @Mutation
+  public removeProjectInvitation({ projectId, invitationId }: {
+    projectId: string,
+    invitationId: string,
+  }) {
+    this.projects = this.projects.map((p) => {
+      if (p.id === projectId) {
+        p.invitations = p.invitations.filter((x) => x.id !== invitationId)
+      }
+      return p
+    })
+  }
 
   @Mutation
   public upsertProjectRequests({ projectId, requests, clearFirst }: {

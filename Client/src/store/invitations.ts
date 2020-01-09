@@ -1,30 +1,22 @@
 import axios from 'axios'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Participation, ParticipationStatus } from '../models/definitions'
+import { Participation } from '../models/definitions'
 
 @Module({ dynamic: true, store, name: 'InvitationModule' })
 export default class InvitationModule extends VuexModule {
 
-  public get getInvitations() {
-    return this.context.getters.getAllParticipations
-      ?.filter((x: Participation) => x.status === ParticipationStatus.Invited)
-  }
-
   @Action
   public async loadInvitations() {
-    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
     if (personId && projectId) {
       const response = await axios.get(`/persons/${personId}/projects/${projectId}/invitations`)
-      const participations = response.data.map((x: any) => Participation.create(x))
+      const invitations = response.data.map((x: any) => Participation.create(x))
 
-      if (project) {
-        project.participations = project.participations
-          ?.filter((x: Participation) => x.status !== ParticipationStatus.Invited)
-        project.participations?.push(...participations)
-
-        this.context.commit('updateProject', project)
-      }
+      this.context.commit('upsertProjectInvitations', {
+        projectId,
+        invitations,
+      })
     }
   }
 
@@ -33,82 +25,73 @@ export default class InvitationModule extends VuexModule {
     personId: string,
     roleId: string
   }) {
-    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
     const response = await axios.post(`/persons/${personId}/projects/${projectId}/invitations`, {
       personId: data.personId,
       roleId: data.roleId,
     })
-    const participation = Participation.create(response.data)
+    const invitation = Participation.create(response.data)
 
-    if (project) {
-      project.participations.push(participation)
-
-      this.context.commit('updateProject', project)
-    }
+    this.context.commit('upsertProjectInvitations', {
+      projectId,
+      invitations: [invitation],
+    })
   }
 
   @Action
   public async updateInvitation(data: {
-    participationId: string,
+    invitationId: string,
     roleId: string
   }) {
-    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.put(`/persons/${personId}/projects/${projectId}/invitations/${data.participationId}`, {
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/invitations/${data.invitationId}`, {
       roleId: data.roleId,
     })
-    const participation = Participation.create(response.data)
+    const invitation = Participation.create(response.data)
 
-    if (project) {
-      project.participations = project.participations?.map((x: Participation) => {
-        return x.id === participation.id ? participation : x
-      })
-
-      this.context.commit('updateProject', project)
-    }
+    this.context.commit('upsertProjectInvitations', {
+      projectId,
+      invitations: [invitation],
+    })
   }
 
   @Action
-  public async acceptInvitation(participation: Participation) {
-    const { personId, person } = this.context.getters.resolvePersonAndProject
+  public async acceptInvitation(invitation: Participation) {
+    const { personId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.put(`/persons/${personId}/projects/${participation.projectId}/invitations/${participation.id}/accept`)
+    const response = await axios.put(`/persons/${personId}/projects/${invitation.projectId}/invitations/${invitation.id}/accept`)
     const updatedParticipation = Participation.create(response.data)
 
-    if (person) {
-      person.participations = person.participations?.map((x: Participation) =>
-        x.id === participation.id ? updatedParticipation : x)
-
-      this.context.commit('updatePerson', person)
-    }
+    this.context.commit('upsertProjectInvitations', {
+      projectId: invitation.projectId,
+      invitations: [updatedParticipation],
+    })
   }
 
   @Action
-  public async declineInvitation(participation: Participation) {
-    const { personId, person } = this.context.getters.resolvePersonAndProject
+  public async declineInvitation(invitation: Participation) {
+    const { personId } = this.context.getters.resolvePersonAndProject
 
-    await axios.put(`/persons/${personId}/projects/${participation.projectId}/invitations/${participation.id}/decline`)
+    await axios.put(`/persons/${personId}/projects/${invitation.projectId}/invitations/${invitation.id}/decline`)
 
-    if (person) {
-      person.participations = person.participations?.filter((x: Participation) => x.id !== participation.id)
-
-      this.context.commit('updatePerson', person)
-    }
+    this.context.commit('removeProjectInvitation', {
+      projectId: invitation.projectId,
+      invitationId: invitation.id,
+    })
   }
 
   @Action
-  public async cancelInvitation(participationId: string) {
-    const { personId, projectId, project } = this.context.getters.resolvePersonAndProject
+  public async cancelInvitation(invitationId: string) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    await axios.delete(`/persons/${personId}/projects/${projectId}/invitations/${participationId}`)
+    await axios.delete(`/persons/${personId}/projects/${projectId}/invitations/${invitationId}`)
 
-    if (project) {
-      project.participations = project.participations
-        ?.filter((x: Participation) => x.id !== participationId)
-
-      this.context.commit('updateProject', project)
-    }
+    this.context.commit('removeProjectInvitation', {
+      projectId,
+      invitationId,
+    })
   }
 
 }

@@ -6,12 +6,6 @@ import { Participation, ParticipationStatus } from '../models/definitions'
 @Module({ dynamic: true, store, name: 'ParticipantModule' })
 export default class ParticipantModule extends VuexModule {
 
-  public get getParticipations(): Participation[] {
-    return this.context.getters.getActiveProject?.participations?.filter((x: Participation) =>
-      x.status === ParticipationStatus.Active ||
-      x.status === ParticipationStatus.Inactive)
-  }
-
   @Action
   public async loadParticipants() {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
@@ -22,7 +16,7 @@ export default class ParticipantModule extends VuexModule {
       this.context.commit('upsertProjectParticipations', {
         projectId,
         participations,
-        clearPermanentsFirst: true,
+        clearFirst: true,
       })
     }
   }
