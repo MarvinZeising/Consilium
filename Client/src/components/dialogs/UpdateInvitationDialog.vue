@@ -116,7 +116,7 @@ export default class UpdateInvitationDialog extends Vue {
       this.loading = true
 
       await this.invitationModule.updateInvitation({
-        participationId: this.participation?.id,
+        invitationId: this.participation?.id,
         roleId: this.roleId
       })
 

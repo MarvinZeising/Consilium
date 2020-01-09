@@ -23,7 +23,7 @@
             <v-list-item-subtitle v-t="'project.participationStatus.' + getParticipationStatus(participation.projectId)" />
           </v-list-item-content>
           <v-list-item-action>
-            <HandleProjectInvitation
+            <HandleProjectInvitationDialog
               v-if="isStatusInvited(participation.projectId)"
               :participation="getParticipation(participation.projectId)"
             />
@@ -63,14 +63,14 @@ import ProjectModule from '../store/projects'
 import PersonModule from '../store/persons'
 import CreateJoinRequestDialog from '../components/dialogs/CreateJoinRequestDialog.vue'
 import DeleteJoinRequestDialog from '../components/dialogs/DeleteJoinRequestDialog.vue'
-import HandleProjectInvitation from '../components/dialogs/HandleProjectInvitation.vue'
+import HandleProjectInvitationDialog from '../components/dialogs/HandleProjectInvitationDialog.vue'
 import { Project, ParticipationStatus } from '../models/definitions'
 
 @Component({
   components: {
     CreateJoinRequestDialog,
     DeleteJoinRequestDialog,
-    HandleProjectInvitation,
+    HandleProjectInvitationDialog,
   }
 })
 export default class PersonalProjects extends Vue {

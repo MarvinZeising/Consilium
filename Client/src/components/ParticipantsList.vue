@@ -9,6 +9,7 @@
     <v-card
       flat
       class="ma-2 mb-5"
+      :loading="loading"
     >
       <!-- <v-card-title>
         <v-spacer></v-spacer>
@@ -21,9 +22,10 @@
         />
       </v-card-title> -->
       <v-data-table
+        v-if="projectModule.getActiveProject"
         :loading="loading"
         :headers="headers"
-        :items="participantModule.getParticipations"
+        :items="projectModule.getActiveProject.getParticipations"
         :items-per-page="15"
         :search="search"
       >
@@ -47,6 +49,7 @@ import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
 import UserModule from '../store/users'
 import PersonModule from '../store/persons'
+import ProjectModule from '../store/projects'
 import ParticipantModule from '../store/participants'
 import DeleteParticipantDialog from './dialogs/DeleteParticipantDialog.vue'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
@@ -59,6 +62,7 @@ import { Person, ParticipationStatus, Gender } from '../models/definitions'
 export default class ParticipantsList extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
 
   private loading: boolean = true

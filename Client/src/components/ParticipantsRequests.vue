@@ -112,12 +112,12 @@ export default class ParticipantsRequests extends Vue {
   private async init() {
     this.loading = true
 
+    await this.requestModule.loadRequests();
+
     const project = this.projectModule.getActiveProject
     if (project) {
       this.requestsAllowed = project.allowRequests
       this.initialRequestsAllowed = this.requestsAllowed
-
-      await this.requestModule.loadRequests();
     }
 
     this.loading = false

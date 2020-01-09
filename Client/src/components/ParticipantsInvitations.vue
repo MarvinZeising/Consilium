@@ -16,12 +16,12 @@
         class="grey--text"
         v-t="'project.invitation.description'"
       />
-      <v-list v-if="invitationModule.getInvitations">
-        <v-list-item v-if="invitationModule.getInvitations.length === 0">
+      <v-list v-if="projectModule.getActiveProject">
+        <v-list-item v-if="projectModule.getActiveProject.getInvitations.length === 0">
           <span v-t="'project.invitation.noInvitations'" />
         </v-list-item>
         <v-list-item
-          v-for="(participation, index) in invitationModule.getInvitations"
+          v-for="(participation, index) in projectModule.getActiveProject.getInvitations"
           :key="index"
           three-line
         >
@@ -49,6 +49,7 @@ import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
 import UserModule from '../store/users'
 import PersonModule from '../store/persons'
+import ProjectModule from '../store/projects'
 import InvitationModule from '../store/invitations'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
 import CreateInvitationDialog from './dialogs/CreateInvitationDialog.vue'
@@ -63,6 +64,7 @@ import UpdateInvitationDialog from './dialogs/UpdateInvitationDialog.vue'
 export default class ParticipantsInvitations extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
 
   private loading: boolean = true

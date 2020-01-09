@@ -113,7 +113,9 @@ export default class SettingsRoles extends Vue {
   }
 
   private getPermitCount(roleId: string) {
-    return this.participantModule.getParticipations?.filter((x) => x.roleId === roleId).length
+    return this.projectModule.getActiveProject
+      ?.getParticipations
+      ?.filter((x) => x.roleId === roleId).length
   }
 
 }
