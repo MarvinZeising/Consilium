@@ -65,6 +65,50 @@ enum Gender {
   Female = 'female',
 }
 
+class Congregation {
+  public static create(data: any) {
+    return new Congregation(
+      data.id,
+      data.name,
+      data.number,
+      data.numberOfParticipants,
+      data.createdBy,
+      data.lastUpdatedBy,
+      data.createdTime,
+      data.lastUpdateTime)
+  }
+
+  public id: string
+  public name: string
+  public number: string
+  public numberOfParticipants: number
+  public createdBy: string
+  public lastUpdatedBy: string
+  public createdTime: string
+  public lastUpdatedTime: string
+
+  constructor(
+    id: string,
+    name: string,
+    // tslint:disable-next-line: variable-name
+    number: string,
+    numberOfParticipants: number,
+    createdBy: string,
+    lastUpdatedBy: string,
+    createdTime: string,
+    lastUpdatedTime: string
+  ) {
+    this.id = id
+    this.name = name
+    this.number = number
+    this.numberOfParticipants = numberOfParticipants
+    this.createdBy = createdBy
+    this.lastUpdatedBy = lastUpdatedBy
+    this.createdTime = createdTime
+    this.lastUpdatedTime = lastUpdatedTime
+  }
+}
+
 class Person {
   public static create(data: any) {
     const person = new Person(
@@ -73,7 +117,8 @@ class Person {
       data.lastname,
       data.createdTime,
       data.lastUpdateTime)
-
+    person.congregationId = data.congregationId ? data.congregationId : undefined
+    person.congregation = data.congregation ? Congregation.create(data.congregation) : undefined
     if (data.participations) {
       person.participations = data.participations.map((x: any) => Participation.create(x))
     }
@@ -83,6 +128,8 @@ class Person {
   public id: string
   public firstname: string
   public lastname: string
+  public congregationId?: string
+  public congregation?: Congregation
   public gender: Gender = Gender.Male
   public participations: Participation[] = []
   public createdTime: string
@@ -104,6 +151,10 @@ class Person {
 
   public get getFullName() {
     return this.firstname + ' ' + this.lastname
+  }
+
+  public get getCongregationName() {
+    return this.congregation?.name || ''
   }
 
   public get getParticipations() {
@@ -406,6 +457,7 @@ export {
   Theme,
   Person,
   Gender,
+  Congregation,
   Project,
   Participation,
   ParticipationStatus,

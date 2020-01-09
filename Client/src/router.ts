@@ -55,6 +55,10 @@ const router = new VueRouter({
     name: 'participants',
     component: () => import('./views/project/Participants.vue'),
   }, {
+    path: '/project/:projectId/congregations',
+    name: 'congregations',
+    component: () => import('./views/project/Congregations.vue'),
+  }, {
     path: '/profile/personal',
     name: 'personal',
     component: () => import('./views/profile/Personal.vue'),
