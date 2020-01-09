@@ -15,21 +15,24 @@
         <v-list-item
           v-for="(participation, index) in personModule.getActivePerson.getParticipations"
           :key="index"
-          :three-line="isStatusInvited(participation.project.id) || isStatusRequested(participation.project.id)"
-          :class="isStatusInvited(participation.projectId) ? 'warning' : isStatusRequested(participation.projectId) ? 'info' : ''"
+          :three-line="isStatusInvited(participation) || isStatusRequested(participation)"
+          :class="isStatusInvited(participation) ? 'warning' : isStatusRequested(participation) ? 'info' : ''"
         >
           <v-list-item-content>
             <v-list-item-title v-text="participation.project.name" />
-            <v-list-item-subtitle v-t="'project.participationStatus.' + getParticipationStatus(participation.projectId)" />
+            <v-list-item-subtitle
+              v-if="isStatusInactive(participation)"
+              v-t="'project.participationStatus.' + participation.status"
+            />
           </v-list-item-content>
           <v-list-item-action>
             <HandleProjectInvitationDialog
               v-if="isStatusInvited(participation.projectId)"
-              :participation="getParticipation(participation.projectId)"
+              :participation="participation"
             />
             <DeleteJoinRequestDialog
-              v-else-if="isStatusRequested(participation.projectId)"
-              :participation="getParticipation(participation.projectId)"
+              v-else-if="isStatusRequested(participation)"
+              :participation="participation"
             />
             <UpdateParticipationDialog
               v-else
@@ -62,7 +65,7 @@ import CreateJoinRequestDialog from '../components/dialogs/CreateJoinRequestDial
 import DeleteJoinRequestDialog from '../components/dialogs/DeleteJoinRequestDialog.vue'
 import HandleProjectInvitationDialog from '../components/dialogs/HandleProjectInvitationDialog.vue'
 import UpdateParticipationDialog from '../components/dialogs/UpdateParticipationDialog.vue'
-import { Project, ParticipationStatus } from '../models/definitions'
+import { Project, ParticipationStatus, Participation } from '../models/definitions'
 
 @Component({
   components: {
@@ -76,21 +79,16 @@ export default class PersonalProjects extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
 
-  private isStatusInvited(projectId: string) {
-    return this.getParticipationStatus(projectId) === ParticipationStatus.Invited
+  private isStatusInvited(participation: Participation) {
+    return participation.status === ParticipationStatus.Invited
   }
 
-  private isStatusRequested(projectId: string) {
-    return this.getParticipationStatus(projectId) === ParticipationStatus.Requested
+  private isStatusRequested(participation: Participation) {
+    return participation.status === ParticipationStatus.Requested
   }
 
-  private getParticipationStatus(projectId: string) {
-    const participation = this.getParticipation(projectId)
-    return participation?.status || 'none'
-  }
-
-  private getParticipation(projectId: string) {
-    return this.personModule.getActivePerson?.participations.find((x) => x.projectId === projectId)
+  private isStatusInactive(participation: Participation) {
+    return participation.status === ParticipationStatus.Inactive
   }
 
 }
