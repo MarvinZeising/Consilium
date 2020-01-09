@@ -7,23 +7,29 @@
       class="headline mb-3"
       v-t="'project.requests'"
     />
-    <v-card flat class="ma-2 mb-5">
+    <v-card
+      flat
+      class="ma-2 mb-5"
+      :loading="loading"
+    >
       <v-card-text
         class="grey--text"
         v-t="'project.requestsDescription'"
       />
-      <v-list v-if="projectModule.getRequests">
-        <v-list-item v-if="projectModule.getRequests.length === 0">
+      <v-list v-if="projectModule.getActiveProject.getRequests">
+        <v-list-item v-if="projectModule.getActiveProject.getRequests.length === 0">
           <span v-t="'project.noRequests'" />
         </v-list-item>
         <v-list-item
-          v-for="(participation, index) in projectModule.getRequests"
+          v-for="(participation, index) in projectModule.getActiveProject.getRequests"
           :key="index"
           two-line
         >
           <v-list-item-content>
-            <v-list-item-title v-text="getPerson(participation.personId)" />
-            <v-list-item-subtitle>Requested on Dec 12, 2019</v-list-item-subtitle>
+            <v-list-item-content>
+              <v-list-item-title v-text="participation.person.fullName()" />
+              <v-list-item-subtitle v-text="getCreationText(participation.createdTime)" />
+            </v-list-item-content>
           </v-list-item-content>
 
           <v-list-item-action>
@@ -44,6 +50,13 @@
           inset
           hide-details
         />
+        <v-btn
+          v-if="requestsAllowed !== initialRequestsAllowed"
+          class="ml-3 mb-2"
+          v-t="'core.save'"
+          @click.stop="saveRequestsAllowed"
+          :loading="saving"
+        />
       </v-card-actions>
     </v-card>
   </v-flex>
@@ -53,21 +66,24 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../i18n'
+import UserModule from '../store/users'
 import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
+import RequestModule from '../store/requests'
 import { Person, ParticipationStatus, Gender } from '../models/definitions'
+import moment from 'moment'
 
 @Component
 export default class ParticipantsRequests extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private requestModule: RequestModule = getModule(RequestModule, this.$store)
 
   private loading: boolean = true
+  private saving: boolean = false
   private requestsAllowed: any = true
-
-  private get getRequests() {
-    return this.projectModule.getRequests
-  }
+  private initialRequestsAllowed: any = true
 
   private get canView() {
     return this.personModule.getActiveRole?.participantsWrite === true
@@ -96,11 +112,35 @@ export default class ParticipantsRequests extends Vue {
   private async init() {
     this.loading = true
 
-    // await this.invitationModule.loadInvitations();
+    const project = this.projectModule.getActiveProject
+    if (project) {
+      this.requestsAllowed = project.allowRequests
+      this.initialRequestsAllowed = this.requestsAllowed
+
+      await this.requestModule.loadRequests();
+    }
 
     this.loading = false
   }
 
+  private getCreationText(createdTime: string) {
+    const user = this.userModule.getUser
+    if (user) {
+      return this.$t('project.request.requestedOn', {
+        date: moment(createdTime).format(`${user?.dateFormat}, ${user?.timeFormat}`)
+      })
+    }
+    return ''
+  }
+
+  private async saveRequestsAllowed() {
+    this.saving = true
+
+    await this.requestModule.updateRequestability(this.requestsAllowed)
+    this.initialRequestsAllowed = this.requestsAllowed
+
+    this.saving = false
+  }
 
 }
 </script>

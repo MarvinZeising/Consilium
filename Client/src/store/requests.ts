@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Participation } from '../models/definitions'
+import { Participation, Project } from '../models/definitions'
 
 @Module({ dynamic: true, store, name: 'RequestModule' })
 export default class RequestModule extends VuexModule {
@@ -46,6 +46,18 @@ export default class RequestModule extends VuexModule {
       projectId,
       requests: [request],
     })
+  }
+
+  @Action
+  public async updateRequestability(allowRequests: boolean) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/requests`, {
+      allowRequests,
+    })
+    const project = Project.create(response.data)
+
+    this.context.commit('upsertProject', project)
   }
 
   @Action

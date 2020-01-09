@@ -128,6 +128,7 @@ class Project {
       data.id,
       data.name,
       data.email,
+      data.allowRequests,
       data.createdTime,
       data.lastUpdatedTime)
   }
@@ -135,6 +136,7 @@ class Project {
   public id: string
   public name: string
   public email: string
+  public allowRequests: boolean
   public participations: Participation[] = []
   public invitations: Participation[] = []
   public requests: Participation[] = []
@@ -142,10 +144,18 @@ class Project {
   public createdTime: string
   public lastUpdatedTime: string
 
-  constructor(id: string, name: string, email: string, createdTime: string, lastUpdatedTime: string) {
+  constructor(
+    id: string,
+    name: string,
+    email: string,
+    allowRequests: boolean,
+    createdTime: string,
+    lastUpdatedTime: string
+  ) {
     this.id = id
     this.name = name
     this.email = email
+    this.allowRequests = allowRequests
     this.createdTime = createdTime
     this.lastUpdatedTime = lastUpdatedTime
   }
@@ -213,6 +223,7 @@ class Project {
   public copyFrom(project: Project) {
     this.name = project.name
     this.email = project.email
+    this.allowRequests = project.allowRequests
     this.createdTime = project.createdTime
     this.lastUpdatedTime = project.lastUpdatedTime
   }

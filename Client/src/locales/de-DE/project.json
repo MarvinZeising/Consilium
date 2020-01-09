@@ -59,7 +59,8 @@
   },
   "request": {
     "info": "Anfrage noch offen",
-    "notAllowed": "Dieses Projekt erlaubt leider keine Teilnahme-Anfragen. Du musst von einem der Projekt-Administratoren eingeladen werden."
+    "notAllowed": "Dieses Projekt erlaubt leider keine Teilnahme-Anfragen. Du musst von einem der Projekt-Administratoren eingeladen werden.",
+    "requestedOn": "Angefragt am {date}"
   },
   "requests": "Anfragen",
   "requestsDescription": "Falls erlaubt, können Personen Teilnahme am Projekt anfragen. Hier kannst du alle offenen Anfragen sehen, die noch von keinem Administrator angenommen oder abgelehnt wurden.",

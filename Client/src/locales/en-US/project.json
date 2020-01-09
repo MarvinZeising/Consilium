@@ -59,7 +59,8 @@
   },
   "request": {
     "info": "Pending join request",
-    "notAllowed": "Sorry, join requests have been disabled for this project. You'll have to ask a coordinating brother with this project to invite you to it."
+    "notAllowed": "Sorry, join requests have been disabled for this project. You'll have to ask a coordinating brother with this project to invite you to it.",
+    "requestedOn": "Requested on {date}"
   },
   "requests": "Requests",
   "requestsDescription": "If allowed below, persons can request participation for the project. Here you can see all open requests that have not yet been accepted or declined by an administrator.",
