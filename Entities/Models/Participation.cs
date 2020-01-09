@@ -22,9 +22,8 @@ namespace Entities.Models
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
 
-        [Required]
         [ForeignKey(nameof(Role))]
-        public Guid RoleId { get; set; }
+        public Guid? RoleId { get; set; }
         public Role Role { get; set; }
 
         [Required]
