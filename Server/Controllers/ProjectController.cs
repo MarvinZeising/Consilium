@@ -58,9 +58,6 @@ namespace Server.Controllers
                 if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
-                var person = _db.Person.FindByCondition(x => x.Id == personId).SingleOrDefault();
-                if (person == null) return BadRequest();
-
                 var project = _mapper.Map<Project>(dto);
                 _db.Project.Create(project);
 
