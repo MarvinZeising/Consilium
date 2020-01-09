@@ -81,58 +81,78 @@
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title v-text="participation.project.name" />
+              <v-list-item-subtitle
+                v-if="participation.status == 'invited'"
+                v-t="'project.invitation.info'"
+              />
+              <v-list-item-subtitle
+                v-if="participation.status == 'requested'"
+                v-t="'project.request.info'"
+              />
             </v-list-item-content>
           </template>
 
-          <v-list-item :to="{ name: 'calendar', params: { projectId: participation.project.id }}">
+          <v-list-item
+            v-if="isPendingParticipation(participation)"
+            :to="{ name: 'configureProjects' }"
+          >
             <v-list-item-icon />
             <v-list-item-content>
-              <v-list-item-title v-t="'project.calendar'" />
+              <v-list-item-title v-t="'project.checkStatus'" />
             </v-list-item-content>
           </v-list-item>
+          <div v-else>
 
-          <v-list-group
-            v-if="getTopics(participation.project).length > 0"
-            no-action
-            sub-group
-          >
-            <template v-slot:activator>
+            <v-list-item :to="{ name: 'calendar', params: { projectId: participation.project.id }}">
+              <v-list-item-icon />
               <v-list-item-content>
-                <v-list-item-title v-t="'project.knowledgeBase'" />
-              </v-list-item-content>
-            </template>
-
-            <v-list-item
-              v-for="(topic, j) in getTopics(participation.project)"
-              :key="j"
-              :to="{ name: 'topic', params: { projectId: participation.project.id, topicId: topic.id }}"
-            >
-              <v-list-item-content>
-                <v-list-item-title v-text="topic.name" />
+                <v-list-item-title v-t="'project.calendar'" />
               </v-list-item-content>
             </v-list-item>
-          </v-list-group>
 
-          <v-list-group
-            no-action
-            sub-group
-          >
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title v-t="'project.administration'" />
-              </v-list-item-content>
-            </template>
-
-            <v-list-item
-              v-for="(action, j) in getAdminActions(participation.project)"
-              :key="j"
-              :to="{ name: action[1], params: { projectId: participation.project.id }}"
+            <v-list-group
+              v-if="getTopics(participation.project).length > 0"
+              no-action
+              sub-group
             >
-              <v-list-item-content>
-                <v-list-item-title v-t="action[0]" />
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
+              <template v-slot:activator>
+                <v-list-item-content>
+                  <v-list-item-title v-t="'project.knowledgeBase'" />
+                </v-list-item-content>
+              </template>
+
+              <v-list-item
+                v-for="(topic, j) in getTopics(participation.project)"
+                :key="j"
+                :to="{ name: 'topic', params: { projectId: participation.project.id, topicId: topic.id }}"
+              >
+                <v-list-item-content>
+                  <v-list-item-title v-text="topic.name" />
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-group>
+
+            <v-list-group
+              no-action
+              sub-group
+            >
+              <template v-slot:activator>
+                <v-list-item-content>
+                  <v-list-item-title v-t="'project.administration'" />
+                </v-list-item-content>
+              </template>
+
+              <v-list-item
+                v-for="(action, j) in getAdminActions(participation.project)"
+                :key="j"
+                :to="{ name: action[1], params: { projectId: participation.project.id }}"
+              >
+                <v-list-item-content>
+                  <v-list-item-title v-t="action[0]" />
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-group>
+          </div>
 
         </v-list-group>
       </div>
@@ -168,7 +188,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
-import { Person, Project, Topic, Participation } from '../models/definitions'
+import { Person, Project, Topic, Participation, ParticipationStatus } from '../models/definitions'
 import { getModule } from 'vuex-module-decorators'
 import PersonModule from '../store/persons'
 import KnowledgeBaseModule from '../store/knowledgeBase'
@@ -205,6 +225,11 @@ export default class NavbarSignedIn extends Vue {
       //// ['Statistics', 'show_chart', 'settings'],
       //// ['Notes', 'edit', 'settings']
     ]
+  }
+
+  private isPendingParticipation(participation: Participation) {
+    return participation.status === ParticipationStatus.Invited
+      || participation.status === ParticipationStatus.Requested
   }
 
   private activatePersonIfNotMe(personId: string) {

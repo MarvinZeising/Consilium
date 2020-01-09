@@ -8,6 +8,7 @@
   "settings": "Einstellungen",
   "nameMustEqual": "Der Projektname muss dem Namen dieses Projekts entsprechen",
   "news": "Neuigkeiten",
+  "checkStatus": "Status überprüfen",
   "delete": "Dieses Projekt löschen",
   "deleteDescription": "Dies wird alle Kategorien, Teams und Schichten löschen. Der Informationsbereich wird geleert, jegliche Berechtigungen auf dieses Projekt zurückgezogen und das Projekt gelöscht.",
   "deleteHint": "Gib den Namen dieses Projekts ein um fortzufahren",
@@ -42,6 +43,7 @@
     "inactive": "Inaktiv"
   },
   "invitation": {
+    "info": "Du wurdest eingeladen",
     "invite": "Jemanden einladen",
     "inviteDescription": "Du kannst eine Person zu diesem Projekt einladen. Die eingeladene Person muss die Einladung annehmen oder ablehnen. Um eine Person einzuladen musst du ID der Person erfragen. Die Person findet sie unter 'Profil / Persönliches / Generelles'",
     "idDescription": "Die ID der Person",
@@ -54,6 +56,9 @@
     "duplicate": "Diese Person ist entweder schon Teilnehmer oder hat eine offene Einladung/Teilnahme-Anfrage",
     "delete": "Einladung löschen",
     "deleteDescription": "Möchtest du diese Einladung wirklich löschen?"
+  },
+  "request": {
+    "info": "Anfrage noch offen",
   },
   "requests": "Anfragen",
   "requestsDescription": "Falls erlaubt, können Personen Teilnahme am Projekt anfragen. Hier kannst du alle offenen Anfragen sehen, die noch von keinem Administrator angenommen oder abgelehnt wurden.",
