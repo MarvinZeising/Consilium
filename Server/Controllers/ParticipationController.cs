@@ -181,7 +181,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("invitations/{participationId}")]
-        public ActionResult<ParticipationDto> UpdateInvitation(Guid personId, Guid projectId, Guid participationId, [FromBody] UpdateInvitationDto dto)
+        public ActionResult<ParticipationDto> UpdateInvitation(Guid personId, Guid projectId, Guid participationId, [FromBody] UpdateParticipationDto dto)
         {
             try
             {
