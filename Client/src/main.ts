@@ -52,7 +52,7 @@ async function init() {
     }
 
     try {
-      await userModule.initStore()
+      await userModule.loadNavbar()
 
       if (router.currentRoute.name === 'serverException') {
         router.push({ name: 'home' })

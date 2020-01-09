@@ -17,7 +17,7 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  public async initStore() {
+  public async loadNavbar() {
     const response = await axios.get(`/users/current`)
 
     this.context.commit('setUser', User.create(response.data))
@@ -72,7 +72,7 @@ export default class UserModule extends VuexModule {
       }))
       axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`
 
-      await this.context.dispatch('initStore', credentials.email)
+      await this.context.dispatch('loadNavbar', credentials.email)
 
       return true
     }

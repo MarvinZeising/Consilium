@@ -110,7 +110,7 @@ export default class ProjectModule extends VuexModule {
       email: project.email,
     })
 
-    await this.context.dispatch('initStore')
+    await this.context.dispatch('loadNavbar')
 
     return Project.create(response.data)
   }
@@ -121,10 +121,16 @@ export default class ProjectModule extends VuexModule {
 
     await axios.delete(`/persons/${personId}/projects/${projectId}`)
 
-    await this.context.dispatch('initStore')
+    await this.context.dispatch('loadNavbar')
 
     return projectId
   }
+
+  // *******************************************************************************************
+  // *
+  // *                         Mutations
+  // *
+  // *******************************************************************************************
 
   @Mutation
   public upsertProject(project: Project) {
