@@ -32,10 +32,6 @@ export default class ProjectModule extends VuexModule {
     })
   }
 
-  public get getAllParticipations() {
-    return this.getActiveProject?.participations
-  }
-
   public get getRequests() {
     return this.getAllParticipations?.filter((x) => x.status === ParticipationStatus.Requested)
   }

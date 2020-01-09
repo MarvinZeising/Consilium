@@ -80,6 +80,7 @@ import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
 import InvitationModule from '../../store/invitations'
+import RequestModule from '../../store/requests'
 import RoleModule from '../../store/roles'
 import { Role } from '@/models/definitions'
 
@@ -87,6 +88,7 @@ import { Role } from '@/models/definitions'
 export default class CreateInvitationDialog extends Vue {
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
+  private requestModule: RequestModule = getModule(RequestModule, this.$store)
   private roleModule: RoleModule = getModule(RoleModule, this.$store)
 
   private dialog: any = false
@@ -108,17 +110,23 @@ export default class CreateInvitationDialog extends Vue {
   private async created() {
     await this.roleModule.loadRoles();
 
-    this.roleValues = this.projectModule.getActiveProject?.getRoles.map((role: Role) => {
-      return {
-        value: role.id,
-        name: role.name,
-      }
-    })
+    const project = this.projectModule.getActiveProject
+    if (project) {
+      this.roleValues = project.getRoles.map((role: Role) => {
+        return {
+          value: role.id,
+          name: role.name,
+        }
+      })
 
-    this.personIdRules.push((v: string) => {
-      const allParticipantIds = this.projectModule.getAllParticipations?.map((x) => x.personId)
-      return !allParticipantIds?.includes(v) || this.$t('project.invitation.duplicate')
-    })
+      this.personIdRules.push((v: string) => {
+        const invitations = project.getInvitations
+        const requests = project.getRequests
+        const permanents = project.getParticipations
+        const allParticipantIds = permanents.concat(invitations).concat(requests).map((x) => x.id)
+        return !allParticipantIds?.includes(v) || this.$t('project.invitation.duplicate')
+      })
+    }
 
     this.loadingRoles = false
   }
