@@ -10,14 +10,14 @@
       </v-card-text>
       <v-list>
         <v-list-item
-          v-if="getPersons.length === 0"
+          v-if="personModule.getPersons.length === 0"
           dark
           class="warning"
         >
           <span v-t="'person.noPersons'" />
         </v-list-item>
         <v-list-item
-          v-for="(person, index) in getPersons"
+          v-for="(person, index) in personModule.getPersons"
           :key="index"
         >
           <v-list-item-content>
@@ -57,10 +57,6 @@ import { Person } from '../models/definitions'
 @Component
 export default class AccountPersons extends Vue {
   private personModule: PersonModule = getModule(PersonModule, this.$store)
-
-  private get getPersons() {
-    return this.personModule.getPersons
-  }
 
   private editPerson(personId: string) {
     if (this.personModule.getActivePersonId !== personId) {
