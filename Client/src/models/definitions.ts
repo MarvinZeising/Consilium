@@ -136,6 +136,8 @@ class Project {
   public name: string
   public email: string
   public participations: Participation[] = []
+  public invitations: Participation[] = []
+  public requests: Participation[] = []
   public roles: Role[] = []
   public createdTime: string
   public lastUpdatedTime: string
@@ -154,6 +156,54 @@ class Project {
         return -1
       } else if (a.name > b.name) {
         return 1
+      } else {
+        return 0
+      }
+    })
+  }
+
+  public get getInvitations() {
+    return [...this.invitations].sort((a, b) => {
+      if (a.project && b.project) {
+        if (a.project.name < b.project.name) {
+          return 1
+        } else if (a.project.name > b.project.name) {
+          return -1
+        } else {
+          return 0
+        }
+      } else {
+        return 0
+      }
+    })
+  }
+
+  public get getRequests() {
+    return [...this.requests].sort((a, b) => {
+      if (a.project && b.project) {
+        if (a.project.name < b.project.name) {
+          return 1
+        } else if (a.project.name > b.project.name) {
+          return -1
+        } else {
+          return 0
+        }
+      } else {
+        return 0
+      }
+    })
+  }
+
+  public get getParticipations() {
+    return [...this.participations].sort((a, b) => {
+      if (a.project && b.project) {
+        if (a.project.name < b.project.name) {
+          return 1
+        } else if (a.project.name > b.project.name) {
+          return -1
+        } else {
+          return 0
+        }
       } else {
         return 0
       }
