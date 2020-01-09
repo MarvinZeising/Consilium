@@ -18,7 +18,9 @@
               <v-list-item-title class="title">
                 {{ personModule.getActivePerson.getFullName }}
               </v-list-item-title>
-              <v-list-item-subtitle>Wuppertal-Nord</v-list-item-subtitle>
+              <v-list-item-subtitle>
+                {{ personModule.getActivePerson.getCongregationName }}
+              </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-icon>
               <v-icon right>arrow_drop_down</v-icon>
@@ -45,7 +47,9 @@
           <v-list-item-title class="title">
             {{ personModule.getActivePerson.getFullName }}
           </v-list-item-title>
-          <v-list-item-subtitle>Wuppertal-Nord</v-list-item-subtitle>
+          <v-list-item-subtitle>
+            {{ personModule.getActivePerson.getCongregationName }}
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -226,6 +230,9 @@ export default class NavbarSignedIn extends Vue {
       }
       if (participation.role.participantsRead) {
         actions.push(['project.participants', 'participants'])
+      }
+      if (participation.role.participantsWrite) {
+        actions.push(['project.congregations', 'congregations'])
       }
     }
     return actions
