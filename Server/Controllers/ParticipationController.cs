@@ -425,5 +425,28 @@ namespace Server.Controllers
             }
         }
 
+        [HttpDelete("participations/{participationId}")]
+        public IActionResult DeleteParticipation(Guid personId, Guid projectId, Guid participationId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var participation = _db.Participation
+                    .FindByCondition(x => x.Id == participationId && x.PersonId == personId)
+                    .SingleOrDefault();
+
+                _db.Participation.Delete(participation);
+                _db.Save();
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in DeleteParticipation: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
