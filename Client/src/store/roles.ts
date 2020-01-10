@@ -46,7 +46,7 @@ export default class RoleModule extends VuexModule {
 
     this.context.commit('upsertProjectRoles', {
       projectId,
-      role: [role],
+      roles: [role],
     })
   }
 
@@ -76,7 +76,7 @@ export default class RoleModule extends VuexModule {
 
     this.context.commit('upsertProjectRoles', {
       projectId,
-      role: [role],
+      roles: [role],
     })
   }
 

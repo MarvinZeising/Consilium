@@ -91,6 +91,7 @@ namespace Server.Controllers
                 {
                     role = _mapper.Map<Role>(dto);
                     role.Editable = true;
+                    role.CreatedTime = roleFromDb.CreatedTime;
                 }
                 else
                 {
