@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -149,7 +150,8 @@ namespace Server.Controllers
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
                 var project = _db.Project.FindByCondition(x => x.Id == projectId).SingleOrDefault();
-                if (project == null || !project.AllowRequests) return BadRequest();
+                if (project == null) return BadRequest(nameof(ProjectNotFoundException));
+                if (!project.AllowRequests) return BadRequest(nameof(RequestsNotAllowedException));
 
                 var participation = new Participation
                 {
