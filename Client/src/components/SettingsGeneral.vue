@@ -83,8 +83,7 @@
             filled
             required
           />
-          <p v-t="'project.emailDescription1'" />
-          <p v-t="'project.emailDescription2'" />
+          <p v-t="'project.emailDescription'" />
           <v-text-field
             v-model="email"
             :label="$t('core.email')"
@@ -99,23 +98,24 @@
       <v-card-actions v-if="canEdit">
         <v-spacer />
         <v-btn
-          text
           v-if="!editMode"
-          @click.stop="toggleEditMode"
+          text
           v-t="'core.edit'"
-        />
-        <v-btn
-          text
-          v-if="editMode"
           @click.stop="toggleEditMode"
-          v-t="'core.cancel'"
         />
         <v-btn
-          text
           v-if="editMode"
+          text
+          v-t="'core.cancel'"
+          @click.stop="toggleEditMode"
+        />
+        <v-btn
+          v-if="editMode"
+          text
           color="primary"
-          @click.stop="save"
           v-t="'core.save'"
+          @click.stop="save"
+          :loading="saving"
         />
       </v-card-actions>
     </v-card>
@@ -129,24 +129,29 @@ import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import moment from 'moment'
 import i18n from '../i18n'
-import ProjectModule from '../store/projects'
-import PersonModule from '../store/persons'
+import AlertModule from '../store/alerts'
 import UserModule from '../store/users'
+import PersonModule from '../store/persons'
+import ProjectModule from '../store/projects'
+import { Exceptions } from '../models/definitions'
 
 @Component
 export default class SettingsGeneral extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private alertModule: AlertModule = getModule(AlertModule, this.$store)
   private userModule: UserModule = getModule(UserModule, this.$store)
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private loading: boolean = true
+  private saving: boolean = false
   private editMode: boolean = false
 
   private name: string = this.projectModule.getActiveProject?.name || ''
   private nameRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
-    (v: string) => v.length >= 3 || i18n.t('core.fieldMin', { count: 3 })
+    (v: string) => v.length >= 3 || i18n.t('core.fieldMin', { count: 3 }),
+    (v: string) => v.charAt(0) === v.charAt(0).toUpperCase() || i18n.t('core.fieldCamelCase')
   ]
   private email: string = this.projectModule.getActiveProject?.email || ''
   private emailRules: any[] = [
@@ -211,14 +216,31 @@ export default class SettingsGeneral extends Vue {
     const userName = this.projectModule.getActiveProject?.name || ''
 
     if (form.validate()) {
-      await this.projectModule.updateProjectGeneral({
+      this.saving = true
+
+      const response = await this.projectModule.updateProjectGeneral({
         name: this.name,
         email: this.email
       })
+      if (response === Exceptions.ProjectNameUnique) {
+        const form: any = this.$refs.form
+        const thisName = this.name
+        this.nameRules.push((v: string) => v !== thisName || i18n.t('project.nameUnique'))
+        form.validate()
+      } else if (response) {
+        this.alertModule.showAlert({
+          message: i18n.t('core.generalError').toString(),
+          color: 'error',
+          timeout: 5000,
+        })
+      } else {
+        this.toggleEditMode()
+      }
+
       // TODO: check that email is correct
       // TODO: maybe by sending an email to verify the new one
 
-      this.toggleEditMode()
+      this.saving = false
     }
   }
 

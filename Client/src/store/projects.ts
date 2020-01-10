@@ -52,15 +52,17 @@ export default class ProjectModule extends VuexModule {
     email: string
   }) {
     const { personId, projectId } = this.resolvePersonAndProject
-    const response = await axios.put(`/persons/${personId}/projects/${projectId}`, {
+    return await axios
+      .put(`/persons/${personId}/projects/${projectId}`, {
       name: project.name,
       email: project.email
     })
+      .then(async (response) => {
     const updatedProject = Project.create(response.data)
-
     await this.context.dispatch('loadNavbar')
-
     this.context.commit('upsertProject', updatedProject)
+      })
+      .catch((error: any) => error.response?.data)
   }
 
   @Action({ commit: 'upsertProject' })

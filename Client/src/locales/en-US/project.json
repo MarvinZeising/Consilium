@@ -2,6 +2,7 @@
   "projects": "You don't participate in any projects, yet. | Project | My Projects",
   "projectsDescription": "Here you see all the project you have access to. You can request admission to an existing or create a new project.",
   "notFound": "Couldn't find a project with this id",
+  "nameUnique": "A project with this name already exists, please choose another name",
   "knowledgeBase": {
     "knowledgeBase": "Knowledge Base",
     "topics": "No topics have been defined, yet. | Topic | Knowledge Base - Topics",
@@ -26,11 +27,10 @@
   "deleteWarning": "!!! This cannot be undone - everything will be gone !!!",
   "updateGeneral": "Update Project General",
   "nameDescription": "The name of this project. The name is unique accross all projects, so no other project can have this name.",
-  "emailDescription1": "We'll use this email address as reply-to in all emails that we send on behalf of this project.",
-  "emailDescription2": "You can create an email account specifically for the project, or just use your own email address.",
   "create": "Create a new project",
   "createDescription1": "Are you the Coordinator of an event/a project?",
   "createDescription2": "Then you can create a new project and invite all the publishers to it.",
+  "emailDescription": "We'll use this email address as reply-to in all emails that we send on behalf of this project. You can create an email account specifically for the project, or just use your own email address.",
   "createSubmit": "Create project",
   "congregations": "Congregations",
   "participant": {

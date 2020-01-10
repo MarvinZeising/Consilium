@@ -2,6 +2,7 @@
   "projects": "Du nimmst noch an keinem Projekt teil. | Projekt | Meine Projekte",
   "projectsDescription": "Hier siehst du alle Projekte an denen du teilnimmst. Du kannst die Teilnahme an weiteren Projekten anfragen oder selbst ein neues Projekt erstellen.",
   "notFound": "Es konnte kein Projekt mit dieser ID gefunden werden",
+  "nameUnique": "Es existiert bereits ein Projekt mit diesem Namen, bitte wähle einen anderen Namen",
   "knowledgeBase": {
     "knowledgeBase": "Informationen",
     "topics": "Du hast noch keine Themen angelegt. | Thema | Informationen - Themen",
@@ -26,8 +27,7 @@
   "deleteWarning": "!!! Dies kann nicht rückgängig gemacht werden - alles wird weg sein !!!",
   "updateGeneral": "Generelle Informationen bearbeiten",
   "nameDescription": "Der Name dieses Projekts. Der Name ist über alle Projekte einmalig, kein anderes Projekt kann diesen Namen haben.",
-  "emailDescription1": "Wir werden diese Email-Adresse as reply-to in allen Emails nutzen, die wir im Auftrag dieses Projekts schicken.",
-  "emailDescription2": "Du kannst ein Email Konto speziell für dieses Projekt erstellen oder einfach deine eigene Email-Adresse nutzen.",
+  "emailDescription": "Wir werden diese Email-Adresse as reply-to in allen Emails nutzen, die wir im Auftrag dieses Projekts schicken. Du kannst ein Email Konto speziell für dieses Projekt erstellen oder einfach deine eigene Email-Adresse nutzen.",
   "create": "Neues Projekt erstellen",
   "createDescription1": "Bist du der Koordinator eines Events oder Projekts?",
   "createDescription2": "Dann kannst du ein Projekt erstellen und die Verkündiger einladen teilzunehmen.",
