@@ -8,6 +8,8 @@
         IParticipationRepository Participation { get; }
         IRoleRepository Role { get; }
         ICongregationRepository Congregation { get; }
+        ITopicRepository Topic { get; }
+        IArticleRepository Article { get; }
         void Save();
     }
 }

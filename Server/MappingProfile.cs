@@ -19,6 +19,10 @@ namespace Server
             CreateMap<Project, ProjectDto>();
             CreateMap<CreateProjectDto, Project>();
 
+            CreateMap<Topic, TopicDto>();
+
+            CreateMap<Article, ArticleDto>();
+
             CreateMap<CreateInvitationDto, Participation>();
             CreateMap<Participation, ParticipationDto>();
 

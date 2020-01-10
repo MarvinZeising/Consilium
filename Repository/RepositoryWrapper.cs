@@ -15,6 +15,8 @@ namespace Repository
         private IParticipationRepository _participation;
         private IRoleRepository _role;
         private ICongregationRepository _congregation;
+        private ITopicRepository _topic;
+        private IArticleRepository _article;
 
         public IUserRepository User
         {
@@ -85,6 +87,30 @@ namespace Repository
                     _congregation = new CongregationRepository(_repositoryContext);
                 }
                 return _congregation;
+            }
+        }
+
+        public ITopicRepository Topic
+        {
+            get
+            {
+                if (_topic == null)
+                {
+                    _topic = new TopicRepository(_repositoryContext);
+                }
+                return _topic;
+            }
+        }
+
+        public IArticleRepository Article
+        {
+            get
+            {
+                if (_article == null)
+                {
+                    _article = new ArticleRepository(_repositoryContext);
+                }
+                return _article;
             }
         }
 
