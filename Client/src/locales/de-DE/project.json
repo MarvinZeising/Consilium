@@ -7,6 +7,7 @@
     "knowledgeBase": "Informationen",
     "topics": "Du hast noch keine Themen angelegt. | Thema | Informationen - Themen",
     "topicsDescription": "Du kannst ein eigenes Informationscenter für dieses Projekt anlegen. Informiere die Teilnehmer über Routen, Orte, rechtliche Bestimmungen oder sonstige Informationen, die ihnen für die Teilnahme an diesem Projekt dienlich sein könnten. Hier kannst du die Themen verwalten. Sie werden links in der Navigationsleiste angezeigt. Innerhalb jedes Themas kannst du dann verschiedene Artikel anlegen.",
+    "articles": "Zu diesem Thema gibt es keine Artikel. | Artikel | Artikel",
     "createTopic": "Thema hinzufügen",
     "renameTopic": "Thema umbenennen",
     "deleteTopic": "Thema löschen",

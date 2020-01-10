@@ -45,7 +45,7 @@ const router = new VueRouter({
   }, {
     path: '/project/:projectId/topic/:topicId',
     name: 'topic',
-    component: () => import('./views/project/Articles.vue'),
+    component: () => import('./views/project/KnowledgeBase.vue'),
   }, {
     path: '/project/:projectId/settings',
     name: 'settings',

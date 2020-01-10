@@ -1,4 +1,3 @@
-import moment from 'moment'
 class Topic {
   public static create(data: any) {
     return new Topic(
@@ -22,6 +21,17 @@ class Topic {
     this.name = topic.name
   }
 
+  public get getArticles() {
+    return [...this.articles].sort((a, b) => {
+      if (a.title < b.title) {
+        return -1
+      } else if (a.title > b.title) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+  }
 }
 
 class Article {
