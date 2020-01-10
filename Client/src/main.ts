@@ -29,6 +29,12 @@ async function init() {
           color: 'error',
           timeout: 5000,
         })
+      } else if ([400, 500].includes(error.response.status)) {
+        alertModule.showAlert({
+          message: error.message,
+          color: 'error',
+          timeout: 5000,
+        })
       } else if ((error.response.status === 401) && localStorage.getItem('user')) {
         // * automatically sign out if token is expired or invalid
         userModule.signOut()
