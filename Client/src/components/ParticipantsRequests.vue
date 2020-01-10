@@ -3,10 +3,9 @@
     v-if="canView"
     xs12 sm10 md8 lg6 xl4
   >
-    <h2
-      class="headline mb-3"
-      v-t="'project.requests'"
-    />
+    <h2 class="headline mb-3">
+      {{ $tc('project.request.requests', 2) }}
+    </h2>
     <v-card
       flat
       class="ma-2 mb-5"
@@ -14,11 +13,11 @@
     >
       <v-card-text
         class="grey--text"
-        v-t="'project.requestsDescription'"
+        v-t="'project.request.description'"
       />
       <v-list v-if="projectModule.getActiveProject.getRequests">
         <v-list-item v-if="projectModule.getActiveProject.getRequests.length === 0">
-          <span v-t="'project.noRequests'" />
+          {{ $tc('project.request.requests', 0) }}
         </v-list-item>
         <v-list-item
           v-for="(participation, index) in projectModule.getActiveProject.getRequests"
@@ -39,7 +38,7 @@
       <v-card-actions>
         <v-switch
           v-model="requestsAllowed"
-          :label="$t(`project.requests${requestsAllowed ? '' : 'Not'}Allowed`)"
+          :label="$t(`project.request.requests${requestsAllowed ? '' : 'Not'}Allowed`)"
           class="mt-0 mb-3 ml-3"
           color="primary"
           inset

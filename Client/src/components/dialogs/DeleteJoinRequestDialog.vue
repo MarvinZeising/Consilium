@@ -14,21 +14,21 @@
     <v-card>
       <v-card-title
         class="headline"
-        v-t="'project.cancelRequest'"
+        v-t="'project.request.cancel'"
       />
-      <v-card-text v-t="'project.cancelRequestDescription'" />
+      <v-card-text v-t="'project.request.cancelDescription'" />
       <v-card-actions>
         <v-btn
           text
           @click.stop="dialog = false"
-          v-t="'project.cancelRequestOtherButton'"
+          v-t="'core.close'"
         />
         <v-spacer></v-spacer>
         <v-btn
           text
           color="primary"
           @click.stop="cancelJoinRequest"
-          v-t="'project.cancelRequestSubmit'"
+          v-t="'project.request.cancel'"
           :loading="loading"
         />
       </v-card-actions>

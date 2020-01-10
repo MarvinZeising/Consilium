@@ -15,6 +15,7 @@
   "calendar": "Kalender",
   "administration": "Verwaltung",
   "settings": "Einstellungen",
+  "participants": "Teilehmer",
   "nameMustEqual": "Der Projektname muss dem Namen dieses Projekts entsprechen",
   "news": "Neuigkeiten",
   "checkStatus": "Status überprüfen",
@@ -31,21 +32,11 @@
   "createDescription2": "Dann kannst du ein Projekt erstellen und die Verkündiger einladen teilzunehmen.",
   "createSubmit": "Projekt erstellen",
   "congregations": "Versammlungen",
-  "participants": "Teilehmer",
   "participant": {
     "participants": "Teilnehmer",
     "delete": "Teilnehmer aus dem Projekt entfernen",
     "deleteDescription": "Möchtest du diesen Teilnehmer wirklich aus dem Projekt entfernen? Die Person wird immer noch existieren, aber ihre Verbindung zu diesem Projekt wird gelöscht."
   },
-  "join": "Einem Projekt beitreten",
-  "joinDescription": "Du kannst anfragen, ob du einem Projekt beitreten darfst. Danach musst du warten bis ein Projekt Administrator diese Anfrage akzeptiert oder ablehnt. Um die Teilnahme anzufragen brauchst du die ID des Projektes. Du kannst sie bei einem der Projekt Administratoren erfragen.",
-  "joinSubmit": "Teilnahme anfragen",
-  "cancelRequest": "Diese Anfrage abbrechen",
-  "cancelRequestDescription": "Bist du dir sicher, dass du diese Anfrage abbrechen möchtest?",
-  "cancelRequestSubmit": "Anfrage abbrechen",
-  "cancelRequestOtherButton": "Dialog schließen",
-  "handleInvitation": "Einladung beantworten",
-  "handleInvitationDescription": "Du kannst die Einladung annehmen oder ablehnen. Falls du sie annimmst, stimmst du damit zu, dass die Projekt-Administratoren deine Personendaten sehen, verwenden und ändern dürfen.",
   "participation": {
     "details": "Teilnahme Details",
     "projectName": "Projekt:",
@@ -75,18 +66,26 @@
     "invitedOn": "Eingeladen am {date}",
     "duplicate": "Diese Person ist entweder schon Teilnehmer oder hat eine offene Einladung/Teilnahme-Anfrage",
     "delete": "Einladung löschen",
-    "deleteDescription": "Möchtest du diese Einladung wirklich löschen?"
+    "deleteDescription": "Möchtest du diese Einladung wirklich löschen?",
+    "handle": "Einladung beantworten",
+    "handleDescription": "Du kannst die Einladung annehmen oder ablehnen. Falls du sie annimmst, stimmst du damit zu, dass die Projekt-Administratoren deine Personendaten sehen, verwenden und ändern dürfen."
   },
   "request": {
+    "requests": "Keine offenen Anfrage | Anfrage | Anfragen",
+    "description": "Falls erlaubt, können Personen Teilnahme am Projekt anfragen. Hier kannst du alle offenen Anfragen sehen, die noch von keinem Administrator angenommen oder abgelehnt wurden.",
     "info": "Anfrage noch offen",
     "notAllowed": "Dieses Projekt erlaubt leider keine Teilnahme-Anfragen. Du musst von einem der Projekt-Administratoren eingeladen werden.",
-    "requestedOn": "Angefragt am {date}"
+    "requestedOn": "Angefragt am {date}",
+    "requestsAllowed": "Teilnahme kann angefragt werden",
+    "requestsNotAllowed": "Teilnahme kann nicht angefragt werden",
+    "create": "Einem Projekt beitreten",
+    "createDescription": "Du kannst anfragen, ob du einem Projekt beitreten darfst. Danach musst du warten bis ein Projekt Administrator diese Anfrage akzeptiert oder ablehnt. Um die Teilnahme anzufragen brauchst du die ID des Projektes. Du kannst sie bei einem der Projekt Administratoren erfragen.",
+    "createSubmit": "Teilnahme anfragen",
+    "handle": "Anfrage beantworten",
+    "handleDescription": "Du kannst die Teilnahme-Anfrage annehmen oder ablehnen. Falls du sie annimmst, wird die Person für dieses Projekt berechtigt und bekommt die unten von dir definierte Rolle zugewiesen.",
+    "cancel": "Anfrage abbrechen",
+    "cancelDescription": "Bist du dir sicher, dass du diese Anfrage abbrechen möchtest?"
   },
-  "requests": "Anfragen",
-  "requestsDescription": "Falls erlaubt, können Personen Teilnahme am Projekt anfragen. Hier kannst du alle offenen Anfragen sehen, die noch von keinem Administrator angenommen oder abgelehnt wurden.",
-  "noRequests": "Keine offenen Anfragen",
-  "requestsAllowed": "Teilnahme kann angefragt werden",
-  "requestsNotAllowed": "Teilnahme kann nicht angefragt werden",
   "role": {
     "description": "Um Kontrolle darüber zu haben, welche Teilnehmer des Projektes was sehen und bearbeiten dürfen, gibt es Rollen. Jeder Teilnehmer hat eine Rolle. Die Rolle regelt, welche verschiedenen Bereiche des Projektes die Teilnehmer sehen oder sogar bearbeiten dürfen. Standardmäßig wird eine 'Administrator' Rolle erstellt.",
     "create": "Rolle hinzufügen",

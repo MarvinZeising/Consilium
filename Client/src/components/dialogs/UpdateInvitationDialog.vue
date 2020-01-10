@@ -23,7 +23,7 @@
           />
         </v-card-title>
         <v-card-text>
-          <p v-t="'project.participant.roleDescription'" />
+          <p v-t="'project.invitation.roleDescription'" />
           <v-select
             v-model="roleId"
             :items="roleValues"

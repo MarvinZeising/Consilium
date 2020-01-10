@@ -7,7 +7,7 @@
       <v-btn
         v-on="on"
         text
-        v-t="'project.join'"
+        v-t="'project.request.create'"
       />
     </template>
     <v-card>
@@ -18,11 +18,11 @@
         <v-card-title>
           <span
             class="headline"
-            v-t="'project.join'"
+            v-t="'project.request.create'"
           />
         </v-card-title>
         <v-card-text>
-          <p v-t="'project.joinDescription'" />
+          <p v-t="'project.request.createDescription'" />
           <v-text-field
             v-model="projectId"
             :rules="projectRules"
@@ -44,7 +44,7 @@
             text
             color="primary"
             @click.stop="joinProject"
-            v-t="'project.joinSubmit'"
+            v-t="'project.request.createSubmit'"
             type="submit"
           />
         </v-card-actions>

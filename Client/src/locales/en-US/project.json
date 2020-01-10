@@ -15,6 +15,7 @@
   "calendar": "Calendar",
   "administration": "Administration",
   "settings": "Settings",
+  "participants": "Participants",
   "nameMustEqual": "Project name must be this project's name",
   "news": "News",
   "checkStatus": "Check status",
@@ -31,21 +32,11 @@
   "createDescription2": "Then you can create a new project and invite all the publishers to it.",
   "createSubmit": "Create project",
   "congregations": "Congregations",
-  "participants": "Participants",
   "participant": {
     "participants": "Participant | Participants",
     "delete": "Remove participant from project",
     "deleteDescription": "Do you really want to remove this participant from the project? The person will still exist, but their connection to this project will be removed."
   },
-  "join": "Join an existing project",
-  "joinDescription": "You can request admission to an existing project. A project administrator will have to accept your request. In order to request, you need to have the project id. Ask a project administrator for the id.",
-  "joinSubmit": "Request admission",
-  "cancelRequest": "Cancel this admission request",
-  "cancelRequestDescription": "Are you sure you want to cancel this admission request?",
-  "cancelRequestSubmit": "Cancel admission request",
-  "cancelRequestOtherButton": "Close dialog",
-  "handleInvitation": "Handle invitation",
-  "handleInvitationDescription": "You can accept or decline this project invitation. If you accept, you thereby grant the administrators of the project to see, use, and edit your person data.",
   "participation": {
     "details": "Participation Details",
     "projectName": "Project:",
@@ -64,7 +55,7 @@
   },
   "invitation": {
     "info": "You've been invited",
-    "invite": "Invite a person",
+    "invite": "Invite a Person",
     "inviteDescription": "You can invite a person to participate in this project. The invitee has to accept/decline your invitiation. In order to invite a person, you'll have to ask for the person ID. The person finds it under 'Profile / Personal / General'",
     "idDescription": "The person's ID",
     "roleDescription": "The role this person is going to be assigned to",
@@ -75,18 +66,26 @@
     "invitedOn": "Invited on {date}",
     "duplicate": "This person is either already participating, or has an open invitation or join request.",
     "delete": "Delete Invitation",
-    "deleteDescription": "Do you really want to delete this invitation?"
+    "deleteDescription": "Do you really want to delete this invitation?",
+    "handle": "Handle invitation",
+    "handleDescription": "You can accept or decline this project invitation. If you accept, you thereby grant the administrators of the project to see, use, and edit your person data."
   },
   "request": {
+    "requests": "No pending requests | Request | Requests",
+    "description": "If allowed below, persons can request participation for the project. Here you can see all open requests that have not yet been accepted or declined by an administrator.",
     "info": "Pending join request",
     "notAllowed": "Sorry, join requests have been disabled for this project. You'll have to ask a coordinating brother with this project to invite you to it.",
-    "requestedOn": "Requested on {date}"
+    "requestedOn": "Requested on {date}",
+    "requestsAllowed": "Participation can be requested",
+    "requestsNotAllowed": "Participation can not be requested",
+    "create": "Join an existing project",
+    "createDescription": "You can request admission to an existing project. A project administrator will have to accept your request. In order to request, you need to have the project id. Ask a project administrator for the id.",
+    "createSubmit": "Request admission",
+    "handle": "Handle Request",
+    "handleDescription": "You can accept or decline this project join request. If you accept, the person will be granted access to this project and will be assigned the role you specify below.",
+    "cancel": "Cancel admission request",
+    "cancelDescription": "Are you sure you want to cancel this admission request?"
   },
-  "requests": "Requests",
-  "requestsDescription": "If allowed below, persons can request participation for the project. Here you can see all open requests that have not yet been accepted or declined by an administrator.",
-  "noRequests": "No pending requests",
-  "requestsAllowed": "Participation can be requested",
-  "requestsNotAllowed": "Participation can not be requested",
   "role": {
     "description": "In order to give you control over who is permitted to do what in your project, there are roles. Each participant is assigned to a role. For every role, you can define the read and write permissions of certain areas of your project. By default, an 'Administrator' role is created.",
     "create": "Add Role",

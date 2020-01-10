@@ -25,8 +25,8 @@
             />
           </v-list-item-content>
           <v-list-item-action>
-            <HandleProjectInvitationDialog
-              v-if="isStatusInvited(participation.projectId)"
+            <HandleInvitationDialog
+              v-if="isStatusInvited(participation)"
               :participation="participation"
             />
             <DeleteJoinRequestDialog
@@ -62,7 +62,7 @@ import ProjectModule from '../store/projects'
 import PersonModule from '../store/persons'
 import CreateJoinRequestDialog from '../components/dialogs/CreateJoinRequestDialog.vue'
 import DeleteJoinRequestDialog from '../components/dialogs/DeleteJoinRequestDialog.vue'
-import HandleProjectInvitationDialog from '../components/dialogs/HandleProjectInvitationDialog.vue'
+import HandleInvitationDialog from '../components/dialogs/HandleInvitationDialog.vue'
 import UpdateParticipationDialog from '../components/dialogs/UpdateParticipationDialog.vue'
 import { Project, ParticipationStatus, Participation } from '../models/definitions'
 
@@ -70,7 +70,7 @@ import { Project, ParticipationStatus, Participation } from '../models/definitio
   components: {
     CreateJoinRequestDialog,
     DeleteJoinRequestDialog,
-    HandleProjectInvitationDialog,
+    HandleInvitationDialog,
     UpdateParticipationDialog,
   }
 })

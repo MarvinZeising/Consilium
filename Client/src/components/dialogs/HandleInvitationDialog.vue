@@ -14,9 +14,9 @@
     <v-card>
       <v-card-title
         class="headline"
-        v-t="'project.handleInvitation'"
+        v-t="'project.invitation.handle'"
       />
-      <v-card-text v-t="'project.handleInvitationDescription'" />
+      <v-card-text v-t="'project.invitation.handleDescription'" />
       <v-card-actions>
         <v-btn
           text
@@ -53,7 +53,7 @@ import InvitationModule from '../../store/invitations'
 import { Participation } from '../../models/definitions'
 
 @Component
-export default class HandleProjectInvitationDialog extends Vue {
+export default class HandleInvitationDialog extends Vue {
   private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
 
   @Prop(Participation)
