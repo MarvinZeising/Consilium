@@ -24,6 +24,7 @@ namespace Server
             CreateMap<UpdateTopicDto, Topic>();
 
             CreateMap<Article, ArticleDto>();
+            CreateMap<CreateArticleDto, Article>();
 
             CreateMap<CreateInvitationDto, Participation>();
             CreateMap<Participation, ParticipationDto>();
