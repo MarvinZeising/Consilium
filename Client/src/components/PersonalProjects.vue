@@ -20,7 +20,7 @@
           <v-list-item-content>
             <v-list-item-title v-text="participation.project.name" />
             <v-list-item-subtitle
-              v-if="isStatusInactive(participation)"
+              v-if="isStatusInvited(participation) || isStatusRequested(participation) || isStatusInactive(participation)"
               v-t="'project.participationStatus.' + participation.status"
             />
           </v-list-item-content>
