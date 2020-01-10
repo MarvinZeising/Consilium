@@ -22,7 +22,7 @@ async function init() {
     (response) => {
       return response
     },
-    (error) => {
+    async (error) => {
       if (!error.response) {
         alertModule.showAlert({
           message: error.message,
@@ -37,9 +37,14 @@ async function init() {
         })
       } else if ((error.response.status === 401) && localStorage.getItem('user')) {
         // * automatically sign out if token is expired or invalid
-        userModule.signOut()
-        location.reload(true)
-        // TODO: communicate signOut via an alert
+        await userModule.signOut()
+        router.push({ name: 'signIn', query: { afterSignIn: router.currentRoute.fullPath } })
+
+        alertModule.showAlert({
+          message: i18n.t('core.unauthorizedAlert').toString(),
+          color: 'info',
+          timeout: 5000,
+        })
       }
       return Promise.reject(error)
     })

@@ -32,5 +32,6 @@
   "termsOfUse": "Nutzungsbedingungen",
   "privacyPolicy": "Datenschutzerklärung",
   "createdTime": "Erstellt am",
-  "lastUpdatedTime": "Zuletzt geändert am"
+  "lastUpdatedTime": "Zuletzt geändert am",
+  "unauthorizedAlert": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an."
 }

@@ -32,5 +32,6 @@
   "termsOfUse": "Terms of Use",
   "privacyPolicy": "Privacy Policy",
   "createdTime": "Created",
-  "lastUpdatedTime": "Last updated"
+  "lastUpdatedTime": "Last updated",
+  "unauthorizedAlert": "Your active session has expired. Please sign in again."
 }
