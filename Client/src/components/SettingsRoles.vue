@@ -16,7 +16,7 @@
         v-t="'project.role.description'"
       />
       <v-list v-if="projectModule.getActiveProject">
-        <v-list-item v-if="!projectModule.getActiveProject.roles">
+        <v-list-item v-if="projectModule.getActiveProject.getRoles.length === 0">
           {{ $tc('project.role.roles', 0) }}
         </v-list-item>
         <v-list-item
