@@ -86,7 +86,7 @@ export default class ParticipantsInvitations extends Vue {
   private async init() {
     this.loading = true
 
-    // await this.knowledgeBaseModule.loadArticles();
+    await this.knowledgeBaseModule.loadArticles();
 
     this.loading = false
   }

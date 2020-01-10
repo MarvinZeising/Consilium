@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
 import router from '../router'
-import { Topic } from '../models'
+import { Topic, Article } from '../models'
 
 @Module({ dynamic: true, store, name: 'KnowledgeBaseModule' })
 export default class KnowledgeBaseModule extends VuexModule {
@@ -26,6 +26,17 @@ export default class KnowledgeBaseModule extends VuexModule {
         topics,
         clearFirst: true,
       })
+    }
+  }
+
+  @Action
+  public async loadArticles() {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+    const topic = this.getActiveTopic
+    if (personId && projectId && topic) {
+      const response = await axios.get(`/persons/${personId}/projects/${projectId}/topics/${topic.id}/articles`)
+      const articles = response.data.map((x: any) => Article.create(x))
+      topic.articles = articles
     }
   }
 
