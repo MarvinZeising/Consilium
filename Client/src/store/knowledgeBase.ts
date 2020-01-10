@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Topic } from '../models/definitions'
+import { Topic } from '../models'
 
 @Module({ dynamic: true, store, name: 'KnowledgeBaseModule' })
 export default class KnowledgeBaseModule extends VuexModule {

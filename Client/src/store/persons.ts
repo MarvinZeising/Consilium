@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
 import router from '../router'
-import { Person, Gender, Participation } from '../models/definitions'
+import { Person, Gender, Participation } from '../models'
 import store from '../plugins/vuex'
 import { setCookie } from './_helpers'
 

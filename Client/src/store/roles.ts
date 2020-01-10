@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Role } from '../models/definitions'
+import { Role } from '../models'
 
 @Module({ dynamic: true, store, name: 'RoleModule' })
 export default class RoleModule extends VuexModule {

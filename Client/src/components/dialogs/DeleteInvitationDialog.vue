@@ -53,7 +53,7 @@ import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import InvitationModule from '../../store/invitations'
 import { getModule } from 'vuex-module-decorators'
-import { Project } from '../../models/definitions'
+import { Project } from '../../models'
 
 @Component
 export default class DeleteInvitationDialog extends Vue {

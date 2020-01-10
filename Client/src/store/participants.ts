@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Participation, ParticipationStatus } from '../models/definitions'
+import { Participation, ParticipationStatus } from '../models'
 
 @Module({ dynamic: true, store, name: 'ParticipantModule' })
 export default class ParticipantModule extends VuexModule {

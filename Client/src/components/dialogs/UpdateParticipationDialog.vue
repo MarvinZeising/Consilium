@@ -53,7 +53,7 @@ import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import UserModule from '../../store/users'
 import DeleteParticipationDialog from './DeleteParticipationDialog.vue'
-import { Participation } from '../../models/definitions'
+import { Participation } from '../../models'
 
 @Component({
   components: {

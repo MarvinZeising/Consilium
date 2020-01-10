@@ -29,7 +29,7 @@
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { Person } from '../../models/definitions'
+import { Person } from '../../models'
 import PersonModule from '../../store/persons'
 import PersonalGeneral from '../../components/PersonalGeneral.vue'
 import DeletePersonDialog from '../../components/dialogs/DeletePersonDialog.vue'

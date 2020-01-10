@@ -53,7 +53,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { Role } from '../models/definitions'
+import { Role } from '../models'
 import CreateRoleDialog from '../components/dialogs/CreateRoleDialog.vue'
 import UpdateRoleDialog from '../components/dialogs/UpdateRoleDialog.vue'
 import PersonModule from '../store/persons'

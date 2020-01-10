@@ -68,7 +68,7 @@ import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import ParticipantModule from '../../store/participants'
 import { getModule } from 'vuex-module-decorators'
-import { Project, Participation } from '../../models/definitions'
+import { Project, Participation } from '../../models'
 
 @Component
 export default class DeleteParticipationDialog extends Vue {

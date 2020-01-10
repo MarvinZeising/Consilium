@@ -52,7 +52,7 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import PersonModule from '../store/persons'
 import UserModule from '../store/users'
-import { Person } from '../models/definitions'
+import { Person } from '../models'
 
 @Component
 export default class AccountPersons extends Vue {

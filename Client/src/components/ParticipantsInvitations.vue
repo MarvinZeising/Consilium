@@ -51,7 +51,7 @@ import UserModule from '../store/users'
 import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import InvitationModule from '../store/invitations'
-import { Person, ParticipationStatus, Gender } from '../models/definitions'
+import { Person, ParticipationStatus, Gender } from '../models'
 import CreateInvitationDialog from './dialogs/CreateInvitationDialog.vue'
 import UpdateInvitationDialog from './dialogs/UpdateInvitationDialog.vue'
 

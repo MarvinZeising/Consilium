@@ -46,7 +46,7 @@ import { getModule } from 'vuex-module-decorators'
 import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import KnowledgeBaseModule from '../store/knowledgeBase'
-import { Topic } from '../models/definitions'
+import { Topic } from '../models'
 import CreateTopicDialog from './dialogs/CreateTopicDialog.vue'
 import UpdateTopicDialog from './dialogs/UpdateTopicDialog.vue'
 

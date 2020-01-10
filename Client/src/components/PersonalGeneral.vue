@@ -149,7 +149,7 @@ import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../i18n'
-import { Person, Gender } from '../models/definitions'
+import { Person, Gender } from '../models'
 import UserModule from '../store/users'
 import PersonModule from '../store/persons'
 

@@ -53,7 +53,7 @@
 import KnowledgeBaseModule from '../../store/knowledgeBase'
 import { getModule } from 'vuex-module-decorators'
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Topic } from '../../models/definitions'
+import { Topic } from '../../models'
 import i18n from '../../i18n'
 import DeleteTopicDialog from './DeleteTopicDialog.vue'
 

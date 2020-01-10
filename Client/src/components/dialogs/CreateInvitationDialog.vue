@@ -82,7 +82,7 @@ import ProjectModule from '../../store/projects'
 import InvitationModule from '../../store/invitations'
 import RequestModule from '../../store/requests'
 import RoleModule from '../../store/roles'
-import { Role, Exceptions } from '@/models/definitions'
+import { Role, Exceptions } from '@/models'
 
 @Component
 export default class CreateInvitationDialog extends Vue {

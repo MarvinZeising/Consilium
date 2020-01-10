@@ -68,7 +68,7 @@ import ProjectModule from '../../store/projects'
 import RoleModule from '../../store/roles'
 import InvitationModule from '../../store/invitations'
 import DeleteInvitationDialog from './DeleteInvitationDialog.vue'
-import { Participation, Role } from '../../models/definitions'
+import { Participation, Role } from '../../models'
 
 @Component({
   components: {

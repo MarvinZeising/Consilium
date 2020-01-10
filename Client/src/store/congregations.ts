@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Congregation } from '../models/definitions'
+import { Congregation } from '../models'
 
 @Module({ dynamic: true, store, name: 'CongregationModule' })
 export default class CongregationModule extends VuexModule {

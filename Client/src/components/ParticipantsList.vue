@@ -51,7 +51,7 @@ import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import ParticipantModule from '../store/participants'
 import DeleteParticipantDialog from './dialogs/DeleteParticipantDialog.vue'
-import { Person, ParticipationStatus, Gender } from '../models/definitions'
+import { Person, ParticipationStatus, Gender } from '../models'
 
 @Component({
   components: {

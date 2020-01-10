@@ -148,7 +148,7 @@ import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import PersonModule from '../../store/persons'
 import RoleModule from '../../store/roles'
-import { Role } from '../../models/definitions'
+import { Role } from '../../models'
 import DeleteRoleDialog from './DeleteRoleDialog.vue'
 
 @Component({

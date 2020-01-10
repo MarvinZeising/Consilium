@@ -199,7 +199,7 @@ import { mapGetters, mapActions } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
 import PersonModule from '../store/persons'
 import KnowledgeBaseModule from '../store/knowledgeBase'
-import { Person, Project, Topic, Participation, ParticipationStatus } from '../models/definitions'
+import { Person, Project, Topic, Participation, ParticipationStatus } from '../models'
 
 @Component
 export default class NavbarSignedIn extends Vue {

@@ -66,7 +66,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import ProjectModule from '../../store/projects'
 import UserModule from '../../store/users'
 import { getModule } from 'vuex-module-decorators'
-import { Project } from '../../models/definitions'
+import { Project } from '../../models'
 import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 

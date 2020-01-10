@@ -125,7 +125,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
-import { Project } from '../models/definitions'
+import { Project } from '../models'
 import ProjectModule from '../store/projects'
 import UserModule from '../store/users'
 import NavbarSignedIn from './NavbarSignedIn.vue'

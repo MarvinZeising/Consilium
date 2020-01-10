@@ -77,7 +77,7 @@ import i18n from '../../i18n'
 import AlertModule from '../../store/alerts'
 import PersonModule from '../../store/persons'
 import ProjectModule from '../../store/projects'
-import { Exceptions } from '@/models/definitions'
+import { Exceptions } from '@/models'
 
 @Component
 export default class CreateProjectDialog extends Vue {

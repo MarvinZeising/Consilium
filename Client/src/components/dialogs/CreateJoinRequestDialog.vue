@@ -59,7 +59,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
 import RequestModule from '../../store/requests'
-import { Topic, Exceptions } from '../../models/definitions'
+import { Topic, Exceptions } from '../../models'
 
 @Component
 export default class CreateJoinRequestDialog extends Vue {

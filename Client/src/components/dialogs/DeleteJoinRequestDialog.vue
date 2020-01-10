@@ -42,7 +42,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
 import RequestModule from '../../store/requests'
-import { Participation } from '../../models/definitions'
+import { Participation } from '../../models'
 
 @Component
 export default class DeleteJoinRequestDialog extends Vue {

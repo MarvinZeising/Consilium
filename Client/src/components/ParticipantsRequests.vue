@@ -66,7 +66,7 @@ import UserModule from '../store/users'
 import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import RequestModule from '../store/requests'
-import { Person, ParticipationStatus, Gender } from '../models/definitions'
+import { Person, ParticipationStatus, Gender } from '../models'
 import HandleJoinRequestDialog from './dialogs/HandleJoinRequestDialog.vue'
 
 @Component({

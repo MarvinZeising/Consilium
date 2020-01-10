@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Participation } from '../models/definitions'
+import { Participation } from '../models'
 
 @Module({ dynamic: true, store, name: 'InvitationModule' })
 export default class InvitationModule extends VuexModule {

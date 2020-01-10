@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import { getModule } from 'vuex-module-decorators'
-import { Project, Topic } from '../../models/definitions'
+import { Project, Topic } from '../../models'
 import { Component, Watch, Prop, Vue } from 'vue-property-decorator'
 import i18n from '../../i18n'
 import KnowledgeBaseModule from '../../store/knowledgeBase'

@@ -46,7 +46,7 @@ import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { VForm } from 'vuetify/lib'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
-import { Project } from '../../models/definitions'
+import { Project } from '../../models'
 import ParticipantModule from '../../store/participants'
 
 @Component

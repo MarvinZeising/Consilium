@@ -50,7 +50,7 @@ import { getModule } from 'vuex-module-decorators'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import i18n from '../../i18n'
 import InvitationModule from '../../store/invitations'
-import { Participation } from '../../models/definitions'
+import { Participation } from '../../models'
 
 @Component
 export default class HandleInvitationDialog extends Vue {

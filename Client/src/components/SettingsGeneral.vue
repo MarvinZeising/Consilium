@@ -133,7 +133,7 @@ import AlertModule from '../store/alerts'
 import UserModule from '../store/users'
 import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
-import { Exceptions } from '../models/definitions'
+import { Exceptions } from '../models'
 
 @Component
 export default class SettingsGeneral extends Vue {

@@ -71,7 +71,7 @@ import InvitationModule from '../../store/invitations'
 import ProjectModule from '../../store/projects'
 import RoleModule from '../../store/roles'
 import RequestModule from '../../store/requests'
-import { Participation, Role } from '../../models/definitions'
+import { Participation, Role } from '../../models'
 
 @Component
 export default class HandleJoinRequestDialog extends Vue {

@@ -61,7 +61,7 @@ import DeleteJoinRequestDialog from '../components/dialogs/DeleteJoinRequestDial
 import HandleInvitationDialog from '../components/dialogs/HandleInvitationDialog.vue'
 import UpdateParticipationDialog from '../components/dialogs/UpdateParticipationDialog.vue'
 import CreateProjectDialog from '../components/dialogs/CreateProjectDialog.vue'
-import { Project, ParticipationStatus, Participation } from '../models/definitions'
+import { Project, ParticipationStatus, Participation } from '../models'
 
 @Component({
   components: {
