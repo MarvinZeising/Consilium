@@ -223,7 +223,6 @@ export default class SettingsGeneral extends Vue {
         email: this.email
       })
       if (response === Exceptions.ProjectNameUnique) {
-        const form: any = this.$refs.form
         const thisName = this.name
         this.nameRules.push((v: string) => v !== thisName || i18n.t('project.nameUnique'))
         form.validate()

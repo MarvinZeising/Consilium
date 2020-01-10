@@ -206,12 +206,6 @@ export default class NavbarSignedIn extends Vue {
   private personModule: PersonModule = getModule(PersonModule, this.$store)
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
-  @Watch('$i18n.locale')
-  private async onLocaleChanged(val: string, oldVal: string) {
-    // * for whatever reason, we have to update it manually, here
-    this.$forceUpdate()
-  }
-
   private profileActions: any[] = [
     ['person.personal', 'personal'],
     //// ['Spiritual', 'assignment_turned_in', 'configureProjects'],
@@ -243,8 +237,7 @@ export default class NavbarSignedIn extends Vue {
       if (link === 'calendar') {
         return true
         // TODO: return participation.role.calendarRead
-      }
-      else if (link === 'topics') {
+      } else if (link === 'topics') {
         return participation.role.knowledgeBaseRead
       }
     }
@@ -259,6 +252,12 @@ export default class NavbarSignedIn extends Vue {
     if (personId !== this.personModule.getActivePersonId) {
       this.personModule.activatePerson(personId)
     }
+  }
+
+  @Watch('$i18n.locale')
+  private async onLocaleChanged(val: string, oldVal: string) {
+    // * for whatever reason, we have to update it manually, here
+    this.$forceUpdate()
   }
 
 }
