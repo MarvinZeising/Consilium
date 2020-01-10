@@ -40,7 +40,7 @@ namespace Server.Controllers
 
                 var participations = _db.Participation
                     .FindByCondition(x => x.PersonId == personId)
-                    .Include(x => x.Project)
+                    .Include(x => x.Project).ThenInclude(x => x.Topics)
                     .Include(x => x.Role)
                     .ToList();
 
