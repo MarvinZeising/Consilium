@@ -1,8 +1,10 @@
 {
-  "projects": "Meine Projekte",
+  "projects": "Du nimmst noch an keinem Projekt teil. | Projekt | Meine Projekte",
   "projectsDescription": "Hier siehst du alle Projekte an denen du teilnimmst. Du kannst die Teilnahme an weiteren Projekten anfragen oder selbst ein neues Projekt erstellen.",
-  "noProjects": "Du nimmst noch an keinem Projekt teil.",
-  "knowledgeBase": "Informationen",
+  "knowledgeBase": {
+    "knowledgeBase": "Informationen",
+    "topics": "Du hast noch keine Themen angelegt. | Thema | Informationen - Themen"
+  },
   "calendar": "Kalender",
   "administration": "Verwaltung",
   "settings": "Einstellungen",
@@ -80,7 +82,6 @@
   "requestsNotAllowed": "Teilnahme kann nicht angefragt werden",
   "role": {
     "description": "Um Kontrolle darüber zu haben, welche Teilnehmer des Projektes was sehen und bearbeiten dürfen, gibt es Rollen. Jeder Teilnehmer hat eine Rolle. Die Rolle regelt, welche verschiedenen Bereiche des Projektes die Teilnehmer sehen oder sogar bearbeiten dürfen. Standardmäßig wird eine 'Administrator' Rolle erstellt.",
-    "loading": "Lade Rollen...",
     "create": "Rolle hinzufügen",
     "createDescription": "Hier kannst du eine neue Rolle für dieses Projekt erstellen. Danach kannst du Teilnehmern dieses Projektes die neue Rolle zuweisen. Beachte, dass Teilnehmer den Namen der Rolle sehen können, die ihnen zugeteilt wurde.",
     "update": "Rolle bearbeiten",
@@ -91,7 +92,7 @@
     "xParticipants": "Niemand hat diese Rolle | 1 Teilnehmer hat diese Rolle | {count} Teilnehmer haben diese Rolle",
     "settings": "Einstellungen",
     "settingsDescription": "Einstellungen. Lesen erlaubt das Sehen der allgemeinen Einstellungen. Bearbeiten erlaubt sie zu bearbeiten. ACHTUNG: Es erlaubt auch das gesamte Projekt zu löschen.",
-    "roles": "Rolle | Rollen",
+    "roles": "Lade Rollen... | Rolle | Rollen",
     "rolesDescription": "Rollen. Lesen erlaubt das Sehen der angelegten Rollen, sowie welchem Teilnehmer welche Rolle zugewiesen ist. Bearbeiten erlaubt es Rollen zu bearbeiten und Teilnehmern Rollen zuzuweisen.",
     "participants": "Teilnehmer",
     "participantsDescription": "Teilnehmer. Lesen erlaubt das Sehen der Teilnehmerliste. Bearbeiten erlaubt das Bearbeiten der Teilnehmerdaten, sowie das Einladen von Personen zum Projekt und das Akzeptieren/Ablehnen von Projekt-Beitrittsanfragen.",

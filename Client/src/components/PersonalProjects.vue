@@ -1,16 +1,15 @@
 <template>
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2
-      class="headline mb-3"
-      v-t="'project.projects'"
-    />
+    <h2 class="headline mb-3">
+      {{ $tc('project.projects', 2) }}
+    </h2>
     <v-card flat class="ma-2 mb-5">
       <v-card-text class="grey--text">
         {{ $t('project.projectsDescription') }}
       </v-card-text>
       <v-list>
         <v-list-item v-if="personModule.getActivePerson.getParticipations.length === 0">
-          <span v-t="'project.noProjects'" />
+          {{ $tc('project.projects', 0) }}
         </v-list-item>
         <v-list-item
           v-for="(participation, index) in personModule.getActivePerson.getParticipations"

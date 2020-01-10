@@ -17,7 +17,7 @@
       />
       <v-list v-if="projectModule.getActiveProject">
         <v-list-item v-if="!projectModule.getActiveProject.roles">
-          <span v-t="'project.role.loading'" />
+          {{ $tc('project.role.roles', 0) }}
         </v-list-item>
         <v-list-item
           v-for="(role, index) in projectModule.getActiveProject.getRoles"

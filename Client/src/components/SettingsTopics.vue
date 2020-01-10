@@ -3,10 +3,9 @@
     v-if="canView"
     xs12 sm10 md8 lg6 xl4
   >
-    <h2
-      class="headline mb-3"
-      v-t="'knowledgeBase.topics'"
-    />
+    <h2 class="headline mb-3">
+      {{ $tc('project.knowledgeBase.topics', 2) }}
+    </h2>
     <v-card
       flat
       class="ma-2 mb-5"
