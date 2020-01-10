@@ -9,6 +9,7 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
+        navbar: colors.blue.darken3,
         primary: colors.blue.darken3,
         secondary: colors.amber.base,
         accent: colors.pink.base,
@@ -18,7 +19,8 @@ export default new Vuetify({
         success: colors.green.base,
       },
       dark: {
-        primary: colors.blue.darken3,
+        navbar: colors.blue.darken3,
+        primary: colors.blue.base,
         secondary: colors.amber.base,
         accent: colors.pink.base,
         error: colors.red.base,
