@@ -6,11 +6,9 @@
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
-        icon
-        class="ma-0"
-      >
-        <v-icon>edit</v-icon>
-      </v-btn>
+        text
+        v-t="'core.edit'"
+      />
     </template>
     <v-card>
       <v-form
