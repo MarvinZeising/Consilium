@@ -194,17 +194,23 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
-import { Person, Project, Topic, Participation, ParticipationStatus } from '../models/definitions'
 import { getModule } from 'vuex-module-decorators'
 import PersonModule from '../store/persons'
 import KnowledgeBaseModule from '../store/knowledgeBase'
+import { Person, Project, Topic, Participation, ParticipationStatus } from '../models/definitions'
 
 @Component
 export default class NavbarSignedIn extends Vue {
   private personModule: PersonModule = getModule(PersonModule, this.$store)
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
+
+  @Watch('$i18n.locale')
+  private async onLocaleChanged(val: string, oldVal: string) {
+    // * for whatever reason, we have to update it manually, here
+    this.$forceUpdate()
+  }
 
   private profileActions: any[] = [
     ['person.personal', 'personal'],
