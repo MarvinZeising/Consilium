@@ -58,6 +58,9 @@ namespace Server.Controllers
                 if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
+                var projectWithThisName = _db.Project.FindByCondition(x => x.Name == dto.Name).SingleOrDefault();
+                if (projectWithThisName != null) return BadRequest(nameof(ProjectNameUniqueException));
+
                 var project = _mapper.Map<Project>(dto);
                 _db.Project.Create(project);
 
@@ -105,6 +108,9 @@ namespace Server.Controllers
                 if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.SettingsWrite != true) return Forbid();
+
+                var projectWithThisName = _db.Project.FindByCondition(x => x.Name == dto.Name).SingleOrDefault();
+                if (projectWithThisName != null) return BadRequest(nameof(ProjectNameUniqueException));
 
                 var project = _db.Project.GetById(projectId);
 
