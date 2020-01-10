@@ -20,6 +20,8 @@ namespace Server
             CreateMap<CreateProjectDto, Project>();
 
             CreateMap<Topic, TopicDto>();
+            CreateMap<CreateTopicDto, Topic>();
+            CreateMap<UpdateTopicDto, Topic>();
 
             CreateMap<Article, ArticleDto>();
 
