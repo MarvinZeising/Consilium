@@ -10,7 +10,7 @@ namespace Entities.DataTransferObjects
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Gender { get; set; }
-        public Guid CongregationId { get; set; }
+        public Guid? CongregationId { get; set; }
         public CongregationDto Congregation { get; set; }
         public DateTime CreatedTime { get; set; }
         public ICollection<ParticipationDto> Participations { get; set; }

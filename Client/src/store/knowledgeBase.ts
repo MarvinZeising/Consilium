@@ -16,6 +16,7 @@ export default class KnowledgeBaseModule extends VuexModule {
       this.context.commit('upsertProjectTopics', {
         projectId,
         topics,
+        clearFirst: true,
       })
     }
   }
