@@ -54,6 +54,22 @@ export default class KnowledgeBaseModule extends VuexModule {
   }
 
   @Action
+  public async createArticle(data: {
+    title: string,
+    content: string,
+  }) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+    const topic = this.getActiveTopic
+
+    const response = await axios.post(`/persons/${personId}/projects/${projectId}/topics/${topic.id}/articles`, {
+      title: data.title,
+      content: data.content,
+    })
+    const article = Article.create(response.data)
+    topic.articles.push(article)
+  }
+
+  @Action
   public async updateTopic(data: {
     topicId: string,
     name: string

@@ -1,7 +1,7 @@
 <template>
   <v-flex
     v-if="canView"
-    xs12
+    xs12 md10 lg8
   >
     <h2 class="headline mb-3">
       {{ $tc('project.knowledgeBase.articles', 2) }}
@@ -27,6 +27,10 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-card-actions v-if="!loading && canEdit">
+        <v-spacer />
+        <CreateArticleDialog />
+      </v-card-actions>
     </v-card>
   </v-flex>
 </template>
@@ -40,8 +44,13 @@ import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import KnowledgeBaseModule from '../store/knowledgeBase'
 import { Article } from '../models'
+import CreateArticleDialog from '../components/dialogs/CreateArticleDialog.vue'
 
-@Component
+@Component({
+  components: {
+    CreateArticleDialog,
+  }
+})
 export default class ParticipantsInvitations extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
@@ -50,17 +59,12 @@ export default class ParticipantsInvitations extends Vue {
 
   private loading: boolean = true
 
-  private get getArticles() {
-    return [{
-      id: 'asdf',
-      topicId: '1234',
-      title: 'My first title',
-      content: 'My awesome content'
-    }]
-  }
-
   private get canView() {
     return this.personModule.getActiveRole?.knowledgeBaseRead === true
+  }
+
+  private get canEdit() {
+    return this.personModule.getActiveRole?.knowledgeBaseWrite === true
   }
 
   @Watch('personModule.getActivePerson')

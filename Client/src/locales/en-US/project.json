@@ -13,7 +13,13 @@
     "deleteTopic": "Delete Topic",
     "deleteTopicDescription": "This will delete the topic and all articles created for this topic.",
     "deleteTopicHint": "Enter the topic name to continue",
-    "topicNameMustEqual": "Name must be this topic's name"
+    "topicNameMustEqual": "Name must be this topic's name",
+    "createArticle": "Add a new Article",
+    "createArticleDescription": "Here you can write a new article. It has a title and a content. Please be aware that a long title might be cropped on smaller displays.",
+    "title": "Title",
+    "titleDescription": "The title of the article.",
+    "content": "Content",
+    "contentDescription": "The content of the article."
   },
   "calendar": "Calendar",
   "administration": "Administration",
