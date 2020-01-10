@@ -54,13 +54,13 @@ export default class ProjectModule extends VuexModule {
     const { personId, projectId } = this.resolvePersonAndProject
     return await axios
       .put(`/persons/${personId}/projects/${projectId}`, {
-      name: project.name,
-      email: project.email
-    })
+        name: project.name,
+        email: project.email
+      })
       .then(async (response) => {
-    const updatedProject = Project.create(response.data)
-    await this.context.dispatch('loadNavbar')
-    this.context.commit('upsertProject', updatedProject)
+        const updatedProject = Project.create(response.data)
+        await this.context.dispatch('loadNavbar')
+        this.context.commit('upsertProject', updatedProject)
       })
       .catch((error: any) => error.response?.data)
   }
@@ -69,17 +69,19 @@ export default class ProjectModule extends VuexModule {
   public async createProject(project: {
     name: string,
     email: string,
-  }): Promise<Project> {
+  }) {
     const { personId } = this.resolvePersonAndProject
 
-    const response = await axios.post(`/persons/${personId}/projects`, {
-      name: project.name,
-      email: project.email,
-    })
-
-    await this.context.dispatch('loadNavbar')
-
-    return Project.create(response.data)
+    return await axios
+      .post(`/persons/${personId}/projects`, {
+        name: project.name,
+        email: project.email,
+      })
+      .then(async (response) => {
+        await this.context.dispatch('loadNavbar')
+        return Project.create(response.data)
+      })
+      .catch((error: any) => error.response?.data)
   }
 
   @Action({ commit: 'removeProject' })

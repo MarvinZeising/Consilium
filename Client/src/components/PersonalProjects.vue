@@ -44,11 +44,7 @@
         <v-layout wrap>
           <CreateJoinRequestDialog />
           <v-spacer />
-          <v-btn
-            text
-            :to="{ name: 'createProject' }"
-            v-t="'project.create'"
-          />
+          <CreateProjectDialog />
         </v-layout>
       </v-card-actions>
     </v-card>
@@ -64,6 +60,7 @@ import CreateJoinRequestDialog from '../components/dialogs/CreateJoinRequestDial
 import DeleteJoinRequestDialog from '../components/dialogs/DeleteJoinRequestDialog.vue'
 import HandleInvitationDialog from '../components/dialogs/HandleInvitationDialog.vue'
 import UpdateParticipationDialog from '../components/dialogs/UpdateParticipationDialog.vue'
+import CreateProjectDialog from '../components/dialogs/CreateProjectDialog.vue'
 import { Project, ParticipationStatus, Participation } from '../models/definitions'
 
 @Component({
@@ -72,6 +69,7 @@ import { Project, ParticipationStatus, Participation } from '../models/definitio
     DeleteJoinRequestDialog,
     HandleInvitationDialog,
     UpdateParticipationDialog,
+    CreateProjectDialog,
   }
 })
 export default class PersonalProjects extends Vue {

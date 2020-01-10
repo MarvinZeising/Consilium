@@ -27,10 +27,9 @@
   "deleteWarning": "!!! This cannot be undone - everything will be gone !!!",
   "updateGeneral": "Update Project General",
   "nameDescription": "The name of this project. The name is unique accross all projects, so no other project can have this name.",
-  "create": "Create a new project",
-  "createDescription1": "Are you the Coordinator of an event/a project?",
-  "createDescription2": "Then you can create a new project and invite all the publishers to it.",
   "emailDescription": "We'll use this email address as reply-to in all emails that we send on behalf of this project. You can create an email account specifically for the project, or just use your own email address.",
+  "create": "Create a new Project",
+  "createDescription": "Are you the coordinator of a project with a lot of participants that need to be scheduled? Then you can create a new project and invite all the participants to it.",
   "createSubmit": "Create project",
   "congregations": "Congregations",
   "participant": {

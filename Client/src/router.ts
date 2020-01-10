@@ -67,10 +67,6 @@ const router = new VueRouter({
     name: 'configureProjects',
     component: () => import('./views/profile/ConfigureProjects.vue'),
   }, {
-    path: '/profile/create-project',
-    name: 'createProject',
-    component: () => import('./views/profile/CreateProject.vue'),
-  }, {
     path: '/account',
     name: 'account',
     component: () => import('./views/account/Account.vue'),
