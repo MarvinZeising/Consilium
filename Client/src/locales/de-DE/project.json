@@ -46,13 +46,13 @@
     "delete": "Projekt verlassen",
     "deleteHint": "Bitte gib den Namen des Projektes ein um fortzufahren",
     "deleteDescription": "Möchtest du wirklich deine Teilnahme an diesem Projekt widerrufen? Falls ja, werden wir deine Berechtigungen entfernen und alle deine Teilnahmen an Schichten anonymisieren.",
-    "deleteWarning": "!!! Das kann nicht rückgängig gemacht werden - alles wird weg sein !!!"
-  },
-  "participationStatus": {
-    "invited": "Du hast eine Einladung für dieses Projekt bekommen",
-    "requested": "Du hast die Teilnahme an diesem Projekt angefragt",
-    "active": "Aktiv",
-    "inactive": "Inaktiv"
+    "deleteWarning": "!!! Das kann nicht rückgängig gemacht werden - alles wird weg sein !!!",
+    "status": {
+      "invited": "Du hast eine Einladung für dieses Projekt bekommen",
+      "requested": "Du hast die Teilnahme an diesem Projekt angefragt",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    }
   },
   "invitation": {
     "info": "Du wurdest eingeladen",

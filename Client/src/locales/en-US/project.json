@@ -46,13 +46,13 @@
     "delete": "Leave this Project",
     "deleteHint": "Please enter the project's name to continue",
     "deleteDescription": "Do you really want to cancel your participation with this project? If so, we'll remove all your permissions and anonymize your shift participations.",
-    "deleteWarning": "!!! This cannot be undone - everything will be gone !!!"
-  },
-  "participationStatus": {
-    "invited": "You received an invitation to join this project",
-    "requested": "You requested admission to this project",
-    "active": "Active",
-    "inactive": "Inactive"
+    "deleteWarning": "!!! This cannot be undone - everything will be gone !!!",
+    "status": {
+      "invited": "You received an invitation to join this project",
+      "requested": "You requested admission to this project",
+      "active": "Active",
+      "inactive": "Inactive"
+    }
   },
   "invitation": {
     "info": "You've been invited",
