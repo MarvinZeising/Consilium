@@ -63,6 +63,15 @@ namespace Server.Controllers
 
                 var articles = _db.Article
                     .FindByCondition(x => x.TopicId == topicId)
+                    .Select(x => new Article
+                    {
+                        Id = x.Id,
+                        TopicId = x.TopicId,
+                        Title = x.Title,
+                        Content = x.Content.Substring(0, 200),
+                        CreatedTime = x.CreatedTime,
+                        LastUpdatedTime = x.LastUpdatedTime,
+                    })
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ArticleDto>>(articles));
