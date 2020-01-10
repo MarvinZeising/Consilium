@@ -1,4 +1,5 @@
 {
+  "notFound": "Es konnte keine Person mit dieser ID gefunden werden",
   "profile": "Profil",
   "personal": "Persönliches",
   "configureProjects": "Projekte konfigurieren",

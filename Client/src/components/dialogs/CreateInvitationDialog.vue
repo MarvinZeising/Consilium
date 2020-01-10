@@ -82,7 +82,7 @@ import ProjectModule from '../../store/projects'
 import InvitationModule from '../../store/invitations'
 import RequestModule from '../../store/requests'
 import RoleModule from '../../store/roles'
-import { Role } from '@/models/definitions'
+import { Role, Exceptions } from '@/models/definitions'
 
 @Component
 export default class CreateInvitationDialog extends Vue {
@@ -131,21 +131,30 @@ export default class CreateInvitationDialog extends Vue {
     this.loadingRoles = false
   }
 
+  private throwValidationError(message: string) {
+      const form: any = this.$refs.form
+      const thisPersonId = this.personId
+      this.personIdRules.push((v: string) => v !== thisPersonId || i18n.t(message))
+      form.validate()
+  }
+
   private async save() {
+    this.loading = true
     const projectId = this.$route.params.projectId
 
-    if (this.valid) {
-      this.loading = true
-
-      await this.invitationModule.createInvitation({
-        personId: this.personId,
-        roleId: this.roleId
-      })
-      // TODO: handle wrong person id
-
-      this.loading = false
+    const response = await this.invitationModule.createInvitation({
+      personId: this.personId,
+      roleId: this.roleId
+    })
+    if (response === Exceptions.PersonNotFound) {
+      this.throwValidationError('person.notFound')
+    } else if (response) {
+      this.throwValidationError('core.generalError')
+    } else {
       this.dialog = false
     }
+
+    this.loading = false
   }
 
 }

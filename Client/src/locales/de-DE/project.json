@@ -1,7 +1,7 @@
 {
   "projects": "Du nimmst noch an keinem Projekt teil. | Projekt | Meine Projekte",
   "projectsDescription": "Hier siehst du alle Projekte an denen du teilnimmst. Du kannst die Teilnahme an weiteren Projekten anfragen oder selbst ein neues Projekt erstellen.",
-  "notFound": "Kein Projekt mit dieser ID konnte gefunden werden",
+  "notFound": "Es konnte kein Projekt mit dieser ID gefunden werden",
   "knowledgeBase": {
     "knowledgeBase": "Informationen",
     "topics": "Du hast noch keine Themen angelegt. | Thema | Informationen - Themen",

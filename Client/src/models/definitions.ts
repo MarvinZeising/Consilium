@@ -494,6 +494,7 @@ class Article {
 
 enum Exceptions {
   ProjectNotFound = 'ProjectNotFoundException',
+  PersonNotFound = 'PersonNotFoundException',
   RequestsNotAllowed = 'RequestsNotAllowedException',
 }
 

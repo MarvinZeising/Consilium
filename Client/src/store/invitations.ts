@@ -27,16 +27,19 @@ export default class InvitationModule extends VuexModule {
   }) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.post(`/persons/${personId}/projects/${projectId}/invitations`, {
-      personId: data.personId,
-      roleId: data.roleId,
-    })
-    const invitation = Participation.create(response.data)
-
-    this.context.commit('upsertProjectInvitations', {
-      projectId,
-      invitations: [invitation],
-    })
+    return await axios
+      .post(`/persons/${personId}/projects/${projectId}/invitations`, {
+        personId: data.personId,
+        roleId: data.roleId,
+      })
+      .then((response) => {
+        const invitation = Participation.create(response.data)
+        this.context.commit('upsertProjectInvitations', {
+          projectId,
+          invitations: [invitation],
+        })
+      })
+      .catch((error: any) => error.response?.data)
   }
 
   @Action
