@@ -1,24 +1,22 @@
 <template>
   <v-dialog
-    v-model="renameTopicDialog"
-    max-width="600px"
+    v-model="dialog"
+    max-width="500px"
   >
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
-        icon
-        class="ma-0"
-      >
-        <v-icon color="grey">edit</v-icon>
-      </v-btn>
+        text
+        v-t="'project.knowledgeBase.createTopic'"
+      />
     </template>
     <v-card>
       <v-form v-model="form">
         <v-card-title>
           <span
             class="headline"
-            v-t="'knowledgeBase.renameTopic'"
-          ></span>
+            v-t="'project.knowledgeBase.createTopic'"
+          />
         </v-card-title>
         <v-card-text>
           <v-text-field
@@ -32,16 +30,17 @@
           <v-spacer />
           <v-btn
             text
-            @click.stop="renameTopicDialog = false"
+            @click.stop="dialog = false"
             v-t="'core.close'"
           />
           <v-btn
-            :disabled="topicName == ''"
             text
-            color="primary"
-            @click.stop="renameTopic"
-            v-t="'core.save'"
             type="submit"
+            color="primary"
+            v-t="'core.save'"
+            @click.stop="createTopic"
+            :disabled="topicName == ''"
+            :loading="loading"
           />
         </v-card-actions>
       </v-form>
@@ -57,28 +56,22 @@ import { Topic } from '../../models/definitions'
 import i18n from '../../i18n'
 
 @Component
-export default class RenameTopicDialog extends Vue {
+export default class CreateTopicDialog extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
-  @Prop(String)
-  private readonly topicId: string | undefined
-
   private form: any = null
-  private renameTopicDialog: any = null
+  private dialog: any = null
+  private loading: boolean = false
+
   private topicName: string = ''
 
-  private async created() {
-    this.topicName = await this.knowledgeBaseModule.allTopics
-      .filter((x: Topic) => x.id === this.topicId)[0].name
-  }
+  private async createTopic() {
+    this.loading = true
 
-  private async renameTopic() {
-    const updatedTopic = new Topic('', this.topicName)
-    updatedTopic.id = this.topicId || ''
+    await this.knowledgeBaseModule.createTopic(this.topicName)
 
-    await this.knowledgeBaseModule.changeTopic(updatedTopic)
-
-    this.renameTopicDialog = false
+    this.loading = false
+    this.dialog = false
   }
 }
 </script>

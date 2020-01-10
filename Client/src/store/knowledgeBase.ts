@@ -5,105 +5,62 @@ import { Topic } from '../models/definitions'
 
 @Module({ dynamic: true, store, name: 'KnowledgeBaseModule' })
 export default class KnowledgeBaseModule extends VuexModule {
-  public topics: Topic[] = []
 
-  public get allTopics(): Topic[] {
-    return [...this.topics].sort((a: Topic, b: Topic) => a.order - b.order)
+  @Action
+  public async loadTopics() {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+    if (personId && projectId) {
+      const response = await axios.get(`/persons/${personId}/projects/${projectId}/topics`)
+      const topics = response.data.map((x: any) => Topic.create(x))
+
+      this.context.commit('upsertProjectTopics', {
+        projectId,
+        topics,
+      })
+    }
   }
 
   @Action
-  public async initKnowledgeBaseModule() {
-    const response = await axios.get('/knowledge-base/topics')
-    this.context.commit('setTopics', response.data)
-  }
+  public async createTopic(name: string) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-  @MutationAction({ mutate: ['topics'] })
-  public async clearKnowledgeBases() {
-    return { topics: [] }
-  }
+    const response = await axios.post(`/persons/${personId}/projects/${projectId}/topics`, { name })
+    const topic = Topic.create(response.data)
 
-  @Action
-  public async createTopic(topic: Topic) {
-    const response = await axios.post('/knowledge-base/topics', {
-      projectId: topic.projectId,
-      name: topic.name,
+    this.context.commit('upsertProjectTopics', {
+      projectId,
+      topics: [topic],
     })
-    this.context.commit('insertTopic', response.data)
   }
 
   @Action
-  public async changeTopic(topic: Topic) {
-    await axios.put('/knowledge-base/topics', {
-      id: topic.id,
-      name: topic.name,
-      order: topic.order,
+  public async updateTopic(data: {
+    topicId: string,
+    name: string
+  }) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/topics/${data.topicId}`, {
+      name: data.name
     })
-    this.context.commit('updateTopic', topic)
+    const topic = Topic.create(response.data)
+
+    this.context.commit('upsertProjectTopics', {
+      projectId,
+      topics: [topic],
+    })
   }
 
   @Action
   public async deleteTopic(topicId: string) {
-    const topic = this.allTopics.filter((x: Topic) => x.id === topicId)[0]
-    await axios.delete(`/knowledge-base/topics/${topicId}`)
-    this.context.commit('removeTopic', topicId)
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    for (const t of this.allTopics.filter((x: Topic) => x.order > topic.order)) {
-      await this.context.dispatch('moveTopicDown', t.id)
-    }
-  }
+    await axios.delete(`/persons/${personId}/projects/${projectId}/topics/${topicId}`)
 
-  @Action
-  public async moveTopicUp(currentOrder: number) {
-    for (const topic of this.allTopics) {
-      if (topic.order === currentOrder - 1) {
-        topic.order++
-        await this.context.dispatch('changeTopic', topic)
-      } else if (topic.order === currentOrder) {
-        topic.order--
-        await this.context.dispatch('changeTopic', topic)
-        break
-      }
-    }
-  }
-
-  @Action
-  public async moveTopicDown(currentOrder: number) {
-    for (const topic of this.allTopics) {
-      if (topic.order === currentOrder) {
-        topic.order++
-        await this.context.dispatch('changeTopic', topic)
-      } else if (topic.order === currentOrder + 1) {
-        topic.order--
-        await this.context.dispatch('changeTopic', topic)
-        break
-      }
-    }
-  }
-
-  @Mutation
-  protected setTopics(topics: Topic[]) {
-    this.topics = topics
-  }
-
-  @Mutation
-  protected insertTopic(topic: Topic) {
-    this.topics.push(topic)
-  }
-
-  @Mutation
-  protected updateTopic(updatedTopic: Topic) {
-    for (const topic of this.topics) {
-      if (topic.id === updatedTopic.id) {
-        topic.name = updatedTopic.name
-        topic.order = updatedTopic.order
-      }
-    }
-  }
-
-  @Mutation
-  protected removeTopic(topicId: string) {
-    // TODO: re-calculate order
-    this.topics = this.topics.filter((x: Topic) => x.id !== topicId)
+    this.context.commit('removeProjectTopic', {
+      projectId,
+      topicId,
+    })
   }
 
 }

@@ -75,7 +75,7 @@ class Congregation {
       data.createdBy,
       data.lastUpdatedBy,
       data.createdTime,
-      data.lastUpdateTime)
+      data.lastUpdatedTime)
   }
 
   public id: string
@@ -116,7 +116,7 @@ class Person {
       data.firstname,
       data.lastname,
       data.createdTime,
-      data.lastUpdateTime)
+      data.lastUpdatedTime)
     person.congregationId = data.congregationId ? data.congregationId : undefined
     person.congregation = data.congregation ? Congregation.create(data.congregation) : undefined
     if (data.participations) {
@@ -183,13 +183,17 @@ class Person {
 
 class Project {
   public static create(data: any) {
-    return new Project(
+    const project = new Project(
       data.id,
       data.name,
       data.email,
       data.allowRequests,
       data.createdTime,
       data.lastUpdatedTime)
+    if (data.topic) {
+      project.topics = data.topics.map((x: any) => Topic.create(x))
+    }
+    return project
   }
 
   public id: string
@@ -200,6 +204,7 @@ class Project {
   public invitations: Participation[] = []
   public requests: Participation[] = []
   public roles: Role[] = []
+  public topics: Topic[] = []
   public createdTime: string
   public lastUpdatedTime: string
 
@@ -273,6 +278,18 @@ class Project {
         } else {
           return 0
         }
+      } else {
+        return 0
+      }
+    })
+  }
+
+  public get getTopics() {
+    return [...this.topics].sort((a, b) => {
+      if (a.name < b.name) {
+        return -1
+      } else if (a.name > b.name) {
+        return 1
       } else {
         return 0
       }
@@ -425,27 +442,50 @@ class Role {
 }
 
 class Topic {
+  public static create(data: any) {
+    return new Topic(
+      data.id,
+      data.projectId,
+      data.name)
+  }
+
   public id: string
   public projectId: string
   public name: string
-  public order: number
+  public articles: Article[] = []
 
-  constructor(projectId: string, name: string) {
-    this.id = ''
+  constructor(id: string, projectId: string, name: string) {
+    this.id = id
     this.projectId = projectId
     this.name = name
-    this.order = 0
   }
+
+  public copyFrom(topic: Topic) {
+    this.name = topic.name
+  }
+
 }
 
 class Article {
+  public static create(data: any) {
+    return new Article(
+      data.id,
+      data.topicId,
+      data.title,
+      data.content)
+  }
+
   public id: string
   public topicId: string
   public title: string
   public content: string
 
-  constructor(topicId: string, title: string, content: string) {
-    this.id = ''
+  constructor(
+    id: string,
+    topicId: string,
+    title: string,
+    content: string) {
+    this.id = id
     this.topicId = topicId
     this.title = title
     this.content = content

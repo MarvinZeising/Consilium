@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
 import router from '../router'
-import { Project, Participation, ParticipationStatus, Role } from '../models/definitions'
+import { Project, Participation, ParticipationStatus, Role, Topic } from '../models/definitions'
 
 @Module({ dynamic: true, store, name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
@@ -235,6 +235,49 @@ export default class ProjectModule extends VuexModule {
     this.projects = this.projects.map((p) => {
       if (p.id === projectId) {
         p.requests = p.requests.filter((x) => x.id !== requestId)
+      }
+      return p
+    })
+  }
+
+  @Mutation
+  public upsertProjectTopics({ projectId, topics, clearFirst }: {
+    projectId: string,
+    topics: Topic[],
+    clearFirst: boolean,
+  }) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === projectId) {
+        if (clearFirst) {
+          project.topics = topics
+          return project
+        }
+        project.topics = project.topics.map((topic) => {
+          const updatedTopic = topics.find((y) => y.id === topic.id)
+          if (updatedTopic) {
+            topic.copyFrom(updatedTopic)
+          }
+          return topic
+        })
+        for (const updatedTopic of topics) {
+          const alreadyExists = project.topics.find((x) => x.id === updatedTopic.id)
+          if (!alreadyExists) {
+            project.topics.push(updatedTopic)
+          }
+        }
+      }
+      return project
+    })
+  }
+
+  @Mutation
+  public removeProjectTopic({ projectId, topicId }: {
+    projectId: string,
+    topicId: string,
+  }) {
+    this.projects = this.projects.map((p) => {
+      if (p.id === projectId) {
+        p.topics = p.topics.filter((x) => x.id !== topicId)
       }
       return p
     })

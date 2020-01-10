@@ -13,45 +13,28 @@
     >
       <v-card-text
         class="grey--text"
-        v-t="'knowledgeBase.topicsDescription'"
+        v-t="'project.knowledgeBase.topicsDescription'"
       />
-      <v-list>
-        <v-list-item v-if="getTopics.length === 0">
-          <span v-t="'knowledgeBase.noTopics'" />
+      <v-list v-if="projectModule.getActiveProject">
+        <v-list-item v-if="projectModule.getActiveProject.getTopics.length === 0">
+          {{ $tc('project.knowledgeBase.topics', 0) }}
         </v-list-item>
         <v-list-item
-          v-for="(topic, index) in getTopics"
-          :key="topic.name"
+          v-for="(topic, index) in projectModule.getActiveProject.getTopics"
+          :key="index"
         >
           <v-list-item-content>
             <v-list-item-title v-text="topic.name" />
           </v-list-item-content>
 
-          <v-list-item-action style="flex-direction:row; align-items:center;">
-            <v-btn
-              v-if="index > 0"
-              icon
-              class="ma-0"
-              @click.stop="knowledgeBaseModule.moveTopicUp(topic.order)"
-            >
-              <v-icon color="grey">expand_less</v-icon>
-            </v-btn>
-            <v-btn
-              v-if="index < getTopics.length - 1"
-              icon
-              class="ma-0"
-              @click.stop="knowledgeBaseModule.moveTopicDown(topic.order)"
-            >
-              <v-icon color="grey">expand_more</v-icon>
-            </v-btn>
-            <RenameTopicDialog :topicId="topic.id" />
-            <DeleteTopicDialog :topicId="topic.id" />
+          <v-list-item-action>
+            <UpdateTopicDialog :topic="topic" />
           </v-list-item-action>
         </v-list-item>
       </v-list>
       <v-card-actions>
         <v-spacer />
-        <NewTopicDialog />
+        <CreateTopicDialog />
       </v-card-actions>
     </v-card>
   </v-flex>
@@ -60,23 +43,23 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import KnowledgeBaseModule from '../store/knowledgeBase'
 import PersonModule from '../store/persons'
+import ProjectModule from '../store/projects'
+import KnowledgeBaseModule from '../store/knowledgeBase'
 import { Topic } from '../models/definitions'
-import NewTopicDialog from './dialogs/NewTopicDialog.vue'
-import RenameTopicDialog from './dialogs/RenameTopicDialog.vue'
-import DeleteTopicDialog from './dialogs/DeleteTopicDialog.vue'
+import CreateTopicDialog from './dialogs/CreateTopicDialog.vue'
+import UpdateTopicDialog from './dialogs/UpdateTopicDialog.vue'
 
 @Component({
   components: {
-    NewTopicDialog,
-    RenameTopicDialog,
-    DeleteTopicDialog,
+    CreateTopicDialog,
+    UpdateTopicDialog,
   }
 })
 export default class SettingsTopics extends Vue {
-  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private loading: boolean = true
 
@@ -107,15 +90,9 @@ export default class SettingsTopics extends Vue {
   private async init() {
     this.loading = true
 
-    // await this.knowledgeBaseModule.loadKnowledgeBase()
+    await this.knowledgeBaseModule.loadTopics()
 
     this.loading = false
-  }
-
-  private get getTopics() {
-    const projectId = this.$route.params.projectId
-
-    return this.knowledgeBaseModule.allTopics.filter((x: Topic) => x.projectId === projectId)
   }
 
 }

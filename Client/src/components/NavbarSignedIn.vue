@@ -118,18 +118,18 @@
             </v-list-item>
 
             <v-list-group
-              v-if="canView(participation, 'topics') && getTopics(participation.project).length > 0"
+              v-if="canView(participation, 'topics') && participation.project.getTopics.length > 0"
               no-action
               sub-group
             >
               <template v-slot:activator>
                 <v-list-item-content>
-                  <v-list-item-title v-t="'project.knowledgeBase'" />
+                  <v-list-item-title v-t="'project.knowledgeBase.knowledgeBase'" />
                 </v-list-item-content>
               </template>
 
               <v-list-item
-                v-for="(topic, j) in getTopics(participation.project)"
+                v-for="(topic, j) in participation.project.getTopics"
                 :key="j"
                 :to="{ name: 'topic', params: { projectId: participation.project.id, topicId: topic.id }}"
               >

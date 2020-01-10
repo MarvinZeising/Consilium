@@ -1,19 +1,22 @@
 <template>
   <v-dialog
-    v-model="newTopicDialog"
-    max-width="600px"
+    v-model="dialog"
+    max-width="500px"
   >
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
         text
-        v-t="'knowledgeBase.createTopic'"
+        v-t="'core.edit'"
       />
     </template>
     <v-card>
       <v-form v-model="form">
         <v-card-title>
-          <span class="headline">Add new Topic</span>
+          <span
+            class="headline"
+            v-t="'project.knowledgeBase.renameTopic'"
+          ></span>
         </v-card-title>
         <v-card-text>
           <v-text-field
@@ -24,19 +27,21 @@
           />
         </v-card-text>
         <v-card-actions>
-          <v-spacer />
           <v-btn
             text
-            @click.stop="newTopicDialog = false"
             v-t="'core.close'"
+            @click.stop="dialog = false"
           />
+          <v-spacer />
+          <DeleteTopicDialog :topic="topic" />
           <v-btn
-            :disabled="topicName == ''"
             text
             color="primary"
-            @click.stop="createTopic"
-            v-t="'core.save'"
             type="submit"
+            v-t="'core.save'"
+            @click.stop="renameTopic"
+            :disabled="topicName == ''"
+            :loading="loading"
           />
         </v-card-actions>
       </v-form>
@@ -50,21 +55,41 @@ import { getModule } from 'vuex-module-decorators'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Topic } from '../../models/definitions'
 import i18n from '../../i18n'
+import DeleteTopicDialog from './DeleteTopicDialog.vue'
 
-@Component
-export default class NewTopicDialog extends Vue {
+@Component({
+  components: {
+    DeleteTopicDialog,
+  }
+})
+export default class UpdateTopicDialog extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
+  @Prop(Topic)
+  private readonly topic?: Topic
+
   private form: any = null
-  private newTopicDialog: any = null
+  private dialog: any = null
+  private loading: boolean = false
+
   private topicName: string = ''
 
-  private async createTopic() {
-    const projectId = this.$route.params.projectId
+  private async created() {
+    this.topicName = this.topic?.name || ''
+  }
 
-    await this.knowledgeBaseModule.createTopic(new Topic(projectId, this.topicName))
+  private async renameTopic() {
+    this.loading = true
 
-    this.newTopicDialog = false
+    if (this.topic) {
+      await this.knowledgeBaseModule.updateTopic({
+        topicId: this.topic.id,
+        name: this.topicName,
+      })
+    }
+
+    this.loading = false
+    this.dialog = false
   }
 }
 </script>

@@ -1,34 +1,30 @@
 <template>
   <v-dialog
-    v-model="deleteTopicDialog"
-    max-width="600px"
+    v-model="dialog"
+    max-width="500px"
   >
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
-        icon
-        class="ma-0"
-      >
-        <v-icon color="grey">delete</v-icon>
-      </v-btn>
+        text
+        color="error"
+        v-t="'project.knowledgeBase.deleteTopic'"
+      />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
           <span
             class="headline"
-            v-t="'knowledgeBase.deleteTopic'"
+            v-t="'project.knowledgeBase.deleteTopic'"
           />
         </v-card-title>
         <v-card-text>
           <p
             class="subtitle-1"
-            v-t="'knowledgeBase.deleteTopicDescription'"
+            v-t="'project.knowledgeBase.deleteTopicDescription'"
           />
-          <p
-            class="subtitle-1"
-            v-t="'knowledgeBase.deleteTopicHint'"
-          />
+          <p v-t="'project.knowledgeBase.deleteTopicHint'" />
           <v-text-field
             v-model="enteredName"
             :label="$t('core.name')"
@@ -38,19 +34,20 @@
           />
         </v-card-text>
         <v-card-actions>
-          <v-spacer />
           <v-btn
             text
-            @click.stop="deleteTopicDialog = false"
             v-t="'core.cancel'"
+            @click.stop="dialog = false"
           />
+          <v-spacer />
           <v-btn
-            :disabled="!valid"
             type="submit"
             text
             color="error"
-            @click.stop="deleteTopic"
             v-t="'core.delete'"
+            @click.stop="deleteTopic"
+            :disabled="!valid"
+            :loading="loading"
           />
         </v-card-actions>
       </v-form>
@@ -62,7 +59,6 @@
 import { getModule } from 'vuex-module-decorators'
 import { Project, Topic } from '../../models/definitions'
 import { Component, Watch, Prop, Vue } from 'vue-property-decorator'
-import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import KnowledgeBaseModule from '../../store/knowledgeBase'
 
@@ -70,37 +66,37 @@ import KnowledgeBaseModule from '../../store/knowledgeBase'
 export default class DeleteProjectDialog extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
-  @Prop(String)
-  private readonly topicId: string | undefined
+  @Prop(Topic)
+  private readonly topic?: Topic
 
   private valid: any = false
-  private deleteTopicDialog: boolean = false
+  private dialog: any = false
+  private loading: boolean = false
+
   private topicName: string = ''
   private enteredName: string = ''
   private get enteredNameRules() {
     return [
       (v: string) => !!v || i18n.t('core.fieldRequired'),
-      (v: string) => v === this.topicName || i18n.t('knowledgeBase.topicNameMustEqual'),
+      (v: string) => v === this.topicName || i18n.t('project.knowledgeBase.topicNameMustEqual'),
     ]
   }
 
   private async created() {
-    await this.loadTopic()
-  }
-
-  private async loadTopic() {
-    const topic = this.knowledgeBaseModule.allTopics.filter((x: Topic) => x.id === this.topicId)[0]
-    if (topic) {
-      this.topicName = topic.name
+    if (this.topic) {
+      this.topicName = this.topic.name
     }
   }
 
   private async deleteTopic() {
-    if (this.topicId) {
-      await this.knowledgeBaseModule.deleteTopic(this.topicId)
+    this.loading = true
+
+    if (this.topic) {
+      await this.knowledgeBaseModule.deleteTopic(this.topic.id)
     }
 
-    this.deleteTopicDialog = false
+    this.loading = false
+    this.dialog = false
   }
 
 }
