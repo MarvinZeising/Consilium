@@ -59,7 +59,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
 import RequestModule from '../../store/requests'
-import { Topic } from '../../models/definitions'
+import { Topic, Exceptions } from '../../models/definitions'
 
 @Component
 export default class CreateJoinRequestDialog extends Vue {
@@ -73,21 +73,28 @@ export default class CreateJoinRequestDialog extends Vue {
   private projectId: string = ''
   private projectRules: any[] = []
 
-  private async joinProject() {
-    try {
-      this.loading = true
-
-      await this.requestModule.createRequest(this.projectId)
-
-      this.dialog = false
-    } catch (e) {
+  private throwValidationError(message: string) {
       const form: any = this.$refs.form
       const thisProjectId = this.projectId
-      this.projectRules.push((v: string) => v !== thisProjectId || i18n.t('project.request.notAllowed'))
+      this.projectRules.push((v: string) => v !== thisProjectId || i18n.t(message))
       form.validate()
-    } finally {
-      this.loading = false
+  }
+
+  private async joinProject() {
+    this.loading = true
+
+    const response = await this.requestModule.createRequest(this.projectId)
+    if (response === Exceptions.ProjectNotFound) {
+      this.throwValidationError('project.notFound')
+    } else if (response === Exceptions.RequestsNotAllowed) {
+      this.throwValidationError('project.request.notAllowed')
+    } else if (response) {
+      this.throwValidationError('core.generalError')
+    } else {
+      this.dialog = false
     }
+
+    this.loading = false
   }
 }
 </script>

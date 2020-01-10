@@ -27,6 +27,7 @@
   "fieldMin": "This field has to have at least {count} characters",
   "fieldMax": "This field must not have more than {count} characters",
   "fieldCamelCase": "Name must begin with an uppercase letter",
+  "generalError": "There was an error, please check your inputs",
   "general": "General",
   "dangerZone": "Danger Zone",
   "termsOfUse": "Terms of Use",

@@ -1,6 +1,7 @@
 {
   "projects": "You don't participate in any projects, yet. | Project | My Projects",
   "projectsDescription": "Here you see all the project you have access to. You can request admission to an existing or create a new project.",
+  "notFound": "Couldn't find a project with this id",
   "knowledgeBase": {
     "knowledgeBase": "Knowledge Base",
     "topics": "No topics have been defined, yet. | Topic | Knowledge Base - Topics",

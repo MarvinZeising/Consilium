@@ -27,6 +27,7 @@
   "fieldMin": "Dieses Feld muss mindestens {count} Zeichen lang sein",
   "fieldMax": "Dieses Feld darf maximal {count} Zeichen lang sein",
   "fieldCamelCase": "Dieses Feld muss mit einem Großbuchstaben anfangen",
+  "generalError": "Ein Fehler ist aufgetreten, bitte überprüfe deine Eingaben",
   "general": "Generelles",
   "dangerZone": "Gefahrenzone",
   "termsOfUse": "Nutzungsbedingungen",

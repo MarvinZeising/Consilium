@@ -492,6 +492,11 @@ class Article {
   }
 }
 
+enum Exceptions {
+  ProjectNotFound = 'ProjectNotFoundException',
+  RequestsNotAllowed = 'RequestsNotAllowedException',
+}
+
 export {
   User,
   Theme,
@@ -504,4 +509,5 @@ export {
   Role,
   Topic,
   Article,
+  Exceptions,
 }

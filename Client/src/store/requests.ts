@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Participation, Project } from '../models/definitions'
+import { Participation, Project, Exceptions } from '../models/definitions'
 
 @Module({ dynamic: true, store, name: 'RequestModule' })
 export default class RequestModule extends VuexModule {
@@ -24,10 +24,13 @@ export default class RequestModule extends VuexModule {
   public async createRequest(projectId: string) {
     const { personId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.post(`/persons/${personId}/projects/${projectId}/requests`, { personId })
-    const participation = Participation.create(response.data)
-
-    this.context.commit('upsertPersonParticipations', [participation])
+    return await axios
+      .post(`/persons/${personId}/projects/${projectId}/requests`, { personId })
+      .then((response: any) => {
+        const participation = Participation.create(response.data)
+        this.context.commit('upsertPersonParticipations', [participation])
+      })
+      .catch((error: any) => error.response?.data)
   }
 
   @Action

@@ -43,6 +43,7 @@
           color="primary"
           inset
           hide-details
+          :disabled="loading"
         />
         <v-btn
           v-if="requestsAllowed !== initialRequestsAllowed"
