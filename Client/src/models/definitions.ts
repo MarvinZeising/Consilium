@@ -190,7 +190,7 @@ class Project {
       data.allowRequests,
       data.createdTime,
       data.lastUpdatedTime)
-    if (data.topic) {
+    if (data.topics) {
       project.topics = data.topics.map((x: any) => Topic.create(x))
     }
     return project

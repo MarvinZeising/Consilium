@@ -12,5 +12,6 @@ namespace Entities.DataTransferObjects
         public DateTime CreatedTime { get; set; }
         public DateTime LastUpdatedTime { get; set; }
         public IEnumerable<ParticipationDto> Participations { get; set; }
+        public ICollection<TopicDto> Topics { get; set; }
     }
 }

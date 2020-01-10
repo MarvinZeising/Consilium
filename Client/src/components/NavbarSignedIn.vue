@@ -214,12 +214,6 @@ export default class NavbarSignedIn extends Vue {
     ['person.configureProjects', 'configureProjects']
   ]
 
-  private getTopics(project: Project) {
-    return this.knowledgeBaseModule.allTopics.filter((topic: Topic) => {
-      return topic.projectId === project.id
-    })
-  }
-
   private getAdminActions(participation: Participation) {
     const actions = []
     if (participation.role) {
