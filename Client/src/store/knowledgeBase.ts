@@ -14,6 +14,15 @@ export default class KnowledgeBaseModule extends VuexModule {
       .find((x: Topic) => x.id === router.currentRoute.params.topicId)
   }
 
+  public get getActiveArticle() {
+    return this.context.getters
+      .getActiveProject
+      ?.getTopics
+      .find((x: Topic) => x.id === router.currentRoute.params.topicId)
+      ?.articles
+      .find((x: Article) => x.id === router.currentRoute.params.articleId)
+  }
+
   @Action
   public async loadTopics() {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
@@ -37,6 +46,27 @@ export default class KnowledgeBaseModule extends VuexModule {
       const response = await axios.get(`/persons/${personId}/projects/${projectId}/topics/${topic.id}/articles`)
       const articles = response.data.map((x: any) => Article.create(x))
       topic.articles = articles
+    }
+  }
+
+  @Action
+  public async loadArticle(articleId: string) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+    const topic: Topic = this.getActiveTopic
+    if (personId && projectId && topic) {
+      const response = await axios.get(`/persons/${personId}/projects/${projectId}/topics/${topic.id}/articles/${articleId}`)
+      const article = Article.create(response.data)
+
+      if (topic.articles.find((x: Article) => x.id === article.id)) {
+        topic.articles = topic.articles.map((x) => {
+          if (x.id === article.id) {
+            x.content = article.content
+          }
+          return x
+        })
+      } else {
+        topic.articles.push(article)
+      }
     }
   }
 

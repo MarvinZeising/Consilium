@@ -47,6 +47,10 @@ const router = new VueRouter({
     name: 'topic',
     component: () => import('./views/project/Topic.vue'),
   }, {
+    path: '/project/:projectId/topic/:topicId/article/:articleId',
+    name: 'article',
+    component: () => import('./views/project/Article.vue'),
+  }, {
     path: '/project/:projectId/settings',
     name: 'settings',
     component: () => import('./views/project/Settings.vue'),

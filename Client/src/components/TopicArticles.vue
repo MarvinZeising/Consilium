@@ -19,7 +19,7 @@
         <v-list-item
           v-for="(article, index) in knowledgeBaseModule.getActiveTopic.getArticles"
           :key="index"
-          @click.stop=""
+          :to="getArticleLink(article.id)"
         >
           <v-list-item-content>
             <v-list-item-title v-html="article.title" />
@@ -93,6 +93,17 @@ export default class ParticipantsInvitations extends Vue {
     await this.knowledgeBaseModule.loadArticles();
 
     this.loading = false
+  }
+
+  private getArticleLink(articleId: string) {
+    return {
+      name: 'article',
+      params: {
+        projectId: this.$route.params.projectId,
+        topicId: this.$route.params.topicId,
+        articleId: articleId,
+      },
+    }
   }
 
 }
