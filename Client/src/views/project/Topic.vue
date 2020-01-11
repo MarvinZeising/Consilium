@@ -19,6 +19,6 @@ import TopicArticles from '../../components/TopicArticles.vue'
     TopicArticles,
   }
 })
-export default class KnowledgeBase extends Vue {
+export default class Topic extends Vue {
 }
 </script>
