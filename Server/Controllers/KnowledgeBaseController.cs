@@ -84,6 +84,39 @@ namespace Server.Controllers
             }
         }
 
+        [HttpGet("topics/{topicId}/articles/{articleId}")]
+        public ActionResult<ArticleDto> GetArticle(Guid personId, Guid projectId, Guid topicId, Guid articleId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.KnowledgeBaseRead != true) return Forbid();
+
+                var topic = _db.Topic.FindByCondition(x => x.Id == topicId).SingleOrDefault();
+                if (topic == null || topic.ProjectId != projectId) return BadRequest();
+
+                var article = _db.Article
+                    .FindByCondition(x => x.Id == articleId && x.TopicId == topicId)
+                    .Select(x => new Article
+                    {
+                        Id = x.Id,
+                        TopicId = x.TopicId,
+                        Title = x.Title,
+                        Content = x.Content,
+                        CreatedTime = x.CreatedTime,
+                        LastUpdatedTime = x.LastUpdatedTime,
+                    })
+                    .SingleOrDefault();
+
+                return Ok(_mapper.Map<ArticleDto>(article));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in GetArticle: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpPost("topics")]
         public ActionResult<TopicDto> CreateTopic(Guid personId, Guid projectId, [FromBody] CreateTopicDto dto)
         {
