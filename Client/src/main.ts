@@ -5,6 +5,7 @@ import { getModule } from 'vuex-module-decorators'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import store from './plugins/vuex'
+import './plugins/showdown'
 import router from './router'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
@@ -15,6 +16,14 @@ import UserModule from './store/users'
 
 async function init() {
   Vue.config.productionTip = false
+
+  new Vue({
+    vuetify,
+    store,
+    router,
+    i18n,
+    render: (h) => h(App)
+  }).$mount('#app')
 
   axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'http://localhost:5000/api'
   axios.defaults.timeout = 5000
@@ -57,11 +66,6 @@ async function init() {
     const user = JSON.parse(userItem)
     axios.defaults.headers.common.Authorization = `Bearer ${user.token}`
 
-    const loadingNode = document.getElementById('loading')
-    if (loadingNode) {
-      loadingNode.innerHTML = 'Signing you in...'
-    }
-
     try {
       await userModule.loadNavbar()
 
@@ -73,15 +77,9 @@ async function init() {
         router.push({ name: 'serverException' })
       }
     }
-  }
 
-  new Vue({
-    vuetify,
-    store,
-    router,
-    i18n,
-    render: (h) => h(App)
-  }).$mount('#app')
+    alertModule.updateLoading(false)
+  }
 }
 
 init()

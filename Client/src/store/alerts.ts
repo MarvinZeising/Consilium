@@ -3,10 +3,16 @@ import store from '../plugins/vuex'
 
 @Module({ dynamic: true, store, name: 'AlertModule' })
 export default class AlertModule extends VuexModule {
+  public loading: boolean = true
   public snackbar: any = {}
 
   public get getSnackbar(): any {
     return this.snackbar
+  }
+
+  @Action
+  public updateLoading(loading: boolean) {
+    this.context.commit('setLoading', loading)
   }
 
   @MutationAction({ mutate: ['snackbar'] })
@@ -27,4 +33,10 @@ export default class AlertModule extends VuexModule {
       }
     }
   }
+
+  @Mutation
+  private setLoading(loading: boolean) {
+    this.loading = loading
+  }
+
 }

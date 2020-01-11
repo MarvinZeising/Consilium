@@ -5,6 +5,10 @@
       <router-view/>
     </v-content>
 
+    <v-overlay :value="alertModule.loading">
+      <v-progress-circular indeterminate size="64" />
+    </v-overlay>
+
     <v-snackbar
       v-model="alertModule.getSnackbar.show"
       :color="alertModule.getSnackbar.color"
