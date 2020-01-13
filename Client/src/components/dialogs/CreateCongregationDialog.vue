@@ -15,7 +15,12 @@
         ref="form"
         v-model="valid"
       >
-        <v-card-title v-t="'project.congregation.create'" />
+        <v-card-title>
+          <span
+            class="headline"
+            v-t="'project.congregation.create'"
+          />
+        </v-card-title>
         <v-card-text>
 
           <p
