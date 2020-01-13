@@ -30,6 +30,23 @@ export default class CongregationModule extends VuexModule {
   }
 
   @Action
+  public async createCongregation(data: {
+    name: string,
+    number: string,
+  }) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+
+    const response = await axios.post(
+      `/persons/${personId}/projects/${projectId}/congregations`, {
+      name: data.name,
+      number: data.number,
+    })
+    const congregation = Congregation.create(response.data)
+
+    this.context.commit('upsertCongregation', congregation)
+  }
+
+  @Action
   public async updateCongregation(data: {
     congregationId: string,
     name: string,
@@ -54,13 +71,17 @@ export default class CongregationModule extends VuexModule {
 
   @Mutation
   protected upsertCongregation(congregation: Congregation) {
-    this.congregations = this.congregations.map((x) => {
-      if (x.id === congregation.id) {
-        x.name = congregation.name
-        x.number = congregation.number
-      }
-      return x
-    })
+    if (this.congregations.find((x) => x.id === congregation.id)) {
+      this.congregations = this.congregations.map((x) => {
+        if (x.id === congregation.id) {
+          x.name = congregation.name
+          x.number = congregation.number
+        }
+        return x
+      })
+    } else {
+      this.congregations.push(congregation)
+    }
   }
 
   @Mutation

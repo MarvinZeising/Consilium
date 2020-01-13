@@ -10,22 +10,20 @@
       flat
       class="ma-2 mb-5"
     >
-      <v-card-title>
-        <v-text-field
-          v-model="search"
-          append-icon="search"
-          :label="$t('core.search')"
-          single-line
-          hide-details
+      <v-card-actions>
+        <v-btn
+          text
+          v-t="'project.congregation.filter'"
         />
-      </v-card-title>
+        <v-spacer />
+        <CreateCongregationDialog />
+      </v-card-actions>
       <v-data-table
         v-if="congregationModule.getCongregations"
         :loading="loading"
         :headers="headers"
         :items="congregationModule.getCongregations"
         :items-per-page="15"
-        :search="search"
       >
         <template v-slot:item.action="{ item }">
           <UpdateCongregationDialog :congregation="item" />
@@ -39,26 +37,23 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
-import UserModule from '../store/users'
 import PersonModule from '../store/persons'
-import ProjectModule from '../store/projects'
 import CongregationModule from '../store/congregations'
 import { Person, ParticipationStatus, Gender } from '../models'
+import CreateCongregationDialog from '../components/dialogs/CreateCongregationDialog.vue'
 import UpdateCongregationDialog from '../components/dialogs/UpdateCongregationDialog.vue'
 
 @Component({
   components: {
+    CreateCongregationDialog,
     UpdateCongregationDialog,
   }
 })
 export default class CongregationsList extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private congregationModule: CongregationModule = getModule(CongregationModule, this.$store)
 
   private loading: boolean = true
-  private search: string = ''
 
   private headers: any[] = [
     { text: 'Name', value: 'name' },

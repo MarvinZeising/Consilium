@@ -24,7 +24,6 @@
   "calendar": "Calendar",
   "administration": "Administration",
   "settings": "Settings",
-  "participants": "Participants",
   "nameMustEqual": "Project name must be this project's name",
   "news": "News",
   "checkStatus": "Check status",
@@ -40,11 +39,14 @@
   "createSubmit": "Create project",
   "congregation": {
     "congregations": "Congregation | Congregations",
+    "create": "Create a Congregation",
+    "createDescription": "You can create a new congregation. Since congregations are shared data, everyone (even other project's participants) will be able to see this new congregation and choose it as their congregation.",
     "update": "Update Congregation",
     "updateDescription": "You can update this congregation's data. Please keep in mind that congregations are shared data. Changes you make will affect every other project with participants belonging to this congregation.",
     "nameDescription": "The name of the congregation.",
     "number": "Congregation number",
-    "numberDescription": "The congregation number."
+    "numberDescription": "The congregation number. (optional)",
+    "filter": "Filter Congregations"
   },
   "participant": {
     "participants": "Participant | Participants",

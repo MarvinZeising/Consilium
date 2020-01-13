@@ -24,7 +24,6 @@
   "calendar": "Kalender",
   "administration": "Verwaltung",
   "settings": "Einstellungen",
-  "participants": "Teilehmer",
   "nameMustEqual": "Der Projektname muss dem Namen dieses Projekts entsprechen",
   "news": "Neuigkeiten",
   "checkStatus": "Status überprüfen",
@@ -40,11 +39,14 @@
   "createSubmit": "Projekt erstellen",
   "congregation": {
     "congregations": "Versammlung | Versammlungen",
+    "create": "Neue Versammlung anlegen",
+    "createDescription": "Du kannst eine neue Versammlung anlegen. Da Versammlungen globale Daten sind, kann jeder (unabhängig davon, ob er/sie in diesem Projekt ist) die neue Versammlung sehen und sie als eigene Versammlung einstellen.",
     "update": "Versammlung bearbeiten",
     "updateDescription": "Hier kannst du die Daten dieser Versammlung bearbeiten. Bitte beachte, dass Versammlungen globale Daten sind. Änderungen an Versammlungen haben also Auswirkungen auf alle Projekte, deren Teilnehmer teil dieser Versammlungen sind.",
     "nameDescription": "Der Name der Versammlung.",
     "number": "Versammlungsnummer",
-    "numberDescription": "Die Versammlungsnummer der Versammlung."
+    "numberDescription": "Die Versammlungsnummer der Versammlung (optional).",
+    "filter": "Versammlungen filtern"
   },
   "participant": {
     "participants": "Teilnehmer",
