@@ -77,8 +77,10 @@ class Person {
       data.gender || Gender.Male,
       data.email || '',
       data.phone || '',
+      data.languages || '',
       data.privilege || Privilege.Publisher,
       data.assignment || Assignment.Publisher,
+      data.notes || '',
       data.createdTime,
       data.lastUpdatedTime)
     person.congregationId = data.congregationId ? data.congregationId : undefined
@@ -97,8 +99,10 @@ class Person {
   public gender: Gender
   public email: string
   public phone: string
+  public languages: string
   public privilege: Privilege
   public assignment: Assignment
+  public notes: string
   public participations: Participation[] = []
   public createdTime: string
   public lastUpdatedTime: string
@@ -110,8 +114,10 @@ class Person {
     gender: Gender,
     email: string,
     phone: string,
+    languages: string,
     privilege: Privilege,
     assignment: Assignment,
+    notes: string,
     createdTime: string,
     lastUpdatedTime: string,
   ) {
@@ -121,8 +127,10 @@ class Person {
     this.gender = gender
     this.email = email
     this.phone = phone
+    this.languages = languages
     this.privilege = privilege
     this.assignment = assignment
+    this.notes = notes
     this.createdTime = createdTime
     this.lastUpdatedTime = lastUpdatedTime
   }
@@ -157,8 +165,10 @@ class Person {
     this.gender = person.gender
     this.email = person.email
     this.phone = person.phone
+    this.languages = person.languages
     this.privilege = person.privilege
     this.assignment = person.assignment
+    this.notes = person.notes
   }
 
 }

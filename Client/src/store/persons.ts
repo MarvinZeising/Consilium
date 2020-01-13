@@ -80,6 +80,20 @@ export default class PersonModule extends VuexModule {
   }
 
   @Action
+  public async updatePersonMiscellaneous(data: {
+    languages: string,
+    notes: string,
+  }) {
+    const response = await axios.put(`/persons/${this.getActivePersonId}/miscellaneous`, {
+      languages: data.languages,
+      notes: data.notes,
+    })
+    const updatedPerson = Person.create(response.data)
+
+    this.context.commit('upsertPerson', updatedPerson)
+  }
+
+  @Action
   public async updatePersonContact(data: {
     email: string,
     phone: string,
