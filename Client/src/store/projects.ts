@@ -65,7 +65,7 @@ export default class ProjectModule extends VuexModule {
       .catch((error: any) => error.response?.data)
   }
 
-  @Action({ commit: 'upsertProject' })
+  @Action
   public async createProject(project: {
     name: string,
     email: string,
@@ -79,7 +79,9 @@ export default class ProjectModule extends VuexModule {
       })
       .then(async (response) => {
         await this.context.dispatch('loadNavbar')
-        return Project.create(response.data)
+        const insertedProject = Project.create(response.data)
+        this.context.commit('upsertProject', insertedProject)
+        return insertedProject
       })
       .catch((error: any) => error.response?.data)
   }
