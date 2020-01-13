@@ -51,7 +51,7 @@
         <v-card-actions>
           <DeleteCongregationDialog
             v-if="canBeDeleted"
-            :congregationId="congregation.id"
+            :congregation="congregation"
           />
           <v-btn
             text

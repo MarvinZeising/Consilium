@@ -69,6 +69,15 @@ export default class CongregationModule extends VuexModule {
     }
   }
 
+  @Action
+  public async deleteCongregation(congregationId: string) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+
+    await axios.delete(`/persons/${personId}/projects/${projectId}/congregations/${congregationId}`)
+
+    this.context.commit('removeCongregation', congregationId)
+  }
+
   @Mutation
   protected upsertCongregation(congregation: Congregation) {
     if (this.congregations.find((x) => x.id === congregation.id)) {
@@ -82,6 +91,11 @@ export default class CongregationModule extends VuexModule {
     } else {
       this.congregations.push(congregation)
     }
+  }
+
+  @Mutation
+  protected removeCongregation(congregationId: string) {
+    this.congregations = this.congregations.filter((x) => x.id !== congregationId)
   }
 
   @Mutation
