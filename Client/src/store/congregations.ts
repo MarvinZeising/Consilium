@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
+import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
 import { Congregation } from '../models'
 
@@ -36,14 +36,17 @@ export default class CongregationModule extends VuexModule {
   }) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.post(
-      `/persons/${personId}/projects/${projectId}/congregations`, {
-      name: data.name,
-      number: data.number,
-    })
-    const congregation = Congregation.create(response.data)
-
-    this.context.commit('upsertCongregation', congregation)
+    return await axios
+      .post(`/persons/${personId}/projects/${projectId}/congregations`, {
+        name: data.name,
+        number: data.number,
+      })
+      .then(async (response) => {
+        const congregation = Congregation.create(response.data)
+        this.context.commit('upsertCongregation', congregation)
+        return congregation
+      })
+      .catch((error: any) => error.response?.data)
   }
 
   @Action
@@ -54,19 +57,22 @@ export default class CongregationModule extends VuexModule {
   }) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.put(
-      `/persons/${personId}/projects/${projectId}/congregations/${data.congregationId}`, {
-      name: data.name,
-      number: data.number,
-    })
-    const congregation = Congregation.create(response.data)
+    return await axios
+      .put(`/persons/${personId}/projects/${projectId}/congregations/${data.congregationId}`, {
+        name: data.name,
+        number: data.number,
+      })
+      .then(async (response) => {
+        const congregation = Congregation.create(response.data)
+        this.context.commit('upsertCongregation', congregation)
 
-    this.context.commit('upsertCongregation', congregation)
-
-    const activePerson = this.context.getters.getActivePerson
-    if (activePerson?.congregationId === congregation.id) {
-      activePerson.congregation.name = congregation.name
-    }
+        const activePerson = this.context.getters.getActivePerson
+        if (activePerson?.congregationId === congregation.id) {
+          activePerson.congregation.name = congregation.name
+        }
+        return congregation
+      })
+      .catch((error: any) => error.response?.data)
   }
 
   @Action

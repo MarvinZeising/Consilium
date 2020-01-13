@@ -7,6 +7,8 @@ import { Topic, Article } from './knowledgeBase'
 enum Exceptions {
   ProjectNotFound = 'ProjectNotFoundException',
   ProjectNameUnique = 'ProjectNameUniqueException',
+  CongregationNameUnique = 'CongregationNameUniqueException',
+  CongregationNumberUnique = 'CongregationNumberUniqueException',
   PersonNotFound = 'PersonNotFoundException',
   RequestsNotAllowed = 'RequestsNotAllowedException',
 }

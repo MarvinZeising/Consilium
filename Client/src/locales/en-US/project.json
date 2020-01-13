@@ -46,7 +46,9 @@
     "delete": "Delete Congregation",
     "deleteDescription": "Do you really want to delete this congregation?",
     "nameDescription": "The name of the congregation.",
+    "nameUnique": "A congregation with this name already exists",
     "number": "Congregation number",
+    "numberUnique": "A congregation with this congregation number already exists",
     "numberDescription": "The congregation number. (optional)",
     "filter": "Filter Congregations"
   },

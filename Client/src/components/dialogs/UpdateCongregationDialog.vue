@@ -79,8 +79,9 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
+import AlertModule from '../../store/alerts'
 import CongregationModule from '../../store/congregations'
-import { Congregation } from '../../models'
+import { Congregation, Exceptions } from '../../models'
 import DeleteCongregationDialog from './DeleteCongregationDialog.vue'
 
 @Component({
@@ -89,6 +90,7 @@ import DeleteCongregationDialog from './DeleteCongregationDialog.vue'
   },
 })
 export default class UpdateCongregationDialog extends Vue {
+  private alertModule: AlertModule = getModule(AlertModule, this.$store)
   private congregationModule: CongregationModule = getModule(CongregationModule, this.$store)
 
   @Prop(Congregation)
@@ -124,14 +126,32 @@ export default class UpdateCongregationDialog extends Vue {
     if (this.congregation) {
       this.loading = true
 
-      await this.congregationModule.updateCongregation({
+      const response = await this.congregationModule.updateCongregation({
         congregationId: this.congregation.id,
         name: this.name,
         number: this.number,
       })
+      if (response === Exceptions.CongregationNameUnique) {
+        const form: any = this.$refs.form
+        const thisName = this.name
+        this.nameRules.push((v: string) => v !== thisName || i18n.t('project.congregation.nameUnique'))
+        form.validate()
+      } else if (response === Exceptions.CongregationNumberUnique) {
+        const form: any = this.$refs.form
+        const thisNumber = this.number
+        this.numberRules.push((v: string) => v !== thisNumber || i18n.t('project.congregation.numberUnique'))
+        form.validate()
+      } else if (response) {
+        this.dialog = false
+      } else {
+        this.alertModule.showAlert({
+          message: i18n.t('core.generalError').toString(),
+          color: 'error',
+          timeout: 5000,
+        })
+      }
 
       this.loading = false
-      this.dialog = false
     }
   }
 

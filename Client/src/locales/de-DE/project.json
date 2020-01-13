@@ -46,8 +46,10 @@
     "delete": "Versammlung löschen",
     "deleteDescription": "Möchtest du diese Versammlung wirklich löschen?",
     "nameDescription": "Der Name der Versammlung.",
+    "nameUnique": "Es existiert bereits eine Versammlung mit diesem Namen",
     "number": "Versammlungsnummer",
     "numberDescription": "Die Versammlungsnummer der Versammlung (optional).",
+    "numberUnique": "Es existiert bereits eine Versammlung mit dieser Versammlungsnummer",
     "filter": "Versammlungen filtern"
   },
   "participant": {
