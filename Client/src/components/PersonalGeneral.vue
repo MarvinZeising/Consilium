@@ -25,14 +25,14 @@
             />
             <p class="subtitle-1 grey--text">{{ personModule.getActivePersonId }}</p>
           </v-flex>
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'person.firstname'"
             />
             <p class="subtitle-1">{{ personModule.getActivePerson.firstname }}</p>
           </v-flex>
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'person.lastname'"
@@ -50,7 +50,7 @@
             />
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.createdTime'"
@@ -60,7 +60,7 @@
             </p>
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.lastUpdatedTime'"

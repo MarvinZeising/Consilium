@@ -32,7 +32,7 @@
             <p class="subtitle-1 grey--text">{{ projectModule.getActiveProject.id }}</p>
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.name'"
@@ -40,7 +40,7 @@
             <p class="subtitle-1">{{ projectModule.getActiveProject.name }}</p>
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.email'"
@@ -48,7 +48,7 @@
             <p class="subtitle-1">{{ projectModule.getActiveProject.email }}</p>
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.createdTime'"
@@ -58,7 +58,7 @@
             </p>
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.lastUpdatedTime'"

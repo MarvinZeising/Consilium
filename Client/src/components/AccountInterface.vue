@@ -18,7 +18,7 @@
       >
         <v-layout wrap>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'language.language'"
@@ -29,7 +29,7 @@
             />
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'account.theme'"
@@ -37,7 +37,7 @@
             <p class="subtitle-1">{{ $t(`account.${userModule.getUser.theme}`) }}</p>
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'account.dateFormat'"
@@ -48,7 +48,7 @@
             />
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'account.timeFormat'"

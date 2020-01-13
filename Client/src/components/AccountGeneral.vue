@@ -34,7 +34,7 @@
             <p class="subtitle-1">{{ userModule.getUser.email }}</p>
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.createdTime'"
@@ -44,7 +44,7 @@
             </p>
           </v-flex>
 
-          <v-flex xs6>
+          <v-flex xs12 sm6>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.lastUpdatedTime'"
