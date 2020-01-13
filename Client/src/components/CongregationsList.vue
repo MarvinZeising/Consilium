@@ -4,7 +4,7 @@
     xs12
   >
     <h2 class="headline mb-3">
-      {{ $tc('project.participant.participants', 2) }}
+      {{ $tc('project.congregation.congregations', 2) }}
     </h2>
     <v-card
       flat
@@ -27,9 +27,8 @@
         :items-per-page="15"
         :search="search"
       >
-        <template
-          v-slot:item.action="{ item }"
-        >
+        <template v-slot:item.action="{ item }">
+          <UpdateCongregationDialog :congregation="item" />
         </template>
       </v-data-table>
     </v-card>
@@ -45,8 +44,13 @@ import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import CongregationModule from '../store/congregations'
 import { Person, ParticipationStatus, Gender } from '../models'
+import UpdateCongregationDialog from '../components/dialogs/UpdateCongregationDialog.vue'
 
-@Component
+@Component({
+  components: {
+    UpdateCongregationDialog,
+  }
+})
 export default class CongregationsList extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)

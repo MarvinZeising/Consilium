@@ -38,7 +38,14 @@
   "create": "Create a new Project",
   "createDescription": "Are you the coordinator of a project with a lot of participants that need to be scheduled? Then you can create a new project and invite all the participants to it.",
   "createSubmit": "Create project",
-  "congregations": "Congregations",
+  "congregation": {
+    "congregations": "Congregation | Congregations",
+    "update": "Update Congregation",
+    "updateDescription": "You can update this congregation's data. Please keep in mind that congregations are shared data. Changes you make will affect every other project with participants belonging to this congregation.",
+    "nameDescription": "The name of the congregation.",
+    "number": "Congregation number",
+    "numberDescription": "The congregation number."
+  },
   "participant": {
     "participants": "Participant | Participants",
     "delete": "Remove participant from project",

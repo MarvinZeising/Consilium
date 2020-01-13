@@ -38,7 +38,14 @@
   "create": "Neues Projekt erstellen",
   "createDescription": "Bist du der Koordinator eines Events oder Projekts? Dann kannst du ein Projekt erstellen und die Verkündiger einladen teilzunehmen.",
   "createSubmit": "Projekt erstellen",
-  "congregations": "Versammlungen",
+  "congregation": {
+    "congregations": "Versammlung | Versammlungen",
+    "update": "Versammlung bearbeiten",
+    "updateDescription": "Hier kannst du die Daten dieser Versammlung bearbeiten. Bitte beachte, dass Versammlungen globale Daten sind. Änderungen an Versammlungen haben also Auswirkungen auf alle Projekte, deren Teilnehmer teil dieser Versammlungen sind.",
+    "nameDescription": "Der Name der Versammlung.",
+    "number": "Versammlungsnummer",
+    "numberDescription": "Die Versammlungsnummer der Versammlung."
+  },
   "participant": {
     "participants": "Teilnehmer",
     "delete": "Teilnehmer aus dem Projekt entfernen",

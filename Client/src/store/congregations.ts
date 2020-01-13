@@ -29,8 +29,42 @@ export default class CongregationModule extends VuexModule {
     this.context.commit('setCongregations', congregations)
   }
 
+  @Action
+  public async updateCongregation(data: {
+    congregationId: string,
+    name: string,
+    number: string,
+  }) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+
+    const response = await axios.put(
+      `/persons/${personId}/projects/${projectId}/congregations/${data.congregationId}`, {
+      name: data.name,
+      number: data.number,
+    })
+    const congregation = Congregation.create(response.data)
+
+    this.context.commit('upsertCongregation', congregation)
+
+    const activePerson = this.context.getters.getActivePerson
+    if (activePerson?.congregationId === congregation.id) {
+      activePerson.congregation.name = congregation.name
+    }
+  }
+
   @Mutation
-  private setCongregations(congregations: Congregation[]) {
+  protected upsertCongregation(congregation: Congregation) {
+    this.congregations = this.congregations.map((x) => {
+      if (x.id === congregation.id) {
+        x.name = congregation.name
+        x.number = congregation.number
+      }
+      return x
+    })
+  }
+
+  @Mutation
+  protected setCongregations(congregations: Congregation[]) {
     this.congregations = congregations
   }
 
