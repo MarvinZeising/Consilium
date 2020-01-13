@@ -23,7 +23,7 @@
         >
           <v-list-item-content>
             <v-list-item-title v-html="article.title" />
-            <v-list-item-subtitle v-html="article.content" />
+            <v-list-item-subtitle v-html="getCleaned(article.content)" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -93,6 +93,10 @@ export default class ParticipantsInvitations extends Vue {
     await this.knowledgeBaseModule.loadArticles();
 
     this.loading = false
+  }
+
+  private getCleaned(content: string) {
+    return content.replace(/[^\w\s]/gi, '')
   }
 
   private getArticleLink(articleId: string) {
