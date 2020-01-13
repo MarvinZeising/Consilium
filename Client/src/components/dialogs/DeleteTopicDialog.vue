@@ -63,7 +63,7 @@ import i18n from '../../i18n'
 import KnowledgeBaseModule from '../../store/knowledgeBase'
 
 @Component
-export default class DeleteProjectDialog extends Vue {
+export default class DeleteTopicDialog extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   @Prop(Topic)
