@@ -1,4 +1,6 @@
 {
+  "persons": "You didn't create any persons, yet! | Person | Persons",
+  "personsDescription": "Your account is connected to the following persons. Each of these persons can participate in one or more projects.",
   "notFound": "Couldn't find a person with this ID",
   "profile": "Profile",
   "personal": "Personal",
@@ -22,13 +24,10 @@
   "createDescription1": "Why create a person?",
   "createDescription2": "You already have an account. But an account is only for signing in.",
   "createDescription3": "To actually connect to a project and participate, you need a person.",
-  "persons": "Persons",
-  "personsDescription": "Your account is connected to the following persons. Each of these persons can participate in one or more projects.",
   "delete": "Delete this person",
   "deleteDescription": "This will delete all future shift participations and delete the person. You will loose access to the projects that this person had access to.",
   "deleteHint": "Enter the person's firstname to continue",
   "nameMustEqual": "Person name must be this person's name",
-  "noPersons": "You didn't create any persons, yet!"
   "gender": {
     "gender": "Gender",
     "description": "The gender of this person.",

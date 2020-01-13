@@ -1,10 +1,12 @@
 <template>
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2
-      class="headline mb-3"
-      v-t="'person.persons'"
-    />
-    <v-card flat class="ma-2 mb-5">
+    <h2 class="headline mb-3">
+      {{ $tc('person.persons', 2) }}
+    </h2>
+    <v-card
+      flat
+      class="ma-2 mb-5"
+    >
       <v-card-text class="grey--text">
         {{ $t('person.personsDescription') }}
       </v-card-text>
@@ -14,7 +16,7 @@
           dark
           class="warning"
         >
-          <span v-t="'person.noPersons'" />
+          {{ $tc('person.persons', 0) }}
         </v-list-item>
         <v-list-item
           v-for="(person, index) in personModule.getPersons"
