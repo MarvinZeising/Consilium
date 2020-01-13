@@ -24,11 +24,7 @@ export default class UserModule extends VuexModule {
     this.context.commit('applyLocale')
     this.context.commit('applyTheme')
 
-    const persons = response.data.persons.map((rawPerson: Person) => {
-      const person = Person.create(rawPerson)
-      person.gender = rawPerson.gender
-      return person
-    })
+    const persons = response.data.persons.map((rawPerson: Person) => Person.create(rawPerson))
 
     const currentlyActivePerson = this.context.getters.getPersons
       .find((x: Person) => x.id === this.context.getters.getActivePersonId)
