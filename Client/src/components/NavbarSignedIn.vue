@@ -81,6 +81,7 @@
           v-for="(participation, i) in personModule.getActivePerson.getParticipations"
           :key="i"
           prepend-icon="extension"
+          :value="participation.projectId === $route.params.projectId"
         >
           <template v-slot:activator>
             <v-list-item-content>
@@ -119,6 +120,7 @@
 
             <v-list-group
               v-if="canView(participation, 'topics') && participation.project.getTopics.length > 0"
+              :value="$route.name === 'article' || $route.name === 'topic'"
               no-action
               sub-group
             >
@@ -141,6 +143,7 @@
 
             <v-list-group
               v-if="getAdminActions(participation).length > 0"
+              :value="['settings', 'participants', 'congregations'].includes($route.name)"
               no-action
               sub-group
             >
