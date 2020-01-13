@@ -42,7 +42,7 @@
               v-model="content"
               :rules="contentRules"
               :label="$t('project.knowledgeBase.content')"
-              counter="5000"
+              counter="10000"
               auto-grow
               filled
               required
@@ -92,7 +92,7 @@ export default class CreateArticleDialog extends Vue {
   private content: string = ''
   private contentRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => v.length <= 5000 || i18n.t('core.fieldMax', { count: 5000 }),
+    (v: string) => v.length <= 10000 || i18n.t('core.fieldMax', { count: 10000 }),
   ]
 
   private async save() {

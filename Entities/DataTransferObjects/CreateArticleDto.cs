@@ -9,7 +9,7 @@ namespace Entities.DataTransferObjects
         public string Title { get; set; }
 
         [Required]
-        [MaxLength(5000)]
+        [MaxLength(10000)]
         public string Content { get; set; }
     }
 }
