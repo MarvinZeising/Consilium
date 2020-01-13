@@ -89,7 +89,7 @@ export default class KnowledgeBaseModule extends VuexModule {
     content: string,
   }) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
-    const topic = this.getActiveTopic
+    const topic: Topic = this.getActiveTopic
 
     const response = await axios.post(`/persons/${personId}/projects/${projectId}/topics/${topic.id}/articles`, {
       title: data.title,
@@ -118,6 +118,30 @@ export default class KnowledgeBaseModule extends VuexModule {
   }
 
   @Action
+  public async updateArticle(data: {
+    articleId: string,
+    title: string,
+    content: string,
+  }) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+    const topic: Topic = this.getActiveTopic
+
+    const response = await axios.put(
+      `/persons/${personId}/projects/${projectId}/topics/${topic.id}/articles/${data.articleId}`, {
+      title: data.title,
+      content: data.content,
+    })
+    const article = Article.create(response.data)
+    topic.articles = topic.articles.map((x) => {
+      if (x.id === article.id) {
+        x.title = article.title
+        x.content = article.content
+      }
+      return x
+    })
+  }
+
+  @Action
   public async deleteTopic(topicId: string) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
@@ -127,6 +151,16 @@ export default class KnowledgeBaseModule extends VuexModule {
       projectId,
       topicId,
     })
+  }
+
+  @Action
+  public async deleteArticle(articleId: string) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+    const topic: Topic = this.getActiveTopic
+
+    await axios.delete(`/persons/${personId}/projects/${projectId}/topics/${topic.id}/articles/${articleId}`)
+
+    topic.articles = topic.articles.filter((x) => x.id !== articleId)
   }
 
 }

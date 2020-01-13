@@ -16,10 +16,15 @@
     "topicNameMustEqual": "Der Name muss dem Namen dieses Themas entsprechen",
     "createArticle": "Neuen Artikel hinzufügen",
     "createArticleDescription": "Hier kannst du einen neuen Artikel schreiben. Artikel haben einen Titel und einen Inhalt. Lange Titel werden auf kleineren Bildschirmen eventuell nicht komplett dargestellt.",
+    "updateArticle": "Artikel überarbeiten",
+    "updateArticleDescription": "Hier kannst du den Artikel überarbeiten",
+    "deleteArticle": "Artikel löschen",
+    "deleteArticleDescription": "Möchtest du den Artikel wirklich löschen?",
     "title": "Titel",
     "titleDescription": "Der Titel des Artikels.",
     "content": "Inhalt",
-    "contentDescription": "Der Inhalt des Artikels."
+    "contentDescription": "Der Inhalt des Artikels.",
+    "markdownHint": "Der Inhalt nutzt die Markdown Syntax. Hier findest du eine detailierte Anleitung dazu:"
   },
   "calendar": "Kalender",
   "administration": "Verwaltung",

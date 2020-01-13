@@ -16,10 +16,15 @@
     "topicNameMustEqual": "Name must be this topic's name",
     "createArticle": "Add a new Article",
     "createArticleDescription": "Here you can write a new article. It has a title and a content. Please be aware that a long title might be cropped on smaller displays.",
+    "updateArticle": "Update Article",
+    "updateArticleDescription": "Here you can update the article.",
+    "deleteArticle": "Delete Article",
+    "deleteArticleDescription": "Do you really want to delete this article?",
     "title": "Title",
     "titleDescription": "The title of the article.",
     "content": "Content",
-    "contentDescription": "The content of the article."
+    "contentDescription": "The content of the article.",
+    "markdownHint": "The content uses the (GitHub flavored) markdown syntax. For a detailed guide, see"
   },
   "calendar": "Calendar",
   "administration": "Administration",

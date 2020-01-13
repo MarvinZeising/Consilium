@@ -6,9 +6,10 @@
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
-        text
-        v-t="'project.knowledgeBase.createArticle'"
-      />
+        icon
+      >
+        <v-icon>edit</v-icon>
+      </v-btn>
     </template>
     <v-card>
       <v-form
@@ -18,12 +19,12 @@
         <v-card-title>
           <span
             class="headline"
-            v-t="'project.knowledgeBase.createArticle'"
+            v-t="'project.knowledgeBase.updateArticle'"
           />
         </v-card-title>
         <v-card-text>
           <span class="subtitle-1">
-            {{ $t('project.knowledgeBase.createArticleDescription') }}
+            {{ $t('project.knowledgeBase.updateArticleDescription') }}
             {{ $t('project.knowledgeBase.markdownHint') }}
             <a
               href="https://guides.github.com/features/mastering-markdown"
@@ -34,25 +35,25 @@
           </span>
         </v-card-text>
         <v-card-text>
-            <p v-t="'project.knowledgeBase.titleDescription'" />
-            <v-text-field
-              v-model="title"
-              :rules="titleRules"
-              :label="$t('project.knowledgeBase.title')"
-              counter="100"
-              filled
-              required
-            />
-            <p v-t="'project.knowledgeBase.contentDescription'" />
-            <v-textarea
-              v-model="content"
-              :rules="contentRules"
-              :label="$t('project.knowledgeBase.content')"
-              counter="10000"
-              auto-grow
-              filled
-              required
-            />
+          <p v-t="'project.knowledgeBase.titleDescription'" />
+          <v-text-field
+            v-model="title"
+            :rules="titleRules"
+            :label="$t('project.knowledgeBase.title')"
+            counter="100"
+            filled
+            required
+          />
+          <p v-t="'project.knowledgeBase.contentDescription'" />
+          <v-textarea
+            v-model="content"
+            :rules="contentRules"
+            :label="$t('project.knowledgeBase.content')"
+            counter="10000"
+            auto-grow
+            filled
+            required
+          />
         </v-card-text>
         <v-card-actions>
           <v-btn
@@ -61,6 +62,10 @@
             v-t="'core.cancel'"
           />
           <v-spacer />
+          <DeleteArticleDialog
+            v-if="knowledgeBaseModule.getActiveArticle"
+            :article="knowledgeBaseModule.getActiveArticle"
+          />
           <v-btn
             text
             type="submit"
@@ -77,14 +82,23 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import KnowledgeBaseModule from '../../store/knowledgeBase'
+import DeleteArticleDialog from '../../components/dialogs/DeleteArticleDialog.vue'
+import { Article } from '../../models'
 
-@Component
-export default class CreateArticleDialog extends Vue {
+@Component({
+  components: {
+    DeleteArticleDialog,
+  }
+})
+export default class UpdateArticleDialog extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
+
+  @Prop(Article)
+  private readonly article?: Article
 
   private dialog: any = false
   private valid: any = null
@@ -101,16 +115,26 @@ export default class CreateArticleDialog extends Vue {
     (v: string) => v.length <= 10000 || i18n.t('core.fieldMax', { count: 10000 }),
   ]
 
+  private created() {
+    if (this.article) {
+      this.title = this.article.title
+      this.content = this.article.content
+    }
+  }
+
   private async save() {
-    this.loading = true
+    if (this.article) {
+      this.loading = true
 
-    await this.knowledgeBaseModule.createArticle({
-      title: this.title,
-      content: this.content,
-    })
+      await this.knowledgeBaseModule.updateArticle({
+        articleId: this.article.id,
+        title: this.title,
+        content: this.content,
+      })
 
-    this.loading = false
-    this.dialog = false
+      this.loading = false
+      this.dialog = false
+    }
   }
 
 }
