@@ -50,7 +50,8 @@
     "number": "Congregation number",
     "numberUnique": "A congregation with this congregation number already exists",
     "numberDescription": "The congregation number. (optional)",
-    "filter": "Filter Congregations"
+    "filter": "Filter Congregations",
+    "searchDescription": "You can search for certain congregations. Just enter the search criteria below. The columns 'Name' and 'Number' will be searched."
   },
   "participant": {
     "participants": "Participant | Participants",

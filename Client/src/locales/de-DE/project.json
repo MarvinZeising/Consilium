@@ -50,7 +50,8 @@
     "number": "Versammlungsnummer",
     "numberDescription": "Die Versammlungsnummer der Versammlung (optional).",
     "numberUnique": "Es existiert bereits eine Versammlung mit dieser Versammlungsnummer",
-    "filter": "Versammlungen filtern"
+    "filter": "Versammlungen filtern",
+    "searchDescription": "Du kannst nach bestimmten Versammlungen suchen. Gib dazu den Suchbegriff ein. Gesucht wird in den Spalten 'Name' und 'Nummer'."
   },
   "participant": {
     "participants": "Teilnehmer",

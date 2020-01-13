@@ -11,10 +11,7 @@
       class="ma-2 mb-5"
     >
       <v-card-actions>
-        <v-btn
-          text
-          v-t="'project.congregation.filter'"
-        />
+        <FilterCongregationsDialog :filter="filter" />
         <v-spacer />
         <CreateCongregationDialog />
       </v-card-actions>
@@ -24,6 +21,7 @@
         :headers="headers"
         :items="congregationModule.getCongregations"
         :items-per-page="15"
+        :search="filter.search"
       >
         <template v-slot:item.action="{ item }">
           <UpdateCongregationDialog :congregation="item" />
@@ -40,11 +38,13 @@ import moment from 'moment'
 import PersonModule from '../store/persons'
 import CongregationModule from '../store/congregations'
 import { Person, ParticipationStatus, Gender } from '../models'
+import FilterCongregationsDialog from '../components/dialogs/FilterCongregationsDialog.vue'
 import CreateCongregationDialog from '../components/dialogs/CreateCongregationDialog.vue'
 import UpdateCongregationDialog from '../components/dialogs/UpdateCongregationDialog.vue'
 
 @Component({
   components: {
+    FilterCongregationsDialog,
     CreateCongregationDialog,
     UpdateCongregationDialog,
   }
@@ -54,12 +54,13 @@ export default class CongregationsList extends Vue {
   private congregationModule: CongregationModule = getModule(CongregationModule, this.$store)
 
   private loading: boolean = true
+  private filter: { search: string } = { search: '' }
 
   private headers: any[] = [
     { text: 'Name', value: 'name' },
     { text: 'Number', value: 'number' },
-    { text: 'Participants', value: 'numberOfParticipants' },
-    { text: 'Actions', value: 'action', sortable: false },
+    { text: 'Participants', value: 'numberOfParticipants', filterable: false },
+    { text: 'Actions', value: 'action', sortable: false, filterable: false },
   ]
 
   public get canView() {
