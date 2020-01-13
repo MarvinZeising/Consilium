@@ -123,7 +123,11 @@ namespace Server.Controllers
                 if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
                 // TODO: check if project is valid / paid for
 
-                var congregation = _db.Congregation.FindByCondition(x => x.Id == congregationId).SingleOrDefault();
+                var congregation = _db.Congregation
+                    .FindByCondition(x => x.Id == congregationId)
+                    .Include(x => x.Persons)
+                    .SingleOrDefault();
+                if (congregation.Persons.Count > 0) return BadRequest();
 
                 _db.Congregation.Delete(congregation);
                 _db.Save();
