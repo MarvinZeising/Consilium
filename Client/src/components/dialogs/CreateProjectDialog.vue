@@ -33,7 +33,7 @@
               v-model="name"
               :label="$t('core.name')"
               :rules="nameRules"
-              counter="40"
+              :counter="name.length >= 30 ? '40' : false"
               filled
               required
             />

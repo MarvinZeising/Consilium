@@ -40,7 +40,7 @@
             v-model="title"
             :rules="titleRules"
             :label="$t('project.knowledgeBase.title')"
-            counter="100"
+            :counter="title.length >= 90 ? '100' : false"
             filled
             required
           />
@@ -49,7 +49,7 @@
             v-model="content"
             :rules="contentRules"
             :label="$t('project.knowledgeBase.content')"
-            counter="10000"
+            :counter="content.length >= 9000 ? '10000' : false"
             auto-grow
             filled
             required

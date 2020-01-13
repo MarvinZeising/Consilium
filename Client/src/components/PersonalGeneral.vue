@@ -81,16 +81,17 @@
             v-model="firstname"
             :label="$t('person.firstname')"
             :rules="nameRules"
-            counter="40"
+            :counter="firstname.length >= 30 ? '40' : false"
             filled
             required
           />
+
           <p v-t="'person.lastnameDescription'" />
           <v-text-field
             v-model="lastname"
             :label="$t('person.lastname')"
             :rules="nameRules"
-            counter="40"
+            :counter="lastname.length >= 30 ? '40' : false"
             filled
             required
           />

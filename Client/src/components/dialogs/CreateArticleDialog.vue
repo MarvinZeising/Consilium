@@ -34,25 +34,28 @@
           </span>
         </v-card-text>
         <v-card-text>
-            <p v-t="'project.knowledgeBase.titleDescription'" />
-            <v-text-field
-              v-model="title"
-              :rules="titleRules"
-              :label="$t('project.knowledgeBase.title')"
-              counter="100"
-              filled
-              required
-            />
-            <p v-t="'project.knowledgeBase.contentDescription'" />
-            <v-textarea
-              v-model="content"
-              :rules="contentRules"
-              :label="$t('project.knowledgeBase.content')"
-              counter="10000"
-              auto-grow
-              filled
-              required
-            />
+
+          <p v-t="'project.knowledgeBase.titleDescription'" />
+          <v-text-field
+            v-model="title"
+            :rules="titleRules"
+            :label="$t('project.knowledgeBase.title')"
+            :counter="title.length >= 90 ? '100' : false"
+            filled
+            required
+          />
+
+          <p v-t="'project.knowledgeBase.contentDescription'" />
+          <v-textarea
+            v-model="content"
+            :rules="contentRules"
+            :label="$t('project.knowledgeBase.content')"
+            :counter="content.length >= 9000 ? '10000' : false"
+            auto-grow
+            filled
+            required
+          />
+
         </v-card-text>
         <v-card-actions>
           <v-btn
