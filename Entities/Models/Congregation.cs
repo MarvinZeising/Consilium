@@ -20,12 +20,6 @@ namespace Entities.Models
         [MaxLength(10)]
         public string Number { get; set; }
 
-        [ValidName]
-        public string CreatedBy { get; set; }
-
-        [ValidName]
-        public string LastUpdatedBy { get; set; }
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
