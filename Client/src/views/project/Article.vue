@@ -1,7 +1,7 @@
 <template>
   <v-container
     fluid
-    class="pa-0 pb-5"
+    class="pa-0"
   >
     <v-layout wrap>
 
@@ -9,6 +9,7 @@
         tile
         flat
         width="100%"
+        color="secondary"
         :loading="loading"
       >
         <v-card-actions>
@@ -19,6 +20,11 @@
           >
             <v-icon>arrow_back</v-icon>
           </v-btn>
+          <v-spacer />
+          <UpdateArticleDialog
+            v-if="canEdit && knowledgeBaseModule.getActiveArticle"
+            :article="knowledgeBaseModule.getActiveArticle"
+          />
         </v-card-actions>
         <v-card-title class="mt-5 mb-3 justify-center">
           <h2
@@ -33,17 +39,22 @@
         </v-card-title>
       </v-card>
 
-      <VueShowdown
-        v-if="knowledgeBaseModule.getActiveArticle"
-        class="pa-5"
-        :markdown="knowledgeBaseModule.getActiveArticle.content"
-      />
-      <v-skeleton-loader
-        v-else
-        type="paragraph@10"
+      <v-card
+        flat
+        class="ma-0"
         width="100%"
-        class="ma-5"
-      />
+      >
+        <VueShowdown
+          v-if="knowledgeBaseModule.getActiveArticle"
+          class="pa-5"
+          :markdown="knowledgeBaseModule.getActiveArticle.content"
+        />
+        <v-skeleton-loader
+          v-else
+          type="paragraph@10"
+          class="ma-5"
+        />
+      </v-card>
 
     </v-layout>
   </v-container>
@@ -53,16 +64,17 @@
 import axios from 'axios'
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import UserModule from '../../store/users'
 import PersonModule from '../../store/persons'
-import ProjectModule from '../../store/projects'
 import KnowledgeBaseModule from '../../store/knowledgeBase'
+import UpdateArticleDialog from '../../components/dialogs/UpdateArticleDialog.vue'
 
-@Component
+@Component({
+  components: {
+    UpdateArticleDialog,
+  }
+})
 export default class Article extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private loading: boolean = true
