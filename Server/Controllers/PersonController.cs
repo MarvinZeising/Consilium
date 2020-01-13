@@ -78,7 +78,7 @@ namespace Server.Controllers
             }
         }
 
-        [HttpPut("{personId}")]
+        [HttpPut("{personId}/general")]
         public ActionResult<PersonDto> UpdateGeneral(Guid personId, [FromBody] UpdatePersonGeneralDto dto)
         {
             try
