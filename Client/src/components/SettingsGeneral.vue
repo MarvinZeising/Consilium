@@ -126,7 +126,6 @@
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { VForm } from 'vuetify/lib'
 import moment from 'moment'
 import i18n from '../i18n'
 import AlertModule from '../store/alerts'

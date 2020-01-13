@@ -72,7 +72,6 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import AlertModule from '../../store/alerts'
 import PersonModule from '../../store/persons'

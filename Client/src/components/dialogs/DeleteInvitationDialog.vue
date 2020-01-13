@@ -49,7 +49,6 @@
 
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
-import { VForm } from 'vuetify/lib'
 import i18n from '../../i18n'
 import InvitationModule from '../../store/invitations'
 import { getModule } from 'vuex-module-decorators'
