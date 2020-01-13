@@ -104,6 +104,31 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPut("{personId}/contact")]
+        public ActionResult<PersonDto> UpdateContact(Guid personId, [FromBody] UpdatePersonContactDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var person = _db.Person.GetById(personId);
+
+                person.Email = dto.Email;
+                person.Phone = dto.Phone;
+
+                _db.Person.Update(person);
+                _db.Save();
+
+                return Ok(_mapper.Map<PersonDto>(person));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateContact: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpDelete("{personId}")]
         public IActionResult DeletePerson(Guid personId)
         {

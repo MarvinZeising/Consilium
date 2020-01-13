@@ -17,8 +17,9 @@ namespace Entities.Validators
                 return false;
             }
 
-            return Regex.IsMatch(valueAsString, ".+@.+\\..+")
-                && valueAsString.Length <= 100;
+            return valueAsString.Length == 0
+                || (Regex.IsMatch(valueAsString, ".+@.+\\..+")
+                    && valueAsString.Length <= 100);
         }
     }
 }
