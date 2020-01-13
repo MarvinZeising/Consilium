@@ -129,6 +129,31 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPut("{personId}/theocratic")]
+        public ActionResult<PersonDto> UpdateTheocratic(Guid personId, [FromBody] UpdatePersonTheocraticDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var person = _db.Person.GetById(personId);
+
+                person.Assignment = dto.Assignment;
+                person.Privilege = dto.Privilege;
+
+                _db.Person.Update(person);
+                _db.Save();
+
+                return Ok(_mapper.Map<PersonDto>(person));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateTheocratic: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpDelete("{personId}")]
         public IActionResult DeletePerson(Guid personId)
         {
