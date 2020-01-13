@@ -34,6 +34,30 @@ namespace Entities.Models
         [ValidGender]
         public string Gender { get; set; }
 
+        [Required]
+        [ValidEmail]
+        public string Email { get; set; }
+
+        [Required]
+        [MaxLength(40)]
+        public string Phone { get; set; }
+
+        [Required]
+        [ValidPrivilege]
+        public string Privilege { get; set; }
+
+        [Required]
+        [ValidAssignment]
+        public string Assignment { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string Languages { get; set; }
+
+        [Required]
+        [MaxLength(1000)]
+        public string Notes { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
