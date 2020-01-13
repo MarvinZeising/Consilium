@@ -11,17 +11,24 @@
         width="100%"
         :loading="loading"
       >
+        <v-card-actions>
+          <v-btn
+            icon
+            exact
+            :to="getBackLink"
+          >
+            <v-icon>arrow_back</v-icon>
+          </v-btn>
+        </v-card-actions>
         <v-card-title class="mt-5 mb-3 justify-center">
           <h2
             v-if="knowledgeBaseModule.getActiveArticle"
-            class="mt-5"
             v-text="knowledgeBaseModule.getActiveArticle.title"
           />
           <v-skeleton-loader
             v-else
             type="heading"
             width="100%"
-            class="ma-5"
           />
         </v-card-title>
       </v-card>
@@ -59,6 +66,16 @@ export default class Article extends Vue {
   private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private loading: boolean = true
+
+  private get getBackLink() {
+    return {
+      name: 'topic',
+      params: {
+        projectId: this.$route.params.projectId,
+        topicId: this.$route.params.topicId,
+      }
+    }
+  }
 
   private get canView() {
     return this.personModule.getActiveRole?.knowledgeBaseRead === true
