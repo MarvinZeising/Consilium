@@ -159,7 +159,9 @@
                 :to="{ name: action[1], params: { projectId: participation.project.id }}"
               >
                 <v-list-item-content>
-                  <v-list-item-title v-t="action[0]" />
+                  <v-list-item-title>
+                    {{ $tc(action[0], 2) }}
+                  </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list-group>
@@ -226,10 +228,10 @@ export default class NavbarSignedIn extends Vue {
         actions.push(['project.settings', 'settings'])
       }
       if (participation.role.participantsRead) {
-        actions.push(['project.participants', 'participants'])
+        actions.push(['project.participant.participants', 'participants'])
       }
       if (participation.role.participantsWrite) {
-        actions.push(['project.congregations', 'congregations'])
+        actions.push(['project.congregation.congregations', 'congregations'])
       }
     }
     return actions
