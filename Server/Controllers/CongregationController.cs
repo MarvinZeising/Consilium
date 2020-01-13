@@ -4,7 +4,6 @@ using System.Linq;
 using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
-using Entities.Enums;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +59,31 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPost("congregations")]
+        public ActionResult<CongregationDto> CreateCongregation(Guid personId, Guid projectId, [FromBody] CreateCongregationDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
+
+                var congregation = _mapper.Map<Congregation>(dto);
+
+                _db.Congregation.Create(congregation);
+                _db.Save();
+
+                var insertedCongregation = _db.Congregation.FindByCondition(x => x.Id == congregation.Id).SingleOrDefault();
+
+                return Ok(_mapper.Map<CongregationDto>(insertedCongregation));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in CreateCongregation: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpPut("congregations/{congregationId}")]
         public ActionResult<CongregationDto> UpdateCongregation(Guid personId, Guid projectId, Guid congregationId, [FromBody] UpdateCongregationDto dto)
         {
@@ -86,6 +110,29 @@ namespace Server.Controllers
             catch (Exception e)
             {
                 _logger.LogError($"ERROR in UpdateCongregation: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("congregations/{congregationId}")]
+        public IActionResult DeleteCongregation(Guid personId, Guid projectId, Guid congregationId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
+                // TODO: check if project is valid / paid for
+
+                var congregation = _db.Congregation.FindByCondition(x => x.Id == congregationId).SingleOrDefault();
+
+                _db.Congregation.Delete(congregation);
+                _db.Save();
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in DeleteCongregation: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }

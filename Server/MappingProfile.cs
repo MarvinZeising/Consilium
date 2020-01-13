@@ -15,6 +15,7 @@ namespace Server
             CreateMap<CreatePersonDto, Person>();
 
             CreateMap<Congregation, CongregationDto>();
+            CreateMap<CreateCongregationDto, Congregation>();
 
             CreateMap<Project, ProjectDto>();
             CreateMap<CreateProjectDto, Project>();
