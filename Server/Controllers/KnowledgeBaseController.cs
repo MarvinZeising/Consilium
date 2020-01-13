@@ -252,7 +252,6 @@ namespace Server.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.KnowledgeBaseWrite != true) return Forbid();
 
@@ -268,6 +267,32 @@ namespace Server.Controllers
             catch (Exception e)
             {
                 _logger.LogError($"ERROR in DeleteTopic: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("topics/{topicId}/articles/{articleId}")]
+        public IActionResult DeleteArticle(Guid personId, Guid projectId, Guid topicId, Guid articleId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.KnowledgeBaseWrite != true) return Forbid();
+
+                var topic = _db.Topic.FindByCondition(x => x.Id == topicId && x.ProjectId == projectId).SingleOrDefault();
+                if (topic == null) return BadRequest();
+
+                var article = _db.Article.FindByCondition(x => x.Id == articleId && x.TopicId == topicId).SingleOrDefault();
+                if (article == null) return BadRequest();
+
+                _db.Article.Delete(article);
+                _db.Save();
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateArticle: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
