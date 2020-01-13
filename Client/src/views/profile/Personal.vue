@@ -6,6 +6,8 @@
 
       <PersonalContact />
 
+      <PersonalTheocratic />
+
       <!--//* Danger Zone -->
       <v-flex xs12 sm10 md8 lg6 xl4>
         <h2
@@ -35,12 +37,14 @@ import { Person } from '../../models'
 import PersonModule from '../../store/persons'
 import PersonalGeneral from '../../components/PersonalGeneral.vue'
 import PersonalContact from '../../components/PersonalContact.vue'
+import PersonalTheocratic from '../../components/PersonalTheocratic.vue'
 import DeletePersonDialog from '../../components/dialogs/DeletePersonDialog.vue'
 
 @Component({
   components: {
     PersonalGeneral,
     PersonalContact,
+    PersonalTheocratic,
     DeletePersonDialog,
   }
 })

@@ -3,6 +3,7 @@
   "profile": "Profil",
   "personal": "Persönliches",
   "contact": "Kontaktdaten",
+  "theocratic": "Theokratisches",
   "configureProjects": "Projekte konfigurieren",
   "description1": "Du kannst für deinen Benutzer mehrere Personen anlegen.",
   "description2": "Dadurch kannst du die Schichten von dir und anderen Personen verwalten (z.B. deinem Ehepartner, Eltern, Kindern, Freunden, etc.)",
@@ -28,5 +29,26 @@
     "description": "Das Geschlecht der Person.",
     "male": "Bruder",
     "female": "Schwester"
+  },
+  "assignment": {
+    "assignment": "Dienstamt",
+    "description": "Das Dienstamt, in dem du gegenwärtig in deiner Versammlung dienst.",
+    "publisher" : "Verkündiger",
+    "ministerial" : "Dienstamtgehilfe",
+    "elder" : "Ältester",
+    "cobe" : "Koordinator der Ältestenschaft",
+    "secretary" : "Sekretär",
+    "serviceOverseer" : "Dienstaufseher"
+  },
+  "privilege": {
+    "privilege": "Vorrecht",
+    "description": "Das Dienstvorrecht, das du gegenwärtig innehaben darfst.",
+    "publisher": "Verkündiger",
+    "auxiliary": "Hilfspionier",
+    "regular": "Pionier",
+    "special": "Sonderpionier",
+    "circuit": "Kreisaufseher",
+    "bethelite": "Bethelit",
+    "construction": "Baudiener"
   }
 }

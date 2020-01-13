@@ -5,6 +5,25 @@ enum Gender {
   Female = 'female',
 }
 
+enum Privilege {
+  Publisher = 'publisher',
+  AuxiliaryPioneer = 'auxiliary',
+  RegularPioneer = 'regular',
+  SpecialPioneer = 'special',
+  Circuit = 'circuit',
+  Bethelite = 'bethelite',
+  ConstructionServant = 'construction',
+}
+
+enum Assignment {
+  Publisher = 'publisher',
+  MinisterialServant = 'ministerial',
+  Elder = 'elder',
+  COBE = 'cobe',
+  Secretary = 'secretary',
+  ServiceOverseer = 'serviceOverseer',
+}
+
 class Congregation {
   public static create(data: any) {
     return new Congregation(
@@ -55,6 +74,11 @@ class Person {
       data.id,
       data.firstname,
       data.lastname,
+      data.gender || Gender.Male,
+      data.email || '',
+      data.phone || '',
+      data.privilege || Privilege.Publisher,
+      data.assignment || Assignment.Publisher,
       data.createdTime,
       data.lastUpdatedTime)
     person.congregationId = data.congregationId ? data.congregationId : undefined
@@ -70,7 +94,11 @@ class Person {
   public lastname: string
   public congregationId?: string
   public congregation?: Congregation
-  public gender: Gender = Gender.Male
+  public gender: Gender
+  public email: string
+  public phone: string
+  public privilege: Privilege
+  public assignment: Assignment
   public participations: Participation[] = []
   public createdTime: string
   public lastUpdatedTime: string
@@ -79,12 +107,22 @@ class Person {
     id: string,
     firstname: string,
     lastname: string,
+    gender: Gender,
+    email: string,
+    phone: string,
+    privilege: Privilege,
+    assignment: Assignment,
     createdTime: string,
     lastUpdatedTime: string,
   ) {
     this.id = id
     this.firstname = firstname
     this.lastname = lastname
+    this.gender = gender
+    this.email = email
+    this.phone = phone
+    this.privilege = privilege
+    this.assignment = assignment
     this.createdTime = createdTime
     this.lastUpdatedTime = lastUpdatedTime
   }
@@ -117,6 +155,10 @@ class Person {
     this.firstname = person.firstname
     this.lastname = person.lastname
     this.gender = person.gender
+    this.email = person.email
+    this.phone = person.phone
+    this.privilege = person.privilege
+    this.assignment = person.assignment
   }
 
 }
@@ -125,4 +167,6 @@ export {
   Person,
   Gender,
   Congregation,
+  Assignment,
+  Privilege,
 }

@@ -4,6 +4,7 @@ import router from '../router'
 import { Person, Gender, Participation } from '../models'
 import store from '../plugins/vuex'
 import { setCookie } from './_helpers'
+import { Assignment, Privilege } from '../models/person'
 
 @Module({ dynamic: true, store, name: 'PersonModule' })
 export default class PersonModule extends VuexModule {
@@ -58,6 +59,34 @@ export default class PersonModule extends VuexModule {
       firstname: person.firstname,
       lastname: person.lastname,
       gender: person.gender,
+    })
+    const updatedPerson = Person.create(response.data)
+
+    this.context.commit('upsertPerson', updatedPerson)
+  }
+
+  @Action
+  public async updatePersonTheocratic(data: {
+    assignment: Assignment,
+    privilege: Privilege,
+  }) {
+    const response = await axios.put(`/persons/${this.getActivePersonId}/theocratic`, {
+      assignment: data.assignment,
+      privilege: data.privilege,
+    })
+    const updatedPerson = Person.create(response.data)
+
+    this.context.commit('upsertPerson', updatedPerson)
+  }
+
+  @Action
+  public async updatePersonContact(data: {
+    email: string,
+    phone: string,
+  }) {
+    const response = await axios.put(`/persons/${this.getActivePersonId}/contact`, {
+      email: data.email,
+      phone: data.phone,
     })
     const updatedPerson = Person.create(response.data)
 

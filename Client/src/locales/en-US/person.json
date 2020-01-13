@@ -3,6 +3,7 @@
   "profile": "Profile",
   "personal": "Personal",
   "contact": "Contact",
+  "theocratic": "Theocratic",
   "configureProjects": "Configure Projects",
   "description1": "You can have multiple persons connected to your account.",
   "description2": "That way, you can manage the shifts for yourself and others (e.g. your spouse, parents, children, friends, etc)",
@@ -29,4 +30,25 @@
     "male": "Male",
     "female": "Female"
   },
+  "assignment": {
+    "assignment": "Assignment",
+    "description": "Your assignment in the congregation you're currently serving in.",
+    "publisher" : "Publisher",
+    "ministerial" : "Ministerial servant",
+    "elder" : "Elder",
+    "cobe" : "Coordinator of the Body of Elders",
+    "secretary" : "Secretary",
+    "serviceOverseer" : "Service overseer"
+  },
+  "privilege": {
+    "privilege": "Privilege",
+    "description": "The service privilege you are allowed to serve as.",
+    "publisher": "Publisher",
+    "auxiliary": "Auxiliary pioneer",
+    "regular": "Regular pioneer",
+    "special": "Special pioneer",
+    "circuit": "Circuit overseer",
+    "bethelite": "Bethelite",
+    "construction": "Construction servant"
+  }
 }
