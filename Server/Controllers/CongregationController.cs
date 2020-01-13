@@ -68,6 +68,12 @@ namespace Server.Controllers
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
 
+                var congregationWithThisData = _db.Congregation
+                    .FindByCondition(x => x.Name == dto.Name || x.Number == dto.Number)
+                    .SingleOrDefault();
+                if (congregationWithThisData?.Name == dto.Name) return BadRequest(nameof(CongregationNameUniqueException));
+                if (congregationWithThisData?.Number == dto.Number) return BadRequest(nameof(CongregationNumberUniqueException));
+
                 var congregation = _mapper.Map<Congregation>(dto);
 
                 _db.Congregation.Create(congregation);
@@ -93,6 +99,12 @@ namespace Server.Controllers
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
                 // TODO: check if project is valid / paid for
+
+                var congregationWithThisData = _db.Congregation
+                    .FindByCondition(x => x.Id != congregationId && (x.Name == dto.Name || x.Number == dto.Number))
+                    .SingleOrDefault();
+                if (congregationWithThisData?.Name == dto.Name) return BadRequest(nameof(CongregationNameUniqueException));
+                if (congregationWithThisData?.Number == dto.Number) return BadRequest(nameof(CongregationNumberUniqueException));
 
                 var congregation = _db.Congregation.FindByCondition(x => x.Id == congregationId).SingleOrDefault();
                 if (congregation == null) return BadRequest();
