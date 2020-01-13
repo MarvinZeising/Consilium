@@ -40,6 +40,7 @@
       </v-card>
 
       <v-card
+        tile
         flat
         class="ma-0"
         width="100%"
