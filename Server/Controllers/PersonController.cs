@@ -154,6 +154,31 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPut("{personId}/miscellaneous")]
+        public ActionResult<PersonDto> UpdateMiscellaneous(Guid personId, [FromBody] UpdatePersonMiscellaneousDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var person = _db.Person.GetById(personId);
+
+                person.Languages = dto.Languages;
+                person.Notes = dto.Notes;
+
+                _db.Person.Update(person);
+                _db.Save();
+
+                return Ok(_mapper.Map<PersonDto>(person));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateMiscellaneous: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpDelete("{personId}")]
         public IActionResult DeletePerson(Guid personId)
         {
