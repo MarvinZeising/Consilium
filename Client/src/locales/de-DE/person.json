@@ -16,6 +16,7 @@
   "lastnameDescription": "Der Nachname der Person.",
   "emailDescription": "Die Email-Adresse, an die Benachrichtigungen zu deinen Schichten geschickt werden.",
   "phoneDescription": "Deine Telefonnummer für den Fall, dass dich jemand (z.B. in deiner Schicht) anrufen möchte.",
+  "nameMustEqual": "Der Name muss dem Vornamen dieser Person entsprechen",
   "languages": "Sprachen",
   "languagesDescription": "Fremdsprachen, die du sprichst.",
   "notes": "Notizen",
@@ -27,7 +28,6 @@
   "delete": "Diese Person löschen",
   "deleteDescription": "Dies wird diese Person und alle zukünftigen Bewerbungen/Teilnahmen der Person für/an Schichten aller Projekte unwiderruflich löschen. Du wirst den Zugriff auf alle Projekte verlieren, zu denen diese Person Zugriff hatte.",
   "deleteHint": "Gib den Vornamen dieser Person ein um fortzufahren",
-  "nameMustEqual": "Der Name muss dem Vornamen dieser Person entsprechen",
   "gender": {
     "gender": "Geschlecht",
     "description": "Das Geschlecht der Person.",

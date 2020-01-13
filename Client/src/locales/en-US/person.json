@@ -16,6 +16,7 @@
   "lastnameDescription": "The last name of this person.",
   "emailDescription": "The email address we'll send shift notifications to.",
   "phoneDescription": "Your phone number in case someone (e.g. in your shift) wants to call you.",
+  "nameMustEqual": "Person name must be this person's name",
   "languages": "Languages",
   "languagesDescription": "Foreign languages you are able to speak.",
   "notes": "Notes",
@@ -27,7 +28,6 @@
   "delete": "Delete this person",
   "deleteDescription": "This will delete all future shift participations and delete the person. You will loose access to the projects that this person had access to.",
   "deleteHint": "Enter the person's firstname to continue",
-  "nameMustEqual": "Person name must be this person's name",
   "gender": {
     "gender": "Gender",
     "description": "The gender of this person.",
