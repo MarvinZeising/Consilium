@@ -9,12 +9,6 @@
   "firstnameDescription": "Der Vorname der Person.",
   "lastname": "Nachname",
   "lastnameDescription": "Der Nachname der Person.",
-  "gender": "Geschlecht",
-  "genderDescription": "Das Geschlecht der Person.",
-  "male": "Bruder",
-  "female": "Schwester",
-  "photo": "Bild",
-  "updatePhoto": "Bild ändern",
   "create": "Neue Person anlegen",
   "createDescription1": "Warum eine Person anlegen?",
   "createDescription2": "Du hast bereits einen Benutzer. Aber ein Benutzer ist nur zum Anmelden am System.",
@@ -25,5 +19,11 @@
   "deleteDescription": "Dies wird diese Person und alle zukünftigen Bewerbungen/Teilnahmen der Person für/an Schichten aller Projekte unwiderruflich löschen. Du wirst den Zugriff auf alle Projekte verlieren, zu denen diese Person Zugriff hatte.",
   "deleteHint": "Gib den Vornamen dieser Person ein um fortzufahren",
   "nameMustEqual": "Der Name muss dem Vornamen dieser Person entsprechen",
-  "noPersons": "Du hast noch keine Personen angelegt!"
+  "noPersons": "Du hast noch keine Personen angelegt!",
+  "gender": {
+    "gender": "Geschlecht",
+    "description": "Das Geschlecht der Person.",
+    "male": "Bruder",
+    "female": "Schwester"
+  }
 }

@@ -42,11 +42,11 @@
           <v-flex xs12>
             <p
               class="caption mb-0 grey--text"
-              v-t="'person.gender'"
+              v-t="'person.gender.gender'"
             />
             <p
               class="subtitle-1"
-              v-t="'person.' + personModule.getActivePerson.gender"
+              v-t="'person.gender.' + personModule.getActivePerson.gender"
             />
           </v-flex>
 
@@ -75,7 +75,11 @@
 
       <!-- //* UPDATE -->
       <v-card-text v-else>
-        <v-form v-model="valid" ref="form">
+        <v-form
+          ref="form"
+          v-model="valid"
+        >
+
           <p v-t="'person.firstnameDescription'" />
           <v-text-field
             v-model="firstname"
@@ -95,23 +99,25 @@
             filled
             required
           />
-          <p v-t="'person.genderDescription'" />
+
+          <p v-t="'person.gender.description'" />
           <v-select
             v-model="gender"
             :items="genderValues"
             item-text="name"
             item-value="value"
-            :label="$t('person.gender')"
+            :label="$t('person.gender.gender')"
             filled
             required
           >
             <template v-slot:selection="{ item }">
-              <span>{{ $t('person.' + item.value) }}</span>
+              <span>{{ $t('person.gender.' + item.value) }}</span>
             </template>
             <template v-slot:item="{ item }">
-              <span>{{ $t('person.' + item.value) }}</span>
+              <span>{{ $t('person.gender.' + item.value) }}</span>
             </template>
           </v-select>
+
         </v-form>
       </v-card-text>
 
@@ -119,25 +125,25 @@
       <v-card-actions>
         <v-spacer />
         <v-btn
-          text
           v-if="!editMode"
-          @click.stop="toggleEditMode"
+          text
           v-t="'core.edit'"
-        />
-        <v-btn
-          text
-          v-if="editMode"
           @click.stop="toggleEditMode"
-          v-t="'core.cancel'"
         />
         <v-btn
-          text
           v-if="editMode"
-          :disabled="!valid"
-          :loading="loading"
+          text
+          v-t="'core.cancel'"
+          @click.stop="toggleEditMode"
+        />
+        <v-btn
+          v-if="editMode"
+          text
           color="primary"
-          @click.stop="save"
           v-t="'core.save'"
+          :loading="loading"
+          :disabled="!valid"
+          @click.stop="save"
         />
       </v-card-actions>
     </v-card>
@@ -148,7 +154,6 @@
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { VForm } from 'vuetify/lib'
 import i18n from '../i18n'
 import { Person, Gender } from '../models'
 import UserModule from '../store/users'
