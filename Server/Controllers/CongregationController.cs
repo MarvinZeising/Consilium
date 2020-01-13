@@ -60,5 +60,35 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPut("congregations/{congregationId}")]
+        public ActionResult<CongregationDto> UpdateCongregation(Guid personId, Guid projectId, Guid congregationId, [FromBody] UpdateCongregationDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
+                // TODO: check if project is valid / paid for
+
+                var congregation = _db.Congregation.FindByCondition(x => x.Id == congregationId).SingleOrDefault();
+                if (congregation == null) return BadRequest();
+
+                congregation.Name = dto.Name;
+                congregation.Number = dto.Number;
+
+                _db.Congregation.Update(congregation);
+                _db.Save();
+
+                var updatedCongregation = _db.Congregation.FindByCondition(x => x.Id == congregationId).SingleOrDefault();
+
+                return Ok(_mapper.Map<CongregationDto>(updatedCongregation));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateCongregation: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
