@@ -61,7 +61,9 @@
   "participant": {
     "participants": "Teilnehmer",
     "delete": "Teilnehmer aus dem Projekt entfernen",
-    "deleteDescription": "Möchtest du diesen Teilnehmer wirklich aus dem Projekt entfernen? Die Person wird immer noch existieren, aber ihre Verbindung zu diesem Projekt wird gelöscht."
+    "deleteDescription": "Möchtest du diesen Teilnehmer wirklich aus dem Projekt entfernen? Die Person wird immer noch existieren, aber ihre Verbindung zu diesem Projekt wird gelöscht.",
+    "filter": "Teilnehmer filtern",
+    "searchDescription": "Du kannst nach bestimmten Teilnehmern suchen. Gib dazu den Suchbegriff ein. Gesucht wird in den Spalten 'Vorname' und 'Nachname'."
   },
   "participation": {
     "details": "Teilnahme Details",

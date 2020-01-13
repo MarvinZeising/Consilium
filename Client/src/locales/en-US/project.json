@@ -61,7 +61,9 @@
   "participant": {
     "participants": "Participant | Participants",
     "delete": "Remove participant from project",
-    "deleteDescription": "Do you really want to remove this participant from the project? The person will still exist, but their connection to this project will be removed."
+    "deleteDescription": "Do you really want to remove this participant from the project? The person will still exist, but their connection to this project will be removed.",
+    "filter": "Filter Participants",
+    "searchDescription": "You can search for certain participants. Just enter the search criteria below. The columns 'First name' and 'Last name' will be searched."
   },
   "participation": {
     "details": "Participation Details",

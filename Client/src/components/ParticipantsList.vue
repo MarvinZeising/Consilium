@@ -10,23 +10,16 @@
       flat
       class="ma-2 mb-5"
     >
-      <!-- <v-card-title>
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-        />
-      </v-card-title> -->
+      <v-card-actions>
+        <FilterParticipantsDialog :filter="filter" />
+      </v-card-actions>
       <v-data-table
         v-if="projectModule.getActiveProject"
         :loading="loading"
         :headers="headers"
         :items="projectModule.getActiveProject.getParticipations"
         :items-per-page="15"
-        :search="search"
+        :search="filter.search"
       >
         <template
           v-if="canEdit"
@@ -51,10 +44,12 @@ import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import ParticipantModule from '../store/participants'
 import DeleteParticipantDialog from './dialogs/DeleteParticipantDialog.vue'
+import FilterParticipantsDialog from './dialogs/FilterParticipantsDialog.vue'
 import { Person, ParticipationStatus, Gender } from '../models'
 
 @Component({
   components: {
+    FilterParticipantsDialog,
     DeleteParticipantDialog,
   }
 })
@@ -65,13 +60,13 @@ export default class ParticipantsList extends Vue {
   private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
 
   private loading: boolean = true
-  private search: string = ''
+  private filter: { search: string } = { search: '' }
 
   private headers: any[] = [
     { text: 'First name', value: 'person.firstname' },
     { text: 'Last name', value: 'person.lastname' },
-    { text: 'Role', value: 'role.name' },
-    { text: 'Actions', value: 'action', sortable: false },
+    { text: 'Role', value: 'role.name', filterable: false },
+    { text: 'Actions', value: 'action', sortable: false, filterable: false },
   ]
 
   public get canView() {
