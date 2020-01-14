@@ -25,10 +25,7 @@
           v-if="canEdit"
           v-slot:item.action="{ item }"
         >
-          <DeleteParticipantDialog
-            v-if="item.person.id !== personModule.getActivePersonId"
-            :participationId="item.id"
-          />
+          <UpdateParticipantDialog :participation="item" />
         </template>
       </v-data-table>
     </v-card>
@@ -38,23 +35,20 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import moment from 'moment'
-import UserModule from '../store/users'
 import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import ParticipantModule from '../store/participants'
-import DeleteParticipantDialog from './dialogs/DeleteParticipantDialog.vue'
+import UpdateParticipantDialog from './dialogs/UpdateParticipantDialog.vue'
 import FilterParticipantsDialog from './dialogs/FilterParticipantsDialog.vue'
 import { Person, ParticipationStatus, Gender } from '../models'
 
 @Component({
   components: {
     FilterParticipantsDialog,
-    DeleteParticipantDialog,
+    UpdateParticipantDialog,
   }
 })
 export default class ParticipantsList extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
   private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)

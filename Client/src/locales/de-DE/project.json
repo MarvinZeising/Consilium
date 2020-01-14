@@ -60,6 +60,8 @@
   },
   "participant": {
     "participants": "Teilnehmer",
+    "update": "Teilnehmer bearbeiten",
+    "updateDescription": "Du kannst die Daten dieses Teilnehmers bearbeiten. Beachte aber, dass der Teilnehmer seine Daten immer wieder ändern kann, da ihm die Daten gehören.",
     "delete": "Teilnehmer aus dem Projekt entfernen",
     "deleteDescription": "Möchtest du diesen Teilnehmer wirklich aus dem Projekt entfernen? Die Person wird immer noch existieren, aber ihre Verbindung zu diesem Projekt wird gelöscht.",
     "filter": "Teilnehmer filtern",

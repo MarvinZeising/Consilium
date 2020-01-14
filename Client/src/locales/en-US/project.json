@@ -60,6 +60,8 @@
   },
   "participant": {
     "participants": "Participant | Participants",
+    "update": "Update Participant",
+    "updateDescription": "You can update this participant's data. Keep in mind that since this person is the owner of the data, they can always change it back.",
     "delete": "Remove participant from project",
     "deleteDescription": "Do you really want to remove this participant from the project? The person will still exist, but their connection to this project will be removed.",
     "filter": "Filter Participants",

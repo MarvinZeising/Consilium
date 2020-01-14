@@ -1,10 +1,15 @@
 <template>
   <v-dialog
     v-model="dialog"
-    max-width="400px"
+    max-width="500px"
   >
     <template v-slot:activator="{ on }">
-      <v-icon v-on="on">delete</v-icon>
+      <v-btn
+        v-on="on"
+        text
+        color="error"
+        v-t="'project.participant.delete'"
+      />
     </template>
     <v-card>
       <v-form v-model="valid">
