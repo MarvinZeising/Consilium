@@ -96,6 +96,28 @@
               xs12 sm6 md4
               class="pa-4"
             >
+              <v-select
+                v-model="language"
+                :items="languageValues"
+                item-text="name"
+                item-value="value"
+                :label="$t('language.language')"
+                filled
+                required
+              >
+                <template v-slot:selection="{ item }">
+                  <span>{{ $t('language.' + item.value) }}</span>
+                </template>
+                <template v-slot:item="{ item }">
+                  <span>{{ $t('language.' + item.value) }}</span>
+                </template>
+              </v-select>
+            </v-flex>
+
+            <v-flex
+              xs12 sm6 md4
+              class="pa-4"
+            >
               <v-text-field
                 v-model="phone"
                 :rules="phoneRules"
@@ -208,7 +230,7 @@ import i18n from '../../i18n'
 import PersonModule from '../../store/persons'
 import ProjectModule from '../../store/projects'
 import DeleteParticipantDialog from '../../components/dialogs/DeleteParticipantDialog.vue'
-import { Article, Person, Participation, Gender, Privilege, Assignment } from '../../models'
+import { Article, Person, Participation, Gender, Privilege, Assignment, Language } from '../../models'
 
 @Component({
   components: {
@@ -230,6 +252,7 @@ export default class UpdateParticipantDialog extends Vue {
   private lastname?: string
   private gender?: Gender
   private email?: string
+  private language?: Language
   private phone?: string
   private privilege?: Privilege
   private assignment?: Assignment
@@ -254,8 +277,10 @@ export default class UpdateParticipantDialog extends Vue {
     (v: string) => v.length <= 1000 || i18n.t('core.fieldMax', { count: 1000 }),
   ]
 
-
   private genderValues: any[] = [ 'male', 'female' ].map((value) => {
+    return { value }
+  })
+  private languageValues: any[] = i18n.availableLocales.map((value) => {
     return { value }
   })
   private privilegeValues: any[] = [
@@ -286,6 +311,7 @@ export default class UpdateParticipantDialog extends Vue {
       this.lastname = this.participation.person?.lastname || ''
       this.gender = this.participation.person?.gender || Gender.Male
       this.email = this.participation.person?.email || ''
+      this.language = this.participation.person?.language || Language.enUS
       this.phone = this.participation.person?.phone || ''
       this.privilege = this.participation.person?.privilege || Privilege.Publisher
       this.assignment = this.participation.person?.assignment || Assignment.Publisher
