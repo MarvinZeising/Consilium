@@ -51,7 +51,7 @@
           <v-text-field
             v-model="languages"
             :label="$t('person.languages')"
-            :rules="languageRules"
+            :rules="languagesRules"
             :counter="languages.length >= 80 ? '100' : false"
             filled
           />
@@ -62,6 +62,7 @@
             :label="$t('person.notes')"
             :rules="notesRules"
             :counter="notes.length >= 900 ? '1000' : false"
+            auto-grow
             filled
           />
 
@@ -114,7 +115,13 @@ export default class PersonalMisc extends Vue {
   private loading: boolean = false
 
   private languages: string = this.personModule.getActivePerson?.firstname || ''
+  private languagesRules: any[] = [
+    (v: string) => v.length <= 100 || i18n.t('core.fieldMax', { count: 100 }),
+  ]
   private notes: string = this.personModule.getActivePerson?.lastname || ''
+  private notesRules: any[] = [
+    (v: string) => v.length <= 1000 || i18n.t('core.fieldMax', { count: 1000 }),
+  ]
 
   private toggleEditMode() {
     this.editMode = !this.editMode
