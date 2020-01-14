@@ -122,8 +122,7 @@ import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../i18n'
 import PersonModule from '../store/persons'
-import { Person, Gender } from '../models'
-import { Assignment, Privilege } from '@/models/person'
+import { Person, Gender, Assignment, Privilege } from '../models'
 
 @Component
 export default class PersonalTheocratic extends Vue {

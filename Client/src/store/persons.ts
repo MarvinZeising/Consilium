@@ -1,10 +1,9 @@
 import axios from 'axios'
 import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
-import router from '../router'
-import { Person, Gender, Participation } from '../models'
 import store from '../plugins/vuex'
+import router from '../router'
+import { Person, Gender, Participation, Assignment, Privilege } from '../models'
 import { setCookie } from './_helpers'
-import { Assignment, Privilege } from '../models/person'
 
 @Module({ dynamic: true, store, name: 'PersonModule' })
 export default class PersonModule extends VuexModule {

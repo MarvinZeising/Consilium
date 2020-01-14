@@ -1,5 +1,5 @@
 import { User, Theme } from './user'
-import { Person, Gender, Congregation } from './person'
+import { Person, Gender, Congregation, Assignment, Privilege } from './person'
 import { Project } from './project'
 import { Participation, ParticipationStatus, Role } from './participation'
 import { Topic, Article } from './knowledgeBase'
@@ -17,6 +17,8 @@ export {
   User,
   Theme,
   Person,
+  Assignment,
+  Privilege,
   Gender,
   Congregation,
   Project,
