@@ -23,7 +23,7 @@
               class="caption mb-0 grey--text"
               v-t="'person.privilege.privilege'"
             />
-            <p class="subtitle-1 grey--text">
+            <p class="subtitle-1">
               {{ $t('person.privilege.' + personModule.getActivePerson.privilege) }}
             </p>
           </v-flex>
