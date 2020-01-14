@@ -178,9 +178,10 @@
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import moment from 'moment'
 import i18n from '../i18n'
 import UserModule from '../store/users'
-import moment from 'moment'
+import { Language } from '../models'
 
 @Component
 export default class AccountInterface extends Vue {
@@ -216,7 +217,7 @@ export default class AccountInterface extends Vue {
   ].map((value) => {
     return { value }
   })
-  private language: string = this.userModule.getUser?.language || ''
+  private language: Language = this.userModule.getUser?.language || Language.enUS
   private languageValues: any[] = i18n.availableLocales.map((value) => {
     return { value }
   })
@@ -229,7 +230,7 @@ export default class AccountInterface extends Vue {
     this.editMode = !this.editMode
 
     if (this.editMode) {
-      this.language = this.userModule.getUser?.language || ''
+      this.language = this.userModule.getUser?.language || Language.enUS
       this.theme = this.userModule.getUser?.theme || ''
     }
   }

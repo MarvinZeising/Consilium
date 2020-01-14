@@ -1,4 +1,4 @@
-import { User, Theme } from './user'
+import { User, Theme, Language } from './user'
 import { Person, Gender, Congregation, Assignment, Privilege } from './person'
 import { Project } from './project'
 import { Participation, ParticipationStatus, Role } from './participation'
@@ -15,6 +15,7 @@ enum Exceptions {
 
 export {
   User,
+  Language,
   Theme,
   Person,
   Assignment,

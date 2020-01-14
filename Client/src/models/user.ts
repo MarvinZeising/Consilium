@@ -1,5 +1,10 @@
 import moment from 'moment'
 
+enum Language {
+  enUS = 'en-US',
+  deDE = 'de-DE',
+}
+
 enum Theme {
   Light = 'light',
   Dark = 'dark',
@@ -20,7 +25,7 @@ class User {
 
   public id: string
   public email: string
-  public language: string
+  public language: Language
   public theme: Theme
   public dateFormat: string
   public timeFormat: string
@@ -30,7 +35,7 @@ class User {
   constructor(
     id: string,
     email: string,
-    language: string,
+    language: Language,
     theme: string,
     dateFormat: string,
     timeFormat: string,
@@ -62,5 +67,6 @@ class User {
 
 export {
   User,
+  Language,
   Theme,
 }

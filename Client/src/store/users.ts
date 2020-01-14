@@ -2,10 +2,10 @@ import axios from 'axios'
 import moment from 'moment'
 import 'moment/locale/de'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
-import { User, Theme, Person } from '../models'
 import i18n from '../i18n'
 import vuetify from '../plugins/vuetify'
 import store from '../plugins/vuex'
+import { User, Theme, Person, Language } from '../models'
 import { getCookie, hashPassword } from './_helpers'
 
 @Module({ dynamic: true, store, name: 'UserModule' })
@@ -102,7 +102,7 @@ export default class UserModule extends VuexModule {
 
   @Action
   public async updateInterface(accountInterface: {
-    language: string,
+    language: Language,
     theme: string,
     dateFormat: string,
     timeFormat: string,
