@@ -380,6 +380,48 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPut("participants/{participationId}")]
+        public ActionResult<ParticipationDto> UpdateParticipant(Guid personId, Guid projectId, Guid participationId, [FromBody] UpdateParticipantDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
+
+                var participation = _db.Participation
+                    .FindByCondition(x => x.Id == participationId && x.ProjectId == projectId)
+                    .Include(x => x.Role)
+                    .SingleOrDefault();
+                if (participation == null) return BadRequest();
+
+                var person = _db.Person.GetById(participation.PersonId);
+
+                person.Firstname = dto.Firstname;
+                person.Lastname = dto.Lastname;
+                person.Gender = dto.Gender;
+                person.Email = dto.Email;
+                person.Language = dto.Language;
+                person.Phone = dto.Phone;
+                person.Privilege = dto.Privilege;
+                person.Assignment = dto.Assignment;
+                person.Languages = dto.Languages;
+                person.Notes = dto.Notes;
+
+                _db.Person.Update(person);
+                _db.Save();
+
+                participation.Person = person;
+
+                return Ok(_mapper.Map<ParticipationDto>(participation));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateParticipant: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpDelete("invitations/{participationId}")]
         public IActionResult DeleteInvitation(Guid personId, Guid projectId, Guid participationId)
         {
