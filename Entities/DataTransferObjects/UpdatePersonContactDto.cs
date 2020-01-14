@@ -8,6 +8,9 @@ namespace Entities.DataTransferObjects
         [ValidEmail]
         public string Email { get; set; }
 
+        [ValidLanguage]
+        public string Language { get; set; }
+
         [MaxLength(40)]
         public string Phone { get; set; }
     }

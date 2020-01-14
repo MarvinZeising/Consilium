@@ -39,6 +39,10 @@ namespace Entities.Models
         public string Email { get; set; }
 
         [Required]
+        [ValidLanguage]
+        public string Language { get; set; }
+
+        [Required]
         [MaxLength(40)]
         public string Phone { get; set; }
 

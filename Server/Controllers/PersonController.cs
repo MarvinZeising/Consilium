@@ -115,6 +115,7 @@ namespace Server.Controllers
                 var person = _db.Person.GetById(personId);
 
                 person.Email = dto.Email;
+                person.Language = dto.Language;
                 person.Phone = dto.Phone;
 
                 _db.Person.Update(person);
