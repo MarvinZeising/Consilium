@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Participation, ParticipationStatus } from '../models'
+import { Participation, ParticipationStatus, Gender, Language, Privilege, Assignment } from '../models'
 
 @Module({ dynamic: true, store, name: 'ParticipantModule' })
 export default class ParticipantModule extends VuexModule {
@@ -19,6 +19,43 @@ export default class ParticipantModule extends VuexModule {
         clearFirst: true,
       })
     }
+  }
+
+  @Action
+  public async updateParticipant(data: {
+    participationId: string,
+    firstname: string,
+    lastname: string,
+    gender: Gender,
+    email: string,
+    language: Language,
+    phone: string,
+    privilege: Privilege,
+    assignment: Assignment,
+    languages: string,
+    notes: string,
+  }) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+
+    const response = await axios.put(
+      `/persons/${personId}/projects/${projectId}/participants/${data.participationId}`, {
+      firstname: data.firstname,
+      lastname: data.lastname,
+      gender: data.gender,
+      email: data.email,
+      language: data.language,
+      phone: data.phone,
+      privilege: data.privilege,
+      assignment: data.assignment,
+      languages: data.languages,
+      notes: data.notes,
+    })
+    const participation = Participation.create(response.data)
+
+    this.context.commit('upsertProjectParticipations', {
+      projectId,
+      participations: [participation],
+    })
   }
 
   @Action

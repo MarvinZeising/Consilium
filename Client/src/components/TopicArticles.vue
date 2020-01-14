@@ -105,7 +105,7 @@ export default class ParticipantsInvitations extends Vue {
       params: {
         projectId: this.$route.params.projectId,
         topicId: this.$route.params.topicId,
-        articleId: articleId,
+        articleId,
       },
     }
   }

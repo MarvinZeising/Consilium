@@ -229,6 +229,7 @@ import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import PersonModule from '../../store/persons'
 import ProjectModule from '../../store/projects'
+import ParticipantModule from '../../store/participants'
 import DeleteParticipantDialog from '../../components/dialogs/DeleteParticipantDialog.vue'
 import { Article, Person, Participation, Gender, Privilege, Assignment, Language } from '../../models'
 
@@ -240,6 +241,7 @@ import { Article, Person, Participation, Gender, Privilege, Assignment, Language
 export default class UpdateParticipantDialog extends Vue {
   private personModule: PersonModule = getModule(PersonModule, this.$store)
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
 
   @Prop(Participation)
   private readonly participation?: Participation
@@ -324,11 +326,19 @@ export default class UpdateParticipantDialog extends Vue {
     if (this.participation) {
       this.loading = true
 
-      // await this.projectModule.updateProjectParticipant({
-      //   participationId: this.participation.id,
-      //   firstname: this.firstname,
-      //   lastname: this.lastname,
-      // })
+      await this.participantModule.updateParticipant({
+        participationId: this.participation.id,
+        firstname: this.firstname || '',
+        lastname: this.lastname || '',
+        gender: this.gender || Gender.Male,
+        email: this.email || '',
+        language: this.language || Language.enUS,
+        phone: this.phone || '',
+        privilege: this.privilege || Privilege.Publisher,
+        assignment: this.assignment || Assignment.Publisher,
+        languages: this.languages || '',
+        notes: this.notes || '',
+      })
 
       this.loading = false
       this.dialog = false
