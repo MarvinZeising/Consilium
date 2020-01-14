@@ -26,7 +26,17 @@
             <p class="subtitle-1">{{ personModule.getActivePerson.email || $t('core.na') }}</p>
           </v-flex>
 
-          <v-flex xs12 sm6>
+          <v-flex xs12>
+            <p
+              class="caption mb-0 grey--text"
+              v-t="'language.language'"
+            />
+            <p class="subtitle-1">
+              {{ $t('language.' + personModule.getActivePerson.language) }}
+            </p>
+          </v-flex>
+
+          <v-flex xs12>
             <p
               class="caption mb-0 grey--text"
               v-t="'core.phone'"
@@ -52,6 +62,24 @@
             filled
             required
           />
+
+          <p v-t="'person.languageDescription'" />
+          <v-select
+            v-model="language"
+            :items="languageValues"
+            item-text="name"
+            item-value="value"
+            :label="$t('language.language')"
+            filled
+            required
+          >
+            <template v-slot:selection="{ item }">
+              <span>{{ $t('language.' + item.value) }}</span>
+            </template>
+            <template v-slot:item="{ item }">
+              <span>{{ $t('language.' + item.value) }}</span>
+            </template>
+          </v-select>
 
           <p v-t="'person.phoneDescription'" />
           <v-text-field
@@ -100,7 +128,7 @@ import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../i18n'
 import PersonModule from '../store/persons'
-import { Person, Gender } from '../models'
+import { Person, Gender, Language } from '../models'
 
 @Component
 export default class PersonalContact extends Vue {
@@ -118,12 +146,17 @@ export default class PersonalContact extends Vue {
   private phoneRules: any[] = [
     (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
   ]
+  private language: Language = this.personModule.getActivePerson?.language || Language.enUS
+  private languageValues: any[] = i18n.availableLocales.map((value) => {
+    return { value }
+  })
 
   private toggleEditMode() {
     this.editMode = !this.editMode
 
     if (this.editMode) {
       this.email = this.personModule.getActivePerson?.email || ''
+      this.language = this.personModule.getActivePerson?.language || Language.enUS
       this.phone = this.personModule.getActivePerson?.phone || ''
     }
   }
@@ -137,6 +170,7 @@ export default class PersonalContact extends Vue {
 
       await this.personModule.updatePersonContact({
         email: this.email,
+        language: this.language,
         phone: this.phone,
       })
 

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Module, VuexModule, Action, Mutation, MutationAction } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
 import router from '../router'
-import { Person, Gender, Participation, Assignment, Privilege } from '../models'
+import { Person, Gender, Participation, Assignment, Privilege, Language } from '../models'
 import { setCookie } from './_helpers'
 
 @Module({ dynamic: true, store, name: 'PersonModule' })
@@ -95,10 +95,12 @@ export default class PersonModule extends VuexModule {
   @Action
   public async updatePersonContact(data: {
     email: string,
+    language: Language,
     phone: string,
   }) {
     const response = await axios.put(`/persons/${this.getActivePersonId}/contact`, {
       email: data.email,
+      language: data.language,
       phone: data.phone,
     })
     const updatedPerson = Person.create(response.data)

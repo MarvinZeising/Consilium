@@ -17,6 +17,7 @@
   "emailDescription": "The email address we'll send shift notifications to.",
   "phoneDescription": "Your phone number in case someone (e.g. in your shift) wants to call you.",
   "nameMustEqual": "Person name must be this person's name",
+  "languageDescription": "The language that these notifications will be in.",
   "languages": "Languages",
   "languagesDescription": "Foreign languages you are able to speak.",
   "notes": "Notes",

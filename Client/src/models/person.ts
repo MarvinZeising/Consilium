@@ -1,4 +1,4 @@
-import { Participation } from '.'
+import { Participation, Language } from '.'
 
 enum Gender {
   Male = 'male',
@@ -76,6 +76,7 @@ class Person {
       data.lastname,
       data.gender || Gender.Male,
       data.email || '',
+      data.language || Language.enUS,
       data.phone || '',
       data.languages || '',
       data.privilege || Privilege.Publisher,
@@ -83,11 +84,14 @@ class Person {
       data.notes || '',
       data.createdTime,
       data.lastUpdatedTime)
+
     person.congregationId = data.congregationId ? data.congregationId : undefined
     person.congregation = data.congregation ? Congregation.create(data.congregation) : undefined
+
     if (data.participations) {
       person.participations = data.participations.map((x: any) => Participation.create(x))
     }
+
     return person
   }
 
@@ -98,6 +102,7 @@ class Person {
   public congregation?: Congregation
   public gender: Gender
   public email: string
+  public language: Language
   public phone: string
   public languages: string
   public privilege: Privilege
@@ -113,6 +118,7 @@ class Person {
     lastname: string,
     gender: Gender,
     email: string,
+    language: Language,
     phone: string,
     languages: string,
     privilege: Privilege,
@@ -126,6 +132,7 @@ class Person {
     this.lastname = lastname
     this.gender = gender
     this.email = email
+    this.language = language
     this.phone = phone
     this.languages = languages
     this.privilege = privilege
@@ -164,6 +171,7 @@ class Person {
     this.lastname = person.lastname
     this.gender = person.gender
     this.email = person.email
+    this.language = person.language
     this.phone = person.phone
     this.languages = person.languages
     this.privilege = person.privilege
