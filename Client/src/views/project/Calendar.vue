@@ -48,11 +48,11 @@
       <v-sheet>
         <v-calendar
           ref="calendar"
-          v-model="start"
+              color="primary"
+              v-model="focus"
               :events="events"
           :type="type"
           :weekdays="weekdays"
-          color="primary"
         />
       </v-sheet>
     </v-flex>
@@ -67,7 +67,7 @@ import moment from 'moment'
 @Component
 export default class Calendar extends Vue {
   private type: string = 'month'
-  private start: string = moment().format('yyyy-mm-dd')
+  private focus: string = moment().format('YYYY-MM-DD')
   private events: any = []
   private weekdays: number[] = [1, 2, 3, 4, 5, 6, 0]
 
