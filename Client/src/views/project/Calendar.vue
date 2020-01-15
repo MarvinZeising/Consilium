@@ -49,6 +49,7 @@
         <v-calendar
           ref="calendar"
           v-model="start"
+              :events="events"
           :type="type"
           :weekdays="weekdays"
           color="primary"
@@ -67,6 +68,7 @@ import moment from 'moment'
 export default class Calendar extends Vue {
   private type: string = 'month'
   private start: string = moment().format('yyyy-mm-dd')
+  private events: any = []
   private weekdays: number[] = [1, 2, 3, 4, 5, 6, 0]
 
   public get canView() {
@@ -75,6 +77,15 @@ export default class Calendar extends Vue {
 
   private get canEdit() {
     return this.personModule.getActiveRole?.calendarWrite === true
+  }
+
+  private created() {
+    this.events.push({
+      name: 'Shift',
+      start: moment().format('YYYY-MM-DD hh:mm'),
+      end: moment().add(2, 'hours').format('YYYY-MM-DD hh:mm'),
+      color: 'primary',
+    })
   }
 }
 </script>
