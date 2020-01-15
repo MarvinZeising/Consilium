@@ -14,6 +14,16 @@ import i18n from './i18n'
 import AlertModule from './store/alerts'
 import UserModule from './store/users'
 
+Vue.config.warnHandler = (msg: string | null, vm: Vue | null, trace: string | null) => {
+  const ignoreWarnMessage = 'The .native modifier for v-on is only valid on components but it was used on <div>.'
+  const route = router.currentRoute
+  if (route.name === 'calendar' && msg === ignoreWarnMessage) {
+    msg = null
+    vm = null
+    trace = null
+  }
+}
+
 async function init() {
   Vue.config.productionTip = false
 
