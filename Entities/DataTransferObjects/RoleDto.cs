@@ -7,6 +7,8 @@ namespace Entities.DataTransferObjects
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
         public string Name { get; set; }
+        public bool CalendarRead { get; set; }
+        public bool CalendarWrite { get; set; }
         public bool KnowledgeBaseRead { get; set; }
         public bool KnowledgeBaseWrite { get; set; }
         public bool ParticipantsRead { get; set; }

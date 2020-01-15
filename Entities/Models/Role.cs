@@ -22,6 +22,12 @@ namespace Entities.Models
         public string Name { get; set; }
 
         [Required]
+        public bool CalendarRead { get; set; }
+
+        [Required]
+        public bool CalendarWrite { get; set; }
+
+        [Required]
         public bool KnowledgeBaseRead { get; set; }
 
         [Required]
