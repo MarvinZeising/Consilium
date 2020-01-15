@@ -11,6 +11,12 @@ namespace Entities.DataTransferObjects
         public string Name { get; set; }
 
         [Required]
+        public bool CalendarRead { get; set; }
+
+        [Required]
+        public bool CalendarWrite { get; set; }
+
+        [Required]
         public bool SettingsRead { get; set; }
 
         [Required]
