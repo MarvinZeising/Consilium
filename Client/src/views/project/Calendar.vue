@@ -62,10 +62,16 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
+import PersonModule from '../../store/persons'
+import ProjectModule from '../../store/projects'
 
 @Component
 export default class Calendar extends Vue {
+  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+
   private type: string = 'month'
   private focus: string = moment().format('YYYY-MM-DD')
   private events: any = []
