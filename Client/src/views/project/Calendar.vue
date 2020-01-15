@@ -1,7 +1,7 @@
 <template>
-  <v-layout
-    wrap
-    class="pt-3"
+  <v-container
+    v-if="canView"
+    fluid
   >
 
     <!--//* Arrow Left -->
@@ -67,5 +67,13 @@ export default class Calendar extends Vue {
     { text: 'Week', value: 'week' },
     { text: 'Month', value: 'month' }
   ]
+
+  public get canView() {
+    return this.personModule.getActiveRole?.calendarRead === true
+  }
+
+  private get canEdit() {
+    return this.personModule.getActiveRole?.calendarWrite === true
+  }
 }
 </script>
