@@ -24,6 +24,7 @@ export default class RoleModule extends VuexModule {
   @Action
   public async createRole(data: {
     name: string,
+    calendar: string,
     settings: string,
     roles: string,
     participants: string,
@@ -33,6 +34,8 @@ export default class RoleModule extends VuexModule {
 
     const response = await axios.post(`/persons/${personId}/projects/${projectId}/roles`, {
       name: data.name,
+      calendarRead: data.calendar !== 'none',
+      calendarWrite: data.calendar === 'write',
       settingsRead: data.settings !== 'none',
       settingsWrite: data.settings === 'write',
       rolesRead: data.roles !== 'none',
@@ -54,6 +57,7 @@ export default class RoleModule extends VuexModule {
   public async updateRole(data: {
     roleId: string,
     name: string,
+    calendar: string,
     settings: string,
     roles: string,
     participants: string,
@@ -63,6 +67,8 @@ export default class RoleModule extends VuexModule {
 
     const response = await axios.put(`/persons/${personId}/projects/${projectId}/roles/${data.roleId}`, {
       name: data.name,
+      calendarRead: data.calendar !== 'none',
+      calendarWrite: data.calendar === 'write',
       settingsRead: data.settings !== 'none',
       settingsWrite: data.settings === 'write',
       rolesRead: data.roles !== 'none',

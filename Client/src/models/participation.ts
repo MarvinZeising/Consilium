@@ -69,6 +69,8 @@ class Role {
       data.id,
       data.projectId,
       data.name,
+      data.calendarRead,
+      data.calendarWrite,
       data.knowledgeBaseRead,
       data.knowledgeBaseWrite,
       data.participantsRead,
@@ -83,6 +85,8 @@ class Role {
   public id: string
   public projectId: string
   public name: string
+  public calendarRead: boolean
+  public calendarWrite: boolean
   public knowledgeBaseRead: boolean
   public knowledgeBaseWrite: boolean
   public participantsRead: boolean
@@ -97,6 +101,8 @@ class Role {
     id: string,
     projectId: string,
     name: string,
+    calendarRead: boolean,
+    calendarWrite: boolean,
     knowledgeBaseRead: boolean,
     knowledgeBaseWrite: boolean,
     participantsRead: boolean,
@@ -110,6 +116,8 @@ class Role {
     this.id = id
     this.projectId = projectId
     this.name = name
+    this.calendarRead = calendarRead
+    this.calendarWrite = calendarWrite
     this.knowledgeBaseRead = knowledgeBaseRead
     this.knowledgeBaseWrite = knowledgeBaseWrite
     this.participantsRead = participantsRead
@@ -123,6 +131,8 @@ class Role {
 
   public copyFrom(role: Role) {
     this.name = role.name
+    this.calendarRead = role.calendarRead
+    this.calendarWrite = role.calendarWrite
     this.knowledgeBaseRead = role.knowledgeBaseRead
     this.knowledgeBaseWrite = role.knowledgeBaseWrite
     this.participantsRead = role.participantsRead

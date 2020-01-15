@@ -126,6 +126,8 @@
     "deleteDescription": "Do you really want to delete this role?",
     "nameDescription": "The name of this role",
     "xParticipants": "Not assigned | Assigned to 1 participant | Assigned to {count} participants",
+    "calendar": "Calendar",
+    "calendarDescription": "Calendar. Read allows to see the calendar. Write allows to edit shifts. (more detailed options with shifts are controlled by the shift category)",
     "settings": "Settings",
     "settingsDescription": "Settings. Read allows to read general project settings. Write allows to change them. CAUTION: It also allows to delete the whole project.",
     "roles": "Loading roles... | Role | Roles",

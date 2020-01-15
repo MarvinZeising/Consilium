@@ -39,6 +39,24 @@
             required
           />
 
+          <p v-t="'project.role.calendarDescription'" />
+          <v-select
+            v-model="calendar"
+            :items="permissionValues"
+            item-text="name"
+            item-value="value"
+            :label="$t('project.role.calendar')"
+            filled
+            required
+          >
+            <template v-slot:selection="{ item }">
+              <span>{{ $t('core.' + item.value) }}</span>
+            </template>
+            <template v-slot:item="{ item }">
+              <span>{{ $t('core.' + item.value) }}</span>
+            </template>
+          </v-select>
+
           <p v-t="'project.role.settingsDescription'" />
           <v-select
             v-model="settings"
@@ -154,6 +172,7 @@ export default class CreateRoleDialog extends Vue {
     (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
     (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
   ]
+  private calendar: any = 'read'
   private settings: any = 'read'
   private roles: any = 'read'
   private participants: any = 'read'
@@ -170,6 +189,7 @@ export default class CreateRoleDialog extends Vue {
 
       await this.roleModule.createRole({
         name: this.name,
+        calendar: this.calendar,
         settings: this.settings,
         roles: this.roles,
         participants: this.participants,

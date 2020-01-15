@@ -126,6 +126,8 @@
     "deleteDescription": "Möchtest du diese Rolle wirklich löschen?",
     "nameDescription": "Der Name der Rolle",
     "xParticipants": "Niemand hat diese Rolle | 1 Teilnehmer hat diese Rolle | {count} Teilnehmer haben diese Rolle",
+    "calendar": "Kalender",
+    "calendarDescription": "Kalender. Lesen erlaubt das Sehen des Kalenders. Bearbeiten erlaubt das Erstellen, Ändern und Löschen von Schichten. (Detailliertere Optionen sind auf Kategorie-Ebene einstellbar)",
     "settings": "Einstellungen",
     "settingsDescription": "Einstellungen. Lesen erlaubt das Sehen der allgemeinen Einstellungen. Bearbeiten erlaubt sie zu bearbeiten. ACHTUNG: Es erlaubt auch das gesamte Projekt zu löschen.",
     "roles": "Lade Rollen... | Rolle | Rollen",

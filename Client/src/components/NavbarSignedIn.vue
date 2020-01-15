@@ -240,8 +240,7 @@ export default class NavbarSignedIn extends Vue {
   private canView(participation: Participation, link: string) {
     if (participation.role) {
       if (link === 'calendar') {
-        return true
-        // TODO: return participation.role.calendarRead
+        return participation.role.calendarRead
       } else if (link === 'topics') {
         return participation.role.knowledgeBaseRead
       }
