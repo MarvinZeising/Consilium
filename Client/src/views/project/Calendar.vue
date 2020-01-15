@@ -6,7 +6,7 @@
 
     <!--//* Arrow Left -->
     <v-flex
-      sm4 xs12
+        xs12 sm4
       class="text-sm-left text-xs-center"
     >
       <v-btn @click.stop="$refs.calendar.prev()">
@@ -15,21 +15,26 @@
       </v-btn>
     </v-flex>
 
-    <!--//* Type chooser -->
+      <!--//* Calendar Type -->
     <v-flex
-      sm4 xs12
-      class="text-xs-center"
+        xs12 sm4
+        class="text-center"
     >
-      <v-select
+        <v-btn-toggle
         v-model="type"
-        :items="typeOptions"
-        label="Type"
-      />
+          color="primary"
+          mandatory
+          borderless
+        >
+          <v-btn value="month">Month</v-btn>
+          <v-btn value="week">Week</v-btn>
+          <v-btn value="day">Day</v-btn>
+        </v-btn-toggle>
     </v-flex>
 
     <!--//* Arrow Right -->
     <v-flex
-      sm4 xs12
+        xs12 sm4
       class="text-sm-right text-xs-center"
     >
       <v-btn @click.stop="$refs.calendar.next()">
@@ -63,10 +68,6 @@ export default class Calendar extends Vue {
   private type: string = 'month'
   private start: string = moment().format('yyyy-mm-dd')
   private weekdays: number[] = [1, 2, 3, 4, 5, 6, 0]
-  private typeOptions: any[] = [
-    { text: 'Week', value: 'week' },
-    { text: 'Month', value: 'month' }
-  ]
 
   public get canView() {
     return this.personModule.getActiveRole?.calendarRead === true
