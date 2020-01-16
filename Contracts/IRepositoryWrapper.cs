@@ -7,6 +7,7 @@
         IProjectRepository Project { get; }
         IParticipationRepository Participation { get; }
         IRoleRepository Role { get; }
+        ICategoryRepository Category { get; }
         ICongregationRepository Congregation { get; }
         ITopicRepository Topic { get; }
         IArticleRepository Article { get; }

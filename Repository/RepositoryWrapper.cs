@@ -14,6 +14,7 @@ namespace Repository
         private IProjectRepository _project;
         private IParticipationRepository _participation;
         private IRoleRepository _role;
+        private ICategoryRepository _category;
         private ICongregationRepository _congregation;
         private ITopicRepository _topic;
         private IArticleRepository _article;
@@ -75,6 +76,18 @@ namespace Repository
                     _role = new RoleRepository(_repositoryContext);
                 }
                 return _role;
+            }
+        }
+
+        public ICategoryRepository Category
+        {
+            get
+            {
+                if (_category == null)
+                {
+                    _category = new CategoryRepository(_repositoryContext);
+                }
+                return _category;
             }
         }
 
