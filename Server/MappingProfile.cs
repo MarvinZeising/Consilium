@@ -33,6 +33,9 @@ namespace Server
             CreateMap<Role, RoleDto>();
             CreateMap<CreateRoleDto, Role>();
             CreateMap<UpdateRoleDto, Role>();
+
+            CreateMap<Category, CategoryDto>();
+            CreateMap<CreateCategoryDto, Category>();
         }
     }
 }
