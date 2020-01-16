@@ -1,6 +1,7 @@
 {
   "create": "Schicht erstellen",
   "goToDay": "Zu diesem Tag",
+  "week": "Woche",
   "category": {
     "categories": "Es wurden noch keine Kategorien angelegt. | Kategorie | Kategorien",
     "description": "Jede Schicht gehört zu einer Kategorie. Diese Kategorien bestimmen die Zugriffsrechte auf Schichten für die Teilnehmer. Sie bestimmen, wer Schichten dieser Kategorie sehen oder sogar bearbeiten darf, sowie wer als Teamleiter in Schichten dieser Kategorie dienen darf.",

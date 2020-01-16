@@ -104,6 +104,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
+import i18n from '../../i18n'
 import UserModule from '../../store/users'
 import PersonModule from '../../store/persons'
 import ProjectModule from '../../store/projects'
@@ -140,7 +141,8 @@ export default class Calendar extends Vue {
       case 'month':
         return moment(this.focus).format('MMMM YYYY')
       case 'week':
-        return moment(this.focus).format('[Week] w, MMM gggg') // TODO: translate
+        const week = i18n.t('shift.week')
+        return moment(this.focus).format(`[${week}] w, MMM gggg`)
       case 'day':
         return this.userModule.getUser?.formatDate(this.focus)
     }
