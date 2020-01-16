@@ -150,8 +150,8 @@ export default class Calendar extends Vue {
   private created() {
     this.events.push({
       name: 'Shift',
-      start: moment().format('YYYY-MM-DD hh:mm'),
-      end: moment().add(2, 'hours').format('YYYY-MM-DD hh:mm'),
+      start: moment().format('YYYY-MM-DD HH:mm'),
+      end: moment().add(2, 'hours').format('YYYY-MM-DD HH:mm'),
       color: 'primary',
     })
   }
