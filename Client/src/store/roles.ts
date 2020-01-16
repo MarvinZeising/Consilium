@@ -92,7 +92,7 @@ export default class RoleModule extends VuexModule {
 
     await axios.delete(`/persons/${personId}/projects/${projectId}/roles/${roleId}`)
 
-    this.context.commit('removeProjectRoles', {
+    this.context.commit('removeProjectRole', {
       projectId,
       roleId,
     })
