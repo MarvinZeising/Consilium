@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     v-model="dialog"
-    max-width="600px"
+    max-width="1000px"
   >
     <template v-slot:activator="{ on }">
       <v-btn
@@ -22,44 +22,76 @@
           />
         </v-card-title>
         <v-card-text>
-          <p
+          <span
             class="subtitle-1"
             v-t="'project.role.updateDescription'"
           />
+        </v-card-text>
+        <v-card-text class="pa-2">
 
-          <NameControl
-            :model="nameModel"
-            translationPath="project.role.nameDescription"
-          />
-
-          <div v-if="role.editable">
-
-            <PermissionControl
-              :model="calendarModel"
-              translationPath="project.role.calendar"
+          <v-flex
+            xs12 sm6 md4
+            class="pa-2"
+          >
+            <NameControl
+              :model="nameModel"
+              translationPath="project.role.nameDescription"
             />
+          </v-flex>
 
-            <PermissionControl
-              :model="settingsModel"
-              translationPath="project.role.settings"
-            />
+          <v-layout wrap v-if="role.editable">
 
-            <PermissionControl
-              :model="rolesModel"
-              translationPath="project.role.roles"
-            />
+            <v-flex
+              xs12 sm6 md4
+              class="pa-2"
+            >
+              <PermissionControl
+                :model="calendarModel"
+                translationPath="project.role.calendar"
+              />
+            </v-flex>
 
-            <PermissionControl
-              :model="participantsModel"
-              translationPath="project.role.participants"
-            />
+            <v-flex
+              xs12 sm6 md4
+              class="pa-2"
+            >
+              <PermissionControl
+                :model="settingsModel"
+                translationPath="project.role.settings"
+              />
+            </v-flex>
 
-            <PermissionControl
-              :model="knowledgeBaseModel"
-              translationPath="project.role.knowledgeBase"
-            />
+            <v-flex
+              xs12 sm6 md4
+              class="pa-2"
+            >
+              <PermissionControl
+                :model="rolesModel"
+                translationPath="project.role.roles"
+              />
+            </v-flex>
 
-          </div>
+            <v-flex
+              xs12 sm6 md4
+              class="pa-2"
+            >
+              <PermissionControl
+                :model="participantsModel"
+                translationPath="project.role.participants"
+              />
+            </v-flex>
+
+            <v-flex
+              xs12 sm6 md4
+              class="pa-2"
+            >
+              <PermissionControl
+                :model="knowledgeBaseModel"
+                translationPath="project.role.knowledgeBase"
+              />
+            </v-flex>
+
+          </v-layout>
         </v-card-text>
         <v-card-actions>
           <DeleteRoleDialog
