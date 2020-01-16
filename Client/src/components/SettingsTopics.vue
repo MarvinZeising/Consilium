@@ -34,7 +34,7 @@
       </v-list>
       <v-card-actions>
         <v-spacer />
-        <CreateTopicDialog />
+        <CreateTopicDialog v-if="!loading" />
       </v-card-actions>
     </v-card>
   </v-flex>
