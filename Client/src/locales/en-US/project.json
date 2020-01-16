@@ -135,6 +135,10 @@
     "participants": "Participants",
     "participantsDescription": "Participants. Read allows to see the list of participants. Write allows to edit participants' data, as well as to invite persons and accept/decline project join requests.",
     "knowledgeBase": "Knowledge Base",
-    "knowledgeBaseDescription": "Knowledge Base. Read allows to see the knowledge base and read everything. Write allows to define topics and edit articles."
+    "knowledgeBaseDescription": "Knowledge Base. Read allows to see the knowledge base and read everything. Write allows to define topics and edit articles.",
+    "category": "Category permissions",
+    "categoryDescription": "Category permissions. Read allow to see shifts of this category and request participation. Write allows to create, edit and delete shifts as well as to schedule participants.",
+    "teamCaptain": "Whether or not the participant can serve as team captain in these category's shifts.",
+    "substituteCaptain": "Whether or not the participant can serve as substitute team captain (if no team captain is available) in these category's shifts."
   }
 }

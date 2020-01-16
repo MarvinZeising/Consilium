@@ -66,6 +66,45 @@
                 :model="knowledgeBaseModel"
                 translationPath="project.role.knowledgeBase"
               />
+
+            </v-layout>
+          </v-card-text>
+        </div>
+
+        <v-divider />
+
+        <v-card-text class="pb-0">
+          <span class="subtitle-1">
+            Trolley
+          </span>
+        </v-card-text>
+
+        <v-card-text class="pa-2">
+          <v-layout wrap>
+
+            <PermissionControl
+              :model="knowledgeBaseModel"
+              translationPath="project.role.category"
+            />
+
+            <v-flex xs12 sm6 md4>
+              <v-switch
+                v-model="teamCaptainModel"
+                :label="$t(`project.role.teamCaptain`)"
+                color="primary"
+                inset
+                hide-details
+              />
+            </v-flex>
+
+            <v-flex xs12 sm6 md4>
+              <v-switch
+                v-model="substituteCaptainModel"
+                :label="$t(`project.role.substituteCaptain`)"
+                color="primary"
+                inset
+                hide-details
+              />
             </v-flex>
 
           </v-layout>
