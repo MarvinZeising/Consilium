@@ -22,116 +22,44 @@
           />
         </v-card-title>
         <v-card-text>
-
           <p
             class="subtitle-1"
             v-t="'project.role.updateDescription'"
           />
 
-          <p
-            class="subtitle-1"
-            v-t="'project.role.nameDescription'"
-          />
-          <v-text-field
-            v-model="name"
-            :label="$t('core.name')"
-            :rules="nameRules"
-            filled
-            required
+          <NameControl
+            :model="nameModel"
+            translationPath="project.role.nameDescription"
           />
 
           <div v-if="role.editable">
-            <p v-t="'project.role.calendarDescription'" />
-            <v-select
-              v-model="calendar"
-              :items="permissionValues"
-              item-text="name"
-              item-value="value"
-              :label="$t('project.role.calendar')"
-              filled
-              required
-            >
-              <template v-slot:selection="{ item }">
-                <span>{{ $t('core.' + item.value) }}</span>
-              </template>
-              <template v-slot:item="{ item }">
-                <span>{{ $t('core.' + item.value) }}</span>
-              </template>
-            </v-select>
 
-            <p v-t="'project.role.settingsDescription'" />
-            <v-select
-              v-model="settings"
-              :items="permissionValues"
-              item-text="name"
-              item-value="value"
-              :label="$t('project.role.settings')"
-              filled
-              required
-            >
-              <template v-slot:selection="{ item }">
-                <span>{{ $t('core.' + item.value) }}</span>
-              </template>
-              <template v-slot:item="{ item }">
-                <span>{{ $t('core.' + item.value) }}</span>
-              </template>
-            </v-select>
+            <PermissionControl
+              :model="calendarModel"
+              translationPath="project.role.calendar"
+            />
 
-            <p v-t="'project.role.rolesDescription'" />
-            <v-select
-              v-model="roles"
-              :items="permissionValues"
-              item-text="name"
-              item-value="value"
-              :label="$tc('project.role.roles', 2)"
-              filled
-              required
-            >
-              <template v-slot:selection="{ item }">
-                <span>{{ $t('core.' + item.value) }}</span>
-              </template>
-              <template v-slot:item="{ item }">
-                <span>{{ $t('core.' + item.value) }}</span>
-              </template>
-            </v-select>
+            <PermissionControl
+              :model="settingsModel"
+              translationPath="project.role.settings"
+            />
 
-            <p v-t="'project.role.participantsDescription'" />
-            <v-select
-              v-model="participants"
-              :items="permissionValues"
-              item-text="name"
-              item-value="value"
-              :label="$t('project.role.participants')"
-              filled
-              required
-            >
-              <template v-slot:selection="{ item }">
-                <span>{{ $t('core.' + item.value) }}</span>
-              </template>
-              <template v-slot:item="{ item }">
-                <span>{{ $t('core.' + item.value) }}</span>
-              </template>
-            </v-select>
+            <PermissionControl
+              :model="rolesModel"
+              translationPath="project.role.roles"
+            />
 
-            <p v-t="'project.role.knowledgeBaseDescription'" />
-            <v-select
-              v-model="knowledgeBase"
-              :items="permissionValues"
-              item-text="name"
-              item-value="value"
-              :label="$t('project.role.knowledgeBase')"
-              filled
-              required
-            >
-              <template v-slot:selection="{ item }">
-                <span>{{ $t('core.' + item.value) }}</span>
-              </template>
-              <template v-slot:item="{ item }">
-                <span>{{ $t('core.' + item.value) }}</span>
-              </template>
-            </v-select>
+            <PermissionControl
+              :model="participantsModel"
+              translationPath="project.role.participants"
+            />
+
+            <PermissionControl
+              :model="knowledgeBaseModel"
+              translationPath="project.role.knowledgeBase"
+            />
+
           </div>
-
         </v-card-text>
         <v-card-actions>
           <DeleteRoleDialog
@@ -167,10 +95,14 @@ import PersonModule from '../../store/persons'
 import RoleModule from '../../store/roles'
 import { Role } from '../../models'
 import DeleteRoleDialog from './DeleteRoleDialog.vue'
+import NameControl from '../controls/NameControl.vue'
+import PermissionControl from '../controls/PermissionControl.vue'
 
 @Component({
   components: {
     DeleteRoleDialog,
+    NameControl,
+    PermissionControl,
   },
 })
 export default class UpdateRoleDialog extends Vue {
@@ -186,22 +118,13 @@ export default class UpdateRoleDialog extends Vue {
   private dialog: any = false
   private valid: any = null
   private loading: boolean = false
-  private loadingDelete: boolean = false
 
-  private name: string = ''
-  private nameRules: any[] = [
-    (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
-    (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
-  ]
-  private calendar: any = 'none'
-  private settings: any = 'none'
-  private roles: any = 'none'
-  private participants: any = 'none'
-  private knowledgeBase: any = 'none'
-  private permissionValues: any[] = [ 'none', 'read', 'write' ].map((value) => {
-    return { value }
-  })
+  private nameModel: { value: string } = { value: '' }
+  private calendarModel: { value: string } = { value: 'none' }
+  private settingsModel: { value: string } = { value: 'none' }
+  private rolesModel: { value: string } = { value: 'none' }
+  private participantsModel: { value: string } = { value: 'none' }
+  private knowledgeBaseModel: { value: string } = { value: 'none' }
 
   private getPermissionLevel(write: boolean, read: boolean) {
       return write ? 'write' : read ? 'read' : 'none'
@@ -209,14 +132,14 @@ export default class UpdateRoleDialog extends Vue {
 
   private created() {
     if (this.role) {
-      this.name = this.role.name
+      this.nameModel = { value: this.role.name }
 
       if (this.role.editable) {
-        this.calendar = this.getPermissionLevel(this.role.calendarWrite, this.role.calendarRead)
-        this.settings = this.getPermissionLevel(this.role.settingsWrite, this.role.settingsRead)
-        this.roles = this.getPermissionLevel(this.role.rolesWrite, this.role.rolesRead)
-        this.participants = this.getPermissionLevel(this.role.participantsWrite, this.role.participantsRead)
-        this.knowledgeBase = this.getPermissionLevel(this.role.knowledgeBaseWrite, this.role.knowledgeBaseRead)
+        this.calendarModel = { value: this.getPermissionLevel(this.role.calendarWrite, this.role.calendarRead) }
+        this.settingsModel = { value: this.getPermissionLevel(this.role.settingsWrite, this.role.settingsRead) }
+        this.rolesModel = { value: this.getPermissionLevel(this.role.rolesWrite, this.role.rolesRead) }
+        this.participantsModel = { value: this.getPermissionLevel(this.role.participantsWrite, this.role.participantsRead) }
+        this.knowledgeBaseModel = { value: this.getPermissionLevel(this.role.knowledgeBaseWrite, this.role.knowledgeBaseRead) }
       }
     }
   }
@@ -227,12 +150,12 @@ export default class UpdateRoleDialog extends Vue {
 
       await this.roleModule.updateRole({
         roleId: this.role.id,
-        name: this.name,
-        calendar: this.calendar,
-        settings: this.settings,
-        roles: this.roles,
-        participants: this.participants,
-        knowledgeBase: this.knowledgeBase,
+        name: this.nameModel.value,
+        calendar: this.calendarModel.value,
+        settings: this.settingsModel.value,
+        roles: this.rolesModel.value,
+        participants: this.participantsModel.value,
+        knowledgeBase: this.knowledgeBaseModel.value,
       })
 
       this.loading = false
