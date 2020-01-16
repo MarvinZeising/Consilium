@@ -13,13 +13,13 @@ namespace Server.Controllers
     [Authorize]
     [ApiController]
     [Route("api/persons/{personId}/projects/{projectId}")]
-    public class RolesController : ControllerBase
+    public class RoleController : ControllerBase
     {
         private readonly IRepositoryWrapper _db;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
-        public RolesController(
+        public RoleController(
             IRepositoryWrapper db,
             ILoggerManager logger,
             IMapper mapper)
@@ -86,7 +86,10 @@ namespace Server.Controllers
 
                 Role role;
 
-                var roleFromDb = _db.Role.FindByCondition(x => x.Id == roleId).SingleOrDefault();
+                var roleFromDb = _db.Role
+                    .FindByCondition(x => x.Id == roleId && x.ProjectId == projectId)
+                    .SingleOrDefault();
+
                 if (roleFromDb?.Editable == true)
                 {
                     role = _mapper.Map<Role>(dto);
@@ -123,7 +126,10 @@ namespace Server.Controllers
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.RolesWrite != true) return Forbid();
 
-                var role = _db.Role.FindByCondition(x => x.Id == roleId).SingleOrDefault();
+                var role = _db.Role
+                    .FindByCondition(x => x.Id == roleId && x.ProjectId == projectId)
+                    .SingleOrDefault();
+
                 if (role?.Editable != true)
                 {
                     return BadRequest();
