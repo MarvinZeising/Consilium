@@ -1,4 +1,15 @@
 {
   "create": "Create a Shift",
-  "goToDay": "Go to day"
+  "goToDay": "Go to day",
+  "category": {
+    "categories": "No categories have been defined, yet. | Category | Categories",
+    "description": "Every shift belongs to a category. These categories control the access permissions of the participants. You can control who can see or even edit shifts of this category, and who will be able to serve as captain in any of this category's shifts.",
+    "create": "Add Category",
+    "createDescription": "Create a new category. Afterwards, you can create shifts for this category. After the creation, check your roles because by default, all roles have full access to new categories.",
+    "update": "Update Category",
+    "updateDescription": "You can update this category. For a category to be deletable, there must not be any future shifts of this category.",
+    "delete": "Delete Category",
+    "deleteDescription": "Do you really want to delete this category? This will also delete all shifts of this category. (even past ones)",
+    "nameDescription": "The name of the category."
+  }
 }

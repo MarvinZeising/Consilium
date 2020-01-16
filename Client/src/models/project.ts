@@ -1,4 +1,4 @@
-import { Topic, Participation, Role } from '.'
+import { Topic, Participation, Role, Category } from '.'
 
 class Project {
   public static create(data: any) {
@@ -22,6 +22,7 @@ class Project {
   public participations: Participation[] = []
   public invitations: Participation[] = []
   public requests: Participation[] = []
+  public categories: Category[] = []
   public roles: Role[] = []
   public topics: Topic[] = []
   public createdTime: string
@@ -97,6 +98,18 @@ class Project {
         } else {
           return 0
         }
+      } else {
+        return 0
+      }
+    })
+  }
+
+  public get getCategories() {
+    return [...this.categories].sort((a, b) => {
+      if (a.name < b.name) {
+        return -1
+      } else if (a.name > b.name) {
+        return 1
       } else {
         return 0
       }

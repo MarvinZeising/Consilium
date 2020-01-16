@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
 import router from '../router'
-import { Project, Participation, ParticipationStatus, Role, Topic } from '../models'
+import { Project, Participation, ParticipationStatus, Role, Topic, Category } from '../models'
 
 @Module({ dynamic: true, store, name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
@@ -198,6 +198,49 @@ export default class ProjectModule extends VuexModule {
     this.projects = this.projects.map((p) => {
       if (p.id === projectId) {
         p.invitations = p.invitations.filter((x) => x.id !== invitationId)
+      }
+      return p
+    })
+  }
+
+  @Mutation
+  public upsertProjectCategories({ projectId, categories, clearFirst }: {
+    projectId: string,
+    categories: Category[],
+    clearFirst: boolean,
+  }) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === projectId) {
+        if (clearFirst) {
+          project.categories = categories
+          return project
+        }
+        project.categories = project.categories.map((category) => {
+          const updatedCategory = categories.find((x) => x.id === category.id)
+          if (updatedCategory) {
+            category.copyFrom(updatedCategory)
+          }
+          return category
+        })
+        for (const updatedCategory of categories) {
+          const categoryAlreadyExists = project.categories.find((x) => x.id === updatedCategory.id)
+          if (!categoryAlreadyExists) {
+            project.categories.push(updatedCategory)
+          }
+        }
+      }
+      return project
+    })
+  }
+
+  @Mutation
+  public removeProjectCategory({ projectId, categoryId }: {
+    projectId: string,
+    categoryId: string,
+  }) {
+    this.projects = this.projects.map((p) => {
+      if (p.id === projectId) {
+        p.categories = p.categories.filter((x) => x.id !== categoryId)
       }
       return p
     })

@@ -1,4 +1,15 @@
 {
   "create": "Schicht erstellen",
-  "goToDay": "Zu diesem Tag"
+  "goToDay": "Zu diesem Tag",
+  "category": {
+    "categories": "Es wurden noch keine Kategorien angelegt. | Kategorie | Kategorien",
+    "description": "Jede Schicht gehört zu einer Kategorie. Diese Kategorien bestimmen die Zugriffsrechte auf Schichten für die Teilnehmer. Sie bestimmen, wer Schichten dieser Kategorie sehen oder sogar bearbeiten darf, sowie wer als Teamleiter in Schichten dieser Kategorie dienen darf.",
+    "create": "Kategorie hinzufügen",
+    "createDescription": "Erstelle eine neue Kategorie. Danach kannst du Schichten dieser Kategorie anlegen. Nachdem du die Kategorie erstellt hast, überprüfe am besten alle Rollen, da standardmäßig alle Rollen vollen Zugriff auf neue Kategorien gewähren.",
+    "update": "Kategorie bearbeiten",
+    "updateDescription": "Du kannst diese Kategorie bearbeiten. Falls es keine zukünftigen Schichten dieser Kategorie mehr gibt, kannst du sie auch löschen. Dabei werden alle vergangen Schichten dieser Kategorie aber auch gelöscht.",
+    "delete": "Kategorie löschen",
+    "deleteDescription": "Möchtest du diese Kategorie wirklich löschen? Dadurch werden auch alle vergangen Schichten dieser Kategorie gelöscht.",
+    "nameDescription": "Der Name der Kategorie."
+  }
 }

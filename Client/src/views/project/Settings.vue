@@ -8,6 +8,8 @@
 
       <SettingsRoles />
 
+      <SettingsCategories />
+
       <!--//* Danger Zone -->
       <v-flex
         v-if="canView"
@@ -42,6 +44,7 @@ import KnowledgeBaseModule from '../../store/knowledgeBase'
 import SettingsGeneral from '../../components/SettingsGeneral.vue'
 import SettingsTopics from '../../components/SettingsTopics.vue'
 import SettingsRoles from '../../components/SettingsRoles.vue'
+import SettingsCategories from '../../components/SettingsCategories.vue'
 import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vue'
 
 @Component({
@@ -50,6 +53,7 @@ import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vu
     DeleteProjectDialog,
     SettingsTopics,
     SettingsRoles,
+    SettingsCategories,
   }
 })
 export default class Settings extends Vue {
