@@ -1,11 +1,15 @@
 <template>
-  <div>
+  <v-flex
+    xs12 sm6 md4
+    class="pa-2"
+  >
     <p v-t="translationPath + 'Description'" />
     <v-select
       v-model="model.value"
       :items="permissionValues"
       item-value="value"
       :label="$tc(translationPath, 2)"
+      hide-details
       filled
       required
     >
@@ -16,7 +20,7 @@
         <span>{{ $t('core.' + item.value) }}</span>
       </template>
     </v-select>
-  </div>
+  </v-flex>
 </template>
 
 <script lang="ts">

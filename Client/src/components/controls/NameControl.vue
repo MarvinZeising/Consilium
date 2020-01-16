@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <v-flex
+    xs12 sm6 md4
+    class="pa-2"
+  >
     <p v-t="translationPath" />
     <v-text-field
       v-model="model.value"
@@ -8,7 +11,7 @@
       filled
       required
     />
-  </div>
+  </v-flex>
 </template>
 
 <script lang="ts">

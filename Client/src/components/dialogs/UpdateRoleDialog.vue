@@ -29,62 +29,39 @@
         </v-card-text>
         <v-card-text class="pa-2">
 
-          <v-flex
-            xs12 sm6 md4
-            class="pa-2"
-          >
-            <NameControl
-              :model="nameModel"
-              translationPath="project.role.nameDescription"
-            />
-          </v-flex>
+          <NameControl
+            :model="nameModel"
+            translationPath="project.role.nameDescription"
+          />
 
-          <v-layout wrap v-if="role.editable">
+        </v-card-text>
+        <div v-if="role.editable">
+          <v-divider />
+          <v-card-text class="pa-2">
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
+            <v-layout wrap>
+              <v-divider />
+
               <PermissionControl
                 :model="calendarModel"
                 translationPath="project.role.calendar"
               />
-            </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
               <PermissionControl
                 :model="settingsModel"
                 translationPath="project.role.settings"
               />
-            </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
               <PermissionControl
                 :model="rolesModel"
                 translationPath="project.role.roles"
               />
-            </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
               <PermissionControl
                 :model="participantsModel"
                 translationPath="project.role.participants"
               />
-            </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
               <PermissionControl
                 :model="knowledgeBaseModel"
                 translationPath="project.role.knowledgeBase"
