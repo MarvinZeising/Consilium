@@ -71,16 +71,16 @@
           </v-layout>
         </v-card-text>
         <v-card-actions>
-          <DeleteRoleDialog
-            v-if="canBeDeleted && role.editable"
-            :roleId="role.id"
-          />
-          <v-spacer />
           <v-btn
             text
             @click.stop="dialog = false"
             v-t="'core.cancel'"
           />
+          <DeleteRoleDialog
+            v-if="canBeDeleted && role.editable"
+            :roleId="role.id"
+          />
+          <v-spacer />
           <v-btn
             :disabled="!valid"
             type="submit"
