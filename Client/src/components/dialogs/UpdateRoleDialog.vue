@@ -15,14 +15,14 @@
         v-model="valid"
         ref="form"
       >
-        <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.role.update'"
-          />
-        </v-card-title>
+        <v-toolbar
+          flat
+          color="navbar"
+        >
+          <v-toolbar-title v-t="'project.role.update'" />
+        </v-toolbar>
         <v-card-text>
-          <span
+          <i
             class="subtitle-1"
             v-t="'project.role.updateDescription'"
           />
@@ -70,6 +70,7 @@
 
           </v-layout>
         </v-card-text>
+        <v-divider />
         <v-card-actions>
           <v-btn
             text
