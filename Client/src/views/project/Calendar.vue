@@ -2,99 +2,101 @@
   <v-container
     v-if="canView"
     fluid
+    class="pa-0"
   >
-    <v-layout wrap>
 
-      <!--//* Arrow Left -->
-      <v-flex
-        xs12 sm4
-        class="text-sm-left text-xs-center"
+    <!--//* Toolbar -->
+    <!--//TODO: On mobile, replace this toolbar with a simpler one (only day view and date picker) -->
+    <v-toolbar flat>
+      <v-btn-toggle
+        dense
+        class="mr-4"
+        @click="setToday"
       >
-        <v-btn @click.stop="$refs.calendar.prev()">
-          <v-icon dark left>keyboard_arrow_left</v-icon>
-          Prev
-        </v-btn>
-      </v-flex>
-
-      <!--//* Calendar Type -->
-      <v-flex
-        xs12 sm4
-        class="text-center"
+        <v-btn>Today</v-btn>
+      </v-btn-toggle>
+      <v-btn
+        fab
+        text
+        small
+        @click="$refs.calendar.prev()"
       >
-        <v-btn-toggle
-          v-model="type"
-          color="primary"
-          mandatory
-          borderless
-        >
-          <v-btn value="month">Month</v-btn>
-          <v-btn value="week">Week</v-btn>
-          <v-btn value="day">Day</v-btn>
-        </v-btn-toggle>
-      </v-flex>
-
-      <!--//* Arrow Right -->
-      <v-flex
-        xs12 sm4
-        class="text-sm-right text-xs-center"
+        <v-icon>keyboard_arrow_left</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        text
+        small
+        @click="$refs.calendar.next()"
       >
-        <v-btn @click.stop="$refs.calendar.next()">
-          Next
-          <v-icon right dark>keyboard_arrow_right</v-icon>
-        </v-btn>
+        <v-icon>keyboard_arrow_right</v-icon>
+      </v-btn>
+      <v-toolbar-title class="ml-4">{{ getTitle }}</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn-toggle
+        v-model="type"
+        color="primary"
+        mandatory
+        dense
+      >
+        <v-btn value="month">Month</v-btn>
+        <v-btn value="week">Week</v-btn>
+        <v-btn value="day">Day</v-btn>
+      </v-btn-toggle>
+    </v-toolbar>
+
+    <!--//* Calendar -->
+    <v-row>
+      <v-flex
+        xs12
+      >
+        <v-sheet>
+          <v-calendar
+            id="calendar"
+            ref="calendar"
+            color="primary"
+            v-model="focus"
+            :events="events"
+            :type="type"
+            :weekdays="weekdays"
+            @click:event="showEvent"
+            @click:more="viewDay"
+          >
+            <template v-slot:day-label="date">
+              <v-menu
+                :close-on-content-click="false"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    v-on="on"
+                    fab
+                    small
+                    class="mb-1"
+                    :icon="date.present ? false : true"
+                    :color="date.present ? 'primary' : ''"
+                    v-text="date.day"
+                    rounded
+                    depressed
+                    @click="canEdit ? false : viewDay(date.date)"
+                  />
+                </template>
+                <v-list>
+                  <v-list-item @click="viewDay(date.date)">
+                    <v-list-item-title v-t="'shift.goToDay'" />
+                  </v-list-item>
+                  <CreateShiftDialog
+                    :date="date"
+                    :menu="this"
+                  />
+                </v-list>
+              </v-menu>
+
+            </template>
+          </v-calendar>
+        </v-sheet>
       </v-flex>
+    </v-row>
 
-      <!--//* Calendar -->
-      <v-row>
-        <v-flex
-          xs12
-          class="mt-3"
-          style="margin-right:1px;"
-        >
-          <v-sheet>
-            <v-calendar
-              ref="calendar"
-              color="primary"
-              v-model="focus"
-              :events="events"
-              :type="type"
-              :weekdays="weekdays"
-              @click:event="showEvent"
-              @click:more="viewDay"
-            >
-              <template v-slot:day-label="date">
-                <v-menu>
-                  <template v-slot:activator="{ on }">
-                    <v-btn
-                      v-on="on"
-                      fab
-                      small
-                      class="mb-1"
-                      :icon="date.present ? false : true"
-                      :color="date.present ? 'primary' : ''"
-                      v-text="date.day"
-                      rounded
-                      depressed
-                      @click="canEdit ? false : viewDay(date.date)"
-                    />
-                  </template>
-                  <v-list>
-                    <v-list-item @click="viewDay">
-                      <v-list-item-title>Go to day</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-title>Create shift</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-
-              </template>
-            </v-calendar>
-          </v-sheet>
-        </v-flex>
-      </v-row>
-
-    </v-layout>
   </v-container>
 </template>
 
@@ -102,11 +104,18 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
+import UserModule from '../../store/users'
 import PersonModule from '../../store/persons'
 import ProjectModule from '../../store/projects'
+import CreateShiftDialog from '../../components/dialogs/CreateShiftDialog.vue'
 
-@Component
+@Component({
+  components: {
+    CreateShiftDialog,
+  }
+})
 export default class Calendar extends Vue {
+  private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
@@ -115,12 +124,27 @@ export default class Calendar extends Vue {
   private events: any = []
   private weekdays: number[] = [1, 2, 3, 4, 5, 6, 0]
 
+  private start: any = null
+  private end: any = null
+
   public get canView() {
     return this.personModule.getActiveRole?.calendarRead === true
   }
 
   private get canEdit() {
     return this.personModule.getActiveRole?.calendarWrite === true
+  }
+
+  private get getTitle() {
+    switch (this.type) {
+      case 'month':
+        return moment(this.focus).format('MMMM YYYY')
+      case 'week':
+        return moment(this.focus).format('[Week] w, MMM gggg') // TODO: translate
+      case 'day':
+        return this.userModule.getUser?.formatDate(this.focus)
+    }
+    return ''
   }
 
   private created() {
