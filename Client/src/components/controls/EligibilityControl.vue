@@ -15,7 +15,7 @@
         <PermissionControl
           :model="eligibilityModel"
           translationPath="project.role.category"
-          @change="(_, value) => eligibility.setPermissionModel('shifts', value)"
+          @change="(value) => eligibility.setPermissionModel('shifts', value)"
         />
 
         <v-flex xs12 sm6 md4>
@@ -26,6 +26,7 @@
             inset
             hide-details
             :disabled="isPermissionNone"
+            @change="(value) => eligibility.isTeamCaptain = value"
           />
         </v-flex>
 
@@ -37,6 +38,7 @@
             inset
             hide-details
             :disabled="isPermissionNone"
+            @change="(value) => eligibility.isSubstituteCaptain = value"
           />
         </v-flex>
 
