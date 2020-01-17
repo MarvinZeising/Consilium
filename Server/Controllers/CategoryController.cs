@@ -41,6 +41,8 @@ namespace Server.Controllers
                     .FindByCondition(x => x.ProjectId == projectId)
                     .ToList();
 
+                // TODO: create eligibilities
+
                 return Ok(_mapper.Map<IEnumerable<CategoryDto>>(categories));
             }
             catch (Exception e)

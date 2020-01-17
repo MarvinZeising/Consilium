@@ -66,6 +66,8 @@ namespace Server.Controllers
                 _db.Role.Create(role);
                 _db.Save();
 
+                // TODO: create eligibilities
+
                 return Ok(_mapper.Map<RoleDto>(role));
             }
             catch (Exception e)
