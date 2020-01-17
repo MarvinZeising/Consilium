@@ -109,11 +109,35 @@ namespace Server.Controllers
 
                 role.Id = roleId;
                 role.ProjectId = projectId;
+                role.Eligibilities = new List<Eligibility>();
 
                 _db.Role.Update(role);
+
+                foreach (var eligibility in dto.Eligibilities)
+                {
+                    var eligibilityFromDb = _db.Eligibility
+                        .FindByCondition(x => x.Id == eligibility.Id && x.RoleId == roleId)
+                        .SingleOrDefault();
+
+                    if (eligibilityFromDb != null)
+                    {
+                        eligibilityFromDb.ShiftsRead = eligibility.ShiftsRead;
+                        eligibilityFromDb.ShiftsWrite = eligibility.ShiftsWrite && eligibility.ShiftsRead;
+                        eligibilityFromDb.IsTeamCaptain = eligibility.IsTeamCaptain && eligibility.ShiftsRead;
+                        eligibilityFromDb.IsSubstituteCaptain = eligibility.IsSubstituteCaptain && eligibility.ShiftsRead;
+
+                        _db.Eligibility.Update(eligibilityFromDb);
+                    }
+                }
+
                 _db.Save();
 
-                return Ok(_mapper.Map<RoleDto>(role));
+                var updatedRole = _db.Role
+                    .FindByCondition(x => x.Id == roleId && x.ProjectId == projectId)
+                    .Include(x => x.Eligibilities).ThenInclude(x => x.Category)
+                    .SingleOrDefault();
+
+                return Ok(_mapper.Map<RoleDto>(updatedRole));
             }
             catch (Exception e)
             {
