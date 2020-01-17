@@ -8,6 +8,7 @@
         v-on="on"
         text
         v-t="'core.edit'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -154,7 +155,7 @@ export default class UpdateRoleDialog extends Vue {
   private knowledgeBaseModel = { value: 'none' }
   private eligibilities: any[] = []
 
-  private created() {
+  private opened() {
     if (this.role) {
       this.nameModel = { value: this.role.name }
 
