@@ -173,27 +173,23 @@ export default class UpdateRoleDialog extends Vue {
   private valid: any = null
   private loading: boolean = false
 
-  private nameModel: { value: string } = { value: '' }
-  private calendarModel: { value: string } = { value: 'none' }
-  private settingsModel: { value: string } = { value: 'none' }
-  private rolesModel: { value: string } = { value: 'none' }
-  private participantsModel: { value: string } = { value: 'none' }
-  private knowledgeBaseModel: { value: string } = { value: 'none' }
-
-  private getPermissionLevel(write: boolean, read: boolean) {
-      return write ? 'write' : read ? 'read' : 'none'
-  }
+  private nameModel = { value: '' }
+  private calendarModel = { value: 'none' }
+  private settingsModel = { value: 'none' }
+  private rolesModel = { value: 'none' }
+  private participantsModel = { value: 'none' }
+  private knowledgeBaseModel = { value: 'none' }
 
   private created() {
     if (this.role) {
       this.nameModel = { value: this.role.name }
 
       if (this.role.editable) {
-        this.calendarModel = { value: this.getPermissionLevel(this.role.calendarWrite, this.role.calendarRead) }
-        this.settingsModel = { value: this.getPermissionLevel(this.role.settingsWrite, this.role.settingsRead) }
-        this.rolesModel = { value: this.getPermissionLevel(this.role.rolesWrite, this.role.rolesRead) }
-        this.participantsModel = { value: this.getPermissionLevel(this.role.participantsWrite, this.role.participantsRead) }
-        this.knowledgeBaseModel = { value: this.getPermissionLevel(this.role.knowledgeBaseWrite, this.role.knowledgeBaseRead) }
+        this.calendarModel = this.role.getPermissionModel('calendar')
+        this.settingsModel = this.role.getPermissionModel('settings')
+        this.rolesModel = this.role.getPermissionModel('roles')
+        this.participantsModel = this.role.getPermissionModel('participants')
+        this.knowledgeBaseModel = this.role.getPermissionModel('knowledgeBase')
       }
     }
   }
