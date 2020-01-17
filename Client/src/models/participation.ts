@@ -147,6 +147,7 @@ class Role {
     this.rolesWrite = role.rolesWrite
     this.settingsRead = role.settingsRead
     this.settingsWrite = role.settingsWrite
+    this.eligibilities = role.eligibilities
   }
 
   public getPermissionModel(

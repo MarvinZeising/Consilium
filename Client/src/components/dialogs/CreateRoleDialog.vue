@@ -1,13 +1,14 @@
 <template>
   <v-dialog
     v-model="dialog"
-    max-width="600px"
+    max-width="1000px"
   >
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
         text
         v-t="'project.role.create'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -15,136 +16,81 @@
         v-model="valid"
         ref="form"
       >
-        <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.role.create'"
-          />
-        </v-card-title>
-
+        <v-toolbar
+          flat
+          color="navbar"
+        >
+          <v-toolbar-title v-t="'project.role.create'" />
+        </v-toolbar>
         <v-card-text>
-          <p
+          <i
             class="subtitle-1"
             v-t="'project.role.createDescription'"
           />
-          <p
-            class="subtitle-1"
-            v-t="'project.role.nameDescription'"
-          />
-          <v-text-field
-            v-model="name"
-            :label="$t('core.name')"
-            :rules="nameRules"
-            filled
-            required
-          />
-
-          <p v-t="'project.role.calendarDescription'" />
-          <v-select
-            v-model="calendar"
-            :items="permissionValues"
-            item-text="name"
-            item-value="value"
-            :label="$t('project.role.calendar')"
-            filled
-            required
-          >
-            <template v-slot:selection="{ item }">
-              <span>{{ $t('core.' + item.value) }}</span>
-            </template>
-            <template v-slot:item="{ item }">
-              <span>{{ $t('core.' + item.value) }}</span>
-            </template>
-          </v-select>
-
-          <p v-t="'project.role.settingsDescription'" />
-          <v-select
-            v-model="settings"
-            :items="permissionValues"
-            item-text="name"
-            item-value="value"
-            :label="$t('project.role.settings')"
-            filled
-            required
-          >
-            <template v-slot:selection="{ item }">
-              <span>{{ $t('core.' + item.value) }}</span>
-            </template>
-            <template v-slot:item="{ item }">
-              <span>{{ $t('core.' + item.value) }}</span>
-            </template>
-          </v-select>
-
-          <p v-t="'project.role.rolesDescription'" />
-          <v-select
-            v-model="roles"
-            :items="permissionValues"
-            item-text="name"
-            item-value="value"
-            :label="$tc('project.role.roles', 2)"
-            filled
-            required
-          >
-            <template v-slot:selection="{ item }">
-              <span>{{ $t('core.' + item.value) }}</span>
-            </template>
-            <template v-slot:item="{ item }">
-              <span>{{ $t('core.' + item.value) }}</span>
-            </template>
-          </v-select>
-
-          <p v-t="'project.role.participantsDescription'" />
-          <v-select
-            v-model="participants"
-            :items="permissionValues"
-            item-text="name"
-            item-value="value"
-            :label="$t('project.role.participants')"
-            filled
-            required
-          >
-            <template v-slot:selection="{ item }">
-              <span>{{ $t('core.' + item.value) }}</span>
-            </template>
-            <template v-slot:item="{ item }">
-              <span>{{ $t('core.' + item.value) }}</span>
-            </template>
-          </v-select>
-
-          <p v-t="'project.role.knowledgeBaseDescription'" />
-          <v-select
-            v-model="knowledgeBase"
-            :items="permissionValues"
-            item-text="name"
-            item-value="value"
-            :label="$t('project.role.knowledgeBase')"
-            filled
-            required
-          >
-            <template v-slot:selection="{ item }">
-              <span>{{ $t('core.' + item.value) }}</span>
-            </template>
-            <template v-slot:item="{ item }">
-              <span>{{ $t('core.' + item.value) }}</span>
-            </template>
-          </v-select>
-
         </v-card-text>
+        <v-card-text class="pa-2">
+
+          <NameControl
+            :model="nameModel"
+            translationPath="project.role.nameDescription"
+          />
+
+          <v-divider />
+          <v-layout wrap>
+
+            <PermissionControl
+              :model="calendarModel"
+              translationPath="project.role.calendar"
+            />
+
+            <PermissionControl
+              :model="settingsModel"
+              translationPath="project.role.settings"
+            />
+
+            <PermissionControl
+              :model="rolesModel"
+              translationPath="project.role.roles"
+            />
+
+            <PermissionControl
+              :model="participantsModel"
+              translationPath="project.role.participants"
+            />
+
+            <PermissionControl
+              :model="knowledgeBaseModel"
+              translationPath="project.role.knowledgeBase"
+            />
+
+          </v-layout>
+        </v-card-text>
+
+        <v-divider />
+
+        <EligibilityControl
+          v-for="(eligibility, index) in role.eligibilities"
+          :key="index"
+          :eligibility="eligibility"
+        />
+
+        <v-divider />
+
         <v-card-actions>
           <v-spacer />
           <v-btn
             text
-            @click.stop="dialog = false"
             v-t="'core.cancel'"
+            @click.stop="dialog = false"
           />
           <v-btn
-            :disabled="!valid"
-            type="submit"
-            :loading="loading"
             text
+            type="submit"
             color="primary"
-            @click.stop="save"
             v-t="'core.save'"
+            :loading="loading"
+            :disabled="!valid"
+            @click.stop="save"
           />
         </v-card-actions>
       </v-form>
@@ -157,44 +103,67 @@ import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import RoleModule from '../../store/roles'
+import NameControl from '../controls/NameControl.vue'
+import PermissionControl from '../controls/PermissionControl.vue'
+import EligibilityControl from '../controls/EligibilityControl.vue'
+import ProjectModule from '../../store/projects'
+import { Eligibility, Role } from '../../models'
 
-@Component
+@Component({
+  components: {
+    NameControl,
+    PermissionControl,
+    EligibilityControl,
+  },
+})
 export default class CreateRoleDialog extends Vue {
   private roleModule: RoleModule = getModule(RoleModule, this.$store)
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
 
   private dialog: any = false
   private valid: any = null
   private loading: boolean = false
 
-  private name: string = ''
-  private nameRules: any[] = [
-    (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
-    (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
-  ]
-  private calendar: any = 'read'
-  private settings: any = 'read'
-  private roles: any = 'read'
-  private participants: any = 'read'
-  private knowledgeBase: any = 'read'
-  private permissionValues: any[] = [ 'none', 'read', 'write' ].map((value) => {
-    return { value }
+  private role: Role = Role.create({
+    eligibilities: []
   })
 
-  private async save() {
-    const projectId = this.$route.params.projectId
+  private nameModel = { value: '' }
+  private calendarModel: { value: 'none' | 'read' | 'write' } = { value: 'read' }
+  private settingsModel: { value: 'none' | 'read' | 'write' } = { value: 'read' }
+  private rolesModel: { value: 'none' | 'read' | 'write' } = { value: 'read' }
+  private participantsModel: { value: 'none' | 'read' | 'write' } = { value: 'read' }
+  private knowledgeBaseModel: { value: 'none' | 'read' | 'write' } = { value: 'read' }
 
+  private opened() {
+    if (this.projectModule.getActiveProject) {
+      this.role.eligibilities = this.projectModule.getActiveProject.categories.map((category) => {
+        return Eligibility.create({
+          categoryId: category.id,
+          category: category,
+          shiftsRead: true,
+          shiftsWrite: false,
+          isTeamCaptain: true,
+          isSubstituteCaptain: false,
+        })
+      })
+    }
+  }
+
+  private async save() {
     if (this.valid) {
       this.loading = true
 
-      await this.roleModule.createRole({
-        name: this.name,
-        calendar: this.calendar,
-        settings: this.settings,
-        roles: this.roles,
-        participants: this.participants,
-        knowledgeBase: this.knowledgeBase,
-      })
+      this.role.projectId = this.projectModule.getActiveProject?.id || ''
+      this.role.name = this.nameModel.value
+
+      this.role.setPermissionModel('calendar', this.calendarModel.value)
+      this.role.setPermissionModel('settings', this.settingsModel.value)
+      this.role.setPermissionModel('roles', this.rolesModel.value)
+      this.role.setPermissionModel('participants', this.participantsModel.value)
+      this.role.setPermissionModel('knowledgeBase', this.knowledgeBaseModel.value)
+
+      await this.roleModule.createRole(this.role)
 
       this.loading = false
       this.dialog = false
