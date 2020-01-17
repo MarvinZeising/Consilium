@@ -7,6 +7,7 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Controllers
 {
@@ -39,6 +40,7 @@ namespace Server.Controllers
 
                 var roles = _db.Role
                     .FindByCondition(x => x.ProjectId == projectId)
+                    .Include(x => x.Eligibilities).ThenInclude(x => x.Category)
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<RoleDto>>(roles));

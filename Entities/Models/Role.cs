@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Entities.Validators;
@@ -59,5 +60,7 @@ namespace Entities.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
+
+        public ICollection<Eligibility> Eligibilities { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Entities.Models;
 
 namespace Entities.DataTransferObjects
 {
@@ -21,5 +23,6 @@ namespace Entities.DataTransferObjects
         public DateTime CreatedTime { get; set; }
         public DateTime LastUpdatedTime { get; set; }
         public ProjectDto Project { get; set; }
+        public ICollection<Eligibility> Eligibilities { get; set; }
     }
 }
