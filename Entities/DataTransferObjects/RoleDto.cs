@@ -23,6 +23,6 @@ namespace Entities.DataTransferObjects
         public DateTime CreatedTime { get; set; }
         public DateTime LastUpdatedTime { get; set; }
         public ProjectDto Project { get; set; }
-        public ICollection<Eligibility> Eligibilities { get; set; }
+        public ICollection<EligibilityDto> Eligibilities { get; set; }
     }
 }
