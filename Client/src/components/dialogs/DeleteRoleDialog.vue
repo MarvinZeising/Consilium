@@ -8,8 +8,8 @@
         v-on="on"
         text
         color="error"
-        :loading="loading"
         v-t="'core.delete'"
+        :loading="loading"
       />
     </template>
     <v-card>
@@ -30,16 +30,17 @@
           <v-spacer />
           <v-btn
             text
-            @click.stop="dialog = false"
             v-t="'core.cancel'"
+            @click.stop="dialog = false"
           />
           <v-btn
-            :disabled="!valid"
-            type="submit"
             text
+            type="submit"
             color="error"
-            @click.stop="deleteRole"
             v-t="'core.delete'"
+            :loading="loading"
+            :disabled="!valid"
+            @click.stop="deleteRole"
           />
         </v-card-actions>
       </v-form>
