@@ -166,6 +166,22 @@ class Eligibility {
     this.isSubstituteCaptain = data.isSubstituteCaptain
   }
 
+  public getPermissionModel(area: 'shifts') {
+    const role: any = this
+    const read = role[area + 'Read']
+    const write = role[area + 'Write']
+    return { value: write ? 'write' : read ? 'read' : 'none' }
+  }
+
+  public setPermissionModel(
+    area: 'shifts',
+    modelValue: 'none' | 'read' | 'write'
+  ) {
+    const role: any = this
+    role[area + 'Read'] = modelValue !== 'none'
+    role[area + 'Write'] = modelValue === 'write'
+  }
+
 }
 
 export {

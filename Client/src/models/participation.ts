@@ -1,4 +1,5 @@
 import { Person, Project } from '.'
+import { Eligibility } from './shift'
 
 enum ParticipationStatus {
   Invited = 'invited',
@@ -65,7 +66,7 @@ class Participation {
 
 class Role {
   public static create(data: any) {
-    return new Role(
+    const role = new Role(
       data.id,
       data.projectId,
       data.name,
@@ -80,6 +81,10 @@ class Role {
       data.settingsRead,
       data.settingsWrite,
       data.editable)
+    if (data.eligibilities) {
+      role.eligibilities = data.eligibilities.map((x: Eligibility) => Eligibility.create(x))
+    }
+    return role
   }
 
   public id: string
@@ -96,6 +101,7 @@ class Role {
   public settingsRead: boolean
   public settingsWrite: boolean
   public editable: boolean
+  public eligibilities: Eligibility[] = []
 
   constructor(
     id: string,
@@ -141,6 +147,24 @@ class Role {
     this.rolesWrite = role.rolesWrite
     this.settingsRead = role.settingsRead
     this.settingsWrite = role.settingsWrite
+  }
+
+  public getPermissionModel(
+    area: 'calendar' | 'knowledgeBase' | 'participants' | 'roles' | 'settings'
+  ) {
+    const role: any = this
+    const read = role[area + 'Read']
+    const write = role[area + 'Write']
+    return { value: write ? 'write' : read ? 'read' : 'none' }
+  }
+
+  public setPermissionModel(
+    area: 'calendar' | 'knowledgeBase' | 'participants' | 'roles' | 'settings',
+    modelValue: 'none' | 'read' | 'write'
+  ) {
+    const role: any = this
+    role[area + 'Read'] = modelValue !== 'none'
+    role[area + 'Write'] = modelValue === 'write'
   }
 
 }

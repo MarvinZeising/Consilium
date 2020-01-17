@@ -78,43 +78,14 @@
 
         <v-divider />
 
-        <v-card-text class="pb-0">
-          <span class="subtitle-1">
-            Trolley
-          </span>
-        </v-card-text>
+        <EligibilityControl
+          v-for="(eligibility, index) in eligibilities"
+          :key="index"
+          :eligibility="eligibility"
+        />
 
-        <v-card-text class="pa-2">
-          <v-layout wrap>
-
-            <PermissionControl
-              :model="knowledgeBaseModel"
-              translationPath="project.role.category"
-            />
-
-            <v-flex xs12 sm6 md4>
-              <v-switch
-                v-model="teamCaptainModel"
-                :label="$t(`project.role.teamCaptain`)"
-                color="primary"
-                inset
-                hide-details
-              />
-            </v-flex>
-
-            <v-flex xs12 sm6 md4>
-              <v-switch
-                v-model="substituteCaptainModel"
-                :label="$t(`project.role.substituteCaptain`)"
-                color="primary"
-                inset
-                hide-details
-              />
-            </v-flex>
-
-          </v-layout>
-        </v-card-text>
         <v-divider />
+
         <v-card-actions>
           <v-btn
             text
@@ -151,12 +122,14 @@ import { Role } from '../../models'
 import DeleteRoleDialog from './DeleteRoleDialog.vue'
 import NameControl from '../controls/NameControl.vue'
 import PermissionControl from '../controls/PermissionControl.vue'
+import EligibilityControl from '../controls/EligibilityControl.vue'
 
 @Component({
   components: {
     DeleteRoleDialog,
     NameControl,
     PermissionControl,
+    EligibilityControl,
   },
 })
 export default class UpdateRoleDialog extends Vue {
@@ -179,6 +152,7 @@ export default class UpdateRoleDialog extends Vue {
   private rolesModel = { value: 'none' }
   private participantsModel = { value: 'none' }
   private knowledgeBaseModel = { value: 'none' }
+  private eligibilities: any[] = []
 
   private created() {
     if (this.role) {
@@ -190,6 +164,8 @@ export default class UpdateRoleDialog extends Vue {
         this.rolesModel = this.role.getPermissionModel('roles')
         this.participantsModel = this.role.getPermissionModel('participants')
         this.knowledgeBaseModel = this.role.getPermissionModel('knowledgeBase')
+
+        this.eligibilities = [...this.role.eligibilities]
       }
     }
   }
@@ -197,6 +173,8 @@ export default class UpdateRoleDialog extends Vue {
   private async save() {
     if (this.valid && this.role) {
       this.loading = true
+
+      this.role.eligibilities = this.eligibilities
 
       await this.roleModule.updateRole(this.role)
 
