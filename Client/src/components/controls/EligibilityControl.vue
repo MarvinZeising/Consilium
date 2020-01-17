@@ -26,7 +26,7 @@
             inset
             hide-details
             :disabled="isPermissionNone"
-            @change="(value) => eligibility.isTeamCaptain = value"
+            @change="toggleTeamCaptain"
           />
         </v-flex>
 
@@ -38,7 +38,7 @@
             inset
             hide-details
             :disabled="isPermissionNone"
-            @change="(value) => eligibility.isSubstituteCaptain = value"
+            @change="toggleSubstituteCaptain"
           />
         </v-flex>
 
@@ -82,6 +82,23 @@ export default class EligibilityControl extends Vue {
   private created() {
     if (this.eligibility) {
       this.eligibilityModel = this.eligibility.getPermissionModel('shifts')
+    }
+  }
+
+  // TODO: replace switches with a select
+  private toggleTeamCaptain(value: boolean) {
+    if (this.eligibility) {
+      this.eligibility.isTeamCaptain = value
+
+      if (value) this.eligibility.isSubstituteCaptain = false
+    }
+  }
+
+  private toggleSubstituteCaptain(value: boolean) {
+    if (this.eligibility) {
+      this.eligibility.isSubstituteCaptain = value
+
+      if (value) this.eligibility.isTeamCaptain = false
     }
   }
 
