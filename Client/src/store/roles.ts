@@ -54,35 +54,15 @@ export default class RoleModule extends VuexModule {
   }
 
   @Action
-  public async updateRole(data: {
-    roleId: string,
-    name: string,
-    calendar: string,
-    settings: string,
-    roles: string,
-    participants: string,
-    knowledgeBase: string,
-  }) {
+  public async updateRole(role: Role) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.put(`/persons/${personId}/projects/${projectId}/roles/${data.roleId}`, {
-      name: data.name,
-      calendarRead: data.calendar !== 'none',
-      calendarWrite: data.calendar === 'write',
-      settingsRead: data.settings !== 'none',
-      settingsWrite: data.settings === 'write',
-      rolesRead: data.roles !== 'none',
-      rolesWrite: data.roles === 'write',
-      participantsRead: data.participants !== 'none',
-      participantsWrite: data.participants === 'write',
-      knowledgeBaseRead: data.knowledgeBase !== 'none',
-      knowledgeBaseWrite: data.knowledgeBase === 'write',
-    })
-    const role = Role.create(response.data)
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/roles/${role.id}`, role)
+    const updatedRole = Role.create(response.data)
 
     this.context.commit('upsertProjectRoles', {
       projectId,
-      roles: [role],
+      roles: [updatedRole],
     })
   }
 

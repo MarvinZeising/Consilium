@@ -45,26 +45,31 @@
               <PermissionControl
                 :model="calendarModel"
                 translationPath="project.role.calendar"
+                @change="(value) => role.setPermissionModel('calendar', value)"
               />
 
               <PermissionControl
                 :model="settingsModel"
                 translationPath="project.role.settings"
+                @change="(value) => role.setPermissionModel('settings', value)"
               />
 
               <PermissionControl
                 :model="rolesModel"
                 translationPath="project.role.roles"
+                @change="(value) => role.setPermissionModel('roles', value)"
               />
 
               <PermissionControl
                 :model="participantsModel"
                 translationPath="project.role.participants"
+                @change="(value) => role.setPermissionModel('participants', value)"
               />
 
               <PermissionControl
                 :model="knowledgeBaseModel"
                 translationPath="project.role.knowledgeBase"
+                @change="(value) => role.setPermissionModel('knowledgeBase', value)"
               />
 
             </v-layout>
@@ -197,15 +202,7 @@ export default class UpdateRoleDialog extends Vue {
     if (this.valid && this.role) {
       this.loading = true
 
-      await this.roleModule.updateRole({
-        roleId: this.role.id,
-        name: this.nameModel.value,
-        calendar: this.calendarModel.value,
-        settings: this.settingsModel.value,
-        roles: this.rolesModel.value,
-        participants: this.participantsModel.value,
-        knowledgeBase: this.knowledgeBaseModel.value,
-      })
+      await this.roleModule.updateRole(this.role)
 
       this.loading = false
       this.dialog = false
