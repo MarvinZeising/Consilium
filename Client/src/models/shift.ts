@@ -120,7 +120,7 @@ class Eligibility {
       data.shiftsRead,
       data.shiftsWrite,
       data.isTeamCaptain,
-      data.isSubstituteTeamCaptain)
+      data.isSubstituteCaptain)
     eligibility.role = data.role ? Role.create(data.role) : undefined
     eligibility.category = data.category ? Category.create(data.category) : undefined
     return eligibility
