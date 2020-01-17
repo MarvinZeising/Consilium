@@ -35,6 +35,7 @@ namespace Server
             CreateMap<UpdateRoleDto, Role>();
 
             CreateMap<Eligibility, EligibilityDto>();
+            CreateMap<CreateEligibilityDto, Eligibility>();
             CreateMap<UpdateEligibilityDto, Eligibility>();
 
             CreateMap<Category, CategoryDto>();

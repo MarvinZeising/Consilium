@@ -65,12 +65,27 @@ namespace Server.Controllers
                 role.ProjectId = projectId;
                 role.Editable = true;
 
+                foreach (var eligibility in role.Eligibilities)
+                {
+                    var category = _db.Category
+                        .FindByCondition(x => x.Id == eligibility.CategoryId && x.ProjectId == projectId)
+                        .SingleOrDefault();
+                    if (category == null) return BadRequest();
+
+                    eligibility.ShiftsWrite = eligibility.ShiftsWrite && eligibility.ShiftsRead;
+                    eligibility.IsTeamCaptain = eligibility.IsTeamCaptain && eligibility.ShiftsRead;
+                    eligibility.IsSubstituteCaptain = eligibility.IsSubstituteCaptain && eligibility.ShiftsRead && !eligibility.IsTeamCaptain;
+                }
+
                 _db.Role.Create(role);
                 _db.Save();
 
-                // TODO: create eligibilities
+                var createdRole = _db.Role
+                    .FindByCondition(x => x.Id == role.Id && x.ProjectId == projectId)
+                    .Include(x => x.Eligibilities).ThenInclude(x => x.Category)
+                    .SingleOrDefault();
 
-                return Ok(_mapper.Map<RoleDto>(role));
+                return Ok(_mapper.Map<RoleDto>(createdRole));
             }
             catch (Exception e)
             {
@@ -124,7 +139,7 @@ namespace Server.Controllers
                         eligibilityFromDb.ShiftsRead = eligibility.ShiftsRead;
                         eligibilityFromDb.ShiftsWrite = eligibility.ShiftsWrite && eligibility.ShiftsRead;
                         eligibilityFromDb.IsTeamCaptain = eligibility.IsTeamCaptain && eligibility.ShiftsRead;
-                        eligibilityFromDb.IsSubstituteCaptain = eligibility.IsSubstituteCaptain && eligibility.ShiftsRead;
+                        eligibilityFromDb.IsSubstituteCaptain = eligibility.IsSubstituteCaptain && eligibility.ShiftsRead && !eligibility.IsTeamCaptain;
 
                         _db.Eligibility.Update(eligibilityFromDb);
                     }

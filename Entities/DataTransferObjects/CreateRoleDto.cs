@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Entities.Validators;
 
@@ -39,5 +39,7 @@ namespace Entities.DataTransferObjects
 
         [Required]
         public bool KnowledgeBaseWrite { get; set; }
+
+        public ICollection<CreateEligibilityDto> Eligibilities { get; set; }
     }
 }
