@@ -90,7 +90,9 @@ export default class EligibilityControl extends Vue {
     if (this.eligibility) {
       this.eligibility.isTeamCaptain = value
 
-      if (value) this.eligibility.isSubstituteCaptain = false
+      if (value) {
+        this.eligibility.isSubstituteCaptain = false
+      }
     }
   }
 
@@ -98,7 +100,9 @@ export default class EligibilityControl extends Vue {
     if (this.eligibility) {
       this.eligibility.isSubstituteCaptain = value
 
-      if (value) this.eligibility.isTeamCaptain = false
+      if (value) {
+        this.eligibility.isTeamCaptain = false
+      }
     }
   }
 

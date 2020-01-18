@@ -139,8 +139,8 @@ export default class CreateRoleDialog extends Vue {
     if (this.projectModule.getActiveProject) {
       this.role.eligibilities = this.projectModule.getActiveProject.categories.map((category) => {
         return Eligibility.create({
+          category,
           categoryId: category.id,
-          category: category,
           shiftsRead: true,
           shiftsWrite: false,
           isTeamCaptain: true,
