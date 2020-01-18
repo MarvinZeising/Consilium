@@ -7,6 +7,7 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Controllers
 {
@@ -39,9 +40,8 @@ namespace Server.Controllers
 
                 var categories = _db.Category
                     .FindByCondition(x => x.ProjectId == projectId)
+                    .Include(x => x.Eligibilities).ThenInclude(x => x.Role)
                     .ToList();
-
-                // TODO: create eligibilities
 
                 return Ok(_mapper.Map<IEnumerable<CategoryDto>>(categories));
             }
@@ -88,8 +88,27 @@ namespace Server.Controllers
                 var category = _db.Category
                     .FindByCondition(x => x.Id == categoryId && x.ProjectId == projectId)
                     .SingleOrDefault();
+                if (category == null) return BadRequest();
 
                 category.Name = dto.Name;
+
+                foreach (var eligibility in dto.Eligibilities)
+                {
+                    var eligibilityFromDb = _db.Eligibility
+                        .FindByCondition(x => x.Id == eligibility.Id && x.CategoryId == categoryId)
+                        .SingleOrDefault();
+
+                    if (eligibilityFromDb != null)
+                    {
+                        eligibilityFromDb.ShiftsRead = eligibility.ShiftsRead;
+                        eligibilityFromDb.ShiftsWrite = eligibility.ShiftsWrite && eligibility.ShiftsRead;
+                        eligibilityFromDb.IsTeamCaptain = eligibility.IsTeamCaptain && eligibility.ShiftsRead;
+                        eligibilityFromDb.IsSubstituteCaptain = eligibility.IsSubstituteCaptain && eligibility.ShiftsRead && !eligibility.IsTeamCaptain;
+
+                        _db.Eligibility.Update(eligibilityFromDb);
+                    }
+                }
+
 
                 _db.Category.Update(category);
                 _db.Save();

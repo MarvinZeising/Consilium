@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Entities.DataTransferObjects
 {
@@ -16,6 +15,5 @@ namespace Entities.DataTransferObjects
         public bool IsSubstituteCaptain { get; set; }
         public DateTime CreatedTime { get; set; }
         public DateTime LastUpdatedTime { get; set; }
-        public ICollection<EligibilityDto> Eligibilities { get; set; }
     }
 }
