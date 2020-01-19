@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     v-model="dialog"
-    max-width="600px"
+    max-width="1000px"
   >
     <template v-slot:activator="{ on }">
       <v-btn
@@ -16,29 +16,37 @@
         v-model="valid"
         ref="form"
       >
-        <v-card-title>
-          <span
-            class="headline"
-            v-t="'shift.category.update'"
-          />
-        </v-card-title>
+        <v-toolbar
+          flat
+          color="navbar"
+        >
+          <v-toolbar-title v-t="'shift.category.update'" />
+        </v-toolbar>
         <v-card-text>
-
-          <p
+          <i
             class="subtitle-1"
             v-t="'shift.category.updateDescription'"
           />
+        </v-card-text>
+        <v-card-text class="pa-2">
 
-          <p v-t="'shift.category.nameDescription'" />
-          <v-text-field
-            v-model="name"
-            :label="$t('core.name')"
-            :rules="nameRules"
-            filled
-            required
+          <NameControl
+            :model="nameModel"
+            translationPath="shift.category.nameDescription"
           />
 
         </v-card-text>
+        <v-divider />
+        <v-card-text>
+
+          <EligibilityControl
+            v-for="(eligibility, index) in category.eligibilities"
+            :key="index"
+            :eligibility="eligibility"
+          />
+
+        </v-card-text>
+        <v-divider />
         <v-card-actions>
           <v-btn
             text
@@ -69,10 +77,14 @@ import i18n from '../../i18n'
 import CategoryModule from '../../store/categories'
 import { Role, Category } from '../../models'
 import DeleteCategoryDialog from './DeleteCategoryDialog.vue'
+import NameControl from '../controls/NameControl.vue'
+import EligibilityControl from '../controls/EligibilityControl.vue'
 
 @Component({
   components: {
     DeleteCategoryDialog,
+    NameControl,
+    EligibilityControl,
   },
 })
 export default class UpdateCategoryDialog extends Vue {
@@ -85,26 +97,23 @@ export default class UpdateCategoryDialog extends Vue {
   private valid: any = null
   private loading: boolean = false
 
-  private name: string = ''
-  private nameRules: any[] = [
-    (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
-    (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
-  ]
+  private nameModel = { value: '' }
 
   private opened() {
+    this.nameModel = { value: this.category?.name || '' }
 
-    this.name = this.category?.name || ''
+    if (this.category) {
+      this.category.eligibilities.forEach((x) => x.category = undefined)
+    }
   }
 
   private async save() {
     if (this.valid && this.category) {
       this.loading = true
 
-      await this.categoryModule.updateCategory({
-        categoryId: this.category.id,
-        name: this.name,
-      })
+      this.category.name = this.nameModel.value
+
+      await this.categoryModule.updateCategory(this.category)
 
       this.loading = false
       this.dialog = false

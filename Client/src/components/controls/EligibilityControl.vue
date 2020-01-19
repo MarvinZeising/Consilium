@@ -1,12 +1,10 @@
 <template>
   <div>
     <v-card-text
-      class="pb-0"
+      class="pb-0 subtitle-1"
     >
-      <span
-        class="subtitle-1"
-        v-text="eligibility.category.name"
-      />
+      <span v-if="eligibility.role">{{ eligibility.role.name }}</span>
+      <span v-if="eligibility.category">{{ eligibility.category.name }}</span>
     </v-card-text>
 
     <v-card-text class="pa-2">

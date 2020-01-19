@@ -57,7 +57,12 @@ class Category {
       data.name,
       data.createdTime,
       data.lastUpdatedTime)
+
     category.project = data.project ? Project.create(data.project) : undefined
+
+    if (data.eligibilities) {
+      category.eligibilities = data.eligibilities.map((x: Eligibility) => Eligibility.create(x))
+    }
     return category
   }
 
@@ -68,6 +73,7 @@ class Category {
   public createdTime: string
   public lastUpdatedTime: string
   public shifts: Shift[] = []
+  public eligibilities: Eligibility[] = []
 
   constructor(
     id: string,
@@ -108,6 +114,8 @@ class Category {
     this.name = category.name
     this.createdTime = category.createdTime
     this.lastUpdatedTime = category.lastUpdatedTime
+    this.shifts = category.shifts
+    this.eligibilities = category.eligibilities
   }
 }
 

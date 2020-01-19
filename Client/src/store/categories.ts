@@ -22,33 +22,28 @@ export default class CategoryModule extends VuexModule {
   }
 
   @Action
-  public async createCategory(name: string) {
+  public async createCategory(category: Category) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.post(`/persons/${personId}/projects/${projectId}/categories`, { name })
-    const category = Category.create(response.data)
+    const response = await axios.post(`/persons/${personId}/projects/${projectId}/categories`, category)
+    const createdCategory = Category.create(response.data)
 
     this.context.commit('upsertProjectCategories', {
       projectId,
-      categories: [category],
+      categories: [createdCategory],
     })
   }
 
   @Action
-  public async updateCategory(data: {
-    categoryId: string,
-    name: string,
-  }) {
+  public async updateCategory(category: Category) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.put(`/persons/${personId}/projects/${projectId}/categories/${data.categoryId}`, {
-      name: data.name,
-    })
-    const category = Category.create(response.data)
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/categories/${category.id}`, category)
+    const updatedCategory = Category.create(response.data)
 
     this.context.commit('upsertProjectCategories', {
       projectId,
-      categories: [category],
+      categories: [updatedCategory],
     })
   }
 

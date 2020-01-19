@@ -16,6 +16,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
+            "requireExactSource": false,
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/Server/bin/Debug/netcoreapp3.1/Server.dll",
             "args": [],

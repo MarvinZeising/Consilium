@@ -102,11 +102,11 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
+import ProjectModule from '../../store/projects'
 import RoleModule from '../../store/roles'
 import NameControl from '../controls/NameControl.vue'
 import PermissionControl from '../controls/PermissionControl.vue'
 import EligibilityControl from '../controls/EligibilityControl.vue'
-import ProjectModule from '../../store/projects'
 import { Eligibility, Role } from '../../models'
 
 @Component({
@@ -117,14 +117,14 @@ import { Eligibility, Role } from '../../models'
   },
 })
 export default class CreateRoleDialog extends Vue {
-  private roleModule: RoleModule = getModule(RoleModule, this.$store)
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private roleModule: RoleModule = getModule(RoleModule, this.$store)
 
   private dialog: any = false
   private valid: any = null
   private loading: boolean = false
 
-  private role: Role = Role.create({
+  private role = Role.create({
     eligibilities: []
   })
 
@@ -154,7 +154,6 @@ export default class CreateRoleDialog extends Vue {
     if (this.valid) {
       this.loading = true
 
-      this.role.projectId = this.projectModule.getActiveProject?.id || ''
       this.role.name = this.nameModel.value
 
       this.role.setPermissionModel('calendar', this.calendarModel.value)

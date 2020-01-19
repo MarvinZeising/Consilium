@@ -135,6 +135,10 @@
     "participants": "Teilnehmer",
     "participantsDescription": "Teilnehmer. Lesen erlaubt das Sehen der Teilnehmerliste. Bearbeiten erlaubt das Bearbeiten der Teilnehmerdaten, sowie das Einladen von Personen zum Projekt und das Akzeptieren/Ablehnen von Projekt-Beitrittsanfragen.",
     "knowledgeBase": "Informationen",
-    "knowledgeBaseDescription": "Informationen. Lesen erlaubt das Sehen des Informationscenters und das Lesen aller angelegten Artikel. Bearbeiten erlaubt das Bearbeiten der Themen und der Artikel innerhalb eines Themas."
+    "knowledgeBaseDescription": "Informationen. Lesen erlaubt das Sehen des Informationscenters und das Lesen aller angelegten Artikel. Bearbeiten erlaubt das Bearbeiten der Themen und der Artikel innerhalb eines Themas.",
+    "category": "Kategorie Berechtigung",
+    "categoryDescription": "Kategorie Berechtigung. Lesen erlaubt das Sehen der (und bewerben auf die) Schichten dieser Kategorie. Bearbeiten erlaubt das Erstellen neuer Schichten, sowie das Einteilen und Löschen bestehender Schichten.",
+    "teamCaptain": "Ob der Teilnehmer in Schichten dieser Kategorie als Teamleiter eingeteilt werden darf.",
+    "substituteCaptain": "Ob der Teilnehmer in Schichten dieser Kategorie als stellvertretender Teamleiter eingeteilt werden darf (wenn kein Teamleiter sich beworben hat)."
   }
 }
