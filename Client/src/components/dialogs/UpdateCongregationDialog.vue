@@ -7,6 +7,7 @@
       <v-btn
         v-on="on"
         icon
+        @click="opened"
       >
         <v-icon>edit</v-icon>
       </v-btn>
@@ -114,7 +115,7 @@ export default class UpdateCongregationDialog extends Vue {
     return this.congregation?.numberOfParticipants === 0
   }
 
-  private created() {
+  private opened() {
     if (this.congregation) {
       this.name = this.congregation.name
       this.number = this.congregation.number

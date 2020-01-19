@@ -8,6 +8,7 @@
         v-on="on"
         color="error"
         v-t="'person.delete'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -81,7 +82,7 @@ export default class DeletePersonDialog extends Vue {
     ]
   }
 
-  private async created() {
+  private async opened() {
     if (this.personId) {
       const person = this.personModule.getPersons.find((x: Person) => x.id === this.personId)
       if (person) {

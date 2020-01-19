@@ -8,6 +8,7 @@
         v-on="on"
         text
         v-t="'core.edit'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -74,7 +75,7 @@ export default class UpdateTopicDialog extends Vue {
 
   private topicName: string = ''
 
-  private async created() {
+  private async opened() {
     this.topicName = this.topic?.name || ''
   }
 

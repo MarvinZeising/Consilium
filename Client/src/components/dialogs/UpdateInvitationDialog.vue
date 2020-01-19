@@ -9,6 +9,7 @@
         text
         class="mt-2"
         v-t="'core.edit'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -93,7 +94,7 @@ export default class UpdateInvitationDialog extends Vue {
     (v: string) => !!v || i18n.t('core.fieldRequired'),
   ]
 
-  private async created() {
+  private async opened() {
     await this.roleModule.loadRoles();
 
     this.roleValues = this.projectModule.getActiveProject?.getRoles.map((role: Role) => {

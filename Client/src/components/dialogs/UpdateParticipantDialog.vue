@@ -7,6 +7,7 @@
       <v-btn
         v-on="on"
         icon
+        @click="opened"
       >
         <v-icon>edit</v-icon>
       </v-btn>
@@ -307,7 +308,7 @@ export default class UpdateParticipantDialog extends Vue {
     return { value }
   })
 
-  private created() {
+  private opened() {
     if (this.participation) {
       this.firstname = this.participation.person?.firstname || ''
       this.lastname = this.participation.person?.lastname || ''

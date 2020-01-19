@@ -7,6 +7,7 @@
       <v-btn
         v-on="on"
         icon
+        @click="opened"
       >
         <v-icon>edit</v-icon>
       </v-btn>
@@ -115,7 +116,7 @@ export default class UpdateArticleDialog extends Vue {
     (v: string) => v.length <= 10000 || i18n.t('core.fieldMax', { count: 10000 }),
   ]
 
-  private created() {
+  private opened() {
     if (this.article) {
       this.title = this.article.title
       this.content = this.article.content

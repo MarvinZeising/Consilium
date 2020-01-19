@@ -8,6 +8,7 @@
         v-on="on"
         text
         v-t="'project.invitation.invite'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -106,7 +107,7 @@ export default class CreateInvitationDialog extends Vue {
     (v: string) => !!v || i18n.t('core.fieldRequired'),
   ]
 
-  private async created() {
+  private async opened() {
     await this.roleModule.loadRoles();
 
     const project = this.projectModule.getActiveProject

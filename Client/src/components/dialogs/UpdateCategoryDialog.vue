@@ -8,6 +8,7 @@
         v-on="on"
         text
         v-t="'core.edit'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -91,7 +92,8 @@ export default class UpdateCategoryDialog extends Vue {
     (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
   ]
 
-  private created() {
+  private opened() {
+
     this.name = this.category?.name || ''
   }
 

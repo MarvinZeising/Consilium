@@ -9,6 +9,7 @@
         text
         class="mt-2"
         v-t="'core.handle'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -94,7 +95,7 @@ export default class HandleJoinRequestDialog extends Vue {
     (v: string) => !!v || i18n.t('core.fieldRequired'),
   ]
 
-  private async created() {
+  private async opened() {
     this.loadingRoles = true
 
     await this.roleModule.loadRoles()

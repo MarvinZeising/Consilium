@@ -8,6 +8,7 @@
         v-on="on"
         color="error"
         v-t="'account.delete'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -86,7 +87,7 @@ export default class DeleteAccountDialog extends Vue {
     ]
   }
 
-  private created() {
+  private opened() {
     const user = this.userModule.getUser
     if (user) {
       this.accountEmail = user.email

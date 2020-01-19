@@ -9,6 +9,7 @@
         text
         color="error"
         v-t="'project.knowledgeBase.deleteTopic'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -82,7 +83,7 @@ export default class DeleteTopicDialog extends Vue {
     ]
   }
 
-  private async created() {
+  private async opened() {
     if (this.topic) {
       this.topicName = this.topic.name
     }

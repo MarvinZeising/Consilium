@@ -8,6 +8,7 @@
         v-on="on"
         color="error"
         v-t="'project.delete'"
+        @click="opened"
       />
     </template>
     <v-card>
@@ -82,7 +83,7 @@ export default class DeleteProjectDialog extends Vue {
     ]
   }
 
-  private async created() {
+  private async opened() {
     const projectId = this.$route.params.projectId
     const project = this.projectModule.getProjects.filter((x: Project) => x.id === projectId)[0]
     if (project) {
