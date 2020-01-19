@@ -64,10 +64,27 @@ namespace Server.Controllers
                 var category = _mapper.Map<Category>(dto);
                 category.ProjectId = projectId;
 
+                foreach (var eligibility in category.Eligibilities)
+                {
+                    var role = _db.Role
+                        .FindByCondition(x => x.Id == eligibility.RoleId && x.ProjectId == projectId)
+                        .SingleOrDefault();
+                    if (role == null) return BadRequest();
+
+                    eligibility.ShiftsWrite = eligibility.ShiftsWrite && eligibility.ShiftsRead;
+                    eligibility.IsTeamCaptain = eligibility.IsTeamCaptain && eligibility.ShiftsRead;
+                    eligibility.IsSubstituteCaptain = eligibility.IsSubstituteCaptain && eligibility.ShiftsRead && !eligibility.IsTeamCaptain;
+                }
+
                 _db.Category.Create(category);
                 _db.Save();
 
-                return Ok(_mapper.Map<CategoryDto>(category));
+                var createdCategory = _db.Category
+                    .FindByCondition(x => x.Id == category.Id && x.ProjectId == projectId)
+                    .Include(x => x.Eligibilities).ThenInclude(x => x.Role)
+                    .SingleOrDefault();
+
+                return Ok(_mapper.Map<CategoryDto>(createdCategory));
             }
             catch (Exception e)
             {

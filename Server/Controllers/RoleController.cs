@@ -77,6 +77,8 @@ namespace Server.Controllers
                     eligibility.IsSubstituteCaptain = eligibility.IsSubstituteCaptain && eligibility.ShiftsRead && !eligibility.IsTeamCaptain;
                 }
 
+                // TODO: create the eligibility for administrator manually with full permissions
+
                 _db.Role.Create(role);
                 _db.Save();
 

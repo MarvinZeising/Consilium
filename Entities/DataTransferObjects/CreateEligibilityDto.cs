@@ -6,7 +6,8 @@ namespace Entities.DataTransferObjects
 {
     public class CreateEligibilityDto
     {
-        [Required]
+        public Guid RoleId { get; set; }
+
         public Guid CategoryId { get; set; }
 
         [Required]
