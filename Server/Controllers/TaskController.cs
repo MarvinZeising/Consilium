@@ -75,75 +75,59 @@ namespace Server.Controllers
             }
         }
 
-        // [HttpPut("categories/{categoryId}")]
-        // public ActionResult<CategoryDto> UpdateCategory(Guid personId, Guid projectId, Guid categoryId, [FromBody] UpdateCategoryDto dto)
-        // {
-        //     try
-        //     {
-        //         if (!ModelState.IsValid) return BadRequest();
-        //         if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-        //         if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
+        [HttpPut("tasks/{taskId}")]
+        public ActionResult<TaskDto> UpdateTask(Guid personId, Guid projectId, Guid taskId, [FromBody] UpdateTaskDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
 
-        //         var category = _db.Category
-        //             .FindByCondition(x => x.Id == categoryId && x.ProjectId == projectId)
-        //             .SingleOrDefault();
-        //         if (category == null) return BadRequest();
+                var task = _db.Task
+                    .FindByCondition(x => x.Id == taskId && x.ProjectId == projectId)
+                    .SingleOrDefault();
+                if (task == null) return BadRequest();
 
-        //         category.Name = dto.Name;
+                task.Name = dto.Name;
+                task.Description = dto.Description;
+                task.HelpLink = dto.HelpLink;
 
-        //         foreach (var eligibility in dto.Eligibilities)
-        //         {
-        //             var eligibilityFromDb = _db.Eligibility
-        //                 .FindByCondition(x => x.Id == eligibility.Id && x.CategoryId == categoryId)
-        //                 .SingleOrDefault();
+                _db.Task.Update(task);
+                _db.Save();
 
-        //             if (eligibilityFromDb != null)
-        //             {
-        //                 eligibilityFromDb.ShiftsRead = eligibility.ShiftsRead;
-        //                 eligibilityFromDb.ShiftsWrite = eligibility.ShiftsWrite && eligibility.ShiftsRead;
-        //                 eligibilityFromDb.IsTeamCaptain = eligibility.IsTeamCaptain && eligibility.ShiftsRead;
-        //                 eligibilityFromDb.IsSubstituteCaptain = eligibility.IsSubstituteCaptain && eligibility.ShiftsRead && !eligibility.IsTeamCaptain;
+                return Ok(_mapper.Map<TaskDto>(task));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateTask: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
-        //                 _db.Eligibility.Update(eligibilityFromDb);
-        //             }
-        //         }
+        [HttpDelete("tasks/{taskId}")]
+        public IActionResult DeleteTask(Guid personId, Guid projectId, Guid taskId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
 
+                var task = _db.Task
+                    .FindByCondition(x => x.Id == taskId && x.ProjectId == projectId)
+                    .SingleOrDefault();
 
-        //         _db.Category.Update(category);
-        //         _db.Save();
+                _db.Task.Delete(task);
+                _db.Save();
 
-        //         return Ok(_mapper.Map<CategoryDto>(category));
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         _logger.LogError($"ERROR in UpdateCategory: {e.Message}");
-        //         return StatusCode(500, "Internal server error");
-        //     }
-        // }
-
-        // [HttpDelete("categories/{categoryId}")]
-        // public IActionResult DeleteCategory(Guid personId, Guid projectId, Guid categoryId)
-        // {
-        //     try
-        //     {
-        //         if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-        //         if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
-
-        //         var category = _db.Category
-        //             .FindByCondition(x => x.Id == categoryId && x.ProjectId == projectId)
-        //             .SingleOrDefault();
-
-        //         _db.Category.Delete(category);
-        //         _db.Save();
-
-        //         return Ok();
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         _logger.LogError($"ERROR in DeleteCategory: {e.Message}");
-        //         return StatusCode(500, "Internal server error");
-        //     }
-        // }
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in DeleteTask: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
     }
 }
