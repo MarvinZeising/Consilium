@@ -1,38 +1,32 @@
 <template>
-  <v-flex
-    xs12 sm6 md4
-    class="pa-2"
-  >
-    <p v-t="translationPath" />
-    <v-text-field
-      v-model="model.value"
-      :label="$t('core.name')"
-      :rules="nameRules"
-      filled
-      required
-    />
-  </v-flex>
+  <TextControl
+    :model="model"
+    label="core.name"
+    :description="description"
+    :isRequired="true"
+    :minLength="0"
+    :maxLength="40"
+  />
 </template>
 
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
+import TextControl from './TextControl.vue'
 
-@Component
+@Component({
+  components: {
+    TextControl,
+  }
+})
 export default class NameControl extends Vue {
 
   @Prop(Object)
   private readonly model: { value: string } = { value: '' }
 
   @Prop(String)
-  private readonly translationPath: string = ''
-
-  private nameRules: any[] = [
-    (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 }),
-    (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
-  ]
+  private readonly description: string = ''
 
 }
 </script>
