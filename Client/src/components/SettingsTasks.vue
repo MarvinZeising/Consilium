@@ -34,7 +34,7 @@
       </v-list>
       <v-card-actions v-if="!loading">
         <v-spacer />
-        <!-- <CreateCategoryDialog /> -->
+        <CreateTaskDialog />
       </v-card-actions>
     </v-card>
   </v-flex>
@@ -44,7 +44,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { Role } from '../models'
-// import CreateCategoryDialog from '../components/dialogs/CreateCategoryDialog.vue'
+import CreateTaskDialog from '../components/dialogs/CreateTaskDialog.vue'
 // import UpdateCategoryDialog from '../components/dialogs/UpdateCategoryDialog.vue'
 import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
@@ -53,7 +53,7 @@ import TaskModule from '../store/tasks'
 
 @Component({
   components: {
-    // CreateCategoryDialog,
+    CreateTaskDialog,
     // UpdateCategoryDialog,
   }
 })

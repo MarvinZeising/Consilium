@@ -24,6 +24,8 @@
     "deleteDescription": "Do you really want to delete this task?",
     "nameDescription": "The name of the task.",
     "descriptionDescription": "Some useful description text for the participants to know what a team that is assigned this task is meant to do.",
-    "helpLinkDescription": "A link to a page with more detailed information. e.g. a link to one this project's knowledge base articles, to an external video platform, a map, or something else."
+    "helpLink": "Help link",
+    "helpLinkDescription": "A link to a page with more detailed information. e.g. a link to one this project's knowledge base articles, to an external video platform, a map, or something else.",
+    "helpLinkFormat": "The link must be a valid URL. It has to start with https://"
   }
 }

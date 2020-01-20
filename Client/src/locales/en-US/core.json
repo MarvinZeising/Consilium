@@ -22,6 +22,7 @@
   "optional": "optional",
   "id": "ID",
   "name": "Name",
+  "description": "Description",
   "email": "Email",
   "emailInvalid": "Email must be valid",
   "phone": "Phone",

@@ -21,18 +21,18 @@ export default class TaskModule extends VuexModule {
     }
   }
 
-  // @Action
-  // public async createCategory(category: Category) {
-  //   const { personId, projectId } = this.context.getters.resolvePersonAndProject
+  @Action
+  public async createTask(task: Task) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-  //   const response = await axios.post(`/persons/${personId}/projects/${projectId}/categories`, category)
-  //   const createdCategory = Category.create(response.data)
+    const response = await axios.post(`/persons/${personId}/projects/${projectId}/tasks`, task)
+    const createdTask = Task.create(response.data)
 
-  //   this.context.commit('upsertProjectCategories', {
-  //     projectId,
-  //     categories: [createdCategory],
-  //   })
-  // }
+    this.context.commit('upsertProjectTasks', {
+      projectId,
+      tasks: [createdTask],
+    })
+  }
 
   // @Action
   // public async updateCategory(category: Category) {
