@@ -28,7 +28,7 @@
             <v-list-item-title v-text="task.name" />
           </v-list-item-content>
           <v-list-item-action>
-            <!-- <UpdateCategoryDialog :category="category" /> -->
+            <UpdateTaskDialog :task="task" />
           </v-list-item-action>
         </v-list-item>
       </v-list>
@@ -45,7 +45,7 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { Role } from '../models'
 import CreateTaskDialog from '../components/dialogs/CreateTaskDialog.vue'
-// import UpdateCategoryDialog from '../components/dialogs/UpdateCategoryDialog.vue'
+import UpdateTaskDialog from '../components/dialogs/UpdateTaskDialog.vue'
 import PersonModule from '../store/persons'
 import ProjectModule from '../store/projects'
 import CategoryModule from '../store/categories'
@@ -54,7 +54,7 @@ import TaskModule from '../store/tasks'
 @Component({
   components: {
     CreateTaskDialog,
-    // UpdateCategoryDialog,
+    UpdateTaskDialog,
   }
 })
 export default class SettingsTasks extends Vue {

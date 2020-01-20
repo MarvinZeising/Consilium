@@ -34,29 +34,29 @@ export default class TaskModule extends VuexModule {
     })
   }
 
-  // @Action
-  // public async updateCategory(category: Category) {
-  //   const { personId, projectId } = this.context.getters.resolvePersonAndProject
+  @Action
+  public async updateTask(task: Task) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-  //   const response = await axios.put(`/persons/${personId}/projects/${projectId}/categories/${category.id}`, category)
-  //   const updatedCategory = Category.create(response.data)
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/tasks/${task.id}`, task)
+    const updatedTask = Task.create(response.data)
 
-  //   this.context.commit('upsertProjectCategories', {
-  //     projectId,
-  //     categories: [updatedCategory],
-  //   })
-  // }
+    this.context.commit('upsertProjectTasks', {
+      projectId,
+      tasks: [updatedTask],
+    })
+  }
 
-  // @Action
-  // public async deleteCategory(categoryId: string) {
-  //   const { personId, projectId } = this.context.getters.resolvePersonAndProject
+  @Action
+  public async deleteTask(taskId: string) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-  //   await axios.delete(`/persons/${personId}/projects/${projectId}/categories/${categoryId}`)
+    await axios.delete(`/persons/${personId}/projects/${projectId}/tasks/${taskId}`)
 
-  //   this.context.commit('removeProjectCategory', {
-  //     projectId,
-  //     categoryId,
-  //   })
-  // }
+    this.context.commit('removeProjectTask', {
+      projectId,
+      taskId,
+    })
+  }
 
 }
