@@ -49,6 +49,60 @@ class Shift {
 
 }
 
+class Task {
+  public static create(data: any) {
+    const task = new Task(
+      data.id,
+      data.projectId,
+      data.name,
+      data.description,
+      data.helpLink,
+      data.createdTime,
+      data.lastUpdatedTime)
+
+    task.project = data.project ? Project.create(data.project) : undefined
+    return task
+  }
+
+  public id: string
+  public projectId: string
+  public project?: Project
+  public name: string
+  public description: string
+  public helpLink: string
+  public createdTime: string
+  public lastUpdatedTime: string
+
+  constructor(
+    id: string,
+    projectId: string,
+    name: string,
+    description: string,
+    helpLink: string,
+    createdTime: string,
+    lastUpdatedTime: string,
+  ) {
+    this.id = id
+    this.projectId = projectId
+    this.name = name
+    this.description = description
+    this.helpLink = helpLink
+    this.createdTime = createdTime
+    this.lastUpdatedTime = lastUpdatedTime
+  }
+
+  public copyFrom(task: Task) {
+    this.id = task.id
+    this.projectId = task.projectId
+    this.project = task.project
+    this.name = task.name
+    this.description = task.description
+    this.helpLink = task.helpLink
+    this.createdTime = task.createdTime
+    this.lastUpdatedTime = task.lastUpdatedTime
+  }
+}
+
 class Category {
   public static create(data: any) {
     const category = new Category(
@@ -193,6 +247,7 @@ class Eligibility {
 }
 
 export {
+  Task,
   Category,
   Eligibility,
   Shift,

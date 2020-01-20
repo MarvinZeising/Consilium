@@ -12,5 +12,18 @@
     "delete": "Delete Category",
     "deleteDescription": "Do you really want to delete this category? This will also delete all shifts of this category. (even past ones)",
     "nameDescription": "The name of the category."
+  },
+  "task": {
+    "tasks": "No tasks have been defined, yet. | Task | Tasks",
+    "description": "Every team in a shift belongs to a task.",
+    "create": "Add Task",
+    "createDescription": "Create a new task.",
+    "update": "Update Task",
+    "updateDescription": "You can update this task.",
+    "delete": "Delete Task",
+    "deleteDescription": "Do you really want to delete this task?",
+    "nameDescription": "The name of the task.",
+    "descriptionDescription": "Some useful description text for the participants to know what a team that is assigned this task is meant to do.",
+    "helpLinkDescription": "A link to a page with more detailed information. e.g. a link to one this project's knowledge base articles, to an external video platform, a map, or something else."
   }
 }

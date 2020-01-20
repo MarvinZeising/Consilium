@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
 import router from '../router'
-import { Project, Participation, ParticipationStatus, Role, Topic, Category } from '../models'
+import { Project, Participation, ParticipationStatus, Role, Topic, Category, Task } from '../models'
 
 @Module({ dynamic: true, store, name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
@@ -370,6 +370,49 @@ export default class ProjectModule extends VuexModule {
     this.projects = this.projects.map((p) => {
       if (p.id === projectId) {
         p.roles = p.roles.filter((x) => x.id !== roleId)
+      }
+      return p
+    })
+  }
+
+  @Mutation
+  public upsertProjectTasks({ projectId, tasks, clearFirst }: {
+    projectId: string,
+    tasks: Task[],
+    clearFirst: boolean,
+  }) {
+    this.projects = this.projects.map((project) => {
+      if (project.id === projectId) {
+        if (clearFirst) {
+          project.tasks = tasks
+          return project
+        }
+        project.tasks = project.tasks.map((task) => {
+          const updatedTask = tasks.find((x) => x.id === task.id)
+          if (updatedTask) {
+            task.copyFrom(updatedTask)
+          }
+          return task
+        })
+        for (const updatedTask of tasks) {
+          const taskAlreadyExists = project.tasks.find((x) => x.id === updatedTask.id)
+          if (!taskAlreadyExists) {
+            project.tasks.push(updatedTask)
+          }
+        }
+      }
+      return project
+    })
+  }
+
+  @Mutation
+  public removeProjectTask({ projectId, taskId }: {
+    projectId: string,
+    taskId: string,
+  }) {
+    this.projects = this.projects.map((p) => {
+      if (p.id === projectId) {
+        p.tasks = p.tasks.filter((x) => x.id !== taskId)
       }
       return p
     })

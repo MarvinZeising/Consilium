@@ -12,5 +12,18 @@
     "delete": "Kategorie löschen",
     "deleteDescription": "Möchtest du diese Kategorie wirklich löschen? Dadurch werden auch alle vergangen Schichten dieser Kategorie gelöscht.",
     "nameDescription": "Der Name der Kategorie."
+  },
+  "task": {
+    "tasks": "Es wurden noch keine Zuteilungen angelegt. | Zuteilung | Zuteilung",
+    "description": "Jedes Team einer Schicht nimmt eine Zuteilung wahr.",
+    "create": "Zuteilung hinzufügen",
+    "createDescription": "Erstelle eine neue Zuteilung.",
+    "update": "Zuteilung bearbeiten",
+    "updateDescription": "Die kannst diese Zuteilung bearbeiten.",
+    "delete": "Zuteilung löschen",
+    "deleteDescription": "Möchtest du diese Zuteilung wirklich löschen?",
+    "nameDescription": "Der Name der Zuteilung.",
+    "descriptionDescription": "Eine hilfreiche Beschreibung dieser Zuteilung, die den Teilnehmern zu verstehen hilft, was sie als Team (das diese Zuteilung wahrnimmt) tun sollen.",
+    "helpLinkDescription": "Ein Hilfe-Link zu weiteren Informationen. Kann z.B. zu einer der Hilfeseiten dieses Projektes führen, zu einer externen Video-Plattform, einer Karte oder anderem."
   }
 }
