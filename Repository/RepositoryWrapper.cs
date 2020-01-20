@@ -15,6 +15,7 @@ namespace Repository
         private IParticipationRepository _participation;
         private IRoleRepository _role;
         private ICategoryRepository _category;
+        private ITaskRepository _task;
         private IEligibilityRepository _eligibility;
         private ICongregationRepository _congregation;
         private ITopicRepository _topic;
@@ -89,6 +90,18 @@ namespace Repository
                     _category = new CategoryRepository(_repositoryContext);
                 }
                 return _category;
+            }
+        }
+
+        public ITaskRepository Task
+        {
+            get
+            {
+                if (_task == null)
+                {
+                    _task = new TaskRepository(_repositoryContext);
+                }
+                return _task;
             }
         }
 

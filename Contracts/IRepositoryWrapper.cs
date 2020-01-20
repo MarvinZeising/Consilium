@@ -8,6 +8,7 @@
         IParticipationRepository Participation { get; }
         IRoleRepository Role { get; }
         ICategoryRepository Category { get; }
+        ITaskRepository Task { get; }
         IEligibilityRepository Eligibility { get; }
         ICongregationRepository Congregation { get; }
         ITopicRepository Topic { get; }
