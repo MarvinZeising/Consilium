@@ -51,46 +51,29 @@ namespace Server.Controllers
             }
         }
 
-        // [HttpPost("categories")]
-        // public ActionResult<CategoryDto> CreateCategory(Guid personId, Guid projectId, [FromBody] CreateCategoryDto dto)
-        // {
-        //     try
-        //     {
-        //         if (!ModelState.IsValid) return BadRequest();
-        //         if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-        //         if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
+        [HttpPost("tasks")]
+        public ActionResult<TaskDto> CreateTask(Guid personId, Guid projectId, [FromBody] CreateTaskDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
 
-        //         var category = _mapper.Map<Category>(dto);
-        //         category.ProjectId = projectId;
+                var task = _mapper.Map<Task>(dto);
+                task.ProjectId = projectId;
 
-        //         foreach (var eligibility in category.Eligibilities)
-        //         {
-        //             var role = _db.Role
-        //                 .FindByCondition(x => x.Id == eligibility.RoleId && x.ProjectId == projectId)
-        //                 .SingleOrDefault();
-        //             if (role == null) return BadRequest();
+                _db.Task.Create(task);
+                _db.Save();
 
-        //             eligibility.ShiftsWrite = eligibility.ShiftsWrite && eligibility.ShiftsRead;
-        //             eligibility.IsTeamCaptain = eligibility.IsTeamCaptain && eligibility.ShiftsRead;
-        //             eligibility.IsSubstituteCaptain = eligibility.IsSubstituteCaptain && eligibility.ShiftsRead && !eligibility.IsTeamCaptain;
-        //         }
-
-        //         _db.Category.Create(category);
-        //         _db.Save();
-
-        //         var createdCategory = _db.Category
-        //             .FindByCondition(x => x.Id == category.Id && x.ProjectId == projectId)
-        //             .Include(x => x.Eligibilities).ThenInclude(x => x.Role)
-        //             .SingleOrDefault();
-
-        //         return Ok(_mapper.Map<CategoryDto>(createdCategory));
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         _logger.LogError($"ERROR in CreateCategory: {e.Message}");
-        //         return StatusCode(500, "Internal server error");
-        //     }
-        // }
+                return Ok(_mapper.Map<TaskDto>(task));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in CreateTask: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
         // [HttpPut("categories/{categoryId}")]
         // public ActionResult<CategoryDto> UpdateCategory(Guid personId, Guid projectId, Guid categoryId, [FromBody] UpdateCategoryDto dto)

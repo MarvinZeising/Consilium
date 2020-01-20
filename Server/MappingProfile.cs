@@ -40,6 +40,9 @@ namespace Server
 
             CreateMap<Category, CategoryDto>();
             CreateMap<CreateCategoryDto, Category>();
+
+            CreateMap<Task, TaskDto>();
+            CreateMap<CreateTaskDto, Task>();
         }
     }
 }
