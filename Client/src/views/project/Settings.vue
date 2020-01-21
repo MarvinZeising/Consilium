@@ -61,8 +61,8 @@ import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vu
   }
 })
 export default class Settings extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
 
   private get canView() {
     return this.personModule.getActiveRole?.settingsWrite === true

@@ -58,7 +58,7 @@ import { Person } from '../models'
 
 @Component
 export default class AccountPersons extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
 
   private editPerson(personId: string) {
     if (this.personModule.getActivePersonId !== personId) {

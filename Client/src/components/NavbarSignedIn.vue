@@ -208,8 +208,8 @@ import { Person, Project, Topic, Participation, ParticipationStatus } from '../m
 
 @Component
 export default class NavbarSignedIn extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private knowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private profileActions: any[] = [
     ['person.personal', 'personal'],

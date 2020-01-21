@@ -53,7 +53,7 @@ import { Article } from '../../models'
 
 @Component
 export default class DeleteArticleDialog extends Vue {
-  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
+  private knowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   @Prop(Article)
   private readonly article?: Article

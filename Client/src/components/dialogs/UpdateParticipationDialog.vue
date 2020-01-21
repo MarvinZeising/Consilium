@@ -61,7 +61,7 @@ import { Participation } from '../../models'
   }
 })
 export default class UpdateParticipationDialog extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
 
   @Prop(Participation)
   private readonly participation?: Participation

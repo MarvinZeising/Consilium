@@ -90,8 +90,8 @@ import DeleteCongregationDialog from './DeleteCongregationDialog.vue'
   },
 })
 export default class UpdateCongregationDialog extends Vue {
-  private alertModule: AlertModule = getModule(AlertModule, this.$store)
-  private congregationModule: CongregationModule = getModule(CongregationModule, this.$store)
+  private alertModule = getModule(AlertModule, this.$store)
+  private congregationModule = getModule(CongregationModule, this.$store)
 
   @Prop(Congregation)
   private readonly congregation?: Congregation

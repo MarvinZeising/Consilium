@@ -185,7 +185,7 @@ import { Language } from '../models'
 
 @Component
 export default class AccountInterface extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
 
   private editMode: boolean = false
 

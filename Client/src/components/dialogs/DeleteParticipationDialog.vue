@@ -71,7 +71,7 @@ import { Project, Participation } from '../../models'
 
 @Component
 export default class DeleteParticipationDialog extends Vue {
-  private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
+  private participantModule = getModule(ParticipantModule, this.$store)
 
   @Prop(Participation)
   private readonly participation?: Participation

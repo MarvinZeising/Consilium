@@ -72,7 +72,7 @@ import i18n from '../../i18n'
 
 @Component
 export default class DeleteAccountDialog extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
 
   private valid: any = false
   private loading: boolean = false

@@ -54,7 +54,7 @@ import { Participation } from '../../models'
 
 @Component
 export default class HandleInvitationDialog extends Vue {
-  private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
+  private invitationModule = getModule(InvitationModule, this.$store)
 
   @Prop(Participation)
   private readonly participation?: Participation

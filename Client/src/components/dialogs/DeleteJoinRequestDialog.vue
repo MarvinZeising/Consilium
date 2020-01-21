@@ -46,8 +46,8 @@ import { Participation } from '../../models'
 
 @Component
 export default class DeleteJoinRequestDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private requestModule: RequestModule = getModule(RequestModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private requestModule = getModule(RequestModule, this.$store)
 
   @Prop(Participation)
   private readonly participation?: Participation

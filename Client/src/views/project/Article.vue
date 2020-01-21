@@ -75,8 +75,8 @@ import UpdateArticleDialog from '../../components/dialogs/UpdateArticleDialog.vu
   }
 })
 export default class Article extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private knowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private loading: boolean = true
 

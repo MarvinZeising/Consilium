@@ -136,10 +136,10 @@ import { Exceptions } from '../models'
 
 @Component
 export default class SettingsGeneral extends Vue {
-  private alertModule: AlertModule = getModule(AlertModule, this.$store)
-  private userModule: UserModule = getModule(UserModule, this.$store)
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private alertModule = getModule(AlertModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
 
   private loading: boolean = true
   private saving: boolean = false

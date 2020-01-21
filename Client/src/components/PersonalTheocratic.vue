@@ -126,7 +126,7 @@ import { Person, Gender, Assignment, Privilege } from '../models'
 
 @Component
 export default class PersonalTheocratic extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
 
   private valid: any = false
   private editMode: boolean = false

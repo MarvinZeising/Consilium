@@ -70,7 +70,7 @@ import i18n from '../../i18n'
 
 @Component
 export default class DeleteProjectDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
 
   private valid: any = false
   private deleteProjectDialog: boolean = false

@@ -55,6 +55,6 @@ import UserModule from '../../store/users'
   }
 })
 export default class Account extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
 }
 </script>

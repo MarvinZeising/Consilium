@@ -68,10 +68,10 @@ import ParticipantModule from '../store/participants'
   }
 })
 export default class SettingsRoles extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private roleModule: RoleModule = getModule(RoleModule, this.$store)
-  private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private roleModule = getModule(RoleModule, this.$store)
+  private participantModule = getModule(ParticipantModule, this.$store)
 
   private loading: boolean = true
 

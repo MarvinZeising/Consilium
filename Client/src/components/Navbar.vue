@@ -138,8 +138,8 @@ import NavbarSignedOut from './NavbarSignedOut.vue'
   }
 })
 export default class Navbar extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
 
   private drawer: boolean = true
   private accountMenu: any = false

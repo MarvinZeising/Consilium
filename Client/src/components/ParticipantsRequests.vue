@@ -75,10 +75,10 @@ import HandleJoinRequestDialog from './dialogs/HandleJoinRequestDialog.vue'
   }
 })
 export default class ParticipantsRequests extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private requestModule: RequestModule = getModule(RequestModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private requestModule = getModule(RequestModule, this.$store)
 
   private loading: boolean = true
   private saving: boolean = false

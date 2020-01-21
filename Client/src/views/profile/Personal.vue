@@ -53,6 +53,6 @@ import DeletePersonDialog from '../../components/dialogs/DeletePersonDialog.vue'
   }
 })
 export default class Personal extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
 }
 </script>

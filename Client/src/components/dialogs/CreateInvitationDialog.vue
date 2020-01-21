@@ -86,10 +86,10 @@ import { Role, Exceptions } from '@/models'
 
 @Component
 export default class CreateInvitationDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
-  private requestModule: RequestModule = getModule(RequestModule, this.$store)
-  private roleModule: RoleModule = getModule(RoleModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private invitationModule = getModule(InvitationModule, this.$store)
+  private requestModule = getModule(RequestModule, this.$store)
+  private roleModule = getModule(RoleModule, this.$store)
 
   private dialog: any = false
   private valid: any = null

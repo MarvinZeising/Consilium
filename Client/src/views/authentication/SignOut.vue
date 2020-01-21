@@ -17,7 +17,7 @@ import UserModule from '../../store/users'
 
 @Component
 export default class SignOut extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
 
   private async created() {
     await this.userModule.signOut()

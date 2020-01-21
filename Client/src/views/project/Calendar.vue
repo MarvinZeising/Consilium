@@ -102,6 +102,8 @@ import i18n from '../../i18n'
 import UserModule from '../../store/users'
 import PersonModule from '../../store/persons'
 import ProjectModule from '../../store/projects'
+import CategoryModule from '../../store/categories'
+import ShiftModule from '../../store/shifts'
 import CreateShiftDialog from '../../components/dialogs/CreateShiftDialog.vue'
 
 @Component({
@@ -110,9 +112,11 @@ import CreateShiftDialog from '../../components/dialogs/CreateShiftDialog.vue'
   }
 })
 export default class Calendar extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private categoryModule = getModule(CategoryModule, this.$store)
+  private shiftModule = getModule(ShiftModule, this.$store)
 
   private loading: boolean = true
 

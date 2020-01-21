@@ -96,7 +96,7 @@ import { Article } from '../../models'
   }
 })
 export default class UpdateArticleDialog extends Vue {
-  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
+  private knowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   @Prop(Article)
   private readonly article?: Article

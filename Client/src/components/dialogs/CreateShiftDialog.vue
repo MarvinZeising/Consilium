@@ -98,8 +98,8 @@ import { Category, Eligibility, Task, Shift } from '../../models'
   },
 })
 export default class CreateTaskDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private shiftModule: ShiftModule = getModule(ShiftModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private shiftModule = getModule(ShiftModule, this.$store)
 
   @Prop(String)
   private readonly date?: string

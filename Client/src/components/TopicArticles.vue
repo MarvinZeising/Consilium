@@ -52,10 +52,10 @@ import CreateArticleDialog from '../components/dialogs/CreateArticleDialog.vue'
   }
 })
 export default class ParticipantsInvitations extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private knowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private loading: boolean = true
 

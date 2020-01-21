@@ -43,6 +43,6 @@ import UserModule from './store/users'
   components: { Navbar }
 })
 export default class App extends Vue {
-  private alertModule: AlertModule = getModule(AlertModule, this.$store)
+  private alertModule = getModule(AlertModule, this.$store)
 }
 </script>

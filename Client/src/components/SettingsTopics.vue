@@ -57,9 +57,9 @@ import UpdateTopicDialog from './dialogs/UpdateTopicDialog.vue'
   }
 })
 export default class SettingsTopics extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private knowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private loading: boolean = true
 

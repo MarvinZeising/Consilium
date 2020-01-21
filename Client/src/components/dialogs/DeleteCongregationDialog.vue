@@ -53,7 +53,7 @@ import { Congregation } from '../../models'
 
 @Component
 export default class DeleteCongregationDialog extends Vue {
-  private congregationModule: CongregationModule = getModule(CongregationModule, this.$store)
+  private congregationModule = getModule(CongregationModule, this.$store)
 
   @Prop(Congregation)
   private readonly congregation?: Congregation

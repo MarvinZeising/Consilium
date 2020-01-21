@@ -124,7 +124,7 @@ import PersonModule from '../../store/persons'
 
 @Component
 export default class CreatePerson extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
 
   private activeStep: number = 1
   private valid: boolean = false

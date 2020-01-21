@@ -96,8 +96,8 @@ import { Category, Eligibility, Task } from '../../models'
   },
 })
 export default class CreateTaskDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private taskModule: TaskModule = getModule(TaskModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private taskModule = getModule(TaskModule, this.$store)
 
   private dialog: any = false
   private valid: any = null

@@ -134,8 +134,8 @@ import EligibilityControl from '../controls/EligibilityControl.vue'
   },
 })
 export default class UpdateRoleDialog extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private roleModule: RoleModule = getModule(RoleModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private roleModule = getModule(RoleModule, this.$store)
 
   @Prop(Object)
   private readonly role?: Role

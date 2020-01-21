@@ -76,9 +76,9 @@ import { Participation, Role } from '../../models'
   }
 })
 export default class UpdateInvitationDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
-  private roleModule: RoleModule = getModule(RoleModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private invitationModule = getModule(InvitationModule, this.$store)
+  private roleModule = getModule(RoleModule, this.$store)
 
   @Prop(Participation)
   private readonly participation?: Participation

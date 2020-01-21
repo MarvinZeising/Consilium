@@ -57,7 +57,7 @@ import { Project, Task } from '../../models'
 
 @Component
 export default class DeleteTaskDialog extends Vue {
-  private taskModule: TaskModule = getModule(TaskModule, this.$store)
+  private taskModule = getModule(TaskModule, this.$store)
 
   @Prop(Task)
   private readonly task?: Task

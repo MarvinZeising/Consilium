@@ -161,8 +161,8 @@ import PersonModule from '../store/persons'
 
 @Component
 export default class PersonalGeneral extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
 
   private valid: any = false
   private editMode: boolean = false

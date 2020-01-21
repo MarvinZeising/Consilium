@@ -88,7 +88,7 @@ import EligibilityControl from '../controls/EligibilityControl.vue'
   },
 })
 export default class UpdateCategoryDialog extends Vue {
-  private categoryModule: CategoryModule = getModule(CategoryModule, this.$store)
+  private categoryModule = getModule(CategoryModule, this.$store)
 
   @Prop(Category)
   private readonly category?: Category

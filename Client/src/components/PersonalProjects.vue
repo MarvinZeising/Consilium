@@ -73,8 +73,8 @@ import { Project, ParticipationStatus, Participation } from '../models'
   }
 })
 export default class PersonalProjects extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
 
   private isStatusInvited(participation: Participation) {
     return participation.status === ParticipationStatus.Invited

@@ -58,9 +58,9 @@ import TaskModule from '../store/tasks'
   }
 })
 export default class SettingsTasks extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private taskModule: TaskModule = getModule(TaskModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private taskModule = getModule(TaskModule, this.$store)
 
   private loading: boolean = true
 

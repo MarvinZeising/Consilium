@@ -108,7 +108,7 @@ import { Person, Gender } from '../models'
 
 @Component
 export default class PersonalMisc extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
 
   private valid: any = false
   private editMode: boolean = false

@@ -57,7 +57,7 @@ import CategoryModule from '../../store/categories'
 
 @Component
 export default class DeleteCategoryDialog extends Vue {
-  private categoryModule: CategoryModule = getModule(CategoryModule, this.$store)
+  private categoryModule = getModule(CategoryModule, this.$store)
 
   @Prop(Category)
   private readonly category?: Category

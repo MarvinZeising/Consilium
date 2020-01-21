@@ -104,7 +104,7 @@ import UserModule from '../../store/users'
 
 @Component
 export default class UpdatePasswordDialog extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
 
   private dialog: any = false
   private valid: any = null

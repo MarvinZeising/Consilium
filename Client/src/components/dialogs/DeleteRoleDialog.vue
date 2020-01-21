@@ -57,7 +57,7 @@ import RoleModule from '../../store/roles'
 
 @Component
 export default class DeleteRoleDialog extends Vue {
-  private roleModule: RoleModule = getModule(RoleModule, this.$store)
+  private roleModule = getModule(RoleModule, this.$store)
 
   @Prop(String)
   private readonly roleId?: string

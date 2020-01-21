@@ -86,8 +86,8 @@ import { Category, Eligibility } from '../../models'
   },
 })
 export default class CreateCategoryDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private categoryModule: CategoryModule = getModule(CategoryModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private categoryModule = getModule(CategoryModule, this.$store)
 
   private dialog: any = false
   private valid: any = null

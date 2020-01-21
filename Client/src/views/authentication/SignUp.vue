@@ -211,7 +211,7 @@ import UserModule from '../../store/users'
 
 @Component
 export default class SignUp extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
 
   private step: number = 0
   private nextLoading: boolean = false

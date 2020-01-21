@@ -55,7 +55,7 @@ import ParticipantModule from '../../store/participants'
 
 @Component
 export default class DeleteRoleDialog extends Vue {
-  private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
+  private participantModule = getModule(ParticipantModule, this.$store)
 
   @Prop(String)
   private readonly participationId?: string

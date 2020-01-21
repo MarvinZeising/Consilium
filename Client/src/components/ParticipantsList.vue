@@ -49,9 +49,9 @@ import { Person, ParticipationStatus, Gender } from '../models'
   }
 })
 export default class ParticipantsList extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private participantModule = getModule(ParticipantModule, this.$store)
 
   private loading: boolean = true
   private filter: { search: string } = { search: '' }

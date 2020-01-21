@@ -79,8 +79,8 @@ import { Topic, Exceptions } from '../../models'
 
 @Component
 export default class CreateCongregationDialog extends Vue {
-  private alertModule: AlertModule = getModule(AlertModule, this.$store)
-  private congregationModule: CongregationModule = getModule(CongregationModule, this.$store)
+  private alertModule = getModule(AlertModule, this.$store)
+  private congregationModule = getModule(CongregationModule, this.$store)
 
   private dialog: any = null
   private valid: boolean = false

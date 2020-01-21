@@ -87,7 +87,7 @@ import KnowledgeBaseModule from '../../store/knowledgeBase'
 
 @Component
 export default class CreateArticleDialog extends Vue {
-  private knowledgeBaseModule: KnowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
+  private knowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
   private dialog: any = false
   private valid: any = null

@@ -81,8 +81,8 @@ import ProjectModule from '../../store/projects'
 
 @Component
 export default class SignIn extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
 
   private valid: boolean = false
   private authInProgress: boolean = false

@@ -76,9 +76,9 @@ import { Participation, Role } from '../../models'
 
 @Component
 export default class HandleJoinRequestDialog extends Vue {
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private roleModule: RoleModule = getModule(RoleModule, this.$store)
-  private requestModule: RequestModule = getModule(RequestModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private roleModule = getModule(RoleModule, this.$store)
+  private requestModule = getModule(RequestModule, this.$store)
 
   @Prop(Participation)
   private readonly participation?: Participation

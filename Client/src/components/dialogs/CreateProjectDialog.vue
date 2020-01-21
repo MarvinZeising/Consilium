@@ -80,9 +80,9 @@ import { Exceptions } from '@/models'
 
 @Component
 export default class CreateProjectDialog extends Vue {
-  private alertModule: AlertModule = getModule(AlertModule, this.$store)
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private alertModule = getModule(AlertModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
 
   private dialog: any = false
   private valid: any = null

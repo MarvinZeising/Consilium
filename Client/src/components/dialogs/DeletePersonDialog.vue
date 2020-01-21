@@ -66,7 +66,7 @@ import { Person } from '../../models'
 
 @Component
 export default class DeletePersonDialog extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
 
   @Prop(String)
   private readonly personId?: string

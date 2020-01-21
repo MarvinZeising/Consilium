@@ -99,7 +99,7 @@ import TextareaControl from '../controls/TextareaControl.vue'
   },
 })
 export default class UpdateTaskDialog extends Vue {
-  private taskModule: TaskModule = getModule(TaskModule, this.$store)
+  private taskModule = getModule(TaskModule, this.$store)
 
   @Prop(Task)
   private readonly task?: Task

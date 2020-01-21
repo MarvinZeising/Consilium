@@ -57,10 +57,10 @@ import ParticipantModule from '../store/participants'
   }
 })
 export default class SettingsCategories extends Vue {
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private categoryModule: CategoryModule = getModule(CategoryModule, this.$store)
-  private participantModule: ParticipantModule = getModule(ParticipantModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private categoryModule = getModule(CategoryModule, this.$store)
+  private participantModule = getModule(ParticipantModule, this.$store)
 
   private loading: boolean = true
 

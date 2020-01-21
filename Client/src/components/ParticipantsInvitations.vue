@@ -62,10 +62,10 @@ import UpdateInvitationDialog from './dialogs/UpdateInvitationDialog.vue'
   }
 })
 export default class ParticipantsInvitations extends Vue {
-  private userModule: UserModule = getModule(UserModule, this.$store)
-  private personModule: PersonModule = getModule(PersonModule, this.$store)
-  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
-  private invitationModule: InvitationModule = getModule(InvitationModule, this.$store)
+  private userModule = getModule(UserModule, this.$store)
+  private personModule = getModule(PersonModule, this.$store)
+  private projectModule = getModule(ProjectModule, this.$store)
+  private invitationModule = getModule(InvitationModule, this.$store)
 
   private loading: boolean = true
 
