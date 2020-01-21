@@ -66,56 +66,20 @@
     </v-toolbar>
 
     <!--//* Calendar -->
-    <v-row>
-      <v-flex
-        xs12
-      >
-        <v-sheet>
-          <v-calendar
-            id="calendar"
-            ref="calendar"
-            color="primary"
-            v-model="focus"
+      <v-calendar
+        id="calendar"
+        ref="calendar"
+        color="primary"
+        style="border-left:0; border-right:0;"
+        v-model="focus"
             :events="events"
-            :type="type"
-            :weekdays="weekdays"
-            @click:event="showEvent"
-            @click:more="viewDay"
-          >
-            <template v-slot:day-label="date">
-              <v-menu
-                :close-on-content-click="false"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    v-on="on"
-                    fab
-                    small
-                    class="mb-1"
-                    :icon="date.present ? false : true"
-                    :color="date.present ? 'primary' : ''"
-                    v-text="date.day"
-                    rounded
-                    depressed
-                    @click="canEdit ? false : viewDay(date.date)"
-                  />
-                </template>
-                <v-list>
-                  <v-list-item @click="viewDay(date.date)">
-                    <v-list-item-title v-t="'shift.goToDay'" />
-                  </v-list-item>
-                  <CreateShiftDialog
-                    :date="date"
-                    :menu="this"
-                  />
-                </v-list>
-              </v-menu>
-
-            </template>
-          </v-calendar>
-        </v-sheet>
-      </v-flex>
-    </v-row>
+        :type="type"
+        :weekdays="weekdays"
+        :event-more="10"
+        @click:date="viewDay"
+        @click:more="viewDay"
+        @click:event="showEvent"
+      />
 
   </v-container>
 </template>
@@ -178,7 +142,7 @@ export default class Calendar extends Vue {
     })
   }
 
-  private viewDay(date: any) {
+  private viewDay({ date }: { date: string }) {
     this.focus = date
     this.type = 'day'
   }
