@@ -1,7 +1,9 @@
 {
   "create": "Create a Shift",
   "goToDay": "Go to day",
+  "month": "Month",
   "week": "Week",
+  "day": "Day",
   "today": "Today",
   "category": {
     "categories": "No categories have been defined, yet. | Category | Categories",

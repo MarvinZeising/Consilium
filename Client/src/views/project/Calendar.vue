@@ -34,17 +34,29 @@
       >
         <v-icon>keyboard_arrow_right</v-icon>
       </v-btn>
+
       <v-toolbar-title class="ml-4">{{ getTitle }}</v-toolbar-title>
-      <v-spacer></v-spacer>
+
+      <v-spacer />
+
       <v-btn-toggle
         v-model="type"
         color="primary"
         mandatory
         dense
       >
-        <v-btn value="month">Month</v-btn>
-        <v-btn value="week">Week</v-btn>
-        <v-btn value="day">Day</v-btn>
+        <v-btn
+          value="month"
+          v-t="'shift.month'"
+        />
+        <v-btn
+          value="week"
+          v-t="'shift.week'"
+        />
+        <v-btn
+          value="day"
+          v-t="'shift.day'"
+        />
       </v-btn-toggle>
     </v-toolbar>
 

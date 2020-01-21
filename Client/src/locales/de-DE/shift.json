@@ -1,7 +1,9 @@
 {
   "create": "Schicht erstellen",
   "goToDay": "Zu diesem Tag",
+  "month": "Monat",
   "week": "Woche",
+  "day": "Tag",
   "today": "Heute",
   "category": {
     "categories": "Es wurden noch keine Kategorien angelegt. | Kategorie | Kategorien",
