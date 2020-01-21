@@ -40,9 +40,6 @@
 
       <v-spacer />
 
-      <CreateShiftDialog
-        :date="focus"
-      />
 
       <v-btn-toggle
         v-model="type"
@@ -89,6 +86,8 @@
       @click:more="viewDay"
       @click:event="showEvent"
     />
+
+    <CreateShiftDialog :date="focus" />
 
   </v-container>
 </template>

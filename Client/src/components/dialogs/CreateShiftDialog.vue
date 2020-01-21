@@ -4,18 +4,18 @@
     max-width="600px"
   >
     <template v-slot:activator="{ on }">
-      <v-btn-toggle
-        dense
-        class="mr-4"
+      <v-btn
+        v-on="on"
+        color="accent"
+        dark
+        fixed
+        right
+        bottom
+        fab
         @click="opened"
       >
-        <v-btn
-          v-on="on"
-          @click="opened"
-        >
-          Add Shift
-        </v-btn>
-      </v-btn-toggle>
+        <v-icon>add</v-icon>
+      </v-btn>
     </template>
     <v-card>
       <v-form
