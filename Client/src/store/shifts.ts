@@ -14,12 +14,6 @@ export default class ShiftModule extends VuexModule {
       const response = await axios.get(`/persons/${personId}/projects/${projectId}/categories/${categoryId}/shifts`)
       const shifts = response.data.map((x: any) => Shift.create(x))
 
-      shifts.push({
-        name: 'Shift',
-        start: moment().format('YYYY-MM-DD HH:mm'),
-        end: moment().add(2, 'hours').format('YYYY-MM-DD HH:mm'),
-      })
-
       const category = await this.context.dispatch('getCategory', categoryId)
       if (category) {
         category.shifts = shifts
