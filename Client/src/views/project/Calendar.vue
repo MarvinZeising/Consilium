@@ -8,15 +8,12 @@
     <!--//* Toolbar -->
     <!--//TODO: On mobile, replace this toolbar with a simpler one (only day view and date picker) -->
     <v-toolbar flat>
-      <v-btn-toggle
-        dense
+      <v-btn
+        v-t="'shift.today'"
         class="mr-4"
-      >
-        <v-btn
-          v-t="'shift.today'"
-          @click="setToday"
-        />
-      </v-btn-toggle>
+        outlined
+        @click="setToday"
+      />
 
       <v-btn
         fab
@@ -40,26 +37,30 @@
 
       <v-spacer />
 
+      <CategoriesControl />
 
-      <v-btn-toggle
-        v-model="type"
-        color="primary"
-        mandatory
-        dense
-      >
-        <v-btn
-          value="month"
-          v-t="'shift.month'"
-        />
-        <v-btn
-          value="week"
-          v-t="'shift.week'"
-        />
-        <v-btn
-          value="day"
-          v-t="'shift.day'"
-        />
-      </v-btn-toggle>
+      <v-menu bottom right>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            v-on="on"
+            outlined
+          >
+            <span v-t="'shift.' + type" />
+            <v-icon right>arrow_drop_down</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item @click="type = 'month'">
+            <v-list-item-title v-t="'shift.month'" />
+          </v-list-item>
+          <v-list-item @click="type = 'week'">
+            <v-list-item-title v-t="'shift.week'" />
+          </v-list-item>
+          <v-list-item @click="type = 'day'">
+            <v-list-item-title v-t="'shift.day'" />
+          </v-list-item>
+        </v-list>
+      </v-menu>
 
       <v-progress-linear
         :active="loading"
@@ -136,10 +137,12 @@ import ProjectModule from '../../store/projects'
 import CategoryModule from '../../store/categories'
 import ShiftModule from '../../store/shifts'
 import CreateShiftDialog from '../../components/dialogs/CreateShiftDialog.vue'
+import CategoriesControl from '../../components/controls/CategoriesControl.vue'
 import { Shift } from '../../models'
 
 @Component({
   components: {
+    CategoriesControl,
     CreateShiftDialog,
   }
 })
