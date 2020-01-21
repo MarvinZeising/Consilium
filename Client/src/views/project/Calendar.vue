@@ -73,14 +73,15 @@
     </v-toolbar>
 
     <!--//* Calendar -->
-    <v-sheet v-if="!loading">
+    <v-sheet>
       <v-calendar
         id="calendar"
         ref="calendar"
-        color="primary"
+        color="navbar"
         style="border-left:0; border-right:0;"
         v-model="focus"
-            :events="events"
+        :events="getEvents"
+        :event-color="(event) => event.color"
         :type="type"
         :locale="userModule.getUser.language"
         :weekdays="weekdays"
@@ -105,6 +106,7 @@ import ProjectModule from '../../store/projects'
 import CategoryModule from '../../store/categories'
 import ShiftModule from '../../store/shifts'
 import CreateShiftDialog from '../../components/dialogs/CreateShiftDialog.vue'
+import { Shift } from '../../models'
 
 @Component({
   components: {
@@ -149,16 +151,36 @@ export default class Calendar extends Vue {
     return ''
   }
 
-  private created() {
-    this.events.push({
-      name: 'Shift',
-      start: moment().format('YYYY-MM-DD HH:mm'),
-      end: moment().add(2, 'hours').format('YYYY-MM-DD HH:mm'),
-      color: 'primary',
-    })
+  private get getEvents() {
+    const project = this.projectModule.getActiveProject
+    if (project) {
+      let events: any[] = []
+
+      project.getCategories
+        .filter((x) => x.id === 'bd711f3f-f6f8-4e94-81ec-c724fa1c5d94')
+        .forEach((x) => {
+          events = events.concat(x.shifts)
+        })
+
+      events = events.map((x) => {
+        return {
+          name: '12 Participants',
+          start: x.start,
+          end: x.end,
+          color: 'navbar',
+        }
+      })
+
+      return events
+    }
+    return []
+  }
 
   private async created() {
     this.loading = true
+
+    await this.categoryModule.loadCategories()
+    await this.shiftModule.loadShifts('bd711f3f-f6f8-4e94-81ec-c724fa1c5d94')
 
     this.loading = false
   }

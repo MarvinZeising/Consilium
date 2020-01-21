@@ -22,6 +22,15 @@ export default class CategoryModule extends VuexModule {
   }
 
   @Action
+  public async getCategory(categoryId: string) {
+    const project = this.context.getters.getActiveProject
+    if (project) {
+      return project.categories.find((x: Category) => x.id === categoryId)
+    }
+    return undefined
+  }
+
+  @Action
   public async createCategory(category: Category) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
