@@ -11,10 +11,13 @@
       <v-btn-toggle
         dense
         class="mr-4"
-        @click="setToday"
       >
-        <v-btn>Today</v-btn>
+        <v-btn
+          v-t="'shift.today'"
+          @click="setToday"
+        />
       </v-btn-toggle>
+
       <v-btn
         fab
         text
@@ -161,6 +164,10 @@ export default class Calendar extends Vue {
   private viewDay(date: any) {
     this.focus = date
     this.type = 'day'
+  }
+
+  private setToday() {
+    this.focus = moment().format('YYYY-MM-DD')
   }
 
 }
