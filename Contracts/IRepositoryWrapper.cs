@@ -9,6 +9,7 @@
         IRoleRepository Role { get; }
         ICategoryRepository Category { get; }
         ITaskRepository Task { get; }
+        IShiftRepository Shift { get; }
         IEligibilityRepository Eligibility { get; }
         ICongregationRepository Congregation { get; }
         ITopicRepository Topic { get; }

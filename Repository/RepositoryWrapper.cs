@@ -16,6 +16,7 @@ namespace Repository
         private IRoleRepository _role;
         private ICategoryRepository _category;
         private ITaskRepository _task;
+        private IShiftRepository _shift;
         private IEligibilityRepository _eligibility;
         private ICongregationRepository _congregation;
         private ITopicRepository _topic;
@@ -102,6 +103,18 @@ namespace Repository
                     _task = new TaskRepository(_repositoryContext);
                 }
                 return _task;
+            }
+        }
+
+        public IShiftRepository Shift
+        {
+            get
+            {
+                if (_shift == null)
+                {
+                    _shift = new ShiftRepository(_repositoryContext);
+                }
+                return _shift;
             }
         }
 

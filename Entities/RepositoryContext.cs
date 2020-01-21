@@ -18,6 +18,7 @@ namespace Entities
         public DbSet<Role> Roles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Task> Tasks { get; set; }
+        public DbSet<Shift> Shifts { get; set; }
         public DbSet<Eligibility> Eligibilities { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Article> Articles { get; set; }
