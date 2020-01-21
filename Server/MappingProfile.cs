@@ -45,6 +45,7 @@ namespace Server
             CreateMap<CreateTaskDto, Task>();
 
             CreateMap<Shift, ShiftDto>();
+            CreateMap<CreateShiftDto, Shift>();
         }
     }
 }

@@ -57,6 +57,35 @@ namespace Server.Controllers
             }
         }
 
+        [HttpPost("shifts")]
+        public ActionResult<ShiftDto> CreateShift(Guid personId, Guid projectId, Guid categoryId, [FromBody] CreateShiftDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
+                // TODO: check category permission
+
+                var category = _db.Category
+                    .FindByCondition(x => x.Id == categoryId && x.ProjectId == projectId)
+                    .SingleOrDefault();
+                if (category == null) return BadRequest();
+
+                var shift = _mapper.Map<Shift>(dto);
+                shift.CategoryId = categoryId;
+
+                _db.Shift.Create(shift);
+                _db.Save();
+
+                return Ok(_mapper.Map<ShiftDto>(shift));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in CreateShift: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
     }
 }
