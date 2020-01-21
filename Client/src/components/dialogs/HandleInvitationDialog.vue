@@ -23,7 +23,7 @@
           @click.stop="dialog = false"
           v-t="'core.cancel'"
         />
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn
           text
           color="error"

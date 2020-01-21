@@ -17,7 +17,7 @@
           <span
             class="headline"
             v-t="'project.knowledgeBase.renameTopic'"
-          ></span>
+          />
         </v-card-title>
         <v-card-text>
           <v-text-field

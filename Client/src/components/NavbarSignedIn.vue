@@ -54,7 +54,7 @@
       </v-list-item>
     </v-list>
 
-    <v-divider></v-divider>
+    <v-divider />
 
     <v-list
       nav
