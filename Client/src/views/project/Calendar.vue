@@ -82,6 +82,7 @@
         v-model="focus"
             :events="events"
         :type="type"
+        :locale="userModule.getUser.language"
         :weekdays="weekdays"
         :event-more="10"
         @click:date="viewDay"
