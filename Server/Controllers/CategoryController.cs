@@ -36,7 +36,7 @@ namespace Server.Controllers
             try
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-                if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.CalendarRead != true) return Forbid();
 
                 var categories = _db.Category
                     .FindByCondition(x => x.ProjectId == projectId)
