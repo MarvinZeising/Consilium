@@ -31,7 +31,7 @@
         <v-row class="ma-0">
           <span v-t="'project.participation.joinedOn'" />
           <v-spacer />
-          <span v-text="userModule.getUser.formatDate(participation.createdDate)" />
+          <span v-text="userModule.getUser.formatDate(participation.createdTime)" />
         </v-row>
       </v-card-text>
       <v-card-actions>

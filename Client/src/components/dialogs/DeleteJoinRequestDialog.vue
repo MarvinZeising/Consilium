@@ -5,9 +5,9 @@
   >
     <template v-slot:activator="{ on }">
       <v-btn
+        v-on="on"
         text
         class="mt-2"
-        @click.stop="dialog = true"
         v-t="'core.cancel'"
       />
     </template>

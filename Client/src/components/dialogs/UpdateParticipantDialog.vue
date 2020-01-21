@@ -251,16 +251,16 @@ export default class UpdateParticipantDialog extends Vue {
   private valid: any = null
   private loading: boolean = false
 
-  private firstname?: string
-  private lastname?: string
+  private firstname?: string = ''
+  private lastname?: string = ''
   private gender?: Gender
-  private email?: string
+  private email?: string = ''
   private language?: Language
-  private phone?: string
+  private phone?: string = ''
   private privilege?: Privilege
   private assignment?: Assignment
-  private languages?: string
-  private notes?: string
+  private languages?: string = ''
+  private notes?: string = ''
 
   private nameRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
