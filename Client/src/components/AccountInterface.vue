@@ -207,7 +207,7 @@ export default class AccountInterface extends Vue {
   ].map((value) => {
     return { value }
   })
-  private timeFormat: string = 'h:mm a'
+  private timeFormat: string = this.userModule.getUser?.timeFormat || ''
   private timeFormatValues: any[] = [
     'h:mm a',
     'h:mm A',
@@ -232,6 +232,8 @@ export default class AccountInterface extends Vue {
     if (this.editMode) {
       this.language = this.userModule.getUser?.language || Language.enUS
       this.theme = this.userModule.getUser?.theme || ''
+      this.dateFormat = this.userModule.getUser?.dateFormat || ''
+      this.timeFormat = this.userModule.getUser?.timeFormat || ''
     }
   }
 

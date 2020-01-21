@@ -52,12 +52,12 @@ class User {
     this.lastUpdatedTime = lastUpdatedTime
   }
 
-  public formatDate(datetime: string) {
-    return moment(datetime).format(this.dateFormat)
+  public formatDate(datetime: string, format: string = 'YYYY-MM-DD') {
+    return moment(datetime, format).format(this.dateFormat)
   }
 
-  public formatTime(datetime: string) {
-    return moment(datetime).format(this.timeFormat)
+  public formatTime(datetime: string, format: string = 'HH:mm') {
+    return moment(datetime, format).format(this.timeFormat)
   }
 
   public formatDateTime(datetime: string) {

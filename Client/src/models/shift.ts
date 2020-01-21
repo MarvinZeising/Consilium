@@ -114,6 +114,9 @@ class Category {
 
     category.project = data.project ? Project.create(data.project) : undefined
 
+    if (data.shifts) {
+      category.shifts = data.shifts.map((x: Shift) => Shift.create(x))
+    }
     if (data.eligibilities) {
       category.eligibilities = data.eligibilities.map((x: Eligibility) => Eligibility.create(x))
     }

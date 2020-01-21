@@ -8,7 +8,6 @@
         v-on="on"
         text
         v-t="'shift.task.create'"
-        @click="opened"
       />
     </template>
     <v-card>
@@ -111,10 +110,6 @@ export default class CreateTaskDialog extends Vue {
   private linkRules = [
     (v: string) => !v || /^https:\/\/.+\..{2,}$/.test(v) || i18n.t('shift.task.helpLinkFormat')
   ]
-
-  private opened() {
-    if (this.projectModule.getActiveProject) { }
-  }
 
   private async save() {
     if (this.valid) {
