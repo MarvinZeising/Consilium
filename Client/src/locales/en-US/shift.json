@@ -1,8 +1,12 @@
 {
   "create": "Create a Shift",
+  "createDescription": "You can manually create a shift. If you want to create more than one or two shifts though, we suggest you to create and apply a blueprint week.",
+  "date": "Date",
+  "time": "Time",
   "month": "Month",
   "week": "Week",
   "day": "Day",
+  "duration": "Duration",
   "today": "Today",
   "category": {
     "categories": "No categories have been defined, yet. | Category | Categories",

@@ -1,8 +1,11 @@
 {
   "create": "Schicht erstellen",
+  "date": "Datum",
+  "time": "Zeit",
   "month": "Monat",
   "week": "Woche",
   "day": "Tag",
+  "duration": "Dauer",
   "today": "Heute",
   "category": {
     "categories": "Es wurden noch keine Kategorien angelegt. | Kategorie | Kategorien",

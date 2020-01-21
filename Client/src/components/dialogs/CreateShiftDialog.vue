@@ -22,46 +22,51 @@
         v-model="valid"
         ref="form"
       >
-        <v-card-title>
-          <span
-            class="headline"
-            v-t="'shift.create'"
-          />
-        </v-card-title>
-
+        <v-toolbar
+          flat
+          color="accent"
+        >
+          <v-toolbar-title v-t="'shift.create'" />
+        </v-toolbar>
         <v-card-text>
-          <p
+          <i
             class="subtitle-1"
             v-t="'shift.createDescription'"
           />
-          <p
-            class="subtitle-1"
-            v-t="'shift.nameDescription'"
-          />
-          <v-text-field
-            v-model="name"
-            :label="$t('core.name')"
-            :rules="nameRules"
-            filled
-            required
-          />
-
         </v-card-text>
+        <v-card-text class="pa-2">
+          <v-layout wrap>
+
+            <DateControl
+              :model="dateModel"
+              label="shift.date"
+            />
+
+            <TimeControl
+              :model="timeModel"
+              label="shift.time"
+            />
+
+          </v-layout>
+        </v-card-text>
+
+        <v-divider />
+
         <v-card-actions>
+          <v-btn
+            text
+            v-t="'core.cancel'"
+            @click.stop="dialog = false"
+          />
           <v-spacer />
           <v-btn
             text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
-          <v-btn
-            :disabled="!valid"
             type="submit"
-            :loading="loading"
-            text
             color="primary"
-            @click.stop="save"
             v-t="'core.save'"
+            :loading="loading"
+            :disabled="!valid"
+            @click.stop="save"
           />
         </v-card-actions>
       </v-form>
@@ -70,39 +75,59 @@
 </template>
 
 <script lang="ts">
+import moment from 'moment'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
-import RoleModule from '../../store/roles'
+import ProjectModule from '../../store/projects'
+import ShiftModule from '../../store/shifts'
+import NameControl from '../controls/NameControl.vue'
+import DateControl from '../controls/DateControl.vue'
+import TimeControl from '../controls/TimeControl.vue'
+import TextControl from '../controls/TextControl.vue'
+import TextareaControl from '../controls/TextareaControl.vue'
+import { Category, Eligibility, Task, Shift } from '../../models'
 
-@Component
-export default class CreateShiftDialog extends Vue {
-  private roleModule: RoleModule = getModule(RoleModule, this.$store)
+@Component({
+  components: {
+    NameControl,
+    DateControl,
+    TimeControl,
+    TextControl,
+    TextareaControl,
+  },
+})
+export default class CreateTaskDialog extends Vue {
+  private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+  private shiftModule: ShiftModule = getModule(ShiftModule, this.$store)
 
-  @Prop(Object)
-  private readonly date: any
-
-  @Prop(Object)
-  private menu: any
+  @Prop(String)
+  private readonly date?: string
 
   private dialog: any = false
   private valid: any = null
   private loading: boolean = false
 
-  private name: string = ''
-  private nameRules: any[] = [
-    (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
-    (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
-  ]
+  private shift = Shift.create({
+    categoryId: 'bd711f3f-f6f8-4e94-81ec-c724fa1c5d94'
+  })
+
+  private dateModel = { value: '' }
+  private timeModel = { value: '10:00' }
+  private durationModel = { value: '02:00' }
+
+  private opened() {
+    this.dateModel = { value: this.date || '' }
+  }
 
   private async save() {
     if (this.valid) {
       this.loading = true
 
-      // await this.roleModule.createRole({
-      //   name: this.name,
-      // })
+      this.shift.start = this.dateModel.value + 'T' + this.timeModel.value
+      this.shift.end = moment(this.shift.start).add(2, 'h').format('YYYY-MM-DD[T]HH:mm')
+
+      await this.shiftModule.createShift(this.shift)
 
       this.loading = false
       this.dialog = false
