@@ -26,6 +26,7 @@
       >
         <v-icon>keyboard_arrow_left</v-icon>
       </v-btn>
+
       <v-btn
         fab
         text
@@ -38,6 +39,10 @@
       <v-toolbar-title class="ml-4">{{ getTitle }}</v-toolbar-title>
 
       <v-spacer />
+
+      <CreateShiftDialog
+        :date="focus"
+      />
 
       <v-btn-toggle
         v-model="type"

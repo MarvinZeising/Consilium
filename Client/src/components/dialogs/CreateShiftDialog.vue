@@ -4,9 +4,18 @@
     max-width="600px"
   >
     <template v-slot:activator="{ on }">
-      <v-list-item v-on="on">
-        <v-list-item-title v-t="'shift.create'" />
-      </v-list-item>
+      <v-btn-toggle
+        dense
+        class="mr-4"
+        @click="opened"
+      >
+        <v-btn
+          v-on="on"
+          @click="opened"
+        >
+          Add Shift
+        </v-btn>
+      </v-btn-toggle>
     </template>
     <v-card>
       <v-form
