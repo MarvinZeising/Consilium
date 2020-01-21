@@ -87,6 +87,39 @@
       @click:event="showEvent"
     />
 
+    <v-menu
+      v-model="selectedOpen"
+      :close-on-content-click="false"
+      :activator="selectedElement"
+      offset-x
+    >
+      <v-card min-width="350px">
+        <v-toolbar
+          :color="selectedEvent.color"
+          prominent
+        >
+          <v-toolbar-title>
+            {{ userModule.getUser.formatTime(selectedEvent.start, 'YYYY-MM-DD HH:mm') }}
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon>
+            <v-icon>edit</v-icon>
+          </v-btn>
+          <v-btn
+            icon
+            @click="selectedOpen = false"
+          >
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-card-text>
+          <span>
+            Lot's of exciting stuff!
+          </span>
+        </v-card-text>
+      </v-card>
+    </v-menu>
+
     <CreateShiftDialog :date="focus" />
 
   </v-container>
@@ -118,11 +151,13 @@ export default class Calendar extends Vue {
   private shiftModule = getModule(ShiftModule, this.$store)
 
   private loading: boolean = true
-
   private type: string = 'month'
   private focus: string = moment().format('YYYY-MM-DD')
   private events: any = []
   private weekdays: number[] = [1, 2, 3, 4, 5, 6, 0]
+  private selectedEvent = {}
+  private selectedElement: any = null
+  private selectedOpen: boolean = false
 
   private start: any = null
   private end: any = null
@@ -184,6 +219,23 @@ export default class Calendar extends Vue {
     await this.shiftModule.loadShifts('bd711f3f-f6f8-4e94-81ec-c724fa1c5d94')
 
     this.loading = false
+  }
+
+  private showEvent({ nativeEvent, event }: { nativeEvent: any, event: any }) {
+    const open = () => {
+      this.selectedEvent = event
+      this.selectedElement = nativeEvent.target
+      setTimeout(() => this.selectedOpen = true, 10)
+    }
+
+    if (this.selectedOpen) {
+      this.selectedOpen = false
+      setTimeout(open, 10)
+    } else {
+      open()
+    }
+
+    nativeEvent.stopPropagation()
   }
 
   private viewDay({ date }: { date: string }) {
