@@ -73,24 +73,22 @@
     </v-toolbar>
 
     <!--//* Calendar -->
-    <v-sheet>
-      <v-calendar
-        id="calendar"
-        ref="calendar"
-        color="navbar"
-        style="border-left:0; border-right:0;"
-        v-model="focus"
-        :events="getEvents"
-        :event-color="(event) => event.color"
-        :type="type"
-        :locale="userModule.getUser.language"
-        :weekdays="weekdays"
-        :event-more="10"
-        @click:date="viewDay"
-        @click:more="viewDay"
-        @click:event="showEvent"
-      />
-    </v-sheet>
+    <v-calendar
+      id="calendar"
+      ref="calendar"
+      color="navbar"
+      :style="`border-left:0; min-height:${getCalendarHeight}px;`"
+      v-model="focus"
+      :events="getEvents"
+      :event-color="(event) => event.color"
+      :type="type"
+      :locale="userModule.getUser.language"
+      :weekdays="weekdays"
+      :event-more="10"
+      @click:date="viewDay"
+      @click:more="viewDay"
+      @click:event="showEvent"
+    />
 
   </v-container>
 </template>
@@ -136,6 +134,10 @@ export default class Calendar extends Vue {
 
   private get canEdit() {
     return this.personModule.getActiveRole?.calendarWrite === true
+  }
+
+  private get getCalendarHeight() {
+    return window.innerHeight - 128
   }
 
   private get getTitle() {
