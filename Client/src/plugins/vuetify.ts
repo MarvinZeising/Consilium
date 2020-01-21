@@ -11,8 +11,7 @@ export default new Vuetify({
       light: {
         navbar: colors.blue.darken3,
         primary: colors.blue.darken3,
-        secondary: colors.amber.lighten2,
-        accent: colors.pink.base,
+        accent: colors.amber.lighten2,
         error: colors.red.base,
         warning: colors.orange.base,
         info: colors.cyan.base,
@@ -21,8 +20,7 @@ export default new Vuetify({
       dark: {
         navbar: colors.blue.darken3,
         primary: colors.blue.base,
-        secondary: colors.amber.darken4,
-        accent: colors.pink.base,
+        accent: colors.amber.darken4,
         error: colors.red.base,
         warning: colors.orange.base,
         info: colors.cyan.base,

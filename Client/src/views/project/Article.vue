@@ -9,7 +9,7 @@
         tile
         flat
         width="100%"
-        color="secondary"
+        color="accent"
         :loading="loading"
       >
         <v-card-actions>
