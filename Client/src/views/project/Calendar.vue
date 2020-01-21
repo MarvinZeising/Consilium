@@ -63,9 +63,17 @@
           v-t="'shift.day'"
         />
       </v-btn-toggle>
+
+      <v-progress-linear
+        :active="loading"
+        :indeterminate="loading"
+        absolute
+        bottom
+      />
     </v-toolbar>
 
     <!--//* Calendar -->
+    <v-sheet v-if="!loading">
       <v-calendar
         id="calendar"
         ref="calendar"
@@ -80,6 +88,7 @@
         @click:more="viewDay"
         @click:event="showEvent"
       />
+    </v-sheet>
 
   </v-container>
 </template>
@@ -103,6 +112,8 @@ export default class Calendar extends Vue {
   private userModule: UserModule = getModule(UserModule, this.$store)
   private personModule: PersonModule = getModule(PersonModule, this.$store)
   private projectModule: ProjectModule = getModule(ProjectModule, this.$store)
+
+  private loading: boolean = true
 
   private type: string = 'month'
   private focus: string = moment().format('YYYY-MM-DD')
@@ -140,6 +151,11 @@ export default class Calendar extends Vue {
       end: moment().add(2, 'hours').format('YYYY-MM-DD HH:mm'),
       color: 'primary',
     })
+
+  private async created() {
+    this.loading = true
+
+    this.loading = false
   }
 
   private viewDay({ date }: { date: string }) {
