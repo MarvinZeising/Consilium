@@ -5,7 +5,7 @@
   >
     <span v-if="description">
       {{ $t(description) }}
-      <i v-if="!isRequired">({{ $t('core.optional') }})</i>
+      <i v-if="!required">({{ $t('core.optional') }})</i>
     </span>
     <v-textarea
       v-model="model.value"
@@ -36,14 +36,14 @@ export default class TextareaControl extends Vue {
   @Prop(String)
   private readonly description?: string
 
-  @Prop(Boolean)
-  private readonly isRequired?: boolean
-
   @Prop(Number)
   private readonly minLength?: number
 
   @Prop(Number)
   private readonly maxLength?: number
+
+  @Prop(Boolean)
+  private required: boolean = false
 
   private get getCounter() {
     if (this.model && this.maxLength && this.maxLength > 0) {
@@ -53,7 +53,7 @@ export default class TextareaControl extends Vue {
   }
 
   private rules: any[] = [
-    (v: string) => this.isRequired === false
+    (v: string) => !this.required
                    || !!v
                    || i18n.t('core.fieldRequired'),
     (v: string) => this.minLength === undefined

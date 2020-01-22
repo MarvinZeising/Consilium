@@ -3,9 +3,9 @@
     :model="model"
     label="core.name"
     :description="description"
-    :isRequired="true"
     :minLength="0"
     :maxLength="40"
+    required
   />
 </template>
 
