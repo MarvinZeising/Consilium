@@ -248,7 +248,7 @@ export default class Calendar extends Vue {
     this.loading = true
 
     await this.categoryModule.loadCategories()
-    await this.shiftModule.loadShifts('bd711f3f-f6f8-4e94-81ec-c724fa1c5d94')
+    await this.shiftModule.loadShifts()
 
     this.categoriesModel.selected = this.projectModule.getActiveProject?.getCategories || []
     this.categoryModel.value = this.categoriesModel.selected[0]

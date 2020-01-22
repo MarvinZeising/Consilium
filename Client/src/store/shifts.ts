@@ -7,15 +7,22 @@ import { Shift } from '../models'
 export default class ShiftModule extends VuexModule {
 
   @Action
-  public async loadShifts(categoryId: string) {
+  public async loadShifts() {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
     if (personId && projectId) {
-      const response = await axios.get(`/persons/${personId}/projects/${projectId}/categories/${categoryId}/shifts`)
-      const shifts = response.data.map((x: any) => Shift.create(x))
+      const response = await axios.get(`/persons/${personId}/projects/${projectId}/shifts`)
+      const shifts: Shift[] = response.data.map((x: any) => Shift.create(x))
 
+      const categories = shifts.reduce((storage: { [categoryId: string]: Shift[] }, item: Shift) => {
+        (storage[item.categoryId] = storage[item.categoryId] || []).push(item)
+        return storage
+      }, {})
+
+      for (const categoryId of Object.keys(categories)) {
       const category = await this.context.dispatch('getCategory', categoryId)
       if (category) {
-        category.shifts = shifts
+          category.shifts = categories[categoryId]
+        }
       }
     }
   }
