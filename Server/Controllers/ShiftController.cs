@@ -30,23 +30,25 @@ namespace Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("categories/{categoryId}/shifts")]
-        public ActionResult<IEnumerable<ShiftDto>> GetProjectShifts(Guid personId, Guid projectId, Guid categoryId)
+        [HttpGet("shifts")]
+        public ActionResult<IEnumerable<ShiftDto>> GetProjectShifts(Guid personId, Guid projectId)
         {
             try
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-                if (_db.Participation.GetRole(personId, projectId)?.CalendarRead != true) return Forbid();
-                // TODO: check category permission
-                // TODO: do this independent of categories
 
-                var category = _db.Category
-                    .FindByCondition(x => x.Id == categoryId && x.ProjectId == projectId)
-                    .SingleOrDefault();
-                if (category == null) return BadRequest();
+                var role = _db.Participation.GetRole(personId, projectId);
+                if (role?.CalendarRead != true) return Forbid();
+                // TODO: only for one month
+
+                var categoryIds = _db.Category
+                    .FindByCondition(x => x.ProjectId == projectId)
+                    .Include(x => x.Eligibilities)
+                    .Where(x => x.Eligibilities.Any(e => e.RoleId == role.Id && e.ShiftsRead))
+                    .Select(x => x.Id);
 
                 var shifts = _db.Shift
-                    .FindByCondition(x => x.CategoryId == categoryId) // TODO: only for one month
+                    .FindByCondition(x => categoryIds.Contains(x.CategoryId))
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ShiftDto>>(shifts));
