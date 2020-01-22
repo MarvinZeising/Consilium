@@ -18,7 +18,7 @@
       >
         <v-toolbar
           flat
-          color="navbar"
+          color="accent"
         >
           <v-toolbar-title v-t="'shift.task.update'" />
         </v-toolbar>

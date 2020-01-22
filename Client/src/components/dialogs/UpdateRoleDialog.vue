@@ -13,12 +13,12 @@
     </template>
     <v-card>
       <v-form
-        v-model="valid"
         ref="form"
+        v-model="valid"
       >
         <v-toolbar
           flat
-          color="navbar"
+          color="accent"
         >
           <v-toolbar-title v-t="'project.role.update'" />
         </v-toolbar>
@@ -90,8 +90,8 @@
         <v-card-actions>
           <v-btn
             text
-            @click.stop="dialog = false"
             v-t="'core.cancel'"
+            @click.stop="dialog = false"
           />
           <DeleteRoleDialog
             v-if="canBeDeleted && role.editable"
@@ -99,13 +99,13 @@
           />
           <v-spacer />
           <v-btn
-            :disabled="!valid"
-            type="submit"
-            :loading="loading"
             text
+            type="submit"
             color="primary"
-            @click.stop="save"
             v-t="'core.save'"
+            :loading="loading"
+            :disabled="!valid"
+            @click.stop="save"
           />
         </v-card-actions>
       </v-form>
