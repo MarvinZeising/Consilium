@@ -27,8 +27,15 @@
           color="accent"
         >
           <v-toolbar-title v-t="'shift.create'" />
+          <v-spacer />
+          <v-btn
+            icon
+            @click="showHelpText = !showHelpText"
+          >
+            <v-icon>help</v-icon>
+          </v-btn>
         </v-toolbar>
-        <v-card-text>
+        <v-card-text v-if="showHelpText">
           <i
             class="subtitle-1"
             v-t="'shift.createDescription'"
@@ -37,6 +44,7 @@
         <v-card-text class="pa-2">
           <v-layout wrap>
 
+            <!--//TODO: only display category I have write permissions for -->
             <CategoryControl
               :model="categoryModel"
               required
@@ -95,25 +103,21 @@ import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
 import ShiftModule from '../../store/shifts'
-import NameControl from '../controls/NameControl.vue'
 import DateControl from '../controls/DateControl.vue'
 import TimeControl from '../controls/TimeControl.vue'
 import TextControl from '../controls/TextControl.vue'
-import TextareaControl from '../controls/TextareaControl.vue'
 import CategoryControl from '../controls/CategoryControl.vue'
 import { Category, Eligibility, Task, Shift } from '../../models'
 
 @Component({
   components: {
-    NameControl,
     DateControl,
     TimeControl,
     TextControl,
-    TextareaControl,
     CategoryControl,
   },
 })
-export default class CreateTaskDialog extends Vue {
+export default class CreateShiftDialog extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
   private shiftModule = getModule(ShiftModule, this.$store)
 
@@ -125,7 +129,8 @@ export default class CreateTaskDialog extends Vue {
 
   private dialog: any = false
   private valid: any = null
-  private loading: boolean = false
+  private showHelpText = false
+  private loading = false
 
   private shift = Shift.create({})
 
