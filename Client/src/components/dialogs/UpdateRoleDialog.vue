@@ -175,6 +175,7 @@ export default class UpdateRoleDialog extends Vue {
     if (this.valid && this.role) {
       this.loading = true
 
+      this.role.name = this.nameModel.value
       this.role.eligibilities = this.eligibilities
 
       await this.roleModule.updateRole(this.role)
