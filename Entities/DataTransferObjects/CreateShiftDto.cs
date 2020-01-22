@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Entities.Validators;
 
 namespace Entities.DataTransferObjects
 {
@@ -9,13 +10,15 @@ namespace Entities.DataTransferObjects
         public Guid CategoryId { get; set; }
 
         [Required]
-        [MinLength(16)]
-        [MaxLength(16)]
-        public string Start { get; set; }
+        [ValidDate]
+        public int Date { get; set; }
 
         [Required]
-        [MinLength(16)]
-        [MaxLength(16)]
-        public string End { get; set; }
+        [ValidTime]
+        public int Time { get; set; }
+
+        [Required]
+        [ValidTime]
+        public int Duration { get; set; }
     }
 }

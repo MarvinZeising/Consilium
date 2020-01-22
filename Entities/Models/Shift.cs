@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Entities.Validators;
 
 namespace Entities.Models
 {
@@ -17,14 +18,16 @@ namespace Entities.Models
         public Category Category { get; set; }
 
         [Required]
-        [MinLength(16)]
-        [MaxLength(16)]
-        public string Start { get; set; }
+        [ValidDate]
+        public int Date { get; set; }
 
         [Required]
-        [MinLength(16)]
-        [MaxLength(16)]
-        public string End { get; set; }
+        [ValidTime]
+        public int Time { get; set; }
+
+        [Required]
+        [ValidTime]
+        public int Duration { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
