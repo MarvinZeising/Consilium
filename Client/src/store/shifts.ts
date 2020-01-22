@@ -10,7 +10,7 @@ export default class ShiftModule extends VuexModule {
   public async loadShifts() {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
     if (personId && projectId) {
-      const response = await axios.get(`/persons/${personId}/projects/${projectId}/shifts`)
+      const response = await axios.get(`/persons/${personId}/projects/${projectId}/shifts/20200101-20200131`)
       const shifts: Shift[] = response.data.map((x: any) => Shift.create(x))
 
       const categories = shifts.reduce((storage: { [categoryId: string]: Shift[] }, item: Shift) => {
@@ -19,7 +19,7 @@ export default class ShiftModule extends VuexModule {
       }, {})
 
       for (const categoryId of Object.keys(categories)) {
-      const category = await this.context.dispatch('getCategory', categoryId)
+        const category: Category = await this.context.dispatch('getCategory', categoryId)
       if (category) {
           category.shifts = categories[categoryId]
         }
@@ -34,7 +34,7 @@ export default class ShiftModule extends VuexModule {
     const response = await axios.post(`/persons/${personId}/projects/${projectId}/shifts`, shift)
     const createdShift = Shift.create(response.data)
 
-    const category = await this.context.dispatch('getCategory', shift.categoryId)
+    const category: Category = await this.context.dispatch('getCategory', shift.categoryId)
     if (category) {
       category.shifts.push(createdShift)
     }
