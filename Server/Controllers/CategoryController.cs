@@ -36,12 +36,14 @@ namespace Server.Controllers
             try
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-                if (_db.Participation.GetRole(personId, projectId)?.CalendarRead != true) return Forbid();
+
+                var role = _db.Participation.GetRole(personId, projectId);
+                if (role?.CalendarRead != true) return Forbid();
 
                 var categories = _db.Category
                     .FindByCondition(x => x.ProjectId == projectId)
                     .Include(x => x.Eligibilities).ThenInclude(x => x.Role)
-                    .ToList();
+                    .Where(x => x.Eligibilities.Any(y => y.RoleId == role.Id && y.ShiftsRead));
 
                 return Ok(_mapper.Map<IEnumerable<CategoryDto>>(categories));
             }
