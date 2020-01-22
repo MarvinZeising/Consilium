@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Shift } from '../models'
+import { Shift, Category } from '../models'
 
 @Module({ dynamic: true, store, name: 'ShiftModule' })
 export default class ShiftModule extends VuexModule {
@@ -40,5 +40,17 @@ export default class ShiftModule extends VuexModule {
     }
   }
 
+
+  @Action
+  public async deleteShift(shift: Shift) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+
+    await axios.delete(`/persons/${personId}/projects/${projectId}/shifts/${shift.id}`)
+
+    const category: Category = await this.context.dispatch('getCategory', shift.categoryId)
+    if (category) {
+      category.shifts = category.shifts.filter((x) => x.id !== shift.id)
+    }
+  }
 
 }
