@@ -38,18 +38,20 @@
           <v-layout wrap>
 
             <CategoryControl
-              required
               :model="categoryModel"
+              required
             />
 
             <DateControl
               :model="dateModel"
               label="shift.date"
+              required
             />
 
             <TimeControl
               :model="timeModel"
               label="shift.time"
+              required
             />
 
           </v-layout>

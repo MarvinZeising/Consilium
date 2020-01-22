@@ -1,5 +1,4 @@
 import axios from 'axios'
-import moment from 'moment'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
 import { Shift } from '../models'
@@ -25,9 +24,7 @@ export default class ShiftModule extends VuexModule {
   public async createShift(shift: Shift) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.post(
-      `/persons/${personId}/projects/${projectId}/categories/${shift.categoryId}/shifts`,
-      shift)
+    const response = await axios.post(`/persons/${personId}/projects/${projectId}/shifts`, shift)
     const createdShift = Shift.create(response.data)
 
     const category = await this.context.dispatch('getCategory', shift.categoryId)
