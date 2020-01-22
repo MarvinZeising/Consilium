@@ -40,7 +40,6 @@ namespace Server.Controllers
 
                 var role = _db.Participation.GetRole(personId, projectId);
                 if (role?.CalendarRead != true) return Forbid();
-                // TODO: only for one month
 
                 var categoryIds = _db.Category
                     .FindByCondition(x => x.ProjectId == projectId)
@@ -53,6 +52,7 @@ namespace Server.Controllers
                         categoryIds.Contains(x.CategoryId) &&
                         x.Date >= from &&
                         x.Date <= to)
+                    .Include(x => x.Category)
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ShiftDto>>(shifts));
