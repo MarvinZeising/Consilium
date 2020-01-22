@@ -10,24 +10,28 @@
       width="290px"
     >
       <template v-slot:activator="{ on }">
-        <span v-if="description">
-          {{ $t(description) }}
-          <i v-if="!required">({{ $t('core.optional') }})</i>
-        </span>
-        <v-text-field
+        <div
           v-on="on"
-          :value="getFormattedDate"
-          :label="label ? $t(label) : false"
-          :rules="getRules"
-          readonly
-          filled
-          required
           @click="opened"
-        />
+        >
+          <span v-if="description">
+            {{ $t(description) }}
+            <i v-if="!required">({{ $t('core.optional') }})</i>
+          </span>
+          <v-text-field
+            :value="getFormattedDate"
+            :label="label ? $t(label) : false"
+            :rules="getRules"
+            readonly
+            filled
+            required
+          />
+        </div>
       </template>
       <v-date-picker
         v-if="datePicker"
         v-model="date"
+        :first-day-of-week="1"
         scrollable
       >
         <v-btn
@@ -40,7 +44,7 @@
           text
           color="primary"
           v-t="'core.ok'"
-          @click="$refs.datePicker.save(date)"
+          @click="updateDate"
         />
       </v-date-picker>
     </v-dialog>
@@ -53,13 +57,14 @@ import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import UserModule from '../../store/users'
+import moment from 'moment'
 
 @Component
 export default class DateControl extends Vue {
   private userModule = getModule(UserModule, this.$store)
 
   @Prop(Object)
-  private readonly model?: { value: string }
+  private readonly model?: { value: number }
 
   @Prop(String)
   private readonly label?: string
@@ -83,7 +88,7 @@ export default class DateControl extends Vue {
 
   private get getFormattedDate() {
     if (this.model && this.userModule.getUser) {
-      return this.userModule.getUser.formatDate(this.model.value)
+      return this.userModule.getUser.formatDate(moment(this.model.value, 'YYYYMMDD').format())
     }
 
     return this.model?.value || ''
@@ -97,7 +102,15 @@ export default class DateControl extends Vue {
   }
 
   private opened() {
-    this.date = this.model?.value || ''
+    this.date = moment(this.model?.value, 'YYYYMMDD').format('YYYY-MM-DD')
+  }
+
+  private updateDate() {
+    if (this.model) {
+      const picker: any = this.$refs.datePicker
+      picker.save(parseInt(moment(this.date, 'YYYY-MM-DD').format('YYYYMMDD'), 10))
+      this.datePicker = false
+    }
   }
 
 }

@@ -56,7 +56,7 @@ class User {
     return moment(datetime, format).format(this.dateFormat)
   }
 
-  public formatTime(datetime: string, format: string = 'HH:mm') {
+  public formatTime(datetime: string, format: string = 'H:mm') {
     return moment(datetime, format).format(this.timeFormat)
   }
 

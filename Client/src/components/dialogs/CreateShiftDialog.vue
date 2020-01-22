@@ -122,12 +122,14 @@ export default class CreateTaskDialog extends Vue {
 
   private shift = Shift.create({})
 
-  private dateModel = { value: '' }
-  private timeModel = { value: '10:00' }
-  private durationModel = { value: '02:00' }
+  private dateModel = { value: 0 }
+  private timeModel = { value: 1000 }
+  private durationModel = { value: 200 }
 
   private opened() {
-    this.dateModel = { value: this.date || '' }
+    this.dateModel = {
+      value: parseInt(moment(this.date).format('YYYYMMDD'), 10)
+    }
   }
 
   private async save() {
@@ -135,8 +137,9 @@ export default class CreateTaskDialog extends Vue {
       this.loading = true
 
       this.shift.categoryId = this.categoryModel?.value?.id || ''
-      this.shift.start = this.dateModel.value + 'T' + this.timeModel.value
-      this.shift.end = moment(this.shift.start).add(2, 'h').format('YYYY-MM-DD[T]HH:mm')
+      this.shift.date = this.dateModel.value
+      this.shift.time = this.timeModel.value
+      this.shift.duration = this.durationModel.value
 
       await this.shiftModule.createShift(this.shift)
 

@@ -211,11 +211,20 @@ export default class Calendar extends Vue {
         })
 
       events = events.map((x) => {
+        const date = moment(x.date, 'YYYYMMDD').format('YYYY-MM-DD')
+        const time = moment(x.time, 'Hmm').format('[T]HH:mm')
+        const start = date + time
+        const end = moment(start)
+          .add(moment(x.duration, 'Hmm').format('H'), 'hours')
+          .add(moment(x.duration, 'Hmm').format('mm'), 'minutes')
+          .format('YYYY-MM-DD[T]HH:mm')
+
         return {
           name: '12 Participants',
-          start: x.start,
-          end: x.end,
           color: 'navbar',
+          shift: x,
+          start,
+          end,
         }
       })
 

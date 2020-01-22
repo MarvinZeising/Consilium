@@ -5,8 +5,9 @@ class Shift {
     const shift = new Shift(
       data.id,
       data.categoryId,
-      data.start,
-      data.end,
+      data.date,
+      data.time,
+      data.duration,
       data.createdTime,
       data.lastUpdatedTime)
     shift.category = data.category ? Category.create(data.category) : undefined
@@ -16,23 +17,26 @@ class Shift {
   public id: string
   public categoryId: string
   public category?: Category
-  public start: string
-  public end: string
+  public date: number
+  public time: number
+  public duration: number
   public createdTime: string
   public lastUpdatedTime: string
 
   constructor(
     id: string,
     categoryId: string,
-    start: string,
-    end: string,
+    date: number,
+    time: number,
+    duration: number,
     createdTime: string,
     lastUpdatedTime: string
   ) {
     this.id = id
     this.categoryId = categoryId
-    this.start = start
-    this.end = end
+    this.date = date
+    this.time = time
+    this.duration = duration
     this.createdTime = createdTime
     this.lastUpdatedTime = lastUpdatedTime
   }
@@ -41,8 +45,9 @@ class Shift {
     this.id = shift.id
     this.categoryId = shift.categoryId
     this.category = shift.category
-    this.start = shift.start
-    this.end = shift.end
+    this.date = shift.date
+    this.time = shift.time
+    this.duration = shift.duration
     this.createdTime = shift.createdTime
     this.lastUpdatedTime = shift.lastUpdatedTime
   }
@@ -148,18 +153,20 @@ class Category {
 
   public get getShifts() {
     return [...this.shifts].sort((a, b) => {
-      if (a.start < b.start) {
+      if (a.date < b.date) {
         return -1
-      } else if (a.start > b.start) {
+      } else if (a.date > b.date) {
+        return 1
+      } else if (a.time < b.time) {
+        return -1
+      } else if (a.time > b.time) {
+        return 1
+      } else if (a.duration < b.duration) {
+        return -1
+      } else if (a.duration > b.duration) {
         return 1
       } else {
-        if (a.end < b.end) {
-          return -1
-        } else if (a.end > b.end) {
-          return 1
-        } else {
-          return 0
-        }
+        return 0
       }
     })
   }
