@@ -37,7 +37,9 @@
 
       <v-spacer />
 
-      <CategoriesControl :model="categoryModel" />
+      <CategoriesControl
+        :model="categoriesModel"
+      />
 
       <v-menu bottom right>
         <template v-slot:activator="{ on }">
@@ -162,7 +164,7 @@ export default class Calendar extends Vue {
   private selectedElement: any = null
   private selectedOpen: boolean = false
 
-  private categoryModel: { selected: Category[] } = { selected: [] }
+  private categoriesModel: { selected: Category[] } = { selected: [] }
 
   private start: any = null
   private end: any = null
@@ -198,7 +200,7 @@ export default class Calendar extends Vue {
       let events: any[] = []
 
       project.getCategories
-        .filter((x) => this.categoryModel.selected.find((y) => y.id === x.id))
+        .filter((x) => this.categoriesModel.selected.find((y) => y.id === x.id))
         .forEach((x) => {
           events = events.concat(x.shifts)
         })
@@ -222,6 +224,8 @@ export default class Calendar extends Vue {
 
     await this.categoryModule.loadCategories()
     await this.shiftModule.loadShifts('bd711f3f-f6f8-4e94-81ec-c724fa1c5d94')
+
+    this.categoriesModel.selected = this.projectModule.getActiveProject?.getCategories || []
 
     this.loading = false
   }

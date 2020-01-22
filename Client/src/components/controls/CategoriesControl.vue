@@ -15,7 +15,7 @@
       chips
       small-chips
       return-object
-      :loading="loading"
+      @change="emitChange"
     >
       <template v-slot:prepend-item>
         <v-list-item
@@ -40,24 +40,20 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
+import { Vue, Component, Watch, Prop, Emit } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import ProjectModule from '../../store/projects'
-import CategoryModule from '../../store/categories'
 import { Category } from '../../models'
 
 @Component
 export default class CategoriesControl extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
-  private categoryModule = getModule(CategoryModule, this.$store)
 
   @Prop(Object)
   private readonly model?: { selected: Category[] }
 
-  private loading = true
-
-  private get getIcon () {
+  private get getIcon() {
     if (this.model?.selected.length === this.projectModule.getActiveProject?.getCategories.length) {
       return 'check_box'
     } else if (this.model && this.model.selected.length > 0) {
@@ -66,16 +62,9 @@ export default class CategoriesControl extends Vue {
     return 'check_box_outline_blank'
   }
 
-  private async created() {
-    if (this.model) {
-      this.loading = true
-
-      await this.categoryModule.loadCategories()
-
-      this.model.selected = this.projectModule.getActiveProject?.getCategories || []
-
-      this.loading = false
-    }
+  @Emit('change')
+  private emitChange() {
+    return this.model?.selected
   }
 
   private toggle() {
@@ -85,6 +74,7 @@ export default class CategoriesControl extends Vue {
       } else if (this.model) {
         this.model.selected = this.projectModule.getActiveProject?.getCategories || []
       }
+      this.emitChange()
     }
   }
 
