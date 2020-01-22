@@ -179,7 +179,7 @@ export default class Calendar extends Vue {
           events = events.concat(x.shifts)
         })
 
-      events = events.map((x) => {
+      events = events.map((x: Shift) => {
         const date = moment(x.date, 'YYYYMMDD').format('YYYY-MM-DD')
         const time = moment(x.time, 'Hmm').format('[T]HH:mm')
         const start = date + time
@@ -189,7 +189,7 @@ export default class Calendar extends Vue {
           .format('YYYY-MM-DD[T]HH:mm')
 
         return {
-          name: '12 Participants',
+          name: x.category?.name,
           color: 'navbar',
           shift: x,
           start,
