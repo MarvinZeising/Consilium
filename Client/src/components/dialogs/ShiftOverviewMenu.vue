@@ -16,9 +16,7 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <DeleteShiftDialog :shift="model.event.shift" />
-        <v-btn icon>
-          <v-icon>edit</v-icon>
-        </v-btn>
+        <UpdateShiftDialog :shift="model.event.shift" />
         <v-btn
           icon
           @click="model.model = false"
@@ -42,10 +40,12 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import UserModule from '../../store/users'
+import UpdateShiftDialog from './UpdateShiftDialog.vue'
 import DeleteShiftDialog from './DeleteShiftDialog.vue'
 
 @Component({
   components: {
+    UpdateShiftDialog,
     DeleteShiftDialog,
   },
 })

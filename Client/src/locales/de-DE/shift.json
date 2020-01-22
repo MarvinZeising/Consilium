@@ -1,6 +1,8 @@
 {
   "create": "Schicht erstellen",
   "createDescription": "Erstelle eine neue Schicht. Möchtest du mehr als ein oder zwei Schichten erstellen, empfehlen wir dir eine Vorlagewoche anzulegen und anzuwenden.",
+  "update": "Schicht bearbeiten",
+  "updateDescription": "Du kannst diese Schicht bearbeiten. Du kannst sogar die Kategorie ändern. Dafür brauchst du Schreibrechte auf diese und die neue Kategorie haben.",
   "delete": "Schicht löschen",
   "deleteDescription": "Möchtest du diese Schicht wirklich löschen?",
   "date": "Datum",

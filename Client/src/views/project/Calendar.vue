@@ -173,6 +173,9 @@ export default class Calendar extends Vue {
     if (project) {
       let events: any[] = []
 
+      //* when this gets re-evaluated, close any open shift overview menus
+      this.shiftOverviewModel.model = false
+
       project.getCategories
         .filter((x) => this.categoriesModel.selected.find((y) => y.id === x.id))
         .forEach((x) => {

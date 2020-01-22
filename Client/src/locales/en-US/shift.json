@@ -1,7 +1,9 @@
 {
   "create": "Create a Shift",
   "createDescription": "You can manually create a shift. If you want to create more than one or two shifts though, we suggest you to create and apply a blueprint week.",
-  "delete": "Delete this Shift",
+  "update": "Update Shift",
+  "updateDescription": "You can update this shift. You can even change the category. In that case, you to have write access to this category and the new one.",
+  "delete": "Delete Shift",
   "deleteDescription": "Do you really want to delete this shift?",
   "date": "Date",
   "time": "Time",
