@@ -219,7 +219,27 @@ export default class Calendar extends Vue {
     return []
   }
 
+  @Watch('personModule.getActivePerson')
+  private async onPersonChanged(val: string, oldVal: string) {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
+  @Watch('$route')
+  private async onRouteChanged(val: string, oldVal: string) {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
   private async created() {
+    if (this.canView) {
+      await this.init()
+    }
+  }
+
+  private async init() {
     this.loading = true
 
     await this.categoryModule.loadCategories()
