@@ -1,9 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Entities.DataTransferObjects
 {
     public class CreateShiftDto
     {
+        [Required]
+        public Guid CategoryId { get; set; }
+
         [Required]
         [MinLength(16)]
         [MaxLength(16)]

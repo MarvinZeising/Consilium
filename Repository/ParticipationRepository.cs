@@ -4,7 +4,6 @@ using Contracts;
 using Entities;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
-using Entities.Enums;
 
 namespace Repository
 {
@@ -17,12 +16,17 @@ namespace Repository
 
         public Participation GetParticipation(Guid personId, Guid projectId) {
             return FindByCondition(x => x.PersonId == personId && x.ProjectId == projectId)
-                .Include(x => x.Role)
+                .Include(x => x.Role).ThenInclude(x => x.Eligibilities)
                 .SingleOrDefault();
         }
 
         public Role GetRole(Guid personId, Guid projectId) {
             return GetParticipation(personId, projectId)?.Role;
+        }
+
+        public Eligibility GetEligibilityByCategory(Guid personId, Guid projectId, Guid categoryId)
+        {
+            return GetRole(personId, projectId)?.Eligibilities.Where(x => x.CategoryId == categoryId).SingleOrDefault();
         }
 
     }

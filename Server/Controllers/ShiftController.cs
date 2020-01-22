@@ -13,7 +13,7 @@ namespace Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/persons/{personId}/projects/{projectId}/categories/{categoryId}")]
+    [Route("api/persons/{personId}/projects/{projectId}")]
     public class ShiftController : ControllerBase
     {
         private readonly IRepositoryWrapper _db;
@@ -30,7 +30,7 @@ namespace Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("shifts")]
+        [HttpGet("categories/{categoryId}/shifts")]
         public ActionResult<IEnumerable<ShiftDto>> GetProjectShifts(Guid personId, Guid projectId, Guid categoryId)
         {
             try
@@ -38,6 +38,7 @@ namespace Server.Controllers
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.CalendarRead != true) return Forbid();
                 // TODO: check category permission
+                // TODO: do this independent of categories
 
                 var category = _db.Category
                     .FindByCondition(x => x.Id == categoryId && x.ProjectId == projectId)
@@ -58,22 +59,21 @@ namespace Server.Controllers
         }
 
         [HttpPost("shifts")]
-        public ActionResult<ShiftDto> CreateShift(Guid personId, Guid projectId, Guid categoryId, [FromBody] CreateShiftDto dto)
+        public ActionResult<ShiftDto> CreateShift(Guid personId, Guid projectId, [FromBody] CreateShiftDto dto)
         {
             try
             {
                 if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
-                // TODO: check category permission
+                if (_db.Participation.GetEligibilityByCategory(personId, projectId, dto.CategoryId)?.ShiftsWrite != true) return Forbid();
 
                 var category = _db.Category
-                    .FindByCondition(x => x.Id == categoryId && x.ProjectId == projectId)
+                    .FindByCondition(x => x.Id == dto.CategoryId && x.ProjectId == projectId)
                     .SingleOrDefault();
                 if (category == null) return BadRequest();
 
                 var shift = _mapper.Map<Shift>(dto);
-                shift.CategoryId = categoryId;
 
                 _db.Shift.Create(shift);
                 _db.Save();
