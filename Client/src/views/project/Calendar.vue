@@ -39,6 +39,7 @@
 
       <CategoriesControl
         :model="categoriesModel"
+        @change="(selected) => categoryModel.value = selected[0]"
       />
 
       <v-menu bottom right>
@@ -123,13 +124,16 @@
       </v-card>
     </v-menu>
 
-    <CreateShiftDialog :date="focus" />
+    <CreateShiftDialog
+      :date="focus"
+      :categoryModel="categoryModel"
+    />
 
   </v-container>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
 import i18n from '../../i18n'
@@ -164,6 +168,7 @@ export default class Calendar extends Vue {
   private selectedElement: any = null
   private selectedOpen: boolean = false
 
+  private categoryModel: { value?: Category } = { value: undefined }
   private categoriesModel: { selected: Category[] } = { selected: [] }
 
   private start: any = null
@@ -246,6 +251,7 @@ export default class Calendar extends Vue {
     await this.shiftModule.loadShifts('bd711f3f-f6f8-4e94-81ec-c724fa1c5d94')
 
     this.categoriesModel.selected = this.projectModule.getActiveProject?.getCategories || []
+    this.categoryModel.value = this.categoriesModel.selected[0]
 
     this.loading = false
   }

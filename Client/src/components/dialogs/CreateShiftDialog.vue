@@ -37,6 +37,11 @@
         <v-card-text class="pa-2">
           <v-layout wrap>
 
+            <CategoryControl
+              required
+              :model="categoryModel"
+            />
+
             <DateControl
               :model="dateModel"
               label="shift.date"
@@ -86,6 +91,7 @@ import DateControl from '../controls/DateControl.vue'
 import TimeControl from '../controls/TimeControl.vue'
 import TextControl from '../controls/TextControl.vue'
 import TextareaControl from '../controls/TextareaControl.vue'
+import CategoryControl from '../controls/CategoryControl.vue'
 import { Category, Eligibility, Task, Shift } from '../../models'
 
 @Component({
@@ -95,6 +101,7 @@ import { Category, Eligibility, Task, Shift } from '../../models'
     TimeControl,
     TextControl,
     TextareaControl,
+    CategoryControl,
   },
 })
 export default class CreateTaskDialog extends Vue {
@@ -104,13 +111,14 @@ export default class CreateTaskDialog extends Vue {
   @Prop(String)
   private readonly date?: string
 
+  @Prop(Object)
+  private readonly categoryModel?: { value?: Category }
+
   private dialog: any = false
   private valid: any = null
   private loading: boolean = false
 
-  private shift = Shift.create({
-    categoryId: 'bd711f3f-f6f8-4e94-81ec-c724fa1c5d94'
-  })
+  private shift = Shift.create({})
 
   private dateModel = { value: '' }
   private timeModel = { value: '10:00' }
@@ -124,6 +132,7 @@ export default class CreateTaskDialog extends Vue {
     if (this.valid) {
       this.loading = true
 
+      this.shift.categoryId = this.categoryModel?.value?.id || ''
       this.shift.start = this.dateModel.value + 'T' + this.timeModel.value
       this.shift.end = moment(this.shift.start).add(2, 'h').format('YYYY-MM-DD[T]HH:mm')
 
