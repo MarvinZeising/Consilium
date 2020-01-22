@@ -47,6 +47,18 @@ export default class TextControl extends Vue {
   @Prop(Object)
   private readonly customRules?: any[]
 
+  private rules = [
+    (v: string) => this.isRequired === false
+                   || !!v
+                   || i18n.t('core.fieldRequired'),
+    (v: string) => this.minLength === undefined
+                   || v.length >= this.minLength
+                   || i18n.t('core.fieldMin', { count: this.minLength }),
+    (v: string) => this.maxLength === undefined
+                   || v.length <= this.maxLength
+                   || i18n.t('core.fieldMax', { count: this.maxLength }),
+  ]
+
   private get getCounter() {
     if (this.model && this.maxLength && this.maxLength > 0) {
       return this.model.value.length >= this.maxLength * 0.8 ? this.maxLength : false
@@ -60,18 +72,6 @@ export default class TextControl extends Vue {
     }
     return this.rules
   }
-
-  private rules = [
-    (v: string) => this.isRequired === false
-                   || !!v
-                   || i18n.t('core.fieldRequired'),
-    (v: string) => this.minLength === undefined
-                   || v.length >= this.minLength
-                   || i18n.t('core.fieldMin', { count: this.minLength }),
-    (v: string) => this.maxLength === undefined
-                   || v.length <= this.maxLength
-                   || i18n.t('core.fieldMax', { count: this.maxLength }),
-  ]
 
 }
 </script>

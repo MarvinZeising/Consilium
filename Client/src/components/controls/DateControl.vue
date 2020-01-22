@@ -18,9 +18,9 @@
           v-on="on"
           :value="getFormattedDate"
           :label="label ? $t(label) : false"
-          prepend-icon="event"
           :rules="getRules"
           readonly
+          filled
           required
           @click="opened"
         />
@@ -75,6 +75,11 @@ export default class DateControl extends Vue {
 
   private datePicker: any = false
   private date: string = ''
+  private rules = [
+    (v: string) => this.isRequired === false
+                   || !!v
+                   || i18n.t('core.fieldRequired'),
+  ]
 
   private get getFormattedDate() {
     if (this.model && this.userModule.getUser) {
@@ -94,12 +99,6 @@ export default class DateControl extends Vue {
   private opened() {
     this.date = this.model?.value || ''
   }
-
-  private rules = [
-    (v: string) => this.isRequired === false
-                   || !!v
-                   || i18n.t('core.fieldRequired'),
-  ]
 
 }
 </script>

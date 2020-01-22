@@ -18,9 +18,9 @@
           v-on="on"
           :value="getFormattedTime"
           :label="label ? $t(label) : false"
-          prepend-icon="access_time"
           :rules="getRules"
           readonly
+          filled
           required
           @click="opened"
         />
@@ -75,6 +75,11 @@ export default class TimeControl extends Vue {
 
   private timePicker: any = false
   private time: string = ''
+  private rules = [
+    (v: string) => this.isRequired === false
+                   || !!v
+                   || i18n.t('core.fieldRequired'),
+  ]
 
   private get getFormattedTime() {
     if (this.model && this.userModule.getUser) {
@@ -94,12 +99,6 @@ export default class TimeControl extends Vue {
   private opened() {
     this.time = this.model?.value || ''
   }
-
-  private rules = [
-    (v: string) => this.isRequired === false
-                   || !!v
-                   || i18n.t('core.fieldRequired'),
-  ]
 
 }
 </script>
