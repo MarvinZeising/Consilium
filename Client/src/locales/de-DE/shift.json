@@ -1,5 +1,8 @@
 {
   "create": "Schicht erstellen",
+  "createDescription": "Erstelle eine neue Schicht. Möchtest du mehr als ein oder zwei Schichten erstellen, empfehlen wir dir eine Vorlagewoche anzulegen und anzuwenden.",
+  "delete": "Schicht löschen",
+  "deleteDescription": "Möchtest du diese Schicht wirklich löschen?",
   "date": "Datum",
   "time": "Zeit",
   "month": "Monat",
@@ -7,6 +10,7 @@
   "day": "Tag",
   "duration": "Dauer",
   "today": "Heute",
+  "hours": "Stunden",
   "category": {
     "categories": "Es wurden noch keine Kategorien angelegt. | Kategorie | Kategorien",
     "description": "Jede Schicht gehört zu einer Kategorie. Diese Kategorien bestimmen die Zugriffsrechte auf Schichten für die Teilnehmer. Sie bestimmen, wer Schichten dieser Kategorie sehen oder sogar bearbeiten darf, sowie wer als Teamleiter in Schichten dieser Kategorie dienen darf.",

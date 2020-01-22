@@ -1,6 +1,8 @@
 {
   "create": "Create a Shift",
   "createDescription": "You can manually create a shift. If you want to create more than one or two shifts though, we suggest you to create and apply a blueprint week.",
+  "delete": "Delete this Shift",
+  "deleteDescription": "Do you really want to delete this shift?",
   "date": "Date",
   "time": "Time",
   "month": "Month",
@@ -8,6 +10,7 @@
   "day": "Day",
   "duration": "Duration",
   "today": "Today",
+  "hours": "hours",
   "category": {
     "categories": "No categories have been defined, yet. | Category | Categories",
     "description": "Every shift belongs to a category. These categories control the access permissions of the participants. You can control who can see or even edit shifts of this category, and who will be able to serve as captain in any of this category's shifts.",
