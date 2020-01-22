@@ -5,6 +5,7 @@ using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Entities.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,8 +31,8 @@ namespace Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("shifts")]
-        public ActionResult<IEnumerable<ShiftDto>> GetProjectShifts(Guid personId, Guid projectId)
+        [HttpGet("shifts/{from}-{to}")]
+        public ActionResult<IEnumerable<ShiftDto>> GetProjectShifts(Guid personId, Guid projectId, [ValidDate] int from, [ValidDate] int to)
         {
             try
             {
@@ -48,7 +49,10 @@ namespace Server.Controllers
                     .Select(x => x.Id);
 
                 var shifts = _db.Shift
-                    .FindByCondition(x => categoryIds.Contains(x.CategoryId))
+                    .FindByCondition(x =>
+                        categoryIds.Contains(x.CategoryId) &&
+                        x.Date >= from &&
+                        x.Date <= to)
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ShiftDto>>(shifts));
