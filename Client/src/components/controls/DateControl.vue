@@ -21,7 +21,6 @@
           <v-text-field
             :value="getFormattedDate"
             :label="label ? $t(label) : false"
-            :rules="getRules"
             readonly
             filled
             required
@@ -72,9 +71,6 @@ export default class DateControl extends Vue {
   @Prop(String)
   private readonly description?: string
 
-  @Prop(Object)
-  private readonly customRules?: any[]
-
   @Prop(Boolean)
   private required: boolean = false
 
@@ -92,13 +88,6 @@ export default class DateControl extends Vue {
     }
 
     return this.model?.value || ''
-  }
-
-  private get getRules() {
-    if (this.customRules) {
-      return this.rules.concat(this.customRules)
-    }
-    return this.rules
   }
 
   private opened() {

@@ -21,7 +21,6 @@
           <v-text-field
             :value="getFormattedTime"
             :label="label ? $t(label) : false"
-            :rules="getRules"
             readonly
             filled
             required
@@ -71,8 +70,8 @@ export default class TimeControl extends Vue {
   @Prop(String)
   private readonly description?: string
 
-  @Prop(Object)
-  private readonly customRules?: any[]
+  @Prop(String)
+  private readonly format?: string
 
   @Prop(Boolean)
   private required: boolean = false
@@ -86,18 +85,13 @@ export default class TimeControl extends Vue {
   ]
 
   private get getFormattedTime() {
-    if (this.model && this.userModule.getUser) {
-      return this.userModule.getUser.formatTime(moment(this.model.value, 'Hmm').format('H:mm'))
+    if (this.format) {
+      return moment(this.model?.value, 'Hmm').format(this.format)
     }
-
+    if (this.userModule.getUser) {
+      return this.userModule.getUser.formatTime(moment(this.model?.value, 'Hmm').format('H:mm'))
+    }
     return this.model?.value || ''
-  }
-
-  private get getRules() {
-    if (this.customRules) {
-      return this.rules.concat(this.customRules)
-    }
-    return this.rules
   }
 
   private opened() {

@@ -54,6 +54,13 @@
               required
             />
 
+            <TimeControl
+              :model="durationModel"
+              label="shift.duration"
+              :format="`H:mm [${$t('shift.hours')}]`"
+              required
+            />
+
           </v-layout>
         </v-card-text>
 
