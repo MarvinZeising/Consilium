@@ -41,20 +41,31 @@ export default class ShiftModule extends VuexModule {
   }
 
   @Action
-  public async updateShift(shift: Shift) {
+  public async updateShift(shift: any) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
     const response = await axios.put(`/persons/${personId}/projects/${projectId}/shifts/${shift.id}`, shift)
     const updatedShift = Shift.create(response.data)
 
-    const category: Category = await this.context.dispatch('getCategory', shift.categoryId)
-    if (category) {
-      category.shifts = category.shifts.map((x) => {
-        if (x.id === shift.id) {
-          x.copyFrom(updatedShift)
-        }
-        return x
-      })
+    if (shift.oldCategoryId) {
+      const oldCategory: Category = await this.context.dispatch('getCategory', shift.oldCategoryId)
+      if (oldCategory) {
+        oldCategory.shifts = oldCategory.shifts.filter((x) => x.id !== shift.id)
+      }
+      const newCategory: Category = await this.context.dispatch('getCategory', shift.categoryId)
+      if (newCategory) {
+        newCategory.shifts.push(updatedShift)
+      }
+    } else {
+      const category: Category = await this.context.dispatch('getCategory', shift.categoryId)
+      if (category) {
+        category.shifts = category.shifts.map((x) => {
+          if (x.id === shift.id) {
+            x.copyFrom(updatedShift)
+          }
+          return x
+        })
+      }
     }
   }
 

@@ -117,7 +117,12 @@ namespace Server.Controllers
                 _db.Shift.Update(shift);
                 _db.Save();
 
-                return Ok(_mapper.Map<ShiftDto>(shift));
+                var updatedShift = _db.Shift
+                    .FindByCondition(x => x.Id == shiftId)
+                    .Include(x => x.Category)
+                    .Single();
+
+                return Ok(_mapper.Map<ShiftDto>(updatedShift));
             }
             catch (Exception e)
             {

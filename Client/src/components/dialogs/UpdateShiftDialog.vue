@@ -124,14 +124,14 @@ export default class UpdateShiftDialog extends Vue {
   private showHelpText = false
   private loading = false
 
-  private categoryModel = { value: '' }
+  private categoryModel: { value?: Category } = {}
   private dateModel = { value: 0 }
   private timeModel = { value: 1000 }
   private durationModel = { value: 200 }
 
   private opened() {
     if (this.shift) {
-      this.categoryModel = { value: this.shift.categoryId }
+      this.categoryModel = { value: this.shift.category }
       this.dateModel = { value: this.shift.date }
       this.timeModel = { value: this.shift.time }
       this.durationModel = { value: this.shift.duration }
@@ -142,12 +142,19 @@ export default class UpdateShiftDialog extends Vue {
     if (this.valid && this.shift) {
       this.loading = true
 
-      this.shift.categoryId = this.categoryModel?.value
+      const oldCategoryId = this.shift.categoryId !== this.categoryModel?.value?.id
+        ? this.shift.categoryId + ''
+        : undefined
+
+      this.shift.categoryId = this.categoryModel?.value?.id || ''
       this.shift.date = this.dateModel.value
       this.shift.time = this.timeModel.value
       this.shift.duration = this.durationModel.value
 
-      await this.shiftModule.updateShift(this.shift)
+      const shift: any = this.shift
+      shift.oldCategoryId = oldCategoryId
+
+      await this.shiftModule.updateShift(shift)
 
       this.loading = false
       this.dialog = false
