@@ -37,7 +37,7 @@
 
       <v-spacer />
 
-      <CategoriesControl />
+      <CategoriesControl :model="categoryModel" />
 
       <v-menu bottom right>
         <template v-slot:activator="{ on }">
@@ -138,7 +138,7 @@ import CategoryModule from '../../store/categories'
 import ShiftModule from '../../store/shifts'
 import CreateShiftDialog from '../../components/dialogs/CreateShiftDialog.vue'
 import CategoriesControl from '../../components/controls/CategoriesControl.vue'
-import { Shift } from '../../models'
+import { Shift, Category } from '../../models'
 
 @Component({
   components: {
@@ -161,6 +161,8 @@ export default class Calendar extends Vue {
   private selectedEvent = {}
   private selectedElement: any = null
   private selectedOpen: boolean = false
+
+  private categoryModel: { selected: Category[] } = { selected: [] }
 
   private start: any = null
   private end: any = null
@@ -196,7 +198,7 @@ export default class Calendar extends Vue {
       let events: any[] = []
 
       project.getCategories
-        .filter((x) => x.id === 'bd711f3f-f6f8-4e94-81ec-c724fa1c5d94')
+        .filter((x) => this.categoryModel.selected.find((y) => y.id === x.id))
         .forEach((x) => {
           events = events.concat(x.shifts)
         })
