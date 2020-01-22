@@ -89,5 +89,28 @@ namespace Server.Controllers
             }
         }
 
+        [HttpDelete("shifts/{shiftId}")]
+        public IActionResult DeleteShift(Guid personId, Guid projectId, Guid shiftId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
+
+                var shift = _db.Shift.FindByCondition(x => x.Id == shiftId).SingleOrDefault();
+                if (_db.Participation.GetEligibilityByCategory(personId, projectId, shift.CategoryId)?.ShiftsWrite != true) return Forbid();
+
+                _db.Shift.Delete(shift);
+                _db.Save();
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in DeleteShift: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
