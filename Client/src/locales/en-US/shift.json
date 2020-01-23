@@ -43,5 +43,8 @@
     "apply": "Apply",
     "create": "Apply for this Shift",
     "createDescription": "You can apply to participate in this shift. This might have to be checked by an administrator. Or, you might need to wait until enough applicants have gathered to be able to plan this shift.",
+    "delete": "Cancel Application",
+    "deleteDescription": "Do you really want to cancel your application for this shift?",
+    "youApplied": "You applied for this shift"
   }
 }
