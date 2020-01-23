@@ -38,5 +38,10 @@
     "helpLink": "Hilfe-Link",
     "helpLinkDescription": "Ein Hilfe-Link zu weiteren Informationen. Kann z.B. zu einer der Hilfeseiten dieses Projektes führen, zu einer externen Video-Plattform, einer Karte oder anderem.",
     "helpLinkFormat": "Der Link muss eine gültige URL sein. Er muss mit https:// beginnen"
+  },
+  "application": {
+    "apply": "Bewerben",
+    "create": "Auf diese Schicht bewerben",
+    "createDescription": "Du darfst dich auf diese Schicht bewerben. Deine Bewerbung muss eventuell von einem Administrator genehmigt werden. Oder du musst warten, bis sich genügend Bewerber gefunden haben, damit die Schicht stattfinden kann.",
   }
 }

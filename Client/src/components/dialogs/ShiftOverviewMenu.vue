@@ -31,7 +31,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <CreateShiftApplicationDialog />
+        <CreateApplicationDialog :shift="getShift" />
       </v-card-actions>
     </v-card>
   </v-menu>
@@ -45,12 +45,12 @@ import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import UserModule from '../../store/users'
 import UpdateShiftDialog from './UpdateShiftDialog.vue'
-import CreateShiftApplicationDialog from './CreateShiftApplicationDialog.vue'
+import CreateApplicationDialog from './CreateApplicationDialog.vue'
 
 @Component({
   components: {
     UpdateShiftDialog,
-    CreateShiftApplicationDialog,
+    CreateApplicationDialog,
   },
 })
 export default class CreateTaskDialog extends Vue {
