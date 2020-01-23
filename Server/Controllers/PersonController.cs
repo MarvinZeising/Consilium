@@ -41,7 +41,7 @@ namespace Server.Controllers
                 var participations = _db.Participation
                     .FindByCondition(x => x.PersonId == personId)
                     .Include(x => x.Project).ThenInclude(x => x.Topics)
-                    .Include(x => x.Role)
+                    .Include(x => x.Role).ThenInclude(x => x.Eligibilities)
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ParticipationDto>>(participations));
