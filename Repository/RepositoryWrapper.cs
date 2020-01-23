@@ -17,6 +17,7 @@ namespace Repository
         private ICategoryRepository _category;
         private ITaskRepository _task;
         private IShiftRepository _shift;
+        private IApplicationRepository _application;
         private IEligibilityRepository _eligibility;
         private ICongregationRepository _congregation;
         private ITopicRepository _topic;
@@ -115,6 +116,18 @@ namespace Repository
                     _shift = new ShiftRepository(_repositoryContext);
                 }
                 return _shift;
+            }
+        }
+
+        public IApplicationRepository Application
+        {
+            get
+            {
+                if (_application == null)
+                {
+                    _application = new ApplicationRepository(_repositoryContext);
+                }
+                return _application;
             }
         }
 

@@ -10,6 +10,7 @@
         ICategoryRepository Category { get; }
         ITaskRepository Task { get; }
         IShiftRepository Shift { get; }
+        IApplicationRepository Application { get; }
         IEligibilityRepository Eligibility { get; }
         ICongregationRepository Congregation { get; }
         ITopicRepository Topic { get; }
