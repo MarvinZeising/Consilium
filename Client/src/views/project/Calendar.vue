@@ -93,6 +93,8 @@
 
     <ShiftOverviewMenu :model="shiftOverviewModel" />
 
+    <!--//TODO: check write permission -->
+    <!--//TODO: handle if does not have access to any categories -->
     <CreateShiftDialog
       :date="focus"
       :categoryModel="categoryModel"
@@ -173,7 +175,7 @@ export default class Calendar extends Vue {
     if (project) {
       let events: any[] = []
 
-      //* when this gets re-evaluated, close any open shift overview menus
+      // * when this gets re-evaluated, close any open shift overview menus
       this.shiftOverviewModel.model = false
 
       project.getCategories
