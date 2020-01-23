@@ -6,11 +6,11 @@
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
-        icon
+        text
+        color="error"
         :loading="loading"
-      >
-        <v-icon>delete</v-icon>
-      </v-btn>
+        v-t="'shift.delete'"
+      />
     </template>
     <v-card>
       <v-form v-model="valid">
@@ -67,7 +67,6 @@ export default class DeleteShiftDialog extends Vue {
   private loading: boolean = false
 
   private async deleteShift() {
-    console.log(this.shift)
     if (this.shift) {
       this.loading = true
 

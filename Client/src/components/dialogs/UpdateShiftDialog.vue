@@ -76,6 +76,7 @@
             v-t="'core.cancel'"
             @click.stop="dialog = false"
           />
+          <DeleteShiftDialog :shift="shift" />
           <v-spacer />
           <v-btn
             text
@@ -103,6 +104,7 @@ import DateControl from '../controls/DateControl.vue'
 import TimeControl from '../controls/TimeControl.vue'
 import TextControl from '../controls/TextControl.vue'
 import CategoryControl from '../controls/CategoryControl.vue'
+import DeleteShiftDialog from '../dialogs/DeleteShiftDialog.vue'
 import { Category, Eligibility, Task, Shift } from '../../models'
 
 @Component({
@@ -111,6 +113,7 @@ import { Category, Eligibility, Task, Shift } from '../../models'
     TimeControl,
     TextControl,
     CategoryControl,
+    DeleteShiftDialog,
   },
 })
 export default class UpdateShiftDialog extends Vue {

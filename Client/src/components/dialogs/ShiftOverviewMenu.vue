@@ -15,7 +15,7 @@
           {{ userModule.getUser.formatTime(model.event.start, 'YYYY-MM-DD HH:mm') }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <DeleteShiftDialog :shift="model.event.shift" />
+        <!--//TODO: check write permission -->
         <UpdateShiftDialog :shift="model.event.shift" />
         <v-btn
           icon
@@ -29,6 +29,10 @@
           Lot's of exciting stuff!
         </span>
       </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <CreateShiftApplicationDialog />
+      </v-card-actions>
     </v-card>
   </v-menu>
 
@@ -41,12 +45,12 @@ import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import UserModule from '../../store/users'
 import UpdateShiftDialog from './UpdateShiftDialog.vue'
-import DeleteShiftDialog from './DeleteShiftDialog.vue'
+import CreateShiftApplicationDialog from './CreateShiftApplicationDialog.vue'
 
 @Component({
   components: {
     UpdateShiftDialog,
-    DeleteShiftDialog,
+    CreateShiftApplicationDialog,
   },
 })
 export default class CreateTaskDialog extends Vue {
