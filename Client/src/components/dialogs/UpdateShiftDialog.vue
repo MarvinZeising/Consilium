@@ -25,6 +25,7 @@
           <v-spacer />
           <v-btn
             icon
+            class="mr-0"
             @click="showHelpText = !showHelpText"
           >
             <v-icon>help</v-icon>
