@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Entities.Validators;
+using System.Collections.Generic;
 
 namespace Entities.Models
 {
@@ -34,5 +35,7 @@ namespace Entities.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
+
+        public ICollection<Application> Applications { get; set; }
     }
 }
