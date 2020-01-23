@@ -93,9 +93,8 @@
 
     <ShiftOverviewMenu :model="shiftOverviewModel" />
 
-    <!--//TODO: check write permission -->
-    <!--//TODO: handle if does not have access to any categories -->
     <CreateShiftDialog
+      v-if="canEdit"
       :date="focus"
       :categoryModel="categoryModel"
     />
@@ -150,7 +149,10 @@ export default class Calendar extends Vue {
   }
 
   private get canEdit() {
-    return this.personModule.getActiveRole?.calendarWrite === true
+    const role = this.personModule.getActiveRole
+    if (role) {
+      return role.calendarWrite === true && role.eligibilities.some((x) => x.shiftsWrite)
+    }
   }
 
   private get getCalendarHeight() {

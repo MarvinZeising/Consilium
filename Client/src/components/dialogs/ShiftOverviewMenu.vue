@@ -6,7 +6,10 @@
     :activator="model.element"
     offset-x
   >
-    <v-card min-width="350px">
+    <v-card
+      v-if="getShift"
+      min-width="350px"
+    >
       <v-toolbar
         :color="model.event.color"
         prominent
@@ -15,8 +18,10 @@
           {{ userModule.getUser.formatTime(model.event.start, 'YYYY-MM-DD HH:mm') }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <!--//TODO: check write permission -->
-        <UpdateShiftDialog :shift="getShift" />
+        <UpdateShiftDialog
+          v-if="canEdit"
+          :shift="getShift"
+        />
         <v-btn
           icon
           @click="model.model = false"
@@ -103,6 +108,17 @@ export default class CreateTaskDialog extends Vue {
   }
 
   private showApplicants = true
+
+  private get canEdit() {
+    const role = this.personModule.getActiveRole
+    if (role && role.calendarWrite) {
+      const eligibility = role.eligibilities.find((x) => x.categoryId === this.getShift?.categoryId)
+      if (eligibility) {
+        return eligibility.shiftsWrite
+      }
+    }
+    return false
+  }
 
   private get getShift(): Shift | undefined {
     return this.model?.event.shift
