@@ -40,6 +40,7 @@
     "helpLinkFormat": "The link must be a valid URL. It has to start with https://"
   },
   "application": {
+    "applicants": "No applicants | Applicant | Applicants",
     "apply": "Apply",
     "create": "Apply for this Shift",
     "createDescription": "You can apply to participate in this shift. This might have to be checked by an administrator. Or, you might need to wait until enough applicants have gathered to be able to plan this shift.",

@@ -39,6 +39,34 @@
         <v-spacer />
         <CreateApplicationDialog :shift="getShift" />
       </v-card-actions>
+      <v-list v-if="getShift.applications.length > 0">
+        <v-subheader>
+          {{ $tc('shift.application.applicants', 2) }}
+          <v-spacer />
+          <v-btn
+            icon
+            @click="showApplicants = !showApplicants"
+          >
+            <v-icon v-if="showApplicants">keyboard_arrow_up</v-icon>
+            <v-icon v-else>keyboard_arrow_down</v-icon>
+          </v-btn>
+        </v-subheader>
+        <div v-if="showApplicants">
+          <v-list-item
+            v-for="(application, index) in getShift.getApplications"
+            :key="index"
+            @click=""
+          >
+            <v-list-item-avatar>
+              <v-icon color="accent">emoji_people</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title>{{ application.person.getFullName }}</v-list-item-title>
+              <v-list-item-subtitle>6 applications, 3 approved</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </div>
+      </v-list>
     </v-card>
   </v-menu>
 
@@ -73,6 +101,8 @@ export default class CreateTaskDialog extends Vue {
     element: any,
     event: any,
   }
+
+  private showApplicants = true
 
   private get getShift(): Shift | undefined {
     return this.model?.event.shift

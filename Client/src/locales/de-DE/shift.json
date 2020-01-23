@@ -40,6 +40,7 @@
     "helpLinkFormat": "Der Link muss eine gültige URL sein. Er muss mit https:// beginnen"
   },
   "application": {
+    "applicants": "Keine Bewerber | Bewerber | Bewerber",
     "apply": "Bewerben",
     "create": "Auf diese Schicht bewerben",
     "createDescription": "Du darfst dich auf diese Schicht bewerben. Deine Bewerbung muss eventuell von einem Administrator genehmigt werden. Oder du musst warten, bis sich genügend Bewerber gefunden haben, damit die Schicht stattfinden kann.",
