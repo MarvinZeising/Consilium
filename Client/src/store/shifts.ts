@@ -28,6 +28,20 @@ export default class ShiftModule extends VuexModule {
   }
 
   @Action
+  public async getShift(shiftId: string) {
+    const project = this.context.getters.getActiveProject
+    if (project) {
+      for (const category of project.categories) {
+        const shift = category.shifts.find((x: Shift) => x.id === shiftId)
+        if (shift) {
+          return shift
+        }
+      }
+    }
+    return undefined
+  }
+
+  @Action
   public async createShift(shift: Shift) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 

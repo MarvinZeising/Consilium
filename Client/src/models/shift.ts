@@ -1,4 +1,4 @@
-import { Project, Role } from '.'
+import { Project, Role, Person } from '.'
 
 class Shift {
   public static create(data: any) {
@@ -10,7 +10,12 @@ class Shift {
       data.duration,
       data.createdTime,
       data.lastUpdatedTime)
+
     shift.category = data.category ? Category.create(data.category) : undefined
+    if (data.applications) {
+      shift.applications = data.applications.map((x: Application) => Application.create(x))
+    }
+
     return shift
   }
 
@@ -22,6 +27,7 @@ class Shift {
   public duration: number
   public createdTime: string
   public lastUpdatedTime: string
+  public applications: Application[] = []
 
   constructor(
     id: string,
@@ -41,6 +47,25 @@ class Shift {
     this.lastUpdatedTime = lastUpdatedTime
   }
 
+  public get getApplications() {
+    return [...this.applications].sort((a, b) => {
+      if (a.person && b.person) {
+        if (a.person.lastname < b.person.lastname) {
+          return -1
+        } else if (a.person.lastname > b.person.lastname) {
+          return 1
+        } else if (a.person.firstname < b.person.firstname) {
+          return -1
+        } else if (a.person.firstname > b.person.firstname) {
+          return 1
+        } else {
+          return 0
+        }
+      }
+      return 0
+    })
+  }
+
   public copyFrom(shift: Shift) {
     this.id = shift.id
     this.categoryId = shift.categoryId
@@ -50,6 +75,62 @@ class Shift {
     this.duration = shift.duration
     this.createdTime = shift.createdTime
     this.lastUpdatedTime = shift.lastUpdatedTime
+    this.applications = shift.applications
+  }
+
+}
+
+class Application {
+  public static create(data: any) {
+    const application = new Application(
+      data.id,
+      data.shiftId,
+      data.personId,
+      data.availableAfter,
+      data.notes,
+      data.createdTime,
+      data.lastUpdatedTime)
+    application.shift = data.shift ? Shift.create(data.shift) : undefined
+    application.person = data.person ? Person.create(data.person) : undefined
+    return application
+  }
+
+  public id: string
+  public shiftId: string
+  public shift?: Shift
+  public personId: string
+  public person?: Person
+  public availableAfter: boolean
+  public notes: string
+  public createdTime: string
+  public lastUpdatedTime: string
+
+  constructor(
+    id: string,
+    shiftId: string,
+    personId: string,
+    availableAfter: boolean,
+    notes: string,
+    createdTime: string,
+    lastUpdatedTime: string
+  ) {
+    this.id = id
+    this.shiftId = shiftId
+    this.personId = personId
+    this.availableAfter = availableAfter
+    this.notes = notes
+    this.createdTime = createdTime
+    this.lastUpdatedTime = lastUpdatedTime
+  }
+
+  public copyFrom(application: Application) {
+    this.id = application.id
+    this.shiftId = application.shiftId
+    this.personId = application.personId
+    this.availableAfter = application.availableAfter
+    this.notes = application.notes
+    this.createdTime = application.createdTime
+    this.lastUpdatedTime = application.lastUpdatedTime
   }
 
 }
@@ -261,4 +342,5 @@ export {
   Category,
   Eligibility,
   Shift,
+  Application,
 }
