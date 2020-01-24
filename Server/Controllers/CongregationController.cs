@@ -13,7 +13,7 @@ namespace Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/persons/{personId}/projects/{projectId}")]
+    [Route("api/persons/{personId}")]
     public class CongregationController : ControllerBase
     {
         private readonly IRepositoryWrapper _db;
@@ -36,8 +36,6 @@ namespace Server.Controllers
             try
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-                if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
-                // TODO: check if project is valid / paid for
 
                 var congregations = _db.Congregation
                     .FindAll()
@@ -59,7 +57,7 @@ namespace Server.Controllers
             }
         }
 
-        [HttpPost("congregations")]
+        [HttpPost("projects/{projectId}/congregations")]
         public ActionResult<CongregationDto> CreateCongregation(Guid personId, Guid projectId, [FromBody] CreateCongregationDto dto)
         {
             try
@@ -67,6 +65,7 @@ namespace Server.Controllers
                 if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
+                // TODO: check if project is valid / paid for
 
                 var congregationWithThisData = _db.Congregation
                     .FindByCondition(x => x.Name == dto.Name || x.Number == dto.Number)
@@ -90,7 +89,7 @@ namespace Server.Controllers
             }
         }
 
-        [HttpPut("congregations/{congregationId}")]
+        [HttpPut("projects/{projectId}/congregations/{congregationId}")]
         public ActionResult<CongregationDto> UpdateCongregation(Guid personId, Guid projectId, Guid congregationId, [FromBody] UpdateCongregationDto dto)
         {
             try
@@ -126,7 +125,7 @@ namespace Server.Controllers
             }
         }
 
-        [HttpDelete("congregations/{congregationId}")]
+        [HttpDelete("projects/{projectId}/congregations/{congregationId}")]
         public IActionResult DeleteCongregation(Guid personId, Guid projectId, Guid congregationId)
         {
             try
