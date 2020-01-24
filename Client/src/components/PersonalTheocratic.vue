@@ -100,7 +100,7 @@
             </template>
           </v-select>
 
-          <p v-t="'person.congregation.description'" />
+          <p v-t="'person.congregationDescription'" />
           <v-overflow-btn
             v-model="congregationId"
             :items="congregationValues"

@@ -29,12 +29,12 @@
             v-t="'project.participant.updateDescription'"
           />
         </v-card-text>
-        <v-card-text class="pa-0">
+        <v-card-text class="pa-2">
           <v-layout wrap>
 
             <v-flex
               xs12 sm6 md4
-              class="pa-4"
+              class="pa-2"
             >
               <v-text-field
                 v-model="firstname"
@@ -48,7 +48,7 @@
 
             <v-flex
               xs12 sm6 md4
-              class="pa-4"
+              class="pa-2"
             >
               <v-text-field
                 v-model="lastname"
@@ -62,7 +62,7 @@
 
             <v-flex
               xs12 sm6 md4
-              class="pa-4"
+              class="pa-2"
             >
               <v-select
                 v-model="gender"
@@ -83,7 +83,7 @@
 
             <v-flex
               xs12 sm6 md4
-              class="pa-4"
+              class="pa-2"
             >
               <v-text-field
                 v-model="email"
@@ -95,7 +95,7 @@
 
             <v-flex
               xs12 sm6 md4
-              class="pa-4"
+              class="pa-2"
             >
               <v-select
                 v-model="language"
@@ -117,7 +117,7 @@
 
             <v-flex
               xs12 sm6 md4
-              class="pa-4"
+              class="pa-2"
             >
               <v-text-field
                 v-model="phone"
@@ -129,7 +129,7 @@
 
             <v-flex
               xs12 sm6 md4
-              class="pa-4"
+              class="pa-2"
             >
               <v-select
                 v-model="privilege"
@@ -150,7 +150,7 @@
 
             <v-flex
               xs12 sm6 md4
-              class="pa-4"
+              class="pa-2"
             >
               <v-select
                 v-model="assignment"
@@ -171,7 +171,24 @@
 
             <v-flex
               xs12 sm6 md4
-              class="pa-4"
+              class="pa-2"
+            >
+              <v-overflow-btn
+                v-model="congregationId"
+                :items="congregationValues"
+                :label="$tc('project.congregation.congregations', 1)"
+                item-text="name"
+                item-value="id"
+                editable
+                filled
+                :loading="congregationLoading"
+                autocomplete="off"
+              />
+            </v-flex>
+
+            <v-flex
+              xs12 sm6 md4
+              class="pa-2"
             >
               <v-text-field
                 v-model="languages"
@@ -184,7 +201,7 @@
 
             <v-flex
               xs12 sm6 md4
-              class="pa-4"
+              class="pa-2"
             >
               <v-textarea
                 v-model="notes"
@@ -229,6 +246,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import PersonModule from '../../store/persons'
+import CongregationModule from '../../store/congregations'
 import ProjectModule from '../../store/projects'
 import ParticipantModule from '../../store/participants'
 import DeleteParticipantDialog from '../../components/dialogs/DeleteParticipantDialog.vue'
@@ -241,6 +259,7 @@ import { Article, Person, Participation, Gender, Privilege, Assignment, Language
 })
 export default class UpdateParticipantDialog extends Vue {
   private personModule = getModule(PersonModule, this.$store)
+  private congregationModule = getModule(CongregationModule, this.$store)
   private projectModule = getModule(ProjectModule, this.$store)
   private participantModule = getModule(ParticipantModule, this.$store)
 
@@ -308,7 +327,11 @@ export default class UpdateParticipantDialog extends Vue {
     return { value }
   })
 
-  private opened() {
+  private congregationId?: string
+  private congregationValues: any[] = []
+  private congregationLoading = false
+
+  private async opened() {
     if (this.participation) {
       this.firstname = this.participation.person?.firstname || ''
       this.lastname = this.participation.person?.lastname || ''
@@ -318,8 +341,16 @@ export default class UpdateParticipantDialog extends Vue {
       this.phone = this.participation.person?.phone || ''
       this.privilege = this.participation.person?.privilege || Privilege.Publisher
       this.assignment = this.participation.person?.assignment || Assignment.Publisher
+      this.congregationId = this.participation.person?.congregationId
       this.languages = this.participation.person?.languages || ''
       this.notes = this.participation.person?.notes || ''
+
+      this.congregationLoading = true
+
+      await this.congregationModule.loadCongregations()
+      this.congregationValues = this.congregationModule.getCongregations
+
+      this.congregationLoading = false
     }
   }
 
@@ -337,6 +368,7 @@ export default class UpdateParticipantDialog extends Vue {
         phone: this.phone || '',
         privilege: this.privilege || Privilege.Publisher,
         assignment: this.assignment || Assignment.Publisher,
+        congregationId: this.congregationId,
         languages: this.languages || '',
         notes: this.notes || '',
       })

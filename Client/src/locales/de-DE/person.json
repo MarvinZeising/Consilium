@@ -21,6 +21,7 @@
   "languagesDescription": "Fremdsprachen, die du sprichst.",
   "notes": "Notizen",
   "notesDescription": "Sonstige Informationen, die für den Einteiler interessant sein könnten (z.B. 'Bin im Rollstuhl').",
+  "congregationDescription": "Deine Versammlung. Sollte die richtige Versammlung nicht dabei sein, wende dich bitte an deinen Projekt-Administrator, damit er sie anlegen kann.",
   "create": "Neue Person anlegen",
   "createDescription1": "Warum eine Person anlegen?",
   "createDescription2": "Du hast bereits einen Benutzer. Aber ein Benutzer ist nur zum Anmelden am System.",

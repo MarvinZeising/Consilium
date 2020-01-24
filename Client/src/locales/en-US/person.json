@@ -22,6 +22,7 @@
   "languagesDescription": "Foreign languages you are able to speak.",
   "notes": "Notes",
   "notesDescription": "Anything else that might be helpful to someone assigning you to shifts. (e.g. I'm in a wheelchair)",
+  "congregationDescription": "Your congregation. If the right one isn't listed, please talk to your project administrator, so he can add it.",
   "create": "Create a new person",
   "createDescription1": "Why create a person?",
   "createDescription2": "You already have an account. But an account is only for signing in.",

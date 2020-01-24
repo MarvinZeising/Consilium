@@ -32,6 +32,7 @@ export default class ParticipantModule extends VuexModule {
     phone: string,
     privilege: Privilege,
     assignment: Assignment,
+    congregationId?: string,
     languages: string,
     notes: string,
   }) {
@@ -47,6 +48,7 @@ export default class ParticipantModule extends VuexModule {
       phone: data.phone,
       privilege: data.privilege,
       assignment: data.assignment,
+      congregationId: data.congregationId,
       languages: data.languages,
       notes: data.notes,
     })
