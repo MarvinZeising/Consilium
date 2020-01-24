@@ -140,8 +140,17 @@ namespace Server.Controllers
 
                 var person = _db.Person.GetById(personId);
 
+                if (dto.CongregationId != null)
+                {
+                    var congregation = _db.Congregation.FindByCondition(x => x.Id == dto.CongregationId).SingleOrDefault();
+                    if (congregation == null) return BadRequest();
+
+                    person.Congregation = congregation;
+                }
+
                 person.Assignment = dto.Assignment;
                 person.Privilege = dto.Privilege;
+                person.CongregationId = dto.CongregationId;
 
                 _db.Person.Update(person);
                 _db.Save();
