@@ -192,9 +192,6 @@ export default class PersonalTheocratic extends Vue {
   private congregationId?: string
   private congregationValues: any[] = []
 
-  private async created() {
-  }
-
   private async toggleEditMode() {
     this.editMode = !this.editMode
 
