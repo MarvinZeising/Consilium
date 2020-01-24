@@ -396,6 +396,14 @@ namespace Server.Controllers
 
                 var person = _db.Person.GetById(participation.PersonId);
 
+                if (dto.CongregationId != null)
+                {
+                    var congregation = _db.Congregation.FindByCondition(x => x.Id == dto.CongregationId).SingleOrDefault();
+                    if (congregation == null) return BadRequest();
+
+                    person.Congregation = congregation;
+                }
+
                 person.Firstname = dto.Firstname;
                 person.Lastname = dto.Lastname;
                 person.Gender = dto.Gender;
@@ -404,6 +412,7 @@ namespace Server.Controllers
                 person.Phone = dto.Phone;
                 person.Privilege = dto.Privilege;
                 person.Assignment = dto.Assignment;
+                person.CongregationId = dto.CongregationId;
                 person.Languages = dto.Languages;
                 person.Notes = dto.Notes;
 

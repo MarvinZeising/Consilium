@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using Entities.Validators;
 
@@ -37,6 +38,8 @@ namespace Entities.DataTransferObjects
 
         [MaxLength(100)]
         public string Languages { get; set; }
+
+        public Guid? CongregationId { get; set; }
 
         [MaxLength(1000)]
         public string Notes { get; set; }
