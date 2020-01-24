@@ -21,9 +21,9 @@ export default class CongregationModule extends VuexModule {
 
   @Action
   public async loadCongregations() {
-    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+    const personId = this.context.getters.getActivePersonId
 
-    const response = await axios.get(`/persons/${personId}/projects/${projectId}/congregations`)
+    const response = await axios.get(`/persons/${personId}/congregations`)
     const congregations = response.data.map((x: Congregation) => Congregation.create(x))
 
     this.context.commit('setCongregations', congregations)
