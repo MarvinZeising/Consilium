@@ -68,10 +68,12 @@ export default class PersonModule extends VuexModule {
   public async updatePersonTheocratic(data: {
     assignment: Assignment,
     privilege: Privilege,
+    congregationId?: string,
   }) {
     const response = await axios.put(`/persons/${this.getActivePersonId}/theocratic`, {
       assignment: data.assignment,
       privilege: data.privilege,
+      congregationId: data.congregationId,
     })
     const updatedPerson = Person.create(response.data)
 

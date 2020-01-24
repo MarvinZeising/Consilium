@@ -38,6 +38,22 @@
             </p>
           </v-flex>
 
+          <v-flex xs12 sm6 sm->
+            <p class="caption mb-0 grey--text">
+              {{ $tc('project.congregation.congregations', 1) }}
+            </p>
+            <p
+              v-if="personModule.getActivePerson.congregation"
+              class="subtitle-1"
+            >
+              {{ personModule.getActivePerson.congregation.name }}
+            </p>
+            <p
+              v-else
+              v-t="'core.na'"
+            />
+          </v-flex>
+
         </v-layout>
       </v-card-text>
 
@@ -84,6 +100,19 @@
             </template>
           </v-select>
 
+          <p v-t="'person.congregation.description'" />
+          <v-overflow-btn
+            v-model="congregationId"
+            :items="congregationValues"
+            :label="$tc('project.congregation.congregations', 1)"
+            item-text="name"
+            item-value="id"
+            editable
+            filled
+            :loading="congregationLoading"
+            autocomplete="off"
+          />
+
         </v-form>
       </v-card-text>
 
@@ -122,15 +151,18 @@ import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../i18n'
 import PersonModule from '../store/persons'
-import { Person, Gender, Assignment, Privilege } from '../models'
+import CongregationModule from '../store/congregations'
+import { Person, Gender, Assignment, Privilege, Congregation } from '../models'
 
 @Component
 export default class PersonalTheocratic extends Vue {
   private personModule = getModule(PersonModule, this.$store)
+  private congregationModule = getModule(CongregationModule, this.$store)
 
   private valid: any = false
   private editMode: boolean = false
   private loading: boolean = false
+  private congregationLoading = true
 
   private privilege?: Privilege
   private privilegeValues: any[] = [
@@ -157,12 +189,26 @@ export default class PersonalTheocratic extends Vue {
     return { value }
   })
 
-  private toggleEditMode() {
+  private congregationId?: string
+  private congregationValues: any[] = []
+
+  private async created() {
+  }
+
+  private async toggleEditMode() {
     this.editMode = !this.editMode
 
     if (this.editMode) {
       this.privilege = this.personModule.getActivePerson?.privilege || Privilege.Publisher
       this.assignment = this.personModule.getActivePerson?.assignment || Assignment.Publisher
+      this.congregationId = this.personModule.getActivePerson?.congregation?.id
+
+      this.congregationLoading = true
+
+      await this.congregationModule.loadCongregations()
+      this.congregationValues = this.congregationModule.getCongregations
+
+      this.congregationLoading = false
     }
   }
 
@@ -176,6 +222,7 @@ export default class PersonalTheocratic extends Vue {
       await this.personModule.updatePersonTheocratic({
         privilege: this.privilege,
         assignment: this.assignment,
+        congregationId: this.congregationId,
       })
 
       this.loading = false

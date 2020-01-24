@@ -176,6 +176,8 @@ class Person {
     this.languages = person.languages
     this.privilege = person.privilege
     this.assignment = person.assignment
+    this.congregation = person.congregation
+    this.congregationId = person.congregationId
     this.notes = person.notes
   }
 
