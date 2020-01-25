@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Contracts;
@@ -12,7 +13,7 @@ namespace Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/persons/{personId}/projects/{projectId}/shifts/{shiftId}")]
+    [Route("api/persons/{personId}")]
     public class ApplicationController : ControllerBase
     {
         private readonly IRepositoryWrapper _db;
@@ -29,25 +30,46 @@ namespace Server.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("applications")]
+        public ActionResult<IEnumerable<ApplicationDto>> GetApplications(Guid personId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var applications = _db.Application
+                    .FindByCondition(x => x.PersonId == personId)
+                    .Include(x => x.Shift).ThenInclude(x => x.Category).ThenInclude(x => x.Project)
+                    .ToList();
+
+                return Ok(_mapper.Map<IEnumerable<ApplicationDto>>(applications));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in GetApplications: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpPost("applications")]
-        public ActionResult<ApplicationDto> CreateApplication(Guid personId, Guid projectId, Guid shiftId, [FromBody] CreateApplicationDto dto)
+        public ActionResult<ApplicationDto> CreateApplication(Guid personId, [FromBody] CreateApplicationDto dto)
         {
             try
             {
                 if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-                if (_db.Participation.GetRole(personId, projectId)?.CalendarRead != true) return Forbid();
 
                 var shift = _db.Shift
-                    .FindByCondition(x => x.Id == shiftId)
+                    .FindByCondition(x => x.Id == dto.ShiftId)
                     .Include(x => x.Category)
-                    .SingleOrDefault(x => x.Category.ProjectId == projectId);
+                    .SingleOrDefault();
                 if (shift == null) return BadRequest();
-                if (_db.Participation.GetEligibilityByCategory(personId, projectId, shift.CategoryId)?.ShiftsRead != true) return Forbid();
+                if (_db.Participation.GetRole(personId, shift.Category.ProjectId)?.CalendarRead != true) return Forbid();
+                if (_db.Participation.GetEligibilityByCategory(personId, shift.Category.ProjectId, shift.CategoryId)?.ShiftsRead != true) return Forbid();
 
                 var application = _mapper.Map<Application>(dto);
                 application.PersonId = personId;
-                application.ShiftId = shiftId;
+                application.ShiftId = dto.ShiftId;
 
                 _db.Application.Create(application);
                 _db.Save();
@@ -67,19 +89,20 @@ namespace Server.Controllers
         }
 
         [HttpDelete("applications/{applicationId}")]
-        public IActionResult DeleteApplication(Guid personId, Guid projectId, Guid shiftId, Guid applicationId)
+        public IActionResult DeleteApplication(Guid personId, Guid applicationId)
         {
             try
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-                if (_db.Participation.GetRole(personId, projectId)?.CalendarRead != true) return Forbid();
 
                 var application = _db.Application
                     .FindByCondition(x => x.Id == applicationId && x.PersonId == personId)
                     .Include(x => x.Shift).ThenInclude(x => x.Category)
-                    .SingleOrDefault(x => x.Shift.Category.ProjectId == projectId);
+                    .SingleOrDefault();
                 if (application == null) return BadRequest();
 
+                var projectId = application.Shift.Category.ProjectId;
+                if (_db.Participation.GetRole(personId, projectId)?.CalendarRead != true) return Forbid();
                 if (_db.Participation.GetEligibilityByCategory(personId, projectId, application.Shift.CategoryId)?.ShiftsRead != true) return Forbid();
 
                 _db.Application.Delete(application);
