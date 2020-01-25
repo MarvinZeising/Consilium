@@ -1,4 +1,4 @@
-import { Participation, Language } from '.'
+import { Participation, Language, Application } from '.'
 
 enum Gender {
   Male = 'male',
@@ -91,6 +91,9 @@ class Person {
     if (data.participations) {
       person.participations = data.participations.map((x: any) => Participation.create(x))
     }
+    if (data.applications) {
+      person.applications = data.applications.map((x: any) => Application.create(x))
+    }
 
     return person
   }
@@ -109,6 +112,7 @@ class Person {
   public assignment: Assignment
   public notes: string
   public participations: Participation[] = []
+  public applications: Application[] = []
   public createdTime: string
   public lastUpdatedTime: string
 
@@ -157,12 +161,32 @@ class Person {
           return 1
         } else if (a.project.name > b.project.name) {
           return -1
-        } else {
-          return 0
         }
-      } else {
         return 0
       }
+      return 0
+    })
+  }
+
+  public get getApplications() {
+    return [...this.applications].sort((a, b) => {
+      if (a.shift && b.shift) {
+        if (a.shift.date < b.shift.date) {
+          return -1
+        } else if (a.shift.date > b.shift.date) {
+          return 1
+        } else if (a.shift.time < b.shift.time) {
+          return -1
+        } else if (a.shift.time > b.shift.time) {
+          return 1
+        } else if (a.shift.duration < b.shift.duration) {
+          return -1
+        } else if (a.shift.duration > b.shift.duration) {
+          return 1
+        }
+        return 0
+      }
+      return 0
     })
   }
 
@@ -179,6 +203,8 @@ class Person {
     this.congregation = person.congregation
     this.congregationId = person.congregationId
     this.notes = person.notes
+    this.participations = person.participations
+    this.applications = person.applications
   }
 
 }

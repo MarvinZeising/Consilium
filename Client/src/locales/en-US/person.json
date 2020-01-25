@@ -30,6 +30,10 @@
   "delete": "Delete this person",
   "deleteDescription": "This will delete all future shift participations and delete the person. You will loose access to the projects that this person had access to.",
   "deleteHint": "Enter the person's firstname to continue",
+  "home": {
+    "welcome": "Welcome,",
+    "welcomeDescription": "This is your personal overview. Here, you'll have everything that is important for you."
+  },
   "gender": {
     "gender": "Gender",
     "description": "The gender of this person.",
@@ -56,5 +60,10 @@
     "circuit": "Circuit overseer",
     "bethelite": "Bethelite",
     "construction": "Construction servant"
+  },
+  "application": {
+    "applications": "No pending applications. | Application | Applications",
+    "description": "Here are your pending shift applications. These applications are pending until either enough applicants have gathered for this shift, or it's manually approved by an administrator.",
+    "at": "at"
   }
 }
