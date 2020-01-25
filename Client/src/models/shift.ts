@@ -1,4 +1,5 @@
-import { Project, Role, Person } from '.'
+import { Project, Role, Person, User } from '.'
+import moment from 'moment'
 
 class Shift {
   public static create(data: any) {
@@ -64,6 +65,28 @@ class Shift {
       }
       return 0
     })
+  }
+
+  public getTimespan(user: User) {
+    let startFormat = 'H:mm - '
+    let endFormat = user.timeFormat
+
+    if (moment(this.time, 'Hmm').format('mm') === '00') {
+      startFormat = 'H - '
+    }
+
+    const startTime = moment(this.time, 'Hmm')
+    const endTime = moment(this.time, 'Hmm')
+    const durationHours = moment(this.duration, 'Hmm').format('H')
+    const durationMinutes = moment(this.duration, 'Hmm').format('mm')
+    endTime.add(durationHours, 'h')
+    endTime.add(durationMinutes, 'm')
+
+    if (endTime.format('mm') === '00') {
+      endFormat = endFormat.replace(/:mm/gi, '')
+    }
+
+    return startTime.format(startFormat) + endTime.format(endFormat)
   }
 
   public copyFrom(shift: Shift) {

@@ -15,7 +15,7 @@
         prominent
       >
         <v-toolbar-title>
-          {{ userModule.getUser.formatTime(model.event.start, 'YYYY-MM-DD HH:mm') }}
+          {{ getShift.getTimespan(userModule.getUser) }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <UpdateShiftDialog
