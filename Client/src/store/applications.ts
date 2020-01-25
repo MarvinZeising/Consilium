@@ -9,12 +9,13 @@ export default class ApplicationModule extends VuexModule {
   @Action
   public async loadMyApplications() {
     const personId = this.context.getters.getActivePersonId
+    if (personId) {
+      const response = await axios.get(`/persons/${personId}/applications`)
+      const applications = response.data.map((x: Application) => Application.create(x))
 
-    const response = await axios.get(`/persons/${personId}/applications`)
-    const applications = response.data.map((x: Application) => Application.create(x))
-
-    const person: Person = this.context.getters.getActivePerson
-    person.applications = applications
+      const person: Person = this.context.getters.getActivePerson
+      person.applications = applications
+    }
   }
 
   @Action
