@@ -7,6 +7,7 @@
       <v-btn
         v-on="on"
         icon
+        :title="$t('shift.update')"
         @click="opened"
       >
         <v-icon>edit</v-icon>

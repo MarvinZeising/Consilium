@@ -24,6 +24,7 @@
         />
         <v-btn
           icon
+          :title="$t('core.close')"
           @click="model.model = false"
         >
           <v-icon>close</v-icon>
