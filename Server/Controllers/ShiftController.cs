@@ -53,7 +53,7 @@ namespace Server.Controllers
                         x.Date >= from &&
                         x.Date <= to)
                     .Include(x => x.Category)
-                    .Include(x => x.Applications).ThenInclude(x => x.Person)
+                    .Include(x => x.Applications).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ShiftDto>>(shifts));
