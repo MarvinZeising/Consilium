@@ -18,6 +18,7 @@
           {{ getShift.getTimespan(userModule.getUser) }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
+        <ShiftAssignmentDialog :shift="getShift" />
         <UpdateShiftDialog
           v-if="canEdit"
           :shift="getShift"
@@ -32,7 +33,7 @@
       </v-toolbar>
       <v-card-actions
         v-if="myApplication"
-        class="info"
+        class="accent"
       >
         <span
           class="ml-2"
@@ -86,6 +87,7 @@ import i18n from '../../i18n'
 import UserModule from '../../store/users'
 import PersonModule from '../../store/persons'
 import UpdateShiftDialog from './UpdateShiftDialog.vue'
+import ShiftAssignmentDialog from './ShiftAssignmentDialog.vue'
 import CreateApplicationDialog from './CreateApplicationDialog.vue'
 import DeleteApplicationDialog from './DeleteApplicationDialog.vue'
 import { Shift } from '../../models'
@@ -93,6 +95,7 @@ import { Shift } from '../../models'
 @Component({
   components: {
     UpdateShiftDialog,
+    ShiftAssignmentDialog,
     CreateApplicationDialog,
     DeleteApplicationDialog,
   },

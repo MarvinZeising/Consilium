@@ -111,6 +111,7 @@ import UserModule from '../../store/users'
 import PersonModule from '../../store/persons'
 import ProjectModule from '../../store/projects'
 import CategoryModule from '../../store/categories'
+import TaskModule from '../../store/tasks'
 import ShiftModule from '../../store/shifts'
 import CreateShiftDialog from '../../components/dialogs/CreateShiftDialog.vue'
 import ShiftOverviewMenu from '../../components/dialogs/ShiftOverviewMenu.vue'
@@ -129,6 +130,7 @@ export default class Calendar extends Vue {
   private personModule = getModule(PersonModule, this.$store)
   private projectModule = getModule(ProjectModule, this.$store)
   private categoryModule = getModule(CategoryModule, this.$store)
+  private taskModule = getModule(TaskModule, this.$store)
   private shiftModule = getModule(ShiftModule, this.$store)
 
   private loading: boolean = true
@@ -234,6 +236,10 @@ export default class Calendar extends Vue {
 
     await this.categoryModule.loadCategories()
     await this.shiftModule.loadShifts()
+
+    if (this.canEdit) {
+      await this.taskModule.loadTasks()
+    }
 
     this.categoriesModel.selected = this.projectModule.getActiveProject?.getCategories || []
     this.categoryModel.value = this.categoriesModel.selected[0]
