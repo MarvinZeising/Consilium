@@ -25,7 +25,7 @@
     "nameDescription": "Der Name der Kategorie."
   },
   "task": {
-    "tasks": "Es wurden noch keine Zuteilungen angelegt. | Zuteilung | Zuteilung",
+    "tasks": "Es wurden noch keine Zuteilungen angelegt. | Zuteilung | Zuteilungen",
     "description": "Jedes Team einer Schicht nimmt eine Zuteilung wahr.",
     "create": "Zuteilung hinzufügen",
     "createDescription": "Erstelle eine neue Zuteilung.",
