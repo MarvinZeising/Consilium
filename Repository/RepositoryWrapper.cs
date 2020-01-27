@@ -17,6 +17,7 @@ namespace Repository
         private ICategoryRepository _category;
         private ITeamRepository _team;
         private IShiftRepository _shift;
+        private IAttendeeRepository _attendee;
         private IApplicationRepository _application;
         private IEligibilityRepository _eligibility;
         private ICongregationRepository _congregation;
@@ -95,18 +96,6 @@ namespace Repository
             }
         }
 
-        public ITeamRepository Team
-        {
-            get
-            {
-                if (_team == null)
-                {
-                    _team = new TeamRepository(_repositoryContext);
-                }
-                return _team;
-            }
-        }
-
         public IShiftRepository Shift
         {
             get
@@ -128,6 +117,30 @@ namespace Repository
                     _application = new ApplicationRepository(_repositoryContext);
                 }
                 return _application;
+            }
+        }
+
+        public ITeamRepository Team
+        {
+            get
+            {
+                if (_team == null)
+                {
+                    _team = new TeamRepository(_repositoryContext);
+                }
+                return _team;
+            }
+        }
+
+        public IAttendeeRepository Attendee
+        {
+            get
+            {
+                if (_attendee == null)
+                {
+                    _attendee = new AttendeeRepository(_repositoryContext);
+                }
+                return _attendee;
             }
         }
 
