@@ -49,6 +49,6 @@
     "youApplied": "You applied for this shift"
   },
   "attendee": {
-    "attendees": "No attendees | Attendee | Attendees"
+    "attendees": "No one has been assigned to a team | Attendee | Attendees"
   }
 }
