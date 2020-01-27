@@ -111,7 +111,7 @@ namespace Server.Controllers
                     .SingleOrDefault();
                 if (shift == null) return BadRequest();
                 if (dto.CategoryId != shift.CategoryId) {
-                if (_db.Participation.GetEligibilityByCategory(personId, projectId, shift.CategoryId)?.ShiftsWrite != true) return Forbid();
+                    if (_db.Participation.GetEligibilityByCategory(personId, projectId, shift.CategoryId)?.ShiftsWrite != true) return Forbid();
                 }
 
                 shift.CategoryId = dto.CategoryId;
@@ -125,6 +125,58 @@ namespace Server.Controllers
                 var updatedShift = _db.Shift
                     .FindByCondition(x => x.Id == shiftId)
                     .Include(x => x.Category)
+                    .Single();
+
+                return Ok(_mapper.Map<ShiftDto>(updatedShift));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in UpdateShift: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("shifts/{shiftId}/assignments")]
+        public ActionResult<ShiftDto> MakeAssignment(Guid personId, Guid projectId, Guid shiftId, [FromBody] MakeAssignmentDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest();
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+                if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
+
+                var shift = _db.Shift
+                    .FindByCondition(x => x.Id == shiftId)
+                    .Include(x => x.Applications)
+                    .Include(x => x.Attendees)
+                    .SingleOrDefault();
+                if (shift == null) return BadRequest();
+                if (_db.Participation.GetEligibilityByCategory(personId, projectId, shift.CategoryId)?.ShiftsWrite != true) return Forbid();
+
+                foreach (var attendee in shift.Attendees)
+                {
+                    _db.Attendee.Delete(attendee);
+                }
+
+                foreach (var createAttendeeDto in dto.Attendees)
+                {
+                    var attendee = _mapper.Map<Attendee>(createAttendeeDto);
+                    attendee.ShiftId = shiftId;
+
+                    if (!shift.Applications.Any(x => x.PersonId == attendee.PersonId)) return Forbid();
+                    // TODO: check teamId
+
+                    _db.Attendee.Create(attendee);
+                }
+
+                _db.Save();
+
+                var updatedShift = _db.Shift
+                    .FindByCondition(x => x.Id == shiftId)
+                    .Include(x => x.Category)
+                    .Include(x => x.Applications).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
+                    .Include(x => x.Attendees).ThenInclude(x => x.Team)
+                    .Include(x => x.Attendees).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
                     .Single();
 
                 return Ok(_mapper.Map<ShiftDto>(updatedShift));
