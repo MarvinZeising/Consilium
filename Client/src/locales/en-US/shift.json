@@ -24,17 +24,17 @@
     "deleteDescription": "Do you really want to delete this category? This will also delete all shifts of this category. (even past ones)",
     "nameDescription": "The name of the category."
   },
-  "task": {
-    "tasks": "No tasks have been defined, yet. | Task | Tasks",
-    "description": "Every team in a shift belongs to a task.",
-    "create": "Add Task",
-    "createDescription": "Create a new task.",
-    "update": "Update Task",
-    "updateDescription": "You can update this task.",
-    "delete": "Delete Task",
-    "deleteDescription": "Do you really want to delete this task?",
-    "nameDescription": "The name of the task.",
-    "descriptionDescription": "Some useful description text for the participants to know what a team that is assigned this task is meant to do.",
+  "team": {
+    "teams": "No teams have been defined, yet. | Team | Teams",
+    "description": "Teams are a way of grouping people inside a shift for different assignments. Attendees of a shift are never directly in that shift. Rather, they are always in a team inside the shift.",
+    "create": "Add Team",
+    "createDescription": "Create a new team.",
+    "update": "Update Team",
+    "updateDescription": "You can update this team.",
+    "delete": "Delete Team",
+    "deleteDescription": "Do you really want to delete this team?",
+    "nameDescription": "The name of the team.",
+    "descriptionDescription": "Some useful description text for the participants to know what the attendees of this team are meant to do.",
     "helpLink": "Help link",
     "helpLinkDescription": "A link to a page with more detailed information. e.g. a link to one this project's knowledge base articles, to an external video platform, a map, or something else.",
     "helpLinkFormat": "The link must be a valid URL. It has to start with https://"

@@ -7,8 +7,7 @@
       <v-btn
         v-on="on"
         text
-        v-t="'core.edit'"
-        @click="opened"
+        v-t="'shift.team.create'"
       />
     </template>
     <v-card>
@@ -20,12 +19,12 @@
           flat
           color="accent"
         >
-          <v-toolbar-title v-t="'shift.task.update'" />
+          <v-toolbar-title v-t="'shift.team.create'" />
         </v-toolbar>
         <v-card-text>
           <i
             class="subtitle-1"
-            v-t="'shift.task.updateDescription'"
+            v-t="'shift.team.createDescription'"
           />
         </v-card-text>
         <v-card-text class="pa-2">
@@ -33,20 +32,20 @@
 
             <NameControl
               :model="nameModel"
-              description="shift.task.nameDescription"
+              description="shift.team.nameDescription"
             />
 
             <TextareaControl
               :model="descriptionModel"
               label="core.description"
-              description="shift.task.descriptionDescription"
+              description="shift.team.descriptionDescription"
               :maxLength="1000"
             />
 
             <TextControl
               :model="helpLinkModel"
-              label="shift.task.helpLink"
-              description="shift.task.helpLinkDescription"
+              label="shift.team.helpLink"
+              description="shift.team.helpLinkDescription"
               :maxLength="1000"
               :customRules="linkRules"
             />
@@ -57,13 +56,12 @@
         <v-divider />
 
         <v-card-actions>
+          <v-spacer />
           <v-btn
             text
             v-t="'core.cancel'"
             @click.stop="dialog = false"
           />
-          <v-spacer />
-          <DeleteTaskDialog :task="task" />
           <v-btn
             text
             type="submit"
@@ -80,56 +78,48 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
-import TaskModule from '../../store/tasks'
-import { Role, Task } from '../../models'
-import DeleteTaskDialog from './DeleteTaskDialog.vue'
+import ProjectModule from '../../store/projects'
+import TeamModule from '../../store/teams'
 import NameControl from '../controls/NameControl.vue'
 import TextControl from '../controls/TextControl.vue'
 import TextareaControl from '../controls/TextareaControl.vue'
+import { Category, Eligibility, Team } from '../../models'
 
 @Component({
   components: {
-    DeleteTaskDialog,
     NameControl,
     TextControl,
     TextareaControl,
   },
 })
-export default class UpdateTaskDialog extends Vue {
-  private taskModule = getModule(TaskModule, this.$store)
-
-  @Prop(Task)
-  private readonly task?: Task
+export default class CreateTeamDialog extends Vue {
+  private projectModule = getModule(ProjectModule, this.$store)
+  private teamModule = getModule(TeamModule, this.$store)
 
   private dialog: any = false
   private valid: any = null
   private loading: boolean = false
 
+  private team = Team.create({})
   private nameModel = { value: '' }
   private descriptionModel = { value: '' }
   private helpLinkModel = { value: '' }
   private linkRules = [
-    (v: string) => !v || /^https:\/\/.+\..{2,}$/.test(v) || i18n.t('shift.task.helpLinkFormat')
+    (v: string) => !v || /^https:\/\/.+\..{2,}$/.test(v) || i18n.t('shift.team.helpLinkFormat')
   ]
 
-  private opened() {
-    this.nameModel = { value: this.task?.name || '' }
-    this.descriptionModel = { value: this.task?.description || '' }
-    this.helpLinkModel = { value: this.task?.helpLink || '' }
-  }
-
   private async save() {
-    if (this.valid && this.task) {
+    if (this.valid) {
       this.loading = true
 
-      this.task.name = this.nameModel.value
-      this.task.description = this.descriptionModel.value
-      this.task.helpLink = this.helpLinkModel.value
+      this.team.name = this.nameModel.value
+      this.team.description = this.descriptionModel.value
+      this.team.helpLink = this.helpLinkModel.value
 
-      await this.taskModule.updateTask(this.task)
+      await this.teamModule.createTeam(this.team)
 
       this.loading = false
       this.dialog = false

@@ -3,7 +3,7 @@ import { Person, Gender, Congregation, Assignment, Privilege } from './person'
 import { Project } from './project'
 import { Participation, ParticipationStatus, Role } from './participation'
 import { Topic, Article } from './knowledgeBase'
-import { Task, Category, Eligibility, Shift, Application } from './shift'
+import { Team, Category, Eligibility, Shift, Application } from './shift'
 
 enum Exceptions {
   ProjectNotFound = 'ProjectNotFoundException',
@@ -27,7 +27,7 @@ export {
   Participation,
   ParticipationStatus,
   Role,
-  Task,
+  Team,
   Category,
   Eligibility,
   Shift,

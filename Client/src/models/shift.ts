@@ -158,9 +158,9 @@ class Application {
 
 }
 
-class Task {
+class Team {
   public static create(data: any) {
-    const task = new Task(
+    const team = new Team(
       data.id,
       data.projectId,
       data.name,
@@ -169,8 +169,8 @@ class Task {
       data.createdTime,
       data.lastUpdatedTime)
 
-    task.project = data.project ? Project.create(data.project) : undefined
-    return task
+    team.project = data.project ? Project.create(data.project) : undefined
+    return team
   }
 
   public id: string
@@ -200,15 +200,15 @@ class Task {
     this.lastUpdatedTime = lastUpdatedTime
   }
 
-  public copyFrom(task: Task) {
-    this.id = task.id
-    this.projectId = task.projectId
-    this.project = task.project
-    this.name = task.name
-    this.description = task.description
-    this.helpLink = task.helpLink
-    this.createdTime = task.createdTime
-    this.lastUpdatedTime = task.lastUpdatedTime
+  public copyFrom(team: Team) {
+    this.id = team.id
+    this.projectId = team.projectId
+    this.project = team.project
+    this.name = team.name
+    this.description = team.description
+    this.helpLink = team.helpLink
+    this.createdTime = team.createdTime
+    this.lastUpdatedTime = team.lastUpdatedTime
   }
 }
 
@@ -361,7 +361,7 @@ class Eligibility {
 }
 
 export {
-  Task,
+  Team,
   Category,
   Eligibility,
   Shift,

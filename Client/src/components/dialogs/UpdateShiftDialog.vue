@@ -106,7 +106,7 @@ import TimeControl from '../controls/TimeControl.vue'
 import TextControl from '../controls/TextControl.vue'
 import CategoryControl from '../controls/CategoryControl.vue'
 import DeleteShiftDialog from '../dialogs/DeleteShiftDialog.vue'
-import { Category, Eligibility, Task, Shift } from '../../models'
+import { Category, Shift } from '../../models'
 
 @Component({
   components: {

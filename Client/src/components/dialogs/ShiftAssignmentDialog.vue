@@ -35,16 +35,16 @@
               <v-list-item-content>
                 <v-list-item-title v-text="application.person.getFullName" />
                 <v-list-item-subtitle v-text="application.person.congregation.name" />
-                <!-- // TODO: use user-decided tasks -->
+                <!-- // TODO: use user-decided teams -->
                 <div class="mt-1">
                   <v-chip
-                    v-for="(task, taskIndex) in projectModule.getActiveProject.getTasks"
-                    :key="taskIndex"
+                    v-for="(team, teamIndex) in projectModule.getActiveProject.getTeams"
+                    :key="teamIndex"
                     class="mt-1 mr-1"
-                    v-text="task.name"
+                    v-text="team.name"
                     small
-                    :color="assignments[application.personId] === task.id ? 'accent' : ''"
-                    @click="toggleTeam(application.personId, task.id)"
+                    :color="assignments[application.personId] === team.id ? 'accent' : ''"
+                    @click="toggleTeam(application.personId, team.id)"
                   />
                 </div>
               </v-list-item-content>
@@ -68,11 +68,11 @@
             dense
           >
             <div
-              v-for="(task, taskIndex) in projectModule.getActiveProject.getTasks"
-              :key="taskIndex"
+              v-for="(team, teamIndex) in projectModule.getActiveProject.getTeams"
+              :key="teamIndex"
             >
-              <v-subheader v-if="getAttendees(task.id).length > 0">
-                {{ task.name }}
+              <v-subheader v-if="getAttendees(team.id).length > 0">
+                {{ team.name }}
                 <v-spacer />
                 <v-chip
                   x-small
@@ -86,11 +86,11 @@
                   class="ml-1"
                   color="error"
                 >
-                  {{ getAttendees(task.id).length }} / 5
+                  {{ getAttendees(team.id).length }} / 5
                 </v-chip>
               </v-subheader>
               <v-list-item
-                v-for="(attendee, attendeeIndex) in getAttendees(task.id)"
+                v-for="(attendee, attendeeIndex) in getAttendees(team.id)"
                 :key="attendeeIndex"
               >
                 <v-list-item-content>
@@ -176,17 +176,17 @@ export default class ShiftAssignmentDialog extends Vue {
     return false
   }
 
-  private toggleTeam(personId: string, taskId: string) {
-    if (this.assignments[personId] === taskId) {
+  private toggleTeam(personId: string, teamId: string) {
+    if (this.assignments[personId] === teamId) {
       Vue.set(this.assignments, personId, undefined)
     } else {
-      Vue.set(this.assignments, personId, taskId)
+      Vue.set(this.assignments, personId, teamId)
     }
   }
 
-  private getAttendees(taskId: string) {
+  private getAttendees(teamId: string) {
     return Object.keys(this.assignments)
-      .filter((x) => this.assignments[x] === taskId)
+      .filter((x) => this.assignments[x] === teamId)
       .map((x) => this.shift?.applications.find((y) => y.personId === x)?.person)
   }
 

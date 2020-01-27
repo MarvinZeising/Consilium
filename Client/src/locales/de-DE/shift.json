@@ -24,17 +24,17 @@
     "deleteDescription": "Möchtest du diese Kategorie wirklich löschen? Dadurch werden auch alle vergangen Schichten dieser Kategorie gelöscht.",
     "nameDescription": "Der Name der Kategorie."
   },
-  "task": {
-    "tasks": "Es wurden noch keine Zuteilungen angelegt. | Zuteilung | Zuteilungen",
-    "description": "Jedes Team einer Schicht nimmt eine Zuteilung wahr.",
-    "create": "Zuteilung hinzufügen",
-    "createDescription": "Erstelle eine neue Zuteilung.",
-    "update": "Zuteilung bearbeiten",
-    "updateDescription": "Die kannst diese Zuteilung bearbeiten.",
-    "delete": "Zuteilung löschen",
-    "deleteDescription": "Möchtest du diese Zuteilung wirklich löschen?",
-    "nameDescription": "Der Name der Zuteilung.",
-    "descriptionDescription": "Eine hilfreiche Beschreibung dieser Zuteilung, die den Teilnehmern zu verstehen hilft, was sie als Team (das diese Zuteilung wahrnimmt) tun sollen.",
+  "team": {
+    "teams": "Es wurden noch keine Teams angelegt. | Team | Teams",
+    "description": "Team sind ein Weg die Teilnehmer einer Schicht zu gruppieren. Schicht-Teilnehmer sind nie direkt einer Schicht zugeteilt, sondern einem Team innerhalb einer Schicht.",
+    "create": "Team hinzufügen",
+    "createDescription": "Erstelle ein neues Team.",
+    "update": "Team bearbeiten",
+    "updateDescription": "Die kannst dieses Team bearbeiten.",
+    "delete": "Team löschen",
+    "deleteDescription": "Möchtest du dieses Team wirklich löschen?",
+    "nameDescription": "Der Name des Teams.",
+    "descriptionDescription": "Eine hilfreiche Beschreibung dieses Teams, die den Teilnehmern zu verstehen hilft, was sie als Teilnehmer dieses Teams tun sollen.",
     "helpLink": "Hilfe-Link",
     "helpLinkDescription": "Ein Hilfe-Link zu weiteren Informationen. Kann z.B. zu einer der Hilfeseiten dieses Projektes führen, zu einer externen Video-Plattform, einer Karte oder anderem.",
     "helpLinkFormat": "Der Link muss eine gültige URL sein. Er muss mit https:// beginnen"

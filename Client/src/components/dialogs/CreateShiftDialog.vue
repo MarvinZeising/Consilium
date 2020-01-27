@@ -108,7 +108,7 @@ import DateControl from '../controls/DateControl.vue'
 import TimeControl from '../controls/TimeControl.vue'
 import TextControl from '../controls/TextControl.vue'
 import CategoryControl from '../controls/CategoryControl.vue'
-import { Category, Eligibility, Task, Shift } from '../../models'
+import { Category, Eligibility, Team, Shift } from '../../models'
 
 @Component({
   components: {

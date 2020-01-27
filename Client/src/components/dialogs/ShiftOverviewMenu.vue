@@ -100,7 +100,7 @@ import { Shift } from '../../models'
     DeleteApplicationDialog,
   },
 })
-export default class CreateTaskDialog extends Vue {
+export default class CreateTeamDialog extends Vue {
   private userModule = getModule(UserModule, this.$store)
   private personModule = getModule(PersonModule, this.$store)
 

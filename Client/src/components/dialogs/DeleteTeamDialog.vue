@@ -17,13 +17,13 @@
         <v-card-title>
           <span
             class="headline"
-            v-t="'shift.task.delete'"
+            v-t="'shift.team.delete'"
           />
         </v-card-title>
         <v-card-text>
           <p
             class="subtitle-1"
-            v-t="'shift.task.deleteDescription'"
+            v-t="'shift.team.deleteDescription'"
           />
         </v-card-text>
         <v-card-actions>
@@ -40,7 +40,7 @@
             v-t="'core.delete'"
             :loading="loading"
             :disabled="!valid"
-            @click.stop="deleteTask"
+            @click.stop="deleteTeam"
           />
         </v-card-actions>
       </v-form>
@@ -52,25 +52,25 @@
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
-import TaskModule from '../../store/tasks'
-import { Project, Task } from '../../models'
+import TeamModule from '../../store/teams'
+import { Project, Team } from '../../models'
 
 @Component
-export default class DeleteTaskDialog extends Vue {
-  private taskModule = getModule(TaskModule, this.$store)
+export default class DeleteTeamDialog extends Vue {
+  private teamModule = getModule(TeamModule, this.$store)
 
-  @Prop(Task)
-  private readonly task?: Task
+  @Prop(Team)
+  private readonly team?: Team
 
   private valid: any = false
   private dialog: boolean = false
   private loading: boolean = false
 
-  private async deleteTask() {
-    if (this.task) {
+  private async deleteTeam() {
+    if (this.team) {
       this.loading = true
 
-      await this.taskModule.deleteTask(this.task.id)
+      await this.teamModule.deleteTeam(this.team.id)
 
       this.loading = false
     }

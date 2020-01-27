@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Module, VuexModule, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
 import router from '../router'
-import { Project, Participation, ParticipationStatus, Role, Topic, Category, Task } from '../models'
+import { Project, Participation, Role, Topic, Category, Team } from '../models'
 
 @Module({ dynamic: true, store, name: 'ProjectModule' })
 export default class ProjectModule extends VuexModule {
@@ -376,28 +376,28 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public upsertProjectTasks({ projectId, tasks, clearFirst }: {
+  public upsertProjectTeams({ projectId, teams, clearFirst }: {
     projectId: string,
-    tasks: Task[],
+    teams: Team[],
     clearFirst: boolean,
   }) {
     this.projects = this.projects.map((project) => {
       if (project.id === projectId) {
         if (clearFirst) {
-          project.tasks = tasks
+          project.teams = teams
           return project
         }
-        project.tasks = project.tasks.map((task) => {
-          const updatedTask = tasks.find((x) => x.id === task.id)
-          if (updatedTask) {
-            task.copyFrom(updatedTask)
+        project.teams = project.teams.map((team) => {
+          const updatedTeam = teams.find((x) => x.id === team.id)
+          if (updatedTeam) {
+            team.copyFrom(updatedTeam)
           }
-          return task
+          return team
         })
-        for (const updatedTask of tasks) {
-          const taskAlreadyExists = project.tasks.find((x) => x.id === updatedTask.id)
-          if (!taskAlreadyExists) {
-            project.tasks.push(updatedTask)
+        for (const updatedTeam of teams) {
+          const teamAlreadyExists = project.teams.find((x) => x.id === updatedTeam.id)
+          if (!teamAlreadyExists) {
+            project.teams.push(updatedTeam)
           }
         }
       }
@@ -406,13 +406,13 @@ export default class ProjectModule extends VuexModule {
   }
 
   @Mutation
-  public removeProjectTask({ projectId, taskId }: {
+  public removeProjectTeam({ projectId, teamId }: {
     projectId: string,
-    taskId: string,
+    teamId: string,
   }) {
     this.projects = this.projects.map((p) => {
       if (p.id === projectId) {
-        p.tasks = p.tasks.filter((x) => x.id !== taskId)
+        p.teams = p.teams.filter((x) => x.id !== teamId)
       }
       return p
     })
