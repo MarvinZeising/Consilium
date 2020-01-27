@@ -47,5 +47,8 @@
     "delete": "Cancel Application",
     "deleteDescription": "Do you really want to cancel your application for this shift?",
     "youApplied": "You applied for this shift"
+  },
+  "attendee": {
+    "attendees": "No attendees | Attendee | Attendees"
   }
 }

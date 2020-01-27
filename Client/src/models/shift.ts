@@ -17,6 +17,10 @@ class Shift {
       shift.applications = data.applications.map((x: Application) => Application.create(x))
     }
 
+    if (data.attendees) {
+      shift.attendees = data.attendees.map((x: Attendee) => Attendee.create(x))
+    }
+
     return shift
   }
 
@@ -29,6 +33,7 @@ class Shift {
   public createdTime: string
   public lastUpdatedTime: string
   public applications: Application[] = []
+  public attendees: Attendee[] = []
 
   constructor(
     id: string,
@@ -51,6 +56,29 @@ class Shift {
   public get getApplications() {
     return [...this.applications].sort((a, b) => {
       if (a.person && b.person) {
+        if (a.person.lastname < b.person.lastname) {
+          return -1
+        } else if (a.person.lastname > b.person.lastname) {
+          return 1
+        } else if (a.person.firstname < b.person.firstname) {
+          return -1
+        } else if (a.person.firstname > b.person.firstname) {
+          return 1
+        } else {
+          return 0
+        }
+      }
+      return 0
+    })
+  }
+
+  public get getAttendees() {
+    return [...this.attendees].sort((a, b) => {
+      if (a.isCaptain && !b.isCaptain) {
+        return -1
+      } else if (!a.isCaptain && b.isCaptain) {
+        return 1
+      } else if (a.person && b.person) {
         if (a.person.lastname < b.person.lastname) {
           return -1
         } else if (a.person.lastname > b.person.lastname) {
@@ -99,6 +127,7 @@ class Shift {
     this.createdTime = shift.createdTime
     this.lastUpdatedTime = shift.lastUpdatedTime
     this.applications = shift.applications
+    this.attendees = shift.attendees
   }
 
 }
@@ -154,6 +183,63 @@ class Application {
     this.notes = application.notes
     this.createdTime = application.createdTime
     this.lastUpdatedTime = application.lastUpdatedTime
+  }
+
+}
+
+class Attendee {
+  public static create(data: any) {
+    const attendee = new Attendee(
+      data.id,
+      data.personId,
+      data.shiftId,
+      data.teamId,
+      data.isCaptain,
+      data.createdTime,
+      data.lastUpdatedTime)
+    attendee.shift = data.shift ? Shift.create(data.shift) : undefined
+    attendee.team = data.team ? Team.create(data.team) : undefined
+    attendee.person = data.person ? Person.create(data.person) : undefined
+    return attendee
+  }
+
+  public id: string
+  public personId: string
+  public person?: Person
+  public shiftId: string
+  public shift?: Shift
+  public teamId: string
+  public team?: Team
+  public isCaptain: boolean
+  public createdTime: string
+  public lastUpdatedTime: string
+
+  constructor(
+    id: string,
+    personId: string,
+    shiftId: string,
+    teamId: string,
+    isCaptain: boolean,
+    createdTime: string,
+    lastUpdatedTime: string
+  ) {
+    this.id = id
+    this.personId = personId
+    this.shiftId = shiftId
+    this.teamId = teamId
+    this.isCaptain = isCaptain
+    this.createdTime = createdTime
+    this.lastUpdatedTime = lastUpdatedTime
+  }
+
+  public copyFrom(attendee: Attendee) {
+    this.id = attendee.id
+    this.personId = attendee.personId
+    this.shiftId = attendee.shiftId
+    this.teamId = attendee.teamId
+    this.isCaptain = attendee.isCaptain
+    this.createdTime = attendee.createdTime
+    this.lastUpdatedTime = attendee.lastUpdatedTime
   }
 
 }

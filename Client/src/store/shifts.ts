@@ -61,26 +61,35 @@ export default class ShiftModule extends VuexModule {
     const response = await axios.put(`/persons/${personId}/projects/${projectId}/shifts/${shift.id}`, shift)
     const updatedShift = Shift.create(response.data)
 
-    if (shift.oldCategoryId) {
-      const oldCategory: Category = await this.context.dispatch('getCategory', shift.oldCategoryId)
-      if (oldCategory) {
-        oldCategory.shifts = oldCategory.shifts.filter((x) => x.id !== shift.id)
-      }
-      const newCategory: Category = await this.context.dispatch('getCategory', shift.categoryId)
-      if (newCategory) {
-        newCategory.shifts.push(updatedShift)
-      }
-    } else {
-      const category: Category = await this.context.dispatch('getCategory', shift.categoryId)
-      if (category) {
-        category.shifts = category.shifts.map((x) => {
-          if (x.id === shift.id) {
-            x.copyFrom(updatedShift)
-          }
-          return x
-        })
-      }
-    }
+    await this.context.dispatch('upsertShift', {
+      oldCategoryId: shift.oldCategoryId,
+      newCategoryId: shift.categoryId,
+      shiftId: shift.id,
+      shift: updatedShift,
+    })
+  }
+
+  @Action
+  public async makeAssignment({ shiftId, assignments}: {
+    shiftId: string,
+    assignments: Array<{
+      personId: string,
+      teamId: string,
+      isCaptain: boolean
+    }>,
+  }) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+
+    const response = await axios.put(
+      `/persons/${personId}/projects/${projectId}/shifts/${shiftId}/assignments`, {
+        attendees: assignments
+      })
+    const updatedShift = Shift.create(response.data)
+
+    await this.context.dispatch('upsertShift', {
+      shiftId,
+      shift: updatedShift,
+    })
   }
 
   @Action
@@ -92,6 +101,35 @@ export default class ShiftModule extends VuexModule {
     const category: Category = await this.context.dispatch('getCategory', shift.categoryId)
     if (category) {
       category.shifts = category.shifts.filter((x) => x.id !== shift.id)
+    }
+  }
+
+  @Action
+  protected async upsertShift(data: {
+    oldCategoryId: string,
+    newCategoryId: string,
+    shiftId: string,
+    shift: Shift,
+  }) {
+    if (data.oldCategoryId && data.newCategoryId) {
+      const oldCategory: Category = await this.context.dispatch('getCategory', data.oldCategoryId)
+      if (oldCategory) {
+        oldCategory.shifts = oldCategory.shifts.filter((x) => x.id !== data.shiftId)
+      }
+      const newCategory: Category = await this.context.dispatch('getCategory', data.newCategoryId)
+      if (newCategory) {
+        newCategory.shifts.push(data.shift)
+      }
+    } else {
+      const category: Category = await this.context.dispatch('getCategory', data.shift.categoryId)
+      if (category) {
+        category.shifts = category.shifts.map((x) => {
+          if (x.id === data.shiftId) {
+            x.copyFrom(data.shift)
+          }
+          return x
+        })
+      }
     }
   }
 

@@ -9,16 +9,19 @@
         v-on="on"
         icon
         title="TODO: add title"
+        @click="opened"
       >
         <v-icon>thumbs_up_down</v-icon>
       </v-btn>
     </template>
     <v-card>
       <v-toolbar
-        dark
+        flat
         color="accent"
       >
         <v-toolbar-title>Handle Shift Applications</v-toolbar-title>
+        <v-spacer />
+        <v-toolbar-title>DRAFT</v-toolbar-title>
       </v-toolbar>
 
       <v-row
@@ -32,7 +35,7 @@
               v-for="(application, applicationIndex) in shift.applications"
               :key="applicationIndex"
             >
-              <v-list-item-content>
+              <v-list-item-content v-if="application.person">
                 <v-list-item-title v-text="application.person.getFullName" />
                 <v-list-item-subtitle v-text="application.person.congregation.name" />
                 <!-- // TODO: use user-decided teams -->
@@ -93,7 +96,7 @@
                 v-for="(attendee, attendeeIndex) in getAttendees(team.id)"
                 :key="attendeeIndex"
               >
-                <v-list-item-content>
+                <v-list-item-content v-if="attendee">
                   <v-list-item-title v-text="attendee.getFullName" />
                 </v-list-item-content>
               </v-list-item>
@@ -114,18 +117,25 @@
         <v-spacer />
         <v-btn
           text
-          type="submit"
+          type=""
+          v-text="'Reset draft'"
+          :disabled="saving || releasing || isSaved"
+          @click.stop="reset"
+        />
+        <v-btn
+          text
           v-text="'Save draft'"
-          :loading="loading"
+          :loading="saving"
+          :disabled="releasing || isSaved"
           @click.stop="save"
         />
         <v-btn
           text
-          type="submit"
           color="primary"
           v-text="'Release'"
-          :loading="loading"
-          @click.stop="save"
+          :loading="releasing"
+          :disabled="saving"
+          @click.stop="release"
         />
       </v-card-actions>
 
@@ -136,33 +146,30 @@
 
 <script lang="ts">
 import moment from 'moment'
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import UserModule from '../../store/users'
 import PersonModule from '../../store/persons'
 import ProjectModule from '../../store/projects'
-import UpdateShiftDialog from './UpdateShiftDialog.vue'
-import CreateApplicationDialog from './CreateApplicationDialog.vue'
-import DeleteApplicationDialog from './DeleteApplicationDialog.vue'
+import ShiftModule from '../../store/shifts'
 import { Shift, Person } from '../../models'
 
-@Component({
-  components: {
-    UpdateShiftDialog,
-    CreateApplicationDialog,
-    DeleteApplicationDialog,
-  },
-})
+@Component
 export default class ShiftAssignmentDialog extends Vue {
   private userModule = getModule(UserModule, this.$store)
   private personModule = getModule(PersonModule, this.$store)
   private projectModule = getModule(ProjectModule, this.$store)
+  private shiftModule = getModule(ShiftModule, this.$store)
 
   @Prop(Shift)
   private readonly shift?: Shift
 
   private dialog = false
+  private saving = false
+  private releasing = false
+
+  private savedAssignments: any = {}
   private assignments: any = {}
 
   private get canEdit() {
@@ -174,6 +181,29 @@ export default class ShiftAssignmentDialog extends Vue {
       }
     }
     return false
+  }
+
+  private get isSaved() {
+    if (this.assignments.length !== this.savedAssignments.length) {
+      return false
+    }
+
+    for (const personId of Object.keys(this.assignments)) {
+      if (this.assignments[personId] !== this.savedAssignments[personId]) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  private opened() {
+    if (this.shift?.attendees) {
+      for (const attendee of this.shift.attendees) {
+        Vue.set(this.assignments, attendee.personId, attendee.teamId)
+      }
+      Object.assign(this.savedAssignments, this.assignments)
+    }
   }
 
   private toggleTeam(personId: string, teamId: string) {
@@ -191,6 +221,55 @@ export default class ShiftAssignmentDialog extends Vue {
   }
 
   private openPerson() {}
+
+  private async reset() {
+    const copy = {}
+    Object.assign(copy, this.savedAssignments)
+    Vue.set(this, 'assignments', copy)
+  }
+
+  private async save() {
+    if (this.shift) {
+      this.saving = true
+
+      const assignments = Object.keys(this.assignments)
+        .filter((personId) => this.assignments[personId] !== undefined)
+        .map((personId) => {
+          return {
+            personId,
+            teamId: this.assignments[personId],
+            isCaptain: false,
+          }
+        })
+
+      await this.shiftModule.makeAssignment({
+        shiftId: this.shift?.id,
+        assignments,
+      })
+
+      const copy = {}
+      Object.assign(copy, this.assignments)
+      Vue.set(this, 'savedAssignments', copy)
+
+      this.saving = false
+      this.emitSaved()
+      this.dialog = true
+    }
+  }
+
+  private async release() {
+    if (this.shift) {
+      this.releasing = true
+
+      if (!this.isSaved) {
+        await this.save()
+      }
+
+      this.releasing = false
+    }
+  }
+
+  @Emit('saved') private emitSaved() { /* nothing to do */ }
 
 }
 </script>

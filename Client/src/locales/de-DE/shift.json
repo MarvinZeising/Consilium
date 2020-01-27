@@ -47,5 +47,8 @@
     "delete": "Bewerbung zurückziehen",
     "deleteDescription": "Möchtest du diese Bewerbung wirklich zurückziehen?",
     "youApplied": "Du hast dich beworben"
+  },
+  "attendee": {
+    "attendees": "Keine Teilnehmer | Teilnehmer | Teilnehmer"
   }
 }

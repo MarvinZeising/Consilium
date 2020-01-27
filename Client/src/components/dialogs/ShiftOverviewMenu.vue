@@ -8,17 +8,24 @@
   >
     <v-card
       v-if="getShift"
-      min-width="350px"
+      min-width="400px"
+      max-width="500px"
     >
       <v-toolbar
         :color="model.event.color"
         prominent
+        dark
       >
         <v-toolbar-title>
+          {{ userModule.getUser.formatDate(getShift.date) }},
           {{ getShift.getTimespan(userModule.getUser) }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <ShiftAssignmentDialog :shift="getShift" />
+        <ShiftAssignmentDialog
+          v-if="canEdit"
+          :shift="getShift"
+          @saved="model.model = true"
+        />
         <UpdateShiftDialog
           v-if="canEdit"
           :shift="getShift"
@@ -31,6 +38,7 @@
           <v-icon>close</v-icon>
         </v-btn>
       </v-toolbar>
+
       <v-card-actions
         v-if="myApplication"
         class="accent"
@@ -46,7 +54,37 @@
         <v-spacer />
         <CreateApplicationDialog :shift="getShift" />
       </v-card-actions>
-      <v-list v-if="getShift.applications.length > 0">
+
+      <v-list v-if="getShift.attendees.length > 0">
+        <v-subheader v-if="canEdit">
+          {{ $tc('shift.attendee.attendees', 2) }}
+          <v-spacer />
+          <v-btn
+            icon
+            @click="showAttendees = !showAttendees"
+          >
+            <v-icon v-if="showAttendees">keyboard_arrow_up</v-icon>
+            <v-icon v-else>keyboard_arrow_down</v-icon>
+          </v-btn>
+        </v-subheader>
+        <div v-if="showAttendees">
+          <v-list-item
+            v-for="(attendee, index) in getShift.getAttendees"
+            :key="index"
+            @click="openPerson()"
+          >
+            <v-list-item-content>
+              <v-list-item-title>{{ attendee.person.getFullName }}</v-list-item-title>
+              <v-list-item-subtitle>{{ attendee.person.congregation.name }}</v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-icon>info</v-icon>
+            </v-list-item-action>
+          </v-list-item>
+        </div>
+      </v-list>
+
+      <v-list v-if="canEdit && getShift.applications.length > 0">
         <v-subheader>
           {{ $tc('shift.application.applicants', 2) }}
           <v-spacer />
@@ -62,7 +100,7 @@
           <v-list-item
             v-for="(application, index) in getShift.getApplications"
             :key="index"
-            @click=""
+            @click="openPerson()"
           >
             <v-list-item-avatar>
               <v-icon color="accent">emoji_people</v-icon>
@@ -74,6 +112,7 @@
           </v-list-item>
         </div>
       </v-list>
+
     </v-card>
   </v-menu>
 
@@ -81,7 +120,7 @@
 
 <script lang="ts">
 import moment from 'moment'
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import UserModule from '../../store/users'
@@ -112,6 +151,7 @@ export default class CreateTeamDialog extends Vue {
   }
 
   private showApplicants = true
+  private showAttendees = true
 
   private get canEdit() {
     const role = this.personModule.getActiveRole
@@ -132,6 +172,15 @@ export default class CreateTeamDialog extends Vue {
     const personId = this.personModule.getActivePersonId
     return this.getShift?.applications.find((x) => x.personId === personId)
   }
+
+  @Watch('model.event')
+  private async onModelChanged(val: any, oldVal: any) {
+    setTimeout(() => {
+      this.showApplicants = val?.shift?.attendees.length === 0
+    }, 10)
+  }
+
+  private openPerson() {}
 
 }
 </script>
