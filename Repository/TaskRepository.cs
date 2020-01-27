@@ -4,9 +4,9 @@ using Entities.Models;
 
 namespace Repository
 {
-    public class TaskRepository : RepositoryBase<Task>, ITaskRepository
+    public class TeamRepository : RepositoryBase<Team>, ITeamRepository
     {
-        public TaskRepository(RepositoryContext repositoryContext)
+        public TeamRepository(RepositoryContext repositoryContext)
             : base(repositoryContext)
         {
         }

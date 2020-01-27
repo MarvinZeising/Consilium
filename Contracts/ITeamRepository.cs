@@ -2,7 +2,7 @@
 
 namespace Contracts
 {
-    public interface ITaskRepository : IRepositoryBase<Task>
+    public interface ITeamRepository : IRepositoryBase<Team>
     {
     }
 }

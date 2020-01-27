@@ -14,13 +14,13 @@ namespace Server.Controllers
     [Authorize]
     [ApiController]
     [Route("api/persons/{personId}/projects/{projectId}")]
-    public class TaskController : ControllerBase
+    public class TeamController : ControllerBase
     {
         private readonly IRepositoryWrapper _db;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
-        public TaskController(
+        public TeamController(
             IRepositoryWrapper db,
             ILoggerManager logger,
             IMapper mapper)
@@ -30,29 +30,29 @@ namespace Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("tasks")]
-        public ActionResult<IEnumerable<TaskDto>> GetProjectTasks(Guid personId, Guid projectId)
+        [HttpGet("teams")]
+        public ActionResult<IEnumerable<TeamDto>> GetProjectTeams(Guid personId, Guid projectId)
         {
             try
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
 
-                var tasks = _db.Task
+                var teams = _db.Team
                     .FindByCondition(x => x.ProjectId == projectId)
                     .ToList();
 
-                return Ok(_mapper.Map<IEnumerable<TaskDto>>(tasks));
+                return Ok(_mapper.Map<IEnumerable<TeamDto>>(teams));
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in GetProjectTasks: {e.Message}");
+                _logger.LogError($"ERROR in GetProjectTeams: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpPost("tasks")]
-        public ActionResult<TaskDto> CreateTask(Guid personId, Guid projectId, [FromBody] CreateTaskDto dto)
+        [HttpPost("teams")]
+        public ActionResult<TeamDto> CreateTeam(Guid personId, Guid projectId, [FromBody] CreateTeamDto dto)
         {
             try
             {
@@ -60,23 +60,23 @@ namespace Server.Controllers
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
 
-                var task = _mapper.Map<Task>(dto);
-                task.ProjectId = projectId;
+                var team = _mapper.Map<Team>(dto);
+                team.ProjectId = projectId;
 
-                _db.Task.Create(task);
+                _db.Team.Create(team);
                 _db.Save();
 
-                return Ok(_mapper.Map<TaskDto>(task));
+                return Ok(_mapper.Map<TeamDto>(team));
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in CreateTask: {e.Message}");
+                _logger.LogError($"ERROR in CreateTeam: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpPut("tasks/{taskId}")]
-        public ActionResult<TaskDto> UpdateTask(Guid personId, Guid projectId, Guid taskId, [FromBody] UpdateTaskDto dto)
+        [HttpPut("teams/{teamId}")]
+        public ActionResult<TeamDto> UpdateTeam(Guid personId, Guid projectId, Guid teamId, [FromBody] UpdateTeamDto dto)
         {
             try
             {
@@ -84,47 +84,47 @@ namespace Server.Controllers
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
 
-                var task = _db.Task
-                    .FindByCondition(x => x.Id == taskId && x.ProjectId == projectId)
+                var team = _db.Team
+                    .FindByCondition(x => x.Id == teamId && x.ProjectId == projectId)
                     .SingleOrDefault();
-                if (task == null) return BadRequest();
+                if (team == null) return BadRequest();
 
-                task.Name = dto.Name;
-                task.Description = dto.Description;
-                task.HelpLink = dto.HelpLink;
+                team.Name = dto.Name;
+                team.Description = dto.Description;
+                team.HelpLink = dto.HelpLink;
 
-                _db.Task.Update(task);
+                _db.Team.Update(team);
                 _db.Save();
 
-                return Ok(_mapper.Map<TaskDto>(task));
+                return Ok(_mapper.Map<TeamDto>(team));
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in UpdateTask: {e.Message}");
+                _logger.LogError($"ERROR in UpdateTeam: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpDelete("tasks/{taskId}")]
-        public IActionResult DeleteTask(Guid personId, Guid projectId, Guid taskId)
+        [HttpDelete("teams/{teamId}")]
+        public IActionResult DeleteTeam(Guid personId, Guid projectId, Guid teamId)
         {
             try
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
 
-                var task = _db.Task
-                    .FindByCondition(x => x.Id == taskId && x.ProjectId == projectId)
+                var team = _db.Team
+                    .FindByCondition(x => x.Id == teamId && x.ProjectId == projectId)
                     .SingleOrDefault();
 
-                _db.Task.Delete(task);
+                _db.Team.Delete(team);
                 _db.Save();
 
                 return Ok();
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in DeleteTask: {e.Message}");
+                _logger.LogError($"ERROR in DeleteTeam: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }

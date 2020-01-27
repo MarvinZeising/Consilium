@@ -3,7 +3,7 @@ using Entities.Validators;
 
 namespace Entities.DataTransferObjects
 {
-    public class CreateTaskDto
+    public class CreateTeamDto
     {
         [Required]
         [ValidName]

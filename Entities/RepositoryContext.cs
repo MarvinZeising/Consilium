@@ -17,7 +17,7 @@ namespace Entities
         public DbSet<Participation> Participations { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Team> Teams { get; set; }
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<Eligibility> Eligibilities { get; set; }

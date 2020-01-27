@@ -15,7 +15,7 @@ namespace Repository
         private IParticipationRepository _participation;
         private IRoleRepository _role;
         private ICategoryRepository _category;
-        private ITaskRepository _task;
+        private ITeamRepository _team;
         private IShiftRepository _shift;
         private IApplicationRepository _application;
         private IEligibilityRepository _eligibility;
@@ -95,15 +95,15 @@ namespace Repository
             }
         }
 
-        public ITaskRepository Task
+        public ITeamRepository Team
         {
             get
             {
-                if (_task == null)
+                if (_team == null)
                 {
-                    _task = new TaskRepository(_repositoryContext);
+                    _team = new TeamRepository(_repositoryContext);
                 }
-                return _task;
+                return _team;
             }
         }
 

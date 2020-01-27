@@ -8,7 +8,7 @@
         IParticipationRepository Participation { get; }
         IRoleRepository Role { get; }
         ICategoryRepository Category { get; }
-        ITaskRepository Task { get; }
+        ITeamRepository Team { get; }
         IShiftRepository Shift { get; }
         IApplicationRepository Application { get; }
         IEligibilityRepository Eligibility { get; }

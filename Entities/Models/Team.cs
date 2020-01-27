@@ -5,8 +5,8 @@ using Entities.Validators;
 
 namespace Entities.Models
 {
-    [Table("task")]
-    public class Task
+    [Table("team")]
+    public class Team
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

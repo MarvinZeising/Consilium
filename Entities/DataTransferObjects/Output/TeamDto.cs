@@ -2,7 +2,7 @@
 
 namespace Entities.DataTransferObjects
 {
-    public class TaskDto
+    public class TeamDto
     {
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }

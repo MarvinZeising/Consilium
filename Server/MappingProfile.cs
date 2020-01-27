@@ -41,8 +41,8 @@ namespace Server
             CreateMap<Category, CategoryDto>();
             CreateMap<CreateCategoryDto, Category>();
 
-            CreateMap<Task, TaskDto>();
-            CreateMap<CreateTaskDto, Task>();
+            CreateMap<Team, TeamDto>();
+            CreateMap<CreateTeamDto, Team>();
 
             CreateMap<Shift, ShiftDto>();
             CreateMap<CreateShiftDto, Shift>();
