@@ -170,7 +170,13 @@ export default class UserModule extends VuexModule {
 
   @Mutation
   protected applyTheme() {
-    vuetify.framework.theme.dark = this.user?.theme === Theme.Dark
+    if (this.user?.theme === Theme.Dark) {
+      vuetify.framework.theme.dark = true
+      document.getElementsByTagName('body')[0].style.backgroundColor = '#202020'
+    } else {
+      vuetify.framework.theme.dark = false
+      document.getElementsByTagName('body')[0].style.backgroundColor = ''
+    }
   }
 
 }
