@@ -54,6 +54,8 @@ namespace Server.Controllers
                         x.Date <= to)
                     .Include(x => x.Category)
                     .Include(x => x.Applications).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
+                    .Include(x => x.Attendees).ThenInclude(x => x.Team)
+                    .Include(x => x.Attendees).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
                     .ToList();
 
                 return Ok(_mapper.Map<IEnumerable<ShiftDto>>(shifts));
@@ -108,7 +110,9 @@ namespace Server.Controllers
                     .FindByCondition(x => x.Id == shiftId)
                     .SingleOrDefault();
                 if (shift == null) return BadRequest();
+                if (dto.CategoryId != shift.CategoryId) {
                 if (_db.Participation.GetEligibilityByCategory(personId, projectId, shift.CategoryId)?.ShiftsWrite != true) return Forbid();
+                }
 
                 shift.CategoryId = dto.CategoryId;
                 shift.Date = dto.Date;

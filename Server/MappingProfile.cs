@@ -49,6 +49,8 @@ namespace Server
 
             CreateMap<Application, ApplicationDto>();
             CreateMap<CreateApplicationDto, Application>();
+
+            CreateMap<Attendee, AttendeeDto>();
         }
     }
 }

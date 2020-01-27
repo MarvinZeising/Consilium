@@ -37,5 +37,7 @@ namespace Entities.Models
         public DateTime LastUpdatedTime { get; set; }
 
         public ICollection<Application> Applications { get; set; }
+
+        public ICollection<Attendee> Attendees { get; set; }
     }
 }
