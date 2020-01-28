@@ -2,6 +2,7 @@
 
   <v-dialog
     v-model="dialog"
+    :fullscreen="$vuetify.breakpoint.smAndDown"
     max-width="1000px"
   >
     <template v-slot:activator="{ on }">
@@ -23,6 +24,13 @@
         <v-spacer />
         <v-btn icon>
           <v-icon>info</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="$vuetify.breakpoint.smAndDown"
+          icon
+          @click="dialog = false"
+        >
+          <v-icon>close</v-icon>
         </v-btn>
       </v-toolbar>
 
