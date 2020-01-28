@@ -30,6 +30,18 @@ namespace Entities.Models
         [ValidTime]
         public int Duration { get; set; }
 
+        [Required]
+        [ValidShiftStatus]
+        public string Status { get; set; }
+
+        [Required]
+        [ValidShiftMode]
+        public string Mode { get; set; }
+
+        [Required]
+        [MaxLength(200)]
+        public string CalledOffReason { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
