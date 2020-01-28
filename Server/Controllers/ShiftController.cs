@@ -85,10 +85,15 @@ namespace Server.Controllers
 
                 var shift = _mapper.Map<Shift>(dto);
 
+                shift.Status = ShiftStatus.Draft.ToString();
+                shift.Mode = ShiftMode.Open.ToString();
+                shift.CalledOffReason = string.Empty;
+
                 _db.Shift.Create(shift);
                 _db.Save();
 
-                return Ok(_mapper.Map<ShiftDto>(shift));
+                var createdShift = _db.Shift.GetFullShift(shift.Id);
+                return Ok(_mapper.Map<ShiftDto>(createdShift));
             }
             catch (Exception e)
             {
