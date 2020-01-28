@@ -1,8 +1,8 @@
 <template>
-  <v-toolbar-items>
+  <v-toolbar-items v-if="projectModule.getActiveProject">
 
     <v-select
-      v-if="projectModule.getActiveProject"
+      v-if="projectModule.getActiveProject.getCategories.length > 1"
       v-model="model.selected"
       :items="projectModule.getActiveProject.getCategories"
       :label="$tc('shift.category.categories', 2)"
