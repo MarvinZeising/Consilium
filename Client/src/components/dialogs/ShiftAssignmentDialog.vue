@@ -294,8 +294,11 @@ export default class ShiftAssignmentDialog extends Vue {
           teamId: attendee.teamId,
           isCaptain: attendee.isCaptain,
         })
+        Vue.set(this.savedAssignments, attendee.personId, {
+          teamId: attendee.teamId,
+          isCaptain: attendee.isCaptain,
+        })
       }
-      Object.assign(this.savedAssignments, this.assignments)
     }
   }
 
