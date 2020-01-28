@@ -3,14 +3,17 @@
     v-if="canView"
     fluid
     class="pa-0"
+    v-resize="setCalendarHeight"
   >
 
-    <!--//* Toolbar -->
-    <!--//TODO: On mobile, replace this toolbar with a simpler one (only day view and date picker) -->
-    <v-toolbar flat>
+    <!-- // * big toolbar -->
+    <v-toolbar
+      class="d-none d-sm-block"
+      flat
+    >
       <v-btn
         v-t="'shift.today'"
-        class="mr-4"
+        class="mr-4 d-none d-md-flex"
         outlined
         @click="setToday"
       />
@@ -33,7 +36,7 @@
         <v-icon>keyboard_arrow_right</v-icon>
       </v-btn>
 
-      <v-toolbar-title class="ml-4">{{ getTitle }}</v-toolbar-title>
+      <v-toolbar-title class="ml-4 d-none d-md-flex">{{ getTitle }}</v-toolbar-title>
 
       <v-spacer />
 
@@ -42,28 +45,44 @@
         @change="(selected) => categoryModel.value = selected[0]"
       />
 
-      <v-menu bottom right>
-        <template v-slot:activator="{ on }">
-          <v-btn
-            v-on="on"
-            outlined
-          >
-            <span v-t="'shift.' + type" />
-            <v-icon right>arrow_drop_down</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item @click="type = 'month'">
-            <v-list-item-title v-t="'shift.month'" />
-          </v-list-item>
-          <v-list-item @click="type = 'week'">
-            <v-list-item-title v-t="'shift.week'" />
-          </v-list-item>
-          <v-list-item @click="type = 'day'">
-            <v-list-item-title v-t="'shift.day'" />
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <CalendarTypeControl :model="calendarTypeModel" />
+
+      <v-progress-linear
+        :active="loading"
+        :indeterminate="loading"
+        absolute
+        bottom
+      />
+    </v-toolbar>
+
+    <!-- // * small toolbar -->
+    <v-toolbar
+      class="d-xs-block d-sm-none"
+      flat
+    >
+      <v-btn
+        fab
+        text
+        small
+        @click="$refs.calendar.prev()"
+      >
+        <v-icon>keyboard_arrow_left</v-icon>
+      </v-btn>
+
+      <v-spacer />
+
+      <CalendarTypeControl :model="calendarTypeModel" />
+
+      <v-spacer />
+
+      <v-btn
+        fab
+        text
+        small
+        @click="$refs.calendar.next()"
+      >
+        <v-icon>keyboard_arrow_right</v-icon>
+      </v-btn>
 
       <v-progress-linear
         :active="loading"
@@ -78,11 +97,11 @@
       id="calendar"
       ref="calendar"
       color="navbar"
-      :style="`border-left:0; min-height:${getCalendarHeight}px;`"
+      :style="`border-left:0; min-height:${calendarHeight}px;`"
       v-model="focus"
       :events="getEvents"
       :event-color="(event) => event.color"
-      :type="type"
+      :type="calendarTypeModel.type"
       :locale="userModule.getUser.language"
       :weekdays="weekdays"
       :event-more="10"
@@ -116,6 +135,7 @@ import ShiftModule from '../../store/shifts'
 import CreateShiftDialog from '../../components/dialogs/CreateShiftDialog.vue'
 import ShiftOverviewMenu from '../../components/dialogs/ShiftOverviewMenu.vue'
 import CategoriesControl from '../../components/controls/CategoriesControl.vue'
+import CalendarTypeControl from '../../components/controls/CalendarTypeControl.vue'
 import { Shift, Category } from '../../models'
 
 @Component({
@@ -123,6 +143,7 @@ import { Shift, Category } from '../../models'
     CreateShiftDialog,
     ShiftOverviewMenu,
     CategoriesControl,
+    CalendarTypeControl,
   }
 })
 export default class Calendar extends Vue {
@@ -133,12 +154,13 @@ export default class Calendar extends Vue {
   private teamModule = getModule(TeamModule, this.$store)
   private shiftModule = getModule(ShiftModule, this.$store)
 
-  private loading: boolean = true
-  private type: string = 'month'
-  private focus: string = moment().format('YYYY-MM-DD')
+  private loading = true
+  private calendarHeight = 0
+  private focus = moment().format('YYYY-MM-DD')
   private events: any = []
-  private weekdays: number[] = [1, 2, 3, 4, 5, 6, 0]
+  private weekdays = [1, 2, 3, 4, 5, 6, 0]
 
+  private calendarTypeModel = { type: 'month' }
   private categoryModel: { value?: Category } = { value: undefined }
   private categoriesModel: { selected: Category[] } = { selected: [] }
   private shiftOverviewModel = { model: false, element: null, event: {} }
@@ -157,12 +179,8 @@ export default class Calendar extends Vue {
     }
   }
 
-  private get getCalendarHeight() {
-    return window.innerHeight - 128
-  }
-
   private get getTitle() {
-    switch (this.type) {
+    switch (this.calendarTypeModel.type) {
       case 'month':
         return moment(this.focus).format('MMMM YYYY')
       case 'week':
@@ -244,6 +262,8 @@ export default class Calendar extends Vue {
     this.categoriesModel.selected = this.projectModule.getActiveProject?.getCategories || []
     this.categoryModel.value = this.categoriesModel.selected[0]
 
+    this.setCalendarHeight()
+
     this.loading = false
   }
 
@@ -266,11 +286,19 @@ export default class Calendar extends Vue {
 
   private viewDay({ date }: { date: string }) {
     this.focus = date
-    this.type = 'day'
+    this.calendarTypeModel.type = 'day'
   }
 
   private setToday() {
     this.focus = moment().format('YYYY-MM-DD')
+  }
+
+  private setCalendarHeight() {
+    if (this.$vuetify.breakpoint.smAndDown) {
+      this.calendarHeight = window.innerHeight - 112
+      } else {
+      this.calendarHeight = window.innerHeight - 128
+    }
   }
 
 }
