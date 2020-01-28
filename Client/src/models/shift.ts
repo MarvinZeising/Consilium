@@ -1,6 +1,20 @@
 import { Project, Role, Person, User } from '.'
 import moment from 'moment'
 
+enum ShiftStatus {
+  draft = 'draft',
+  pending = 'pending',
+  planned = 'planned',
+  suspense = 'suspense',
+  calledOff = 'calledOff',
+}
+
+enum ShiftMode {
+  open = 'open',
+  captainsOnly = 'captainsOnly',
+  closed = 'closed',
+}
+
 class Shift {
   public static create(data: any) {
     const shift = new Shift(
@@ -9,6 +23,9 @@ class Shift {
       data.date,
       data.time,
       data.duration,
+      data.status,
+      data.mode,
+      data.calledOffReason,
       data.createdTime,
       data.lastUpdatedTime)
 
@@ -30,6 +47,9 @@ class Shift {
   public date: number
   public time: number
   public duration: number
+  public status: ShiftStatus
+  public mode: ShiftMode
+  public calledOffReason: string
   public createdTime: string
   public lastUpdatedTime: string
   public applications: Application[] = []
@@ -41,6 +61,9 @@ class Shift {
     date: number,
     time: number,
     duration: number,
+    status: ShiftStatus,
+    mode: ShiftMode,
+    calledOffReason: string,
     createdTime: string,
     lastUpdatedTime: string
   ) {
@@ -49,6 +72,9 @@ class Shift {
     this.date = date
     this.time = time
     this.duration = duration
+    this.status = status
+    this.mode = mode
+    this.calledOffReason = calledOffReason
     this.createdTime = createdTime
     this.lastUpdatedTime = lastUpdatedTime
   }
@@ -124,6 +150,9 @@ class Shift {
     this.date = shift.date
     this.time = shift.time
     this.duration = shift.duration
+    this.status = shift.status
+    this.mode = shift.mode
+    this.calledOffReason = shift.calledOffReason
     this.createdTime = shift.createdTime
     this.lastUpdatedTime = shift.lastUpdatedTime
     this.applications = shift.applications
@@ -451,5 +480,7 @@ export {
   Category,
   Eligibility,
   Shift,
+  ShiftStatus,
+  ShiftMode,
   Application,
 }
