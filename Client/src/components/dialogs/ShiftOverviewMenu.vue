@@ -74,7 +74,10 @@
             @click="openPerson()"
           >
             <v-list-item-content>
-              <v-list-item-title>{{ attendee.person.getFullName }}</v-list-item-title>
+              <v-list-item-title>
+                {{ attendee.person.getFullName }}
+                <v-icon small v-if="attendee.isCaptain">flag</v-icon>
+              </v-list-item-title>
               <v-list-item-subtitle>{{ attendee.person.congregation.name }}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
