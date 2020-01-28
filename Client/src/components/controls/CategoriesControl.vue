@@ -6,7 +6,7 @@
       v-model="model.selected"
       :items="projectModule.getActiveProject.getCategories"
       :label="$tc('shift.category.categories', 2)"
-      class="ma-3"
+      :class="$vuetify.breakpoint.mdAndUp ? 'ma-3' : 'ma-2'"
       item-value="id"
       item-text="name"
       multiple
@@ -18,19 +18,19 @@
       @change="emitChange"
     >
       <template v-slot:prepend-item>
-        <v-list-item
-          ripple
-          @click="toggle"
-        >
-          <v-list-item-action>
-            <v-icon
-              :color="model.selected.length > 0 ? 'primary' : ''"
-              v-html="getIcon"
-            />
-          </v-list-item-action>
+        <v-list-item>
           <v-list-item-content>
             <v-list-item-title v-t="'core.selectAll'" />
           </v-list-item-content>
+          <v-list-item-action>
+            <v-switch
+              v-model="selectAllModel"
+              color="primary"
+              inset
+              hide-details
+              @change="toggle"
+            />
+          </v-list-item-action>
         </v-list-item>
         <v-divider class="mt-2"></v-divider>
       </template>
@@ -53,13 +53,8 @@ export default class CategoriesControl extends Vue {
   @Prop(Object)
   private readonly model?: { selected: Category[] }
 
-  private get getIcon() {
-    if (this.model?.selected.length === this.projectModule.getActiveProject?.getCategories.length) {
-      return 'check_box'
-    } else if (this.model && this.model.selected.length > 0) {
-      return 'indeterminate_check_box'
-    }
-    return 'check_box_outline_blank'
+  private get selectAllModel() {
+    return this.model?.selected.length === this.projectModule.getActiveProject?.getCategories.length
   }
 
   @Emit('change')
