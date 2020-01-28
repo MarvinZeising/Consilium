@@ -21,7 +21,9 @@
       >
         <v-toolbar-title>Handle Shift Applications</v-toolbar-title>
         <v-spacer />
-        <v-toolbar-title>DRAFT</v-toolbar-title>
+        <v-btn icon>
+          <v-icon>info</v-icon>
+        </v-btn>
       </v-toolbar>
 
       <v-row
@@ -78,9 +80,7 @@
 
           <v-list
             v-if="getHasAttendee"
-            class="mx-2"
             dense
-            rounded
           >
             <div
               v-for="(team, teamIndex) in projectModule.getActiveProject.getTeams"
