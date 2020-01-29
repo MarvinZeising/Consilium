@@ -3,9 +3,9 @@ import moment from 'moment'
 
 enum ShiftStatus {
   draft = 'draft',
-  pending = 'pending',
   planned = 'planned',
-  suspense = 'suspense',
+  scheduled = 'scheduled',
+  suspended = 'suspended',
   calledOff = 'calledOff',
 }
 
@@ -483,4 +483,5 @@ export {
   ShiftStatus,
   ShiftMode,
   Application,
+  Attendee,
 }

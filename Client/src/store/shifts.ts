@@ -64,9 +64,28 @@ export default class ShiftModule extends VuexModule {
     await this.context.dispatch('upsertShift', {
       oldCategoryId: shift.oldCategoryId,
       newCategoryId: shift.categoryId,
-      shiftId: shift.id,
       shift: updatedShift,
     })
+  }
+
+  @Action
+  public async planShift(shiftId: string) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/shifts/${shiftId}/plan`)
+    const shift = Shift.create(response.data)
+
+    await this.context.dispatch('upsertShift', { shift })
+  }
+
+  @Action
+  public async scheduleShift(shiftId: string) {
+    const { personId, projectId } = this.context.getters.resolvePersonAndProject
+
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/shifts/${shiftId}/schedule`)
+    const shift = Shift.create(response.data)
+
+    await this.context.dispatch('upsertShift', { shift })
   }
 
   @Action
@@ -84,12 +103,9 @@ export default class ShiftModule extends VuexModule {
       `/persons/${personId}/projects/${projectId}/shifts/${shiftId}/assignments`, {
         attendees: assignments
       })
-    const updatedShift = Shift.create(response.data)
+    const shift = Shift.create(response.data)
 
-    await this.context.dispatch('upsertShift', {
-      shiftId,
-      shift: updatedShift,
-    })
+    await this.context.dispatch('upsertShift', { shift })
   }
 
   @Action
@@ -106,15 +122,14 @@ export default class ShiftModule extends VuexModule {
 
   @Action
   protected async upsertShift(data: {
+    shift: Shift,
     oldCategoryId: string,
     newCategoryId: string,
-    shiftId: string,
-    shift: Shift,
   }) {
     if (data.oldCategoryId && data.newCategoryId) {
       const oldCategory: Category = await this.context.dispatch('getCategory', data.oldCategoryId)
       if (oldCategory) {
-        oldCategory.shifts = oldCategory.shifts.filter((x) => x.id !== data.shiftId)
+        oldCategory.shifts = oldCategory.shifts.filter((x) => x.id !== data.shift.id)
       }
       const newCategory: Category = await this.context.dispatch('getCategory', data.newCategoryId)
       if (newCategory) {
@@ -124,7 +139,7 @@ export default class ShiftModule extends VuexModule {
       const category: Category = await this.context.dispatch('getCategory', data.shift.categoryId)
       if (category) {
         category.shifts = category.shifts.map((x) => {
-          if (x.id === data.shiftId) {
+          if (x.id === data.shift.id) {
             x.copyFrom(data.shift)
           }
           return x

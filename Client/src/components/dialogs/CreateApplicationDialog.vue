@@ -6,8 +6,16 @@
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
+        v-if="shift.status === 'planned'"
         text
         v-t="'shift.application.apply'"
+        @click="opened"
+      />
+      <v-btn
+        v-on="on"
+        v-else-if="shift.status === 'scheduled'"
+        text
+        v-t="'shift.application.applyAsBackup'"
         @click="opened"
       />
     </template>
@@ -20,7 +28,14 @@
           flat
           color="accent"
         >
-          <v-toolbar-title v-t="'shift.application.create'" />
+          <v-toolbar-title
+            v-if="shift.status === 'planned'"
+            v-t="'shift.application.create'"
+          />
+          <v-toolbar-title
+            v-else-if="shift.status === 'scheduled'"
+            v-t="'shift.application.createBackup'"
+          />
           <v-spacer />
           <v-btn
             icon
@@ -32,8 +47,14 @@
         </v-toolbar>
         <v-card-text v-if="showHelpText">
           <i
+            v-if="shift.status === 'planned'"
             class="subtitle-1"
             v-t="'shift.application.createDescription'"
+          />
+          <i
+            v-else-if="shift.status === 'scheduled'"
+            class="subtitle-1"
+            v-t="'shift.application.createBackupDescription'"
           />
         </v-card-text>
         <v-card-text class="pa-2">

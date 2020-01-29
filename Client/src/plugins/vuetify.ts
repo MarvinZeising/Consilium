@@ -28,6 +28,9 @@ export default new Vuetify({
       },
     },
     dark: false,
+    options: {
+      customProperties: true,
+    },
   },
   iconfont: 'md',
 });
