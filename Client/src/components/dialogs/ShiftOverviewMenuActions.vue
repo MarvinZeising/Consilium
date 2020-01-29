@@ -29,6 +29,8 @@
         class="ml-2"
         v-t="'shift.attendee.attending'"
       />
+      <v-spacer />
+      <DeleteAttendeeDialog :attendee="myAttendee" />
     </v-card-actions>
 
     <v-card-actions v-if="!myApplication && !myAttendee">

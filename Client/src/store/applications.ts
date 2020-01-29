@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Application, Shift, Person } from '../models'
+import { Application, Shift, Person, Attendee } from '../models'
 
 @Module({ dynamic: true, store, name: 'ApplicationModule' })
 export default class ApplicationModule extends VuexModule {
@@ -28,6 +28,19 @@ export default class ApplicationModule extends VuexModule {
     const shift: Shift = await this.context.dispatch('getShift', application.shiftId)
     if (shift) {
       shift.applications.push(createdApplication)
+    }
+  }
+
+  @Action
+  public async deleteAttendee(attendee: Attendee) {
+    const personId = this.context.getters.getActivePersonId
+
+    await axios.delete(`/persons/${personId}/attendee/${attendee.id}`)
+
+    // TODO: also delete application once applicationId exists (also do it serverside, then)
+    const shift: Shift = await this.context.dispatch('getShift', attendee.shiftId)
+    if (shift) {
+      shift.attendees = shift.attendees.filter((x) => x.id !== attendee.id)
     }
   }
 
