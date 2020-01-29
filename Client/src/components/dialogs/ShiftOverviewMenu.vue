@@ -70,8 +70,6 @@
         <DeleteApplicationDialog :application="myApplication" />
       </v-card-actions>
 
-        <v-list v-if="getShift.attendees.length > 0">
-          <v-subheader v-if="canEdit">
       <v-card-actions
         v-else-if="getShift.status === 'scheduled' && myAttendee"
         class="green"
@@ -88,65 +86,59 @@
         <v-spacer />
         <CreateApplicationDialog :shift="getShift" />
       </v-card-actions>
-            {{ $tc('shift.attendee.attendees', 2) }}
-            <v-spacer />
-            <v-btn
-              icon
-              @click="showAttendees = !showAttendees"
-            >
-              <v-icon v-if="showAttendees">keyboard_arrow_up</v-icon>
-              <v-icon v-else>keyboard_arrow_down</v-icon>
-            </v-btn>
-          </v-subheader>
-          <div v-if="showAttendees">
-            <v-list-item
-              v-for="(attendee, index) in getShift.getAttendees"
-              :key="index"
-              @click="openPerson()"
-            >
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ attendee.person.getFullName }}
-                  <v-icon small v-if="attendee.isCaptain">flag</v-icon>
-                </v-list-item-title>
-                <v-list-item-subtitle>{{ attendee.person.congregation.name }}</v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-icon>info</v-icon>
-              </v-list-item-action>
-            </v-list-item>
-          </div>
-        </v-list>
 
-        <v-list v-if="getShift.applications.length > 0">
-          <v-subheader>
+      <v-list-group
+        v-if="getShift.attendees.length > 0"
+        :value="showAttendees"
+        color="/*none*/"
+      >
+        <template v-slot:activator>
+          <v-list-item-title>
+            {{ $tc('shift.attendee.attendees', 2) }}
+          </v-list-item-title>
+        </template>
+        <v-list-item
+          v-for="(attendee, index) in getShift.getAttendees"
+          :key="index"
+          @click="openPerson()"
+        >
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ attendee.person.getFullName }}
+              <v-icon small v-if="attendee.isCaptain">flag</v-icon>
+            </v-list-item-title>
+            <v-list-item-subtitle>{{ attendee.person.congregation.name }}</v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-icon>info</v-icon>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list-group>
+
+      <v-list-group
+        v-if="getShift.applications.length > 0"
+        :value="showApplicants"
+        color="/*none*/"
+      >
+        <template v-slot:activator>
+          <v-list-item-title>
             {{ $tc('shift.application.applicants', 2) }}
-            <v-spacer />
-            <v-btn
-              icon
-              @click="showApplicants = !showApplicants"
-            >
-              <v-icon v-if="showApplicants">keyboard_arrow_up</v-icon>
-              <v-icon v-else>keyboard_arrow_down</v-icon>
-            </v-btn>
-          </v-subheader>
-          <div v-if="showApplicants">
-            <v-list-item
-              v-for="(application, index) in getShift.getApplications"
-              :key="index"
-              @click="openPerson()"
-            >
-              <v-list-item-avatar>
-                <v-icon color="accent">emoji_people</v-icon>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <v-list-item-title>{{ application.person.getFullName }}</v-list-item-title>
-                <v-list-item-subtitle>6 applications, 3 approved</v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </div>
-        </v-list>
-      </div>
+          </v-list-item-title>
+        </template>
+        <v-list-item
+          v-for="(application, index) in getShift.getApplications"
+          :key="index"
+          @click="openPerson()"
+        >
+          <v-list-item-avatar>
+            <v-icon color="accent">emoji_people</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title>{{ application.person.getFullName }}</v-list-item-title>
+            <v-list-item-subtitle>6 applications, 3 approved</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
 
     </v-card>
   </v-menu>
