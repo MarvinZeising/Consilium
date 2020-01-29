@@ -50,7 +50,7 @@ namespace Server.Controllers
                     .Where(x => x.Eligibilities.Any(e => e.RoleId == role.Id && e.ShiftsRead))
                     .Select(x => x.Id);
 
-                var shifts = _db.Shift
+                var shiftsFromDb = _db.Shift
                     .FindByCondition(x =>
                         categoryIds.Contains(x.CategoryId) &&
                         x.Date >= from &&
@@ -61,20 +61,39 @@ namespace Server.Controllers
                     .Include(x => x.Attendees).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
                     .ToList();
 
-                foreach (var shift in shifts)
-                {
-                    if (!shift.Status.Equals(ShiftStatus.Scheduled.ToString(), StringComparison.CurrentCultureIgnoreCase) && !canEdit)
-                    {
-                        shift.Attendees = new List<Attendee>();
-                    }
+                var shifts = _mapper.Map<IEnumerable<ShiftDto>>(shiftsFromDb);
 
-                    if (shift.Status.Equals(ShiftStatus.Scheduled.ToString(), StringComparison.CurrentCultureIgnoreCase) && !canEdit)
+                if (!canEdit)
+                {
+                    foreach (var shift in shifts)
                     {
-                        shift.Applications = new List<Application>();
+                        if (Enum.Parse<ShiftStatus>(shift.Status) != ShiftStatus.Scheduled)
+                        {
+                            shift.Attendees = new List<AttendeeDto>();
+                        }
+                        else
+                        {
+                            shift.Applications = new List<ApplicationDto>();
+                        }
                     }
                 }
 
-                return Ok(_mapper.Map<IEnumerable<ShiftDto>>(shifts));
+                foreach (var shift in shifts)
+                {
+                    var application = shift.Applications.SingleOrDefault(x => x.PersonId == personId);
+                    if (application != null)
+                    {
+                        shift.IsApplicant = true;
+
+                        // TODO: use this once applicationId is ready
+                        // shift.IsAttendee = shift.Attendees.Any(x => x.ApplicationId == application.Id);
+                    }
+
+                    // TODO: delete
+                    shift.IsAttendee = shift.Attendees.Any(x => x.PersonId == personId);
+                }
+
+                return Ok(shifts);
             }
             catch (Exception e)
             {
@@ -107,8 +126,7 @@ namespace Server.Controllers
                 _db.Shift.Create(shift);
                 _db.Save();
 
-                var createdShift = _db.Shift.GetFullShift(shift.Id);
-                return Ok(_mapper.Map<ShiftDto>(createdShift));
+                return Ok(_db.Shift.GetFullShift(_mapper, shift.Id, personId));
             }
             catch (Exception e)
             {
@@ -143,8 +161,7 @@ namespace Server.Controllers
                 _db.Shift.Update(shift);
                 _db.Save();
 
-                var updatedShift = _db.Shift.GetFullShift(shiftId);
-                return Ok(_mapper.Map<ShiftDto>(updatedShift));
+                return Ok(_db.Shift.GetFullShift(_mapper, shiftId, personId));
             }
             catch (Exception e)
             {
@@ -172,8 +189,7 @@ namespace Server.Controllers
                 _db.Shift.Update(shift);
                 _db.Save();
 
-                var updatedShift = _db.Shift.GetFullShift(shiftId);
-                return Ok(_mapper.Map<ShiftDto>(updatedShift));
+                return Ok(_db.Shift.GetFullShift(_mapper, shiftId, personId));
             }
             catch (Exception e)
             {
@@ -201,8 +217,7 @@ namespace Server.Controllers
                 _db.Shift.Update(shift);
                 _db.Save();
 
-                var updatedShift = _db.Shift.GetFullShift(shiftId);
-                return Ok(_mapper.Map<ShiftDto>(updatedShift));
+                return Ok(_db.Shift.GetFullShift(_mapper, shiftId, personId));
             }
             catch (Exception e)
             {
@@ -246,8 +261,7 @@ namespace Server.Controllers
 
                 _db.Save();
 
-                var updatedShift = _db.Shift.GetFullShift(shiftId);
-                return Ok(_mapper.Map<ShiftDto>(updatedShift));
+                return Ok(_db.Shift.GetFullShift(_mapper, shiftId, personId));
             }
             catch (Exception e)
             {
