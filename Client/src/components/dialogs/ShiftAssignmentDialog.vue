@@ -9,10 +9,9 @@
       <v-btn
         v-on="on"
         icon
-        title="TODO: add title"
         @click="opened"
       >
-        <v-icon>thumbs_up_down</v-icon>
+        <v-icon>edit</v-icon>
       </v-btn>
     </template>
     <v-card>
@@ -192,25 +191,25 @@
         <v-spacer />
         <v-btn
           text
-          type=""
-          v-text="'Reset draft'"
+          v-t="'core.reset'"
           :disabled="saving || releasing || isSaved"
           @click.stop="reset"
         />
         <v-btn
           text
-          v-text="'Save draft'"
+          v-t="'core.save'"
           :loading="saving"
           :disabled="releasing || isSaved"
           @click.stop="save"
         />
         <v-btn
+          v-if="shift.status !== 'scheduled'"
           text
           color="primary"
-          v-text="'Release'"
-          :loading="releasing"
+          v-t="'shift.status.schedule'"
+          :loading="scheduling"
           :disabled="saving"
-          @click.stop="release"
+          @click.stop="schedule"
         />
       </v-card-actions>
 
@@ -242,7 +241,7 @@ export default class ShiftAssignmentDialog extends Vue {
 
   private dialog = false
   private saving = false
-  private releasing = false
+  private scheduling = false
 
   private savedAssignments: {
     [personId: string]: {
@@ -375,15 +374,17 @@ export default class ShiftAssignmentDialog extends Vue {
     }
   }
 
-  private async release() {
+  private async schedule() {
     if (this.shift) {
-      this.releasing = true
+      this.scheduling = true
 
       if (!this.isSaved) {
         await this.save()
       }
 
-      this.releasing = false
+      this.shiftModule.scheduleShift(this.shift.id)
+
+      this.scheduling = false
     }
   }
 
