@@ -17,8 +17,10 @@
     "draftDescription": "Dies ist ein Entwurf. Er ist unsichtbar für die Teilnehmer. Damit sie sich bewerben können, musst du die Schicht planen.",
     "planShift": "Diese Schicht planen",
     "planShiftDescription": "Möchtest du diese Schicht wirklich planen? Dadurch wird sie für die Teilnehmer sichtbar. Ist die Schicht offen, kann sich jeder mit ausreichenden Berechtigungen darauf bewerben. Bitte beachte: Ist die Schicht geplant, kannst du Zeit und Kategorie nicht mehr verändern.",
+    "assignments": "Einteilung",
     "unplan": "In Entwurf umwandeln",
     "schedule": "Veröffentlichen",
+    "scheduling": "Schicht einteilen",
     "unschedule": "Geheim machen",
     "suspend": "In Schwebe versetzen",
     "callOff": "Absagen"
@@ -67,6 +69,9 @@
     "attending": "Du bist Teilnehmer dieser Schicht",
     "cancel": "Absagen",
     "delete": "Teilnahme absagen",
-    "deleteDescription": "Möchtest du wirklich deine Teilnahme an dieser Schicht absagen?"
+    "deleteDescription": "Möchtest du wirklich deine Teilnahme an dieser Schicht absagen?",
+    "noCaptain": "Kein Teamleiter",
+    "promote": "Zu Teamleiter machen",
+    "demote": "Zu Teilnehmer machen"
   }
 }

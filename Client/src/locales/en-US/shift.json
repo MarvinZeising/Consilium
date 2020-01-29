@@ -17,8 +17,10 @@
     "draftDescription": "This is a draft. It's invisible to participants. You have to plan this shift in order to allow applications for it.",
     "planShift": "Plan this Shift",
     "planShiftDescription": "Do you really want to plan this shift? This makes it visible for participants. If the shift is open, everyone with sufficient permissions can apply for it. Please keep in mind: Once the shift is planned, it's time and category cannot be changed, anymore.",
+    "assignments": "Assignments",
     "unplan": "Unplan",
     "schedule": "Schedule",
+    "scheduling": "Shift scheduling",
     "unschedule": "Unschedule",
     "suspend": "Suspend",
     "callOff": "Call off"
@@ -67,6 +69,9 @@
     "attending": "You're attending this shift",
     "cancel": "Cancel",
     "delete": "Cancel Attendance",
-    "deleteDescription": "Do you really want to cancel your attendance for this shift?"
+    "deleteDescription": "Do you really want to cancel your attendance for this shift?",
+    "noCaptain": "No captain",
+    "promote": "Promote to captain",
+    "demote": "Demote from captain"
   }
 }

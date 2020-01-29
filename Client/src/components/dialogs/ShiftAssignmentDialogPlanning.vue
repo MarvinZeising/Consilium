@@ -53,6 +53,10 @@
     <v-divider vertical />
     <v-col>
 
+        <span
+          v-t="'shift.status.assignments'"
+          class="title"
+        />
       <v-list
         v-if="getHasAttendee"
         dense
@@ -66,11 +70,10 @@
             <v-spacer />
             <v-chip
               x-small
+              v-t="'shift.attendee.noCaptain'"
               class="ml-1"
               color="error"
-            >
-              No captain
-            </v-chip>
+            />
             <v-chip
               x-small
               class="ml-1"
@@ -115,7 +118,10 @@
                 >
                   <v-icon small>outlined_flag</v-icon>
                 </v-list-item-avatar>
-                <v-list-item-title class="ml-2">Demote from captain</v-list-item-title>
+                <v-list-item-title
+                  v-t="'shift.attendee.demote'"
+                  class="ml-2"
+                />
               </v-list-item>
               <v-list-item
                 v-else
@@ -130,7 +136,10 @@
                 >
                   <v-icon small>flag</v-icon>
                 </v-list-item-avatar>
-                <v-list-item-title class="ml-2">Promote to captain</v-list-item-title>
+                <v-list-item-title
+                  v-t="'shift.attendee.promote'"
+                  class="ml-2"
+                />
               </v-list-item>
             </v-list>
           </v-menu>
@@ -217,8 +226,11 @@ export default class ShiftAssignmentDialogPlanning extends Vue {
     if (this.assignments) {
       const isInTeam = this.assignments[personId]?.teamId === teamId
       if (isInTeam) {
-        if (this.shift?.isPlanned) return 'navbar'
-        if (this.shift?.isScheduled) return 'green'
+        if (this.shift?.isPlanned) {
+          return 'navbar'
+        } else if (this.shift?.isScheduled) {
+          return 'green'
+        }
       }
       return ''
     }

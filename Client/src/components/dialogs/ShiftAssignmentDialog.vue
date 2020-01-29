@@ -19,7 +19,7 @@
         flat
         :color="shift.isPlanned ? 'navbar' : shift.isScheduled ? 'green' : ''"
       >
-        <v-toolbar-title>Handle Shift Applications</v-toolbar-title>
+        <v-toolbar-title v-t="'shift.status.scheduling'" />
         <v-spacer />
         <v-btn icon>
           <v-icon>info</v-icon>
