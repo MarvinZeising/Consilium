@@ -18,7 +18,10 @@
         >
           <v-list-item-content v-if="application.person">
             <v-list-item-title v-text="application.person.getFullName" />
-            <v-list-item-subtitle v-text="application.person.congregation.name" />
+            <v-list-item-subtitle
+              v-if="application.person.congregation"
+              v-text="application.person.congregation.name"
+            />
             <!-- // TODO: use user-decided teams -->
             <div class="mt-1">
               <v-chip

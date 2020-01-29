@@ -76,7 +76,7 @@ namespace Server.Controllers
 
                 var createdApplication = _db.Application
                     .FindByCondition(x => x.Id == application.Id)
-                    .Include(x => x.Person)
+                    .Include(x => x.Person).ThenInclude(x => x.Congregation)
                     .Single();
 
                 return Ok(_mapper.Map<ApplicationDto>(createdApplication));
