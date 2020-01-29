@@ -13,6 +13,16 @@
   "duration": "Dauer",
   "today": "Heute",
   "hours": "Stunden",
+  "status": {
+    "draftDescription": "Dies ist ein Entwurf. Er ist unsichtbar für die Teilnehmer. Damit sie sich bewerben können, musst du die Schicht planen.",
+    "planShift": "Diese Schicht planen",
+    "planShiftDescription": "Möchtest du diese Schicht wirklich planen? Dadurch wird sie für die Teilnehmer sichtbar. Ist die Schicht offen, kann sich jeder mit ausreichenden Berechtigungen darauf bewerben. Bitte beachte: Ist die Schicht geplant, kannst du Zeit und Kategorie nicht mehr verändern.",
+    "unplan": "In Entwurf umwandeln",
+    "schedule": "Veröffentlichen",
+    "unschedule": "Geheim machen",
+    "suspend": "In Schwebe versetzen",
+    "callOff": "Absagen"
+  },
   "category": {
     "categories": "Es wurden noch keine Kategorien angelegt. | Kategorie | Kategorien",
     "description": "Jede Schicht gehört zu einer Kategorie. Diese Kategorien bestimmen die Zugriffsrechte auf Schichten für die Teilnehmer. Sie bestimmen, wer Schichten dieser Kategorie sehen oder sogar bearbeiten darf, sowie wer als Teamleiter in Schichten dieser Kategorie dienen darf.",
@@ -42,13 +52,21 @@
   "application": {
     "applicants": "Keine Bewerber | Bewerber | Bewerber",
     "apply": "Bewerben",
+    "applyAsBackup": "Als Ersatz bewerben",
     "create": "Auf diese Schicht bewerben",
     "createDescription": "Du darfst dich auf diese Schicht bewerben. Deine Bewerbung muss eventuell von einem Administrator genehmigt werden. Oder du musst warten, bis sich genügend Bewerber gefunden haben, damit die Schicht stattfinden kann.",
+    "createBackup": "Für diese Schicht als Ersatz melden",
+    "createBackupDescription": "Du kannst dich für diese Schicht als möglicher Ersatz melden. Falls jemand seine Teilnahme absagt, könntest du dann eventuell nachrutschen.",
     "delete": "Bewerbung zurückziehen",
     "deleteDescription": "Möchtest du diese Bewerbung wirklich zurückziehen?",
-    "youApplied": "Du hast dich beworben"
+    "applied": "Du hast dich beworben",
+    "appliedBackup": "Du stehst als Ersatz bereit"
   },
   "attendee": {
-    "attendees": "Niemand wurde einem Team zugewiesen | Teilnehmer | Teilnehmer"
+    "attendees": "Niemand wurde einem Team zugewiesen | Teilnehmer | Teilnehmer",
+    "attending": "Du bist Teilnehmer dieser Schicht",
+    "cancel": "Absagen",
+    "delete": "Teilnahme absagen",
+    "deleteDescription": "Möchtest du wirklich deine Teilnahme an dieser Schicht absagen?"
   }
 }

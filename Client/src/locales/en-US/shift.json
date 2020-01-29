@@ -13,6 +13,16 @@
   "duration": "Duration",
   "today": "Today",
   "hours": "hours",
+  "status": {
+    "draftDescription": "This is a draft. It's invisible to participants. You have to plan this shift in order to allow applications for it.",
+    "planShift": "Plan this Shift",
+    "planShiftDescription": "Do you really want to plan this shift? This makes it visible for participants. If the shift is open, everyone with sufficient permissions can apply for it. Please keep in mind: Once the shift is planned, it's time and category cannot be changed, anymore.",
+    "unplan": "Unplan",
+    "schedule": "Schedule",
+    "unschedule": "Unschedule",
+    "suspend": "Suspend",
+    "callOff": "Call off"
+  },
   "category": {
     "categories": "No categories have been defined, yet. | Category | Categories",
     "description": "Every shift belongs to a category. These categories control the access permissions of the participants. You can control who can see or even edit shifts of this category, and who will be able to serve as captain in any of this category's shifts.",
@@ -42,13 +52,21 @@
   "application": {
     "applicants": "No applicants | Applicant | Applicants",
     "apply": "Apply",
+    "applyAsBackup": "Apply as backup",
     "create": "Apply for this Shift",
     "createDescription": "You can apply to participate in this shift. This might have to be checked by an administrator. Or, you might need to wait until enough applicants have gathered to be able to plan this shift.",
+    "createBackup": "Apply as Backup for this Shift",
+    "createBackupDescription": "You can apply as backup for this shift. In case of someone cancelling their attendance for this shift, a backup might be asked to join the shift in their place.",
     "delete": "Cancel Application",
     "deleteDescription": "Do you really want to cancel your application for this shift?",
-    "youApplied": "You applied for this shift"
+    "applied": "You applied for this shift",
+    "appliedBackup": "You're available as backup"
   },
   "attendee": {
-    "attendees": "No one has been assigned to a team | Attendee | Attendees"
+    "attendees": "No one has been assigned to a team | Attendee | Attendees",
+    "attending": "You're attending this shift",
+    "cancel": "Cancel",
+    "delete": "Cancel Attendance",
+    "deleteDescription": "Do you really want to cancel your attendance for this shift?"
   }
 }
