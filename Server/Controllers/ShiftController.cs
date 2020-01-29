@@ -42,6 +42,8 @@ namespace Server.Controllers
                 var role = _db.Participation.GetRole(personId, projectId);
                 if (role?.CalendarRead != true) return Forbid();
 
+                var canEdit = role?.CalendarWrite == true;
+
                 var categoryIds = _db.Category
                     .FindByCondition(x => x.ProjectId == projectId)
                     .Include(x => x.Eligibilities)
@@ -58,6 +60,19 @@ namespace Server.Controllers
                     .Include(x => x.Attendees).ThenInclude(x => x.Team)
                     .Include(x => x.Attendees).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
                     .ToList();
+
+                foreach (var shift in shifts)
+                {
+                    if (!shift.Status.Equals(ShiftStatus.Scheduled.ToString(), StringComparison.CurrentCultureIgnoreCase) && !canEdit)
+                    {
+                        shift.Attendees = new List<Attendee>();
+                    }
+
+                    if (shift.Status.Equals(ShiftStatus.Scheduled.ToString(), StringComparison.CurrentCultureIgnoreCase) && !canEdit)
+                    {
+                        shift.Applications = new List<Application>();
+                    }
+                }
 
                 return Ok(_mapper.Map<IEnumerable<ShiftDto>>(shifts));
             }
