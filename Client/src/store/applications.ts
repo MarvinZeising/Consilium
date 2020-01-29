@@ -27,6 +27,7 @@ export default class ApplicationModule extends VuexModule {
 
     const shift: Shift = await this.context.dispatch('getShift', application.shiftId)
     if (shift) {
+      shift.isApplicant = true
       shift.applications.push(createdApplication)
     }
   }
@@ -40,6 +41,7 @@ export default class ApplicationModule extends VuexModule {
     // TODO: also delete application once applicationId exists (also do it serverside, then)
     const shift: Shift = await this.context.dispatch('getShift', shiftId)
     if (shift) {
+      shift.isAttendee = false
       shift.attendees = shift.attendees.filter((x) => x.personId !== personId)
     }
   }
@@ -52,6 +54,7 @@ export default class ApplicationModule extends VuexModule {
 
     const shift: Shift = await this.context.dispatch('getShift', shiftId)
     if (shift) {
+      shift.isApplicant = false
       shift.applications = shift.applications.filter((x) => x.personId !== personId)
     }
   }

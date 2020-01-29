@@ -2,18 +2,18 @@
   <div v-if="shift">
 
     <v-card-actions
-      v-if="myApplication && !myAttendee"
+      v-if="shift.isApplicant && !shift.isAttendee"
       :class="shift.isPlanned ? 'navbar' : shift.isScheduled ? 'green' : ''"
     >
       <v-icon class="ml-2">emoji_people</v-icon>
       <span
         v-if="shift.isPlanned"
-        class="ml-2"
+        class="mx-2"
         v-t="'shift.application.applied'"
       />
       <span
         v-if="shift.isScheduled"
-        class="ml-2"
+        class="mx-2"
         v-t="'shift.application.appliedBackup'"
       />
       <v-spacer />
@@ -21,19 +21,19 @@
     </v-card-actions>
 
     <v-card-actions
-      v-else-if="shift.isScheduled && myAttendee"
+      v-else-if="shift.isScheduled && shift.isAttendee"
       class="green"
     >
       <v-icon class="ml-2">check</v-icon>
       <span
-        class="ml-2"
+        class="mx-2"
         v-t="'shift.attendee.attending'"
       />
       <v-spacer />
       <CancelAttendanceDialog :shift="shift" />
     </v-card-actions>
 
-    <v-card-actions v-if="!myApplication && !myAttendee">
+    <v-card-actions v-if="!shift.isApplicant && !shift.isAttendee">
       <v-spacer />
       <CreateApplicationDialog :shift="shift" />
     </v-card-actions>
@@ -62,16 +62,6 @@ export default class ShiftOverviewMenuActions extends Vue {
 
   @Prop(Shift)
   private readonly shift?: Shift
-
-  private get myApplication() {
-    const personId = this.personModule.getActivePersonId
-    return this.shift?.applications.find((x) => x.personId === personId)
-  }
-
-  private get myAttendee() {
-    const personId = this.personModule.getActivePersonId
-    return this.shift?.attendees.find((x) => x.personId === personId)
-  }
 
 }
 </script>

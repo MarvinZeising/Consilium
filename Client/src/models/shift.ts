@@ -26,6 +26,8 @@ class Shift {
       data.status,
       data.mode,
       data.calledOffReason,
+      data.isApplicant,
+      data.isAttendee,
       data.createdTime,
       data.lastUpdatedTime)
 
@@ -50,6 +52,8 @@ class Shift {
   public status: ShiftStatus
   public mode: ShiftMode
   public calledOffReason: string
+  public isApplicant: boolean
+  public isAttendee: boolean
   public createdTime: string
   public lastUpdatedTime: string
   public applications: Application[] = []
@@ -64,6 +68,8 @@ class Shift {
     status: ShiftStatus,
     mode: ShiftMode,
     calledOffReason: string,
+    isApplicant: boolean,
+    isAttendee: boolean,
     createdTime: string,
     lastUpdatedTime: string
   ) {
@@ -75,6 +81,8 @@ class Shift {
     this.status = status
     this.mode = mode
     this.calledOffReason = calledOffReason
+    this.isApplicant = isApplicant
+    this.isAttendee = isAttendee
     this.createdTime = createdTime
     this.lastUpdatedTime = lastUpdatedTime
   }
@@ -173,6 +181,8 @@ class Shift {
     this.status = shift.status
     this.mode = shift.mode
     this.calledOffReason = shift.calledOffReason
+    this.isApplicant = shift.isApplicant
+    this.isAttendee = shift.isAttendee
     this.createdTime = shift.createdTime
     this.lastUpdatedTime = shift.lastUpdatedTime
     this.applications = shift.applications
