@@ -21,6 +21,7 @@
         :color="getEventColor"
         dark
         flat
+        short
       >
         <v-spacer></v-spacer>
         <ShiftAssignmentDialog
@@ -45,6 +46,7 @@
         :color="getEventColor"
         dark
         flat
+        short
       >
         <v-toolbar-title>{{ getShift.getTimespan(userModule.getUser) }}</v-toolbar-title>
         <v-spacer />
