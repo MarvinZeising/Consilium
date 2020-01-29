@@ -88,15 +88,15 @@ namespace Server.Controllers
             }
         }
 
-        [HttpDelete("attendee/{attendeeId}")]
-        public IActionResult DeleteAttendee(Guid personId, Guid attendeeId)
+        [HttpPut("shifts/{shiftId}/cancelAttendance")]
+        public IActionResult CancelAttendance(Guid personId, Guid shiftId)
         {
             try
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
                 var attendee = _db.Attendee
-                    .FindByCondition(x => x.Id == attendeeId && x.PersonId == personId)
+                    .FindByCondition(x => x.ShiftId == shiftId && x.PersonId == personId)
                     .Include(x => x.Shift).ThenInclude(x => x.Category)
                     .SingleOrDefault();
                 if (attendee == null) return BadRequest();
@@ -112,20 +112,20 @@ namespace Server.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in DeleteAttendee: {e.Message}");
+                _logger.LogError($"ERROR in CancelAttendance: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpDelete("applications/{applicationId}")]
-        public IActionResult DeleteApplication(Guid personId, Guid applicationId)
+        [HttpPut("shifts/{shiftId}/cancelApplication")]
+        public IActionResult CancelApplication(Guid personId, Guid shiftId)
         {
             try
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
                 var application = _db.Application
-                    .FindByCondition(x => x.Id == applicationId && x.PersonId == personId)
+                    .FindByCondition(x => x.ShiftId == shiftId && x.PersonId == personId)
                     .Include(x => x.Shift).ThenInclude(x => x.Category)
                     .SingleOrDefault();
                 if (application == null) return BadRequest();
@@ -141,7 +141,7 @@ namespace Server.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in DeleteApplication: {e.Message}");
+                _logger.LogError($"ERROR in CancelApplication: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
