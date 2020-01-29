@@ -59,8 +59,8 @@
     "createDescription": "You can apply to participate in this shift. This might have to be checked by an administrator. Or, you might need to wait until enough applicants have gathered to be able to plan this shift.",
     "createBackup": "Apply as Backup for this Shift",
     "createBackupDescription": "You can apply as backup for this shift. In case of someone cancelling their attendance for this shift, a backup might be asked to join the shift in their place.",
-    "delete": "Cancel Application",
-    "deleteDescription": "Do you really want to cancel your application for this shift?",
+    "cancel": "Cancel Application",
+    "cancelDescription": "Do you really want to cancel your application for this shift?",
     "applied": "You applied for this shift",
     "appliedBackup": "You're available as backup"
   },
@@ -68,8 +68,8 @@
     "attendees": "No one has been assigned to a team | Attendee | Attendees",
     "attending": "You're attending this shift",
     "cancel": "Cancel",
-    "delete": "Cancel Attendance",
-    "deleteDescription": "Do you really want to cancel your attendance for this shift?",
+    "cancelAttendance": "Cancel Attendance",
+    "cancelDescription": "Do you really want to cancel your attendance for this shift?",
     "noCaptain": "No captain",
     "promote": "Promote to captain",
     "demote": "Demote from captain"

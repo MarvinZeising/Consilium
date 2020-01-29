@@ -32,27 +32,27 @@ export default class ApplicationModule extends VuexModule {
   }
 
   @Action
-  public async deleteAttendee(attendee: Attendee) {
+  public async cancelAttendance(shiftId: string) {
     const personId = this.context.getters.getActivePersonId
 
-    await axios.delete(`/persons/${personId}/attendee/${attendee.id}`)
+    await axios.put(`/persons/${personId}/shifts/${shiftId}/cancelAttendance`)
 
     // TODO: also delete application once applicationId exists (also do it serverside, then)
-    const shift: Shift = await this.context.dispatch('getShift', attendee.shiftId)
+    const shift: Shift = await this.context.dispatch('getShift', shiftId)
     if (shift) {
-      shift.attendees = shift.attendees.filter((x) => x.id !== attendee.id)
+      shift.attendees = shift.attendees.filter((x) => x.personId !== personId)
     }
   }
 
   @Action
-  public async deleteApplication(application: Application) {
+  public async cancelApplication(shiftId: string) {
     const personId = this.context.getters.getActivePersonId
 
-    await axios.delete(`/persons/${personId}/applications/${application.id}`)
+    await axios.put(`/persons/${personId}/shifts/${shiftId}/cancelApplication`)
 
-    const shift: Shift = await this.context.dispatch('getShift', application.shiftId)
+    const shift: Shift = await this.context.dispatch('getShift', shiftId)
     if (shift) {
-      shift.applications = shift.applications.filter((x) => x.id !== application.id)
+      shift.applications = shift.applications.filter((x) => x.personId !== personId)
     }
   }
 

@@ -59,8 +59,8 @@
     "createDescription": "Du darfst dich auf diese Schicht bewerben. Deine Bewerbung muss eventuell von einem Administrator genehmigt werden. Oder du musst warten, bis sich genügend Bewerber gefunden haben, damit die Schicht stattfinden kann.",
     "createBackup": "Für diese Schicht als Ersatz melden",
     "createBackupDescription": "Du kannst dich für diese Schicht als möglicher Ersatz melden. Falls jemand seine Teilnahme absagt, könntest du dann eventuell nachrutschen.",
-    "delete": "Bewerbung zurückziehen",
-    "deleteDescription": "Möchtest du diese Bewerbung wirklich zurückziehen?",
+    "cancel": "Bewerbung zurückziehen",
+    "cancelDescription": "Möchtest du diese Bewerbung wirklich zurückziehen?",
     "applied": "Du hast dich beworben",
     "appliedBackup": "Du stehst als Ersatz bereit"
   },
@@ -68,8 +68,8 @@
     "attendees": "Niemand wurde einem Team zugewiesen | Teilnehmer | Teilnehmer",
     "attending": "Du bist Teilnehmer dieser Schicht",
     "cancel": "Absagen",
-    "delete": "Teilnahme absagen",
-    "deleteDescription": "Möchtest du wirklich deine Teilnahme an dieser Schicht absagen?",
+    "cancelAttendance": "Teilnahme absagen",
+    "cancelDescription": "Möchtest du wirklich deine Teilnahme an dieser Schicht absagen?",
     "noCaptain": "Kein Teamleiter",
     "promote": "Zu Teamleiter machen",
     "demote": "Zu Teilnehmer machen"

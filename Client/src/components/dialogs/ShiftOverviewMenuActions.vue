@@ -17,7 +17,7 @@
         v-t="'shift.application.appliedBackup'"
       />
       <v-spacer />
-      <DeleteApplicationDialog :application="myApplication" />
+      <CancelApplicationDialog :shift="shift" />
     </v-card-actions>
 
     <v-card-actions
@@ -30,7 +30,7 @@
         v-t="'shift.attendee.attending'"
       />
       <v-spacer />
-      <DeleteAttendeeDialog :attendee="myAttendee" />
+      <CancelAttendanceDialog :shift="shift" />
     </v-card-actions>
 
     <v-card-actions v-if="!myApplication && !myAttendee">
@@ -46,15 +46,15 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import PersonModule from '../../store/persons'
 import CreateApplicationDialog from './CreateApplicationDialog.vue'
-import DeleteApplicationDialog from './DeleteApplicationDialog.vue'
-import DeleteAttendeeDialog from './DeleteAttendeeDialog.vue'
+import CancelApplicationDialog from './CancelApplicationDialog.vue'
+import CancelAttendanceDialog from './CancelAttendanceDialog.vue'
 import { Shift, ShiftStatus } from '../../models'
 
 @Component({
   components: {
     CreateApplicationDialog,
-    DeleteApplicationDialog,
-    DeleteAttendeeDialog,
+    CancelApplicationDialog,
+    CancelAttendanceDialog,
   },
 })
 export default class ShiftOverviewMenuActions extends Vue {
