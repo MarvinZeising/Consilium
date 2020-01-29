@@ -1,27 +1,27 @@
 <template>
 
   <v-menu
+    v-if="getShift"
     v-model="model.model"
     :close-on-content-click="false"
     :activator="model.element"
     offset-x
+    offset-overflow
   >
+    <ShiftOverviewMenuDraft
+      v-if="getShift.status === 'draft'"
+      :shift="getShift"
+    />
     <v-card
-      v-if="getShift"
+      v-else
       min-width="400px"
       max-width="500px"
     >
       <v-toolbar
-        :class="'toolbar-' + getShift.status"
         :color="getEventColor"
-        prominent
         dark
         flat
       >
-        <v-toolbar-title>
-          {{ userModule.getUser.formatDate(getShift.date) }},
-          {{ getShift.getTimespan(userModule.getUser) }}
-        </v-toolbar-title>
         <v-spacer></v-spacer>
         <ShiftAssignmentDialog
           v-if="canEdit && getShift.status !== 'draft'"
@@ -41,60 +41,53 @@
         </v-btn>
       </v-toolbar>
 
-      <div v-if="getShift.status === 'draft'">
+      <v-toolbar
+        :color="getEventColor"
+        dark
+        flat
+      >
+        <v-toolbar-title>
+          {{ userModule.getUser.formatDate(getShift.date) }},
+          {{ getShift.getTimespan(userModule.getUser) }}
+        </v-toolbar-title>
+      </v-toolbar>
 
-        <v-card-text
-          style="width:400px;"
-          v-t="'shift.status.draftDescription'"
+      <v-card-actions
+        v-if="myApplication && !myAttendee"
+        class="navbar"
+      >
+        <span
+          v-if="getShift.status === 'planned'"
+          class="ml-2"
+          v-t="'shift.application.applied'"
         />
-        <v-card-actions>
-          <v-spacer />
-          <HandlePlanShiftDialog
-            :shift="getShift"
-            @saved="model.model = true"
-          />
-        </v-card-actions>
-
-      </div>
-      <div v-else>
-
-        <v-card-actions
-          v-if="myApplication && !myAttendee"
-          class="navbar"
-        >
-          <span
-            v-if="getShift.status === 'planned'"
-            class="ml-2"
-            v-t="'shift.application.applied'"
-          />
-          <span
-            v-if="getShift.status === 'scheduled'"
-            class="ml-2"
-            v-t="'shift.application.appliedBackup'"
-          />
-          <v-spacer />
-          <DeleteApplicationDialog :application="myApplication" />
-        </v-card-actions>
-
-        <v-card-actions
-          v-else-if="getShift.status === 'scheduled' && myAttendee"
-          class="green"
-        >
-          <span
-            class="ml-2"
-            v-t="'shift.attendee.attending'"
-          />
-          <v-spacer />
-          <DeleteAttendeeDialog :attendee="myAttendee" />
-        </v-card-actions>
-
-        <v-card-actions v-if="!myApplication && !myAttendee">
-          <v-spacer />
-          <CreateApplicationDialog :shift="getShift" />
-        </v-card-actions>
+        <span
+          v-if="getShift.status === 'scheduled'"
+          class="ml-2"
+          v-t="'shift.application.appliedBackup'"
+        />
+        <v-spacer />
+        <DeleteApplicationDialog :application="myApplication" />
+      </v-card-actions>
 
         <v-list v-if="getShift.attendees.length > 0">
           <v-subheader v-if="canEdit">
+      <v-card-actions
+        v-else-if="getShift.status === 'scheduled' && myAttendee"
+        class="green"
+      >
+        <span
+          class="ml-2"
+          v-t="'shift.attendee.attending'"
+        />
+        <v-spacer />
+        <DeleteAttendeeDialog :attendee="myAttendee" />
+      </v-card-actions>
+
+      <v-card-actions v-if="!myApplication && !myAttendee">
+        <v-spacer />
+        <CreateApplicationDialog :shift="getShift" />
+      </v-card-actions>
             {{ $tc('shift.attendee.attendees', 2) }}
             <v-spacer />
             <v-btn
@@ -174,14 +167,13 @@
 </style>
 
 <script lang="ts">
-import moment from 'moment'
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import i18n from '../../i18n'
 import UserModule from '../../store/users'
 import PersonModule from '../../store/persons'
 import UpdateShiftDialog from './UpdateShiftDialog.vue'
 import HandlePlanShiftDialog from './HandlePlanShiftDialog.vue'
+import ShiftOverviewMenuDraft from './ShiftOverviewMenuDraft.vue'
 import ShiftAssignmentDialog from './ShiftAssignmentDialog.vue'
 import CreateApplicationDialog from './CreateApplicationDialog.vue'
 import DeleteApplicationDialog from './DeleteApplicationDialog.vue'
@@ -192,6 +184,7 @@ import { Shift, ShiftStatus } from '../../models'
   components: {
     UpdateShiftDialog,
     HandlePlanShiftDialog,
+    ShiftOverviewMenuDraft,
     ShiftAssignmentDialog,
     CreateApplicationDialog,
     DeleteApplicationDialog,
