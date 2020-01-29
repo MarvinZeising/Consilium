@@ -6,7 +6,8 @@
     no-gutters
   >
     <v-col
-      cols="8"
+      sm="7"
+      md="8"
       style="min-height:100px;"
     >
 
@@ -50,13 +51,25 @@
       </div>
 
     </v-col>
-    <v-divider vertical />
+
+    <v-divider
+      v-if="!$vuetify.breakpoint.smAndDown"
+      vertical
+    />
+
     <v-col>
 
+      <v-card-text
+        v-if="$vuetify.breakpoint.smAndDown"
+        class="pb-0"
+      >
+        <v-divider class="mb-4" />
         <span
           v-t="'shift.status.assignments'"
           class="title"
         />
+      </v-card-text>
+
       <v-list
         v-if="getHasAttendee"
         dense

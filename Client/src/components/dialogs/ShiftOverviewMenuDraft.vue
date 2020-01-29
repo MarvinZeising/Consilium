@@ -2,7 +2,7 @@
 
   <v-card
     v-if="shift"
-    min-width="400px"
+    min-width="350px"
     max-width="500px"
   >
     <v-toolbar dark flat>
@@ -18,7 +18,7 @@
     </v-toolbar>
 
     <v-card-text
-      style="width:400px;"
+      style="min-width:350px;"
       v-t="'shift.status.draftDescription'"
     />
     <v-card-actions>

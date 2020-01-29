@@ -7,6 +7,8 @@
     :activator="model.element"
     offset-x
     offset-overflow
+    :content-class="$vuetify.breakpoint.xsOnly ? 'menu-fullscreen' : ''"
+
   >
     <ShiftOverviewMenuDraft
       v-if="getShift.isDraft"
@@ -14,8 +16,9 @@
     />
     <v-card
       v-else
-      min-width="400px"
+      min-width="350px"
       max-width="500px"
+      :elevation="$vuetify.breakpoint.xsOnly ? 8 : undefined"
     >
       <v-toolbar
         :color="getEventColor"
@@ -114,6 +117,16 @@
   </v-menu>
 
 </template>
+
+<style lang="scss" scoped>
+  .menu-fullscreen {
+    top: 0px !important;
+    left: 0px !important;
+    min-width: 100% !important;
+    padding: 12px !important;
+    box-shadow: none;
+  }
+</style>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
