@@ -51,40 +51,9 @@
         <v-toolbar-title>{{ userModule.getUser.formatDate(getShift.date) }}</v-toolbar-title>
       </v-toolbar>
 
-      <v-card-actions
-        v-if="myApplication && !myAttendee"
-        class="navbar"
-      >
-        <span
-          v-if="getShift.status === 'planned'"
-          class="ml-2"
-          v-t="'shift.application.applied'"
-        />
-        <span
-          v-if="getShift.status === 'scheduled'"
-          class="ml-2"
-          v-t="'shift.application.appliedBackup'"
-        />
-        <v-spacer />
-        <DeleteApplicationDialog :application="myApplication" />
-      </v-card-actions>
-
-      <v-card-actions
-        v-else-if="getShift.status === 'scheduled' && myAttendee"
-        class="green"
-      >
-        <span
-          class="ml-2"
-          v-t="'shift.attendee.attending'"
-        />
-        <v-spacer />
-        <DeleteAttendeeDialog :attendee="myAttendee" />
-      </v-card-actions>
-
-      <v-card-actions v-if="!myApplication && !myAttendee">
-        <v-spacer />
-        <CreateApplicationDialog :shift="getShift" />
-      </v-card-actions>
+      <ShiftOverviewMenuActions
+        :shift="getShift"
+      />
 
       <v-list-group
         v-if="getShift.attendees.length > 0"
@@ -144,19 +113,6 @@
 
 </template>
 
-<style lang="scss" scoped>
-  .toolbar-draft {
-    background: repeating-linear-gradient(
-      -45deg,
-      #222,
-      #222 10px,
-      var(--v-accent-darken1) 10px,
-      var(--v-accent-darken1) 20px,
-    );
-    text-shadow: 2px 2px #222;
-  }
-</style>
-
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
@@ -164,22 +120,18 @@ import UserModule from '../../store/users'
 import PersonModule from '../../store/persons'
 import UpdateShiftDialog from './UpdateShiftDialog.vue'
 import HandlePlanShiftDialog from './HandlePlanShiftDialog.vue'
-import ShiftOverviewMenuDraft from './ShiftOverviewMenuDraft.vue'
 import ShiftAssignmentDialog from './ShiftAssignmentDialog.vue'
-import CreateApplicationDialog from './CreateApplicationDialog.vue'
-import DeleteApplicationDialog from './DeleteApplicationDialog.vue'
-import DeleteAttendeeDialog from './DeleteAttendeeDialog.vue'
-import { Shift, ShiftStatus } from '../../models'
+import ShiftOverviewMenuDraft from './ShiftOverviewMenuDraft.vue'
+import ShiftOverviewMenuActions from './ShiftOverviewMenuActions.vue'
+import { Shift } from '../../models'
 
 @Component({
   components: {
     UpdateShiftDialog,
     HandlePlanShiftDialog,
-    ShiftOverviewMenuDraft,
     ShiftAssignmentDialog,
-    CreateApplicationDialog,
-    DeleteApplicationDialog,
-    DeleteAttendeeDialog,
+    ShiftOverviewMenuDraft,
+    ShiftOverviewMenuActions,
   },
 })
 export default class CreateTeamDialog extends Vue {
@@ -212,27 +164,10 @@ export default class CreateTeamDialog extends Vue {
   }
 
   private get getEventColor() {
-     if (this.getShift?.status === ShiftStatus.scheduled) {
+     if (this.getShift?.isScheduled) {
        return 'green'
      }
      return 'navbar'
-  }
-
-  private get myApplication() {
-    const personId = this.personModule.getActivePersonId
-    return this.getShift?.applications.find((x) => x.personId === personId)
-  }
-
-  private get myAttendee() {
-    const personId = this.personModule.getActivePersonId
-    return this.getShift?.attendees.find((x) => x.personId === personId)
-  }
-
-  @Watch('model.event')
-  private async onModelChanged(val: any, oldVal: any) {
-    setTimeout(() => {
-      this.showApplicants = val?.shift?.attendees.length === 0
-    }, 10)
   }
 
   private openPerson() {}
