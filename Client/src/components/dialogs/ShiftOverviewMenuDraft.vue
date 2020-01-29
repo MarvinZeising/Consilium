@@ -6,10 +6,7 @@
     max-width="500px"
   >
     <v-toolbar dark flat>
-      <v-toolbar-title>
-        {{ userModule.getUser.formatDate(shift.date) }},
-        {{ shift.getTimespan(userModule.getUser) }}
-      </v-toolbar-title>
+      <v-toolbar-title>{{ shift.getTimespan(userModule.getUser) }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
         icon

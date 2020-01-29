@@ -46,10 +46,9 @@
         dark
         flat
       >
-        <v-toolbar-title>
-          {{ userModule.getUser.formatDate(getShift.date) }},
-          {{ getShift.getTimespan(userModule.getUser) }}
-        </v-toolbar-title>
+        <v-toolbar-title>{{ getShift.getTimespan(userModule.getUser) }}</v-toolbar-title>
+        <v-spacer />
+        <v-toolbar-title>{{ userModule.getUser.formatDate(getShift.date) }}</v-toolbar-title>
       </v-toolbar>
 
       <v-card-actions
