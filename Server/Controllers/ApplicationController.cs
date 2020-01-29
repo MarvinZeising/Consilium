@@ -88,6 +88,35 @@ namespace Server.Controllers
             }
         }
 
+        [HttpDelete("attendee/{attendeeId}")]
+        public IActionResult DeleteAttendee(Guid personId, Guid attendeeId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var attendee = _db.Attendee
+                    .FindByCondition(x => x.Id == attendeeId && x.PersonId == personId)
+                    .Include(x => x.Shift).ThenInclude(x => x.Category)
+                    .SingleOrDefault();
+                if (attendee == null) return BadRequest();
+
+                var projectId = attendee.Shift.Category.ProjectId;
+                if (_db.Participation.GetRole(personId, projectId)?.CalendarRead != true) return Forbid();
+                if (_db.Participation.GetEligibilityByCategory(personId, projectId, attendee.Shift.CategoryId)?.ShiftsRead != true) return Forbid();
+
+                _db.Attendee.Delete(attendee);
+                _db.Save();
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in DeleteAttendee: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpDelete("applications/{applicationId}")]
         public IActionResult DeleteApplication(Guid personId, Guid applicationId)
         {
