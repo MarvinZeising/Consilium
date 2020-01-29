@@ -24,12 +24,12 @@
       >
         <v-spacer></v-spacer>
         <ShiftAssignmentDialog
-          v-if="canEdit && getShift.status !== 'draft'"
+          v-if="canEdit && !getShift.isDraft"
           :shift="getShift"
           @saved="model.model = true"
         />
         <UpdateShiftDialog
-          v-if="canEdit && getShift.status === 'draft'"
+          v-if="canEdit && getShift.isDraft"
           :shift="getShift"
         />
         <v-btn

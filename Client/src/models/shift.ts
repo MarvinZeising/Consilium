@@ -143,6 +143,26 @@ class Shift {
     return startTime.format(startFormat) + endTime.format(endFormat)
   }
 
+  public get isDraft() {
+    return this.status === ShiftStatus.draft
+  }
+
+  public get isPlanned() {
+    return this.status === ShiftStatus.planned
+  }
+
+  public get isScheduled() {
+    return this.status === ShiftStatus.scheduled
+  }
+
+  public get isSuspended() {
+    return this.status === ShiftStatus.suspended
+  }
+
+  public get isCalledOff() {
+    return this.status === ShiftStatus.calledOff
+  }
+
   public copyFrom(shift: Shift) {
     this.id = shift.id
     this.categoryId = shift.categoryId
