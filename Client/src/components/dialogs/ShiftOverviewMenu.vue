@@ -9,7 +9,7 @@
     offset-overflow
   >
     <ShiftOverviewMenuDraft
-      v-if="getShift.status === 'draft'"
+      v-if="getShift.isDraft"
       :shift="getShift"
     />
     <v-card
