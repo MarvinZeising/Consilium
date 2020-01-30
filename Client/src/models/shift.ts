@@ -250,42 +250,48 @@ class Attendee {
   public static create(data: any) {
     const attendee = new Attendee(
       data.id,
-      data.personId,
       data.shiftId,
+      data.personId,
       data.teamId,
+      data.applicationId,
       data.isCaptain,
       data.createdTime,
       data.lastUpdatedTime)
     attendee.shift = data.shift ? Shift.create(data.shift) : undefined
-    attendee.team = data.team ? Team.create(data.team) : undefined
     attendee.person = data.person ? Person.create(data.person) : undefined
+    attendee.team = data.team ? Team.create(data.team) : undefined
+    attendee.application = data.application ? Application.create(data.application) : undefined
     return attendee
   }
 
   public id: string
-  public personId: string
-  public person?: Person
   public shiftId: string
   public shift?: Shift
+  public personId: string
+  public person?: Person
   public teamId: string
   public team?: Team
+  public applicationId: string
+  public application?: Application
   public isCaptain: boolean
   public createdTime: string
   public lastUpdatedTime: string
 
   constructor(
     id: string,
-    personId: string,
     shiftId: string,
+    personId: string,
     teamId: string,
+    applicationId: string,
     isCaptain: boolean,
     createdTime: string,
     lastUpdatedTime: string
   ) {
     this.id = id
-    this.personId = personId
     this.shiftId = shiftId
+    this.personId = personId
     this.teamId = teamId
+    this.applicationId = applicationId
     this.isCaptain = isCaptain
     this.createdTime = createdTime
     this.lastUpdatedTime = lastUpdatedTime
@@ -293,9 +299,14 @@ class Attendee {
 
   public copyFrom(attendee: Attendee) {
     this.id = attendee.id
-    this.personId = attendee.personId
+    this.shift = attendee.shift
     this.shiftId = attendee.shiftId
+    this.person = attendee.person
+    this.personId = attendee.personId
+    this.team = attendee.team
     this.teamId = attendee.teamId
+    this.application = attendee.application
+    this.applicationId = attendee.applicationId
     this.isCaptain = attendee.isCaptain
     this.createdTime = attendee.createdTime
     this.lastUpdatedTime = attendee.lastUpdatedTime
