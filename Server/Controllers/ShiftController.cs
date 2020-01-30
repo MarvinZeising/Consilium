@@ -84,13 +84,8 @@ namespace Server.Controllers
                     if (application != null)
                     {
                         shift.IsApplicant = true;
-
-                        // TODO: use this once applicationId is ready
-                        // shift.IsAttendee = shift.Attendees.Any(x => x.ApplicationId == application.Id);
+                        shift.IsAttendee = shift.Attendees.Any(x => x.ApplicationId == application.Id);
                     }
-
-                    // TODO: delete
-                    shift.IsAttendee = shift.Attendees.Any(x => x.PersonId == personId);
                 }
 
                 return Ok(shifts);
@@ -253,7 +248,10 @@ namespace Server.Controllers
                     var attendee = _mapper.Map<Attendee>(createAttendeeDto);
                     attendee.ShiftId = shiftId;
 
-                    if (!shift.Applications.Any(x => x.PersonId == attendee.PersonId)) return Forbid();
+                    var application = shift.Applications.SingleOrDefault(x => x.PersonId == attendee.PersonId);
+                    if (application == null) return BadRequest();
+                    attendee.ApplicationId = application.Id;
+
                     // TODO: check teamId
 
                     _db.Attendee.Create(attendee);

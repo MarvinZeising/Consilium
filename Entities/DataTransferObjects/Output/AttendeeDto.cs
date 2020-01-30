@@ -12,6 +12,8 @@ namespace Entities.DataTransferObjects
         public ShiftDto Shift { get; set; }
         public Guid TeamId { get; set; }
         public TeamDto Team { get; set; }
+        public Guid ApplicationId { get; set; }
+        public ApplicationDto Application { get; set; }
         public bool IsCaptain { get; set; }
         public DateTime CreatedTime { get; set; }
         public DateTime LastUpdatedTime { get; set; }

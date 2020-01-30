@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Entities.Validators;
-using System.Collections.Generic;
 
 namespace Entities.Models
 {
@@ -27,6 +25,10 @@ namespace Entities.Models
         [ForeignKey(nameof(Team))]
         public Guid TeamId { get; set; }
         public Team Team { get; set; }
+
+        [ForeignKey(nameof(Application))]
+        public Guid ApplicationId { get; set; }
+        public Application Application { get; set; }
 
         [Required]
         public bool IsCaptain { get; set; }

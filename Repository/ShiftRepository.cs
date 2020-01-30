@@ -32,13 +32,8 @@ namespace Repository
             if (application != null)
             {
                 shift.IsApplicant = true;
-
-                // TODO: use this once applicationId is ready
-                // shift.IsAttendee = shift.Attendees.Any(x => x.ApplicationId == application.Id);
+                shift.IsAttendee = shift.Attendees.Any(x => x.ApplicationId == application.Id);
             }
-
-            // TODO: delete
-            shift.IsAttendee = shift.Attendees.Any(x => x.PersonId == personId);
 
             return shift;
         }
