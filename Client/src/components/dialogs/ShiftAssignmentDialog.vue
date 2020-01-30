@@ -17,7 +17,7 @@
     <v-card>
       <v-toolbar
         flat
-        :color="shift.isPlanned ? 'navbar' : shift.isScheduled ? 'green' : ''"
+        :color="shift.isPlanned ? 'navbar' : shift.isScheduled ? 'green' : shift.isSuspended ? 'red' : ''"
       >
         <v-toolbar-title v-t="'shift.status.scheduling'" />
         <v-spacer />
@@ -120,7 +120,7 @@ import { getModule } from 'vuex-module-decorators'
 import PersonModule from '../../store/persons'
 import ShiftModule from '../../store/shifts'
 import ShiftAssignmentDialogPlanning from './ShiftAssignmentDialogPlanning.vue'
-import { Shift, Person } from '../../models'
+import { Shift, Person, ShiftStatus } from '../../models'
 
 @Component({
   components: {
@@ -137,6 +137,10 @@ export default class ShiftAssignmentDialog extends Vue {
   private dialog = false
   private saving = false
   private scheduling = false
+  private unscheduling = false
+  private unplanning = false
+  private suspending = false
+  private callingOff = false
 
   private savedAssignments: {
     [personId: string]: {
@@ -243,6 +247,19 @@ export default class ShiftAssignmentDialog extends Vue {
     }
   }
 
+  private async unplan() {
+    if (this.shift) {
+      this.unplanning = true
+
+      this.shiftModule.updateShiftStatus({
+        shiftId: this.shift.id,
+        status: ShiftStatus.draft
+      })
+
+      this.unplanning = false
+    }
+  }
+
   private async schedule() {
     if (this.shift) {
       this.scheduling = true
@@ -251,9 +268,51 @@ export default class ShiftAssignmentDialog extends Vue {
         await this.save()
       }
 
-      this.shiftModule.scheduleShift(this.shift.id)
+      this.shiftModule.updateShiftStatus({
+        shiftId: this.shift.id,
+        status: ShiftStatus.scheduled
+      })
 
       this.scheduling = false
+    }
+  }
+
+  private async unschedule() {
+    if (this.shift) {
+      this.unscheduling = true
+
+      this.shiftModule.updateShiftStatus({
+        shiftId: this.shift.id,
+        status: ShiftStatus.planned
+      })
+
+      this.unscheduling = false
+    }
+  }
+
+  private async suspend() {
+    if (this.shift) {
+      this.suspending = true
+
+      this.shiftModule.updateShiftStatus({
+        shiftId: this.shift.id,
+        status: ShiftStatus.suspended
+      })
+
+      this.suspending = false
+    }
+  }
+
+  private async callOff() {
+    if (this.shift) {
+      this.callingOff = true
+
+      this.shiftModule.updateShiftStatus({
+        shiftId: this.shift.id,
+        status: ShiftStatus.calledOff
+      })
+
+      this.callingOff = false
     }
   }
 

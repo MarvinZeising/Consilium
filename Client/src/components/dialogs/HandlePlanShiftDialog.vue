@@ -71,7 +71,10 @@ export default class HandlePlanShiftDialog extends Vue {
     if (this.shift) {
       this.loading = true
 
-      await this.shiftModule.planShift(this.shift.id)
+      await this.shiftModule.updateShiftStatus({
+        shiftId: this.shift.id,
+        status: ShiftStatus.planned
+      })
 
       this.loading = false
     }

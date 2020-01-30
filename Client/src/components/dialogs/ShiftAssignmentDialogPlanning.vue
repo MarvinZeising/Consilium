@@ -246,6 +246,8 @@ export default class ShiftAssignmentDialogPlanning extends Vue {
           return 'navbar'
         } else if (this.shift?.isScheduled) {
           return 'green'
+        } else if (this.shift?.isSuspended) {
+          return 'red'
         }
       }
       return ''

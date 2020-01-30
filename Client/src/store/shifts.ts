@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Module, VuexModule, Action } from 'vuex-module-decorators'
 import store from '../plugins/vuex'
-import { Shift, Category } from '../models'
+import { Shift, Category, ShiftStatus } from '../models'
 
 @Module({ dynamic: true, store, name: 'ShiftModule' })
 export default class ShiftModule extends VuexModule {
@@ -69,20 +69,16 @@ export default class ShiftModule extends VuexModule {
   }
 
   @Action
-  public async planShift(shiftId: string) {
+  public async updateShiftStatus({
+    shiftId,
+    status
+  }: {
+    shiftId: string,
+    status: ShiftStatus
+  }) {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
 
-    const response = await axios.put(`/persons/${personId}/projects/${projectId}/shifts/${shiftId}/plan`)
-    const shift = Shift.create(response.data)
-
-    await this.context.dispatch('upsertShift', { shift })
-  }
-
-  @Action
-  public async scheduleShift(shiftId: string) {
-    const { personId, projectId } = this.context.getters.resolvePersonAndProject
-
-    const response = await axios.put(`/persons/${personId}/projects/${projectId}/shifts/${shiftId}/schedule`)
+    const response = await axios.put(`/persons/${personId}/projects/${projectId}/shifts/${shiftId}/status/${status}`)
     const shift = Shift.create(response.data)
 
     await this.context.dispatch('upsertShift', { shift })
