@@ -67,7 +67,7 @@ namespace Server.Controllers
                 {
                     foreach (var shift in shifts)
                     {
-                        if (Enum.Parse<ShiftStatus>(shift.Status) != ShiftStatus.Scheduled)
+                        if (Enum.Parse<ShiftStatus>(shift.Status, ignoreCase: true) != ShiftStatus.Scheduled)
                         {
                             shift.Attendees = new List<AttendeeDto>();
                         }
@@ -165,21 +165,20 @@ namespace Server.Controllers
             }
         }
 
-        [HttpPut("shifts/{shiftId}/plan")]
-        public ActionResult<ShiftDto> PlanShift(Guid personId, Guid projectId, Guid shiftId)
+        [HttpPut("shifts/{shiftId}/status/{status}")]
+        public ActionResult<ShiftDto> UpdateShiftStatus(Guid personId, Guid projectId, Guid shiftId, string status)
         {
             try
             {
+                if (!Enum.TryParse<ShiftStatus>(status, ignoreCase: true, out var shiftStatus)) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
 
-                var shift = _db.Shift
-                    .FindByCondition(x => x.Id == shiftId && x.Status.Equals(ShiftStatus.Draft.ToString(), StringComparison.CurrentCultureIgnoreCase))
-                    .SingleOrDefault();
+                var shift = _db.Shift.FindByCondition(x => x.Id == shiftId).SingleOrDefault();
                 if (shift == null) return BadRequest();
                 if (_db.Participation.GetEligibilityByCategory(personId, projectId, shift.CategoryId)?.ShiftsWrite != true) return Forbid();
 
-                shift.Status = ShiftStatus.Planned.ToString();
+                shift.Status = status;
 
                 _db.Shift.Update(shift);
                 _db.Save();
@@ -188,35 +187,7 @@ namespace Server.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"ERROR in PlanShift: {e.Message}");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
-        [HttpPut("shifts/{shiftId}/schedule")]
-        public ActionResult<ShiftDto> ScheduleShift(Guid personId, Guid projectId, Guid shiftId)
-        {
-            try
-            {
-                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
-                if (_db.Participation.GetRole(personId, projectId)?.CalendarWrite != true) return Forbid();
-
-                var shift = _db.Shift
-                    .FindByCondition(x => x.Id == shiftId && x.Status.Equals(ShiftStatus.Planned.ToString(), StringComparison.CurrentCultureIgnoreCase))
-                    .SingleOrDefault();
-                if (shift == null) return BadRequest();
-                if (_db.Participation.GetEligibilityByCategory(personId, projectId, shift.CategoryId)?.ShiftsWrite != true) return Forbid();
-
-                shift.Status = ShiftStatus.Scheduled.ToString();
-
-                _db.Shift.Update(shift);
-                _db.Save();
-
-                return Ok(_db.Shift.GetFullShift(_mapper, shiftId, personId));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"ERROR in PlanShift: {e.Message}");
+                _logger.LogError($"ERROR in UpdateShiftStatus: {e.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }

@@ -105,6 +105,8 @@ namespace Server.Controllers
                 if (_db.Participation.GetRole(personId, projectId)?.CalendarRead != true) return Forbid();
                 if (_db.Participation.GetEligibilityByCategory(personId, projectId, attendee.Shift.CategoryId)?.ShiftsRead != true) return Forbid();
 
+                // TODO: make application have status bailed
+
                 _db.Attendee.Delete(attendee);
                 _db.Save();
 
