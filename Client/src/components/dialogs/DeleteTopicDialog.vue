@@ -72,7 +72,7 @@ export default class DeleteTopicDialog extends Vue {
 
   private valid: any = false
   private dialog: any = false
-  private loading: boolean = false
+  private loading = false
 
   private topicName: string = ''
   private enteredName: string = ''

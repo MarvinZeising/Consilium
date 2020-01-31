@@ -141,9 +141,9 @@ export default class SettingsGeneral extends Vue {
   private personModule = getModule(PersonModule, this.$store)
   private projectModule = getModule(ProjectModule, this.$store)
 
-  private loading: boolean = true
-  private saving: boolean = false
-  private editMode: boolean = false
+  private loading = true
+  private saving = false
+  private editMode = false
 
   private name: string = this.projectModule.getActiveProject?.name || ''
   private nameRules: any[] = [

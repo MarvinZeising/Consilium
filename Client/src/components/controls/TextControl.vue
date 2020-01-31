@@ -45,7 +45,7 @@ export default class TextControl extends Vue {
   private readonly customRules?: any[]
 
   @Prop(Boolean)
-  private required: boolean = false
+  private required = false
 
   private rules = [
     (v: string) => !this.required

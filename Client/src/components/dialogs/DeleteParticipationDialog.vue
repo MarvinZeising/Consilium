@@ -77,8 +77,8 @@ export default class DeleteParticipationDialog extends Vue {
   private readonly participation?: Participation
 
   private valid: any = false
-  private dialog: boolean = false
-  private loading: boolean = false
+  private dialog = false
+  private loading = false
 
   private enteredName: string = ''
   private get enteredNameRules() {

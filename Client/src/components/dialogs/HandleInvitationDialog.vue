@@ -61,8 +61,8 @@ export default class HandleInvitationDialog extends Vue {
 
   private form: any = null
   private dialog: any = null
-  private accepting: boolean = false
-  private declining: boolean = false
+  private accepting = false
+  private declining = false
 
   private async acceptInvitation() {
     this.accepting = true

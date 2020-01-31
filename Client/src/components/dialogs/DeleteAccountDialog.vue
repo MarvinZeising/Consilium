@@ -75,8 +75,8 @@ export default class DeleteAccountDialog extends Vue {
   private userModule = getModule(UserModule, this.$store)
 
   private valid: any = false
-  private loading: boolean = false
-  private deleteAccountDialog: boolean = false
+  private loading = false
+  private deleteAccountDialog = false
   private accountEmail: string = ''
   private email: string = ''
   private get emailRules() {

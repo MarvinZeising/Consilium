@@ -78,7 +78,7 @@ export default class Article extends Vue {
   private personModule = getModule(PersonModule, this.$store)
   private knowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
 
-  private loading: boolean = true
+  private loading = true
 
   private get getBackLink() {
     return {

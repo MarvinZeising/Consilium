@@ -101,7 +101,7 @@ export default class CreateTeamDialog extends Vue {
 
   private dialog: any = false
   private valid: any = null
-  private loading: boolean = false
+  private loading = false
 
   private team = Team.create({})
   private nameModel = { value: '' }

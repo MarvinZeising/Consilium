@@ -34,7 +34,7 @@ export default class CategoryControl extends Vue {
   private readonly model?: { value?: Category }
 
   @Prop(Boolean)
-  private required: boolean = false
+  private required = false
 
   private rules = [
     (v: string) => !this.required

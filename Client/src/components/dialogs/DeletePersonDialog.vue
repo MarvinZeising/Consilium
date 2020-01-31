@@ -72,7 +72,7 @@ export default class DeletePersonDialog extends Vue {
   private readonly personId?: string
 
   private valid: any = false
-  private deletePersonDialog: boolean = false
+  private deletePersonDialog = false
   private personFirstname: string = ''
   private enteredName: string = ''
   private get enteredNameRules() {

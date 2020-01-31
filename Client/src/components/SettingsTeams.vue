@@ -62,7 +62,7 @@ export default class SettingsTeams extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
   private teamModule = getModule(TeamModule, this.$store)
 
-  private loading: boolean = true
+  private loading = true
 
   private get canView() {
     return this.personModule.getActiveRole?.calendarWrite === true

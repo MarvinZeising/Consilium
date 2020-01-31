@@ -83,8 +83,8 @@ export default class CreateCongregationDialog extends Vue {
   private congregationModule = getModule(CongregationModule, this.$store)
 
   private dialog: any = null
-  private valid: boolean = false
-  private loading: boolean = false
+  private valid = false
+  private loading = false
 
   private name: string = ''
   private nameRules: any[] = [

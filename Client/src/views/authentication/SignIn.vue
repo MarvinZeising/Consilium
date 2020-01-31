@@ -84,9 +84,9 @@ export default class SignIn extends Vue {
   private userModule = getModule(UserModule, this.$store)
   private projectModule = getModule(ProjectModule, this.$store)
 
-  private valid: boolean = false
-  private authInProgress: boolean = false
-  private authFailed: boolean = false
+  private valid = false
+  private authInProgress = false
+  private authFailed = false
 
   private email: string = ''
   private emailRules: any[] = [
@@ -95,7 +95,7 @@ export default class SignIn extends Vue {
   ]
 
   private password: string = ''
-  private passwordShow: boolean = false
+  private passwordShow = false
   private passwordRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
   ]

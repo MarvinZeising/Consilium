@@ -71,7 +71,7 @@ export default class UpdateTopicDialog extends Vue {
 
   private form: any = null
   private dialog: any = null
-  private loading: boolean = false
+  private loading = false
 
   private topicName: string = ''
 

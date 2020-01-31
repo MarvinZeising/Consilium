@@ -63,8 +63,8 @@ export default class DeleteCategoryDialog extends Vue {
   private readonly category?: Category
 
   private valid: any = false
-  private dialog: boolean = false
-  private loading: boolean = false
+  private dialog = false
+  private loading = false
 
   private async deleteCategory() {
     if (this.category) {

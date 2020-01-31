@@ -165,8 +165,8 @@ export default class PersonalGeneral extends Vue {
   private personModule = getModule(PersonModule, this.$store)
 
   private valid: any = false
-  private editMode: boolean = false
-  private loading: boolean = false
+  private editMode = false
+  private loading = false
 
   private firstname: string = this.personModule.getActivePerson?.firstname || ''
   private lastname: string = this.personModule.getActivePerson?.lastname || ''

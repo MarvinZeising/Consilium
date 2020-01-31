@@ -3,7 +3,7 @@ import store from '../plugins/vuex'
 
 @Module({ dynamic: true, store, name: 'AlertModule' })
 export default class AlertModule extends VuexModule {
-  public loading: boolean = true
+  public loading = true
   public snackbar: any = {}
 
   public get getSnackbar(): any {

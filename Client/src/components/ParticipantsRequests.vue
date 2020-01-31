@@ -80,8 +80,8 @@ export default class ParticipantsRequests extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
   private requestModule = getModule(RequestModule, this.$store)
 
-  private loading: boolean = true
-  private saving: boolean = false
+  private loading = true
+  private saving = false
   private requestsAllowed: any = true
   private initialRequestsAllowed: any = true
 

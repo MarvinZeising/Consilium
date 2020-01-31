@@ -43,7 +43,7 @@ import { getModule } from 'vuex-module-decorators'
 @Component
 export default class FilterCongregationsDialog extends Vue {
   private dialog: any = null
-  private valid: boolean = false
+  private valid = false
 
   @Prop(Object)
   private readonly filter?: { search: string }

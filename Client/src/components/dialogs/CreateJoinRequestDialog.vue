@@ -68,7 +68,7 @@ export default class CreateJoinRequestDialog extends Vue {
 
   private form: any = null
   private dialog: any = null
-  private loading: boolean = false
+  private loading = false
 
   private projectId: string = ''
   private projectRules: any[] = []

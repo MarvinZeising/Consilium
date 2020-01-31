@@ -85,8 +85,8 @@ export default class UpdateInvitationDialog extends Vue {
 
   private dialog: any = false
   private valid: any = null
-  private loading: boolean = false
-  private loadingRoles: boolean = true
+  private loading = false
+  private loadingRoles = true
 
   private roleId: string = ''
   private roleValues: any = []

@@ -72,7 +72,7 @@ export default class DateControl extends Vue {
   private readonly description?: string
 
   @Prop(Boolean)
-  private required: boolean = false
+  private required = false
 
   private datePicker: any = false
   private date: string = ''

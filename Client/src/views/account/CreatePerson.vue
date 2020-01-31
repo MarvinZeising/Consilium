@@ -127,7 +127,7 @@ export default class CreatePerson extends Vue {
   private personModule = getModule(PersonModule, this.$store)
 
   private activeStep: number = 1
-  private valid: boolean = false
+  private valid = false
 
   private firstname: string = ''
   private lastname: string = ''

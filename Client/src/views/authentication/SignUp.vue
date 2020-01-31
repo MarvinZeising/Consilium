@@ -214,26 +214,26 @@ export default class SignUp extends Vue {
   private userModule = getModule(UserModule, this.$store)
 
   private step: number = 0
-  private nextLoading: boolean = false
+  private nextLoading = false
 
   private email: string = ''
-  private emailValid: boolean = false
-  private emailAlreadyExists: boolean = false
+  private emailValid = false
+  private emailAlreadyExists = false
   private emailRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid'),
   ]
 
   private password: string = ''
-  private passwordShow: boolean = false
-  private passwordValid: boolean = false
+  private passwordShow = false
+  private passwordValid = false
   private passwordRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => v.length >= 8 || i18n.t('core.fieldMin', { count: 8 }),
   ]
 
   private passwordRepeat: string = ''
-  private passwordRepeatShow: boolean = false
+  private passwordRepeatShow = false
   private get passwordRepeatRules() {
     return [
       (v: string) => !!v || i18n.t('core.fieldRequired'),

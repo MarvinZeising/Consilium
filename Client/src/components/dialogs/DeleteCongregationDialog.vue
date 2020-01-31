@@ -59,7 +59,7 @@ export default class DeleteCongregationDialog extends Vue {
   private readonly congregation?: Congregation
 
   private dialog: any = false
-  private loading: boolean = false
+  private loading = false
 
   private async deleteCongregation() {
     this.loading = true

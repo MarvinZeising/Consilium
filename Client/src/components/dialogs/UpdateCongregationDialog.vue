@@ -98,7 +98,7 @@ export default class UpdateCongregationDialog extends Vue {
 
   private dialog: any = false
   private valid: any = null
-  private loading: boolean = false
+  private loading = false
 
   private name: string = ''
   private nameRules: any[] = [

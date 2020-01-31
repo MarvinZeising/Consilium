@@ -145,7 +145,7 @@ export default class UpdateRoleDialog extends Vue {
 
   private dialog: any = false
   private valid: any = null
-  private loading: boolean = false
+  private loading = false
 
   private nameModel = { value: '' }
   private calendarModel = { value: 'none' }

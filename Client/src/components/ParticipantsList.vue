@@ -53,7 +53,7 @@ export default class ParticipantsList extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
   private participantModule = getModule(ParticipantModule, this.$store)
 
-  private loading: boolean = true
+  private loading = true
   private filter: { search: string } = { search: '' }
 
   private headers: any[] = [

@@ -93,8 +93,8 @@ export default class CreateInvitationDialog extends Vue {
 
   private dialog: any = false
   private valid: any = null
-  private loading: boolean = false
-  private loadingRoles: boolean = true
+  private loading = false
+  private loadingRoles = true
 
   private personId: string = ''
   private personIdRules: any[] = [

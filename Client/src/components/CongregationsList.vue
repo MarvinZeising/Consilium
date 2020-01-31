@@ -53,7 +53,7 @@ export default class CongregationsList extends Vue {
   private personModule = getModule(PersonModule, this.$store)
   private congregationModule = getModule(CongregationModule, this.$store)
 
-  private loading: boolean = true
+  private loading = true
   private filter: { search: string } = { search: '' }
 
   private headers: any[] = [

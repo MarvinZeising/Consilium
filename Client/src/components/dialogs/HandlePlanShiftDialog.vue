@@ -63,8 +63,8 @@ export default class HandlePlanShiftDialog extends Vue {
   private readonly shift?: Shift
 
   private valid: any = false
-  private dialog: boolean = false
-  private loading: boolean = false
+  private dialog = false
+  private loading = false
 
   @Emit('planned')
   private async planShift() {

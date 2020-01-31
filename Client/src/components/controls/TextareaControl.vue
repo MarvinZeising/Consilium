@@ -43,7 +43,7 @@ export default class TextareaControl extends Vue {
   private readonly maxLength?: number
 
   @Prop(Boolean)
-  private required: boolean = false
+  private required = false
 
   private get getCounter() {
     if (this.model && this.maxLength && this.maxLength > 0) {

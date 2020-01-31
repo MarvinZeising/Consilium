@@ -85,9 +85,9 @@ export default class HandleJoinRequestDialog extends Vue {
 
   private valid: any = null
   private dialog: any = null
-  private loadingRoles: boolean = false
-  private accepting: boolean = false
-  private declining: boolean = false
+  private loadingRoles = false
+  private accepting = false
+  private declining = false
 
   private roleId: string = ''
   private roleValues: any = []

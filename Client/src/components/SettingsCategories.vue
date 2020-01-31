@@ -62,7 +62,7 @@ export default class SettingsCategories extends Vue {
   private categoryModule = getModule(CategoryModule, this.$store)
   private participantModule = getModule(ParticipantModule, this.$store)
 
-  private loading: boolean = true
+  private loading = true
 
   private get canView() {
     return this.personModule.getActiveRole?.calendarWrite === true

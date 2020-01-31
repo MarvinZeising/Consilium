@@ -111,8 +111,8 @@ export default class PersonalMisc extends Vue {
   private personModule = getModule(PersonModule, this.$store)
 
   private valid: any = false
-  private editMode: boolean = false
-  private loading: boolean = false
+  private editMode = false
+  private loading = false
 
   private languages: string = this.personModule.getActivePerson?.firstname || ''
   private languagesRules: any[] = [

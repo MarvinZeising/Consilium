@@ -93,7 +93,7 @@ router.beforeEach((to: Route, from: Route, next) => {
     'signIn',
     'signUp'
   ]
-  const authRequird: boolean = !publicPages.includes(to.name)
+  const authRequird = !publicPages.includes(to.name)
   const loggedIn = localStorage.getItem('user')
 
   if (authRequird && !loggedIn) {

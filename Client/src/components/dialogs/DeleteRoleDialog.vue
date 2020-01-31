@@ -63,8 +63,8 @@ export default class DeleteRoleDialog extends Vue {
   private readonly roleId?: string
 
   private valid: any = false
-  private dialog: boolean = false
-  private loading: boolean = false
+  private dialog = false
+  private loading = false
 
   private async deleteRole() {
     if (this.roleId) {

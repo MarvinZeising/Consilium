@@ -128,7 +128,7 @@ import UserModule from '../store/users'
 export default class AccountGeneral extends Vue {
   private userModule = getModule(UserModule, this.$store)
 
-  private editMode: boolean = false
+  private editMode = false
 
   private id: string = this.userModule.getUser?.id || ''
   private email: string = this.userModule.getUser?.email || ''

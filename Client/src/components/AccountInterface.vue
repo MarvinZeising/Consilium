@@ -187,7 +187,7 @@ import { Language } from '../models'
 export default class AccountInterface extends Vue {
   private userModule = getModule(UserModule, this.$store)
 
-  private editMode: boolean = false
+  private editMode = false
 
   private dateFormat: string = this.userModule.getUser?.dateFormat || ''
   private dateFormatValues: any[] = [

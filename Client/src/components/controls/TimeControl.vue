@@ -74,7 +74,7 @@ export default class TimeControl extends Vue {
   private readonly format?: string
 
   @Prop(Boolean)
-  private required: boolean = false
+  private required = false
 
   private timePicker: any = false
   private time: string = ''

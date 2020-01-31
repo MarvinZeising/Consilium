@@ -59,7 +59,7 @@ export default class DeleteArticleDialog extends Vue {
   private readonly article?: Article
 
   private dialog: any = false
-  private loading: boolean = false
+  private loading = false
 
   private async deleteArticle() {
     this.loading = true

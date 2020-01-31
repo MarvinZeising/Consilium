@@ -61,7 +61,7 @@ export default class HomeApplications extends Vue {
   private personModule = getModule(PersonModule, this.$store)
   private applicationModule = getModule(ApplicationModule, this.$store)
 
-  private loading: boolean = true
+  private loading = true
 
   @Watch('personModule.getActivePerson')
   private async onPersonChanged(val: string, oldVal: string) {

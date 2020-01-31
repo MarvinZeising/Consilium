@@ -110,11 +110,11 @@ export default class UpdatePasswordDialog extends Vue {
   private valid: any = null
 
   private currentPassword: string = ''
-  private currentPasswordShow: boolean = false
+  private currentPasswordShow = false
   private newPassword: string = ''
-  private newPasswordShow: boolean = false
+  private newPasswordShow = false
   private newPasswordRepeat: string = ''
-  private newPasswordRepeatShow: boolean = false
+  private newPasswordRepeatShow = false
   private passwordRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => v.length >= 8 || i18n.t('core.fieldMin', { count: 8 })

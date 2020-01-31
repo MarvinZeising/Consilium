@@ -73,7 +73,7 @@ export default class SettingsRoles extends Vue {
   private roleModule = getModule(RoleModule, this.$store)
   private participantModule = getModule(ParticipantModule, this.$store)
 
-  private loading: boolean = true
+  private loading = true
 
   private get canView() {
     return this.personModule.getActiveRole?.rolesRead === true
