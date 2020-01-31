@@ -58,7 +58,7 @@ export default class DeleteArticleDialog extends Vue {
   @Prop(Article)
   private readonly article?: Article
 
-  private dialog: any = false
+  private dialog = false
   private loading = false
 
   private async deleteArticle() {

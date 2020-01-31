@@ -96,7 +96,7 @@ export default class UpdateCongregationDialog extends Vue {
   @Prop(Congregation)
   private readonly congregation?: Congregation
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private loading = false
 

@@ -70,8 +70,8 @@ export default class DeleteTopicDialog extends Vue {
   @Prop(Topic)
   private readonly topic?: Topic
 
-  private valid: any = false
-  private dialog: any = false
+  private valid = false
+  private dialog = false
   private loading = false
 
   private topicName: string = ''

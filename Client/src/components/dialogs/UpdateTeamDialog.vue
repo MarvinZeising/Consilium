@@ -104,7 +104,7 @@ export default class UpdateTeamDialog extends Vue {
   @Prop(Team)
   private readonly team?: Team
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private loading = false
 

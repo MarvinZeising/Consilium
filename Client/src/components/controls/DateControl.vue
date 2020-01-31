@@ -74,7 +74,7 @@ export default class DateControl extends Vue {
   @Prop(Boolean)
   private required = false
 
-  private datePicker: any = false
+  private datePicker = false
   private date: string = ''
   private rules = [
     (v: string) => !this.required

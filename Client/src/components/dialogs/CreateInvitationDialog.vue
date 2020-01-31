@@ -91,7 +91,7 @@ export default class CreateInvitationDialog extends Vue {
   private requestModule = getModule(RequestModule, this.$store)
   private roleModule = getModule(RoleModule, this.$store)
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private loading = false
   private loadingRoles = true

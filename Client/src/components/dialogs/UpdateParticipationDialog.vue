@@ -66,7 +66,7 @@ export default class UpdateParticipationDialog extends Vue {
   @Prop(Participation)
   private readonly participation?: Participation
 
-  private dialog: any = false
+  private dialog = false
 
 }
 </script>

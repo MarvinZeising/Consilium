@@ -60,7 +60,7 @@ export default class DeleteRoleDialog extends Vue {
   @Prop(String)
   private readonly participationId?: string
 
-  private valid: any = false
+  private valid = false
   private dialog = false
   private loading = false
 

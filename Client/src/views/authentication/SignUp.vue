@@ -241,7 +241,7 @@ export default class SignUp extends Vue {
     ]
   }
 
-  private interfaceValid: any = false
+  private interfaceValid = false
   private languageValues: any[] = i18n.availableLocales.map((value) => {
     return { value }
   })

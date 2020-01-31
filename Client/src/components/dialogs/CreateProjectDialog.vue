@@ -84,7 +84,7 @@ export default class CreateProjectDialog extends Vue {
   private personModule = getModule(PersonModule, this.$store)
   private projectModule = getModule(ProjectModule, this.$store)
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private loading = false
 

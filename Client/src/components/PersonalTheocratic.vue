@@ -159,7 +159,7 @@ export default class PersonalTheocratic extends Vue {
   private personModule = getModule(PersonModule, this.$store)
   private congregationModule = getModule(CongregationModule, this.$store)
 
-  private valid: any = false
+  private valid = false
   private editMode = false
   private loading = false
   private congregationLoading = true

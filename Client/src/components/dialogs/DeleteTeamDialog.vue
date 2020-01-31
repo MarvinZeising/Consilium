@@ -62,7 +62,7 @@ export default class DeleteTeamDialog extends Vue {
   @Prop(Team)
   private readonly team?: Team
 
-  private valid: any = false
+  private valid = false
   private dialog = false
   private loading = false
 

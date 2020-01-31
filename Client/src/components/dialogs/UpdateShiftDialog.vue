@@ -124,7 +124,7 @@ export default class UpdateShiftDialog extends Vue {
   @Prop(Shift)
   private readonly shift?: Shift
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private showHelpText = false
   private loading = false

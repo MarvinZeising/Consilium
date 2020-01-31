@@ -62,7 +62,7 @@ export default class DeleteCategoryDialog extends Vue {
   @Prop(Category)
   private readonly category?: Category
 
-  private valid: any = false
+  private valid = false
   private dialog = false
   private loading = false
 

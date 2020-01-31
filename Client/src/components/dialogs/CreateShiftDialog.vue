@@ -128,7 +128,7 @@ export default class CreateShiftDialog extends Vue {
   @Prop(Object)
   private readonly categoryModel?: { value?: Category }
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private showHelpText = false
   private loading = false

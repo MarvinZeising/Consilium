@@ -62,7 +62,7 @@ export default class HandlePlanShiftDialog extends Vue {
   @Prop(Shift)
   private readonly shift?: Shift
 
-  private valid: any = false
+  private valid = false
   private dialog = false
   private loading = false
 

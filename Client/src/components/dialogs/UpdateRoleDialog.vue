@@ -143,7 +143,7 @@ export default class UpdateRoleDialog extends Vue {
   @Prop(Boolean)
   private readonly canBeDeleted?: boolean
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private loading = false
 

@@ -83,7 +83,7 @@ export default class UpdateInvitationDialog extends Vue {
   @Prop(Participation)
   private readonly participation?: Participation
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private loading = false
   private loadingRoles = true

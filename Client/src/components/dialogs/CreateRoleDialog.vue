@@ -120,7 +120,7 @@ export default class CreateRoleDialog extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
   private roleModule = getModule(RoleModule, this.$store)
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private loading = false
 

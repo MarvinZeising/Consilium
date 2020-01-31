@@ -101,7 +101,7 @@ export default class UpdateArticleDialog extends Vue {
   @Prop(Article)
   private readonly article?: Article
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private loading = false
 

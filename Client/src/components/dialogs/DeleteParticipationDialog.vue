@@ -76,7 +76,7 @@ export default class DeleteParticipationDialog extends Vue {
   @Prop(Participation)
   private readonly participation?: Participation
 
-  private valid: any = false
+  private valid = false
   private dialog = false
   private loading = false
 

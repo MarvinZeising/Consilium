@@ -76,7 +76,7 @@ export default class TimeControl extends Vue {
   @Prop(Boolean)
   private required = false
 
-  private timePicker: any = false
+  private timePicker = false
   private time: string = ''
   private rules = [
     (v: string) => !this.required

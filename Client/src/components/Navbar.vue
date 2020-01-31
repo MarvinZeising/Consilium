@@ -142,8 +142,8 @@ export default class Navbar extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
 
   private drawer = true
-  private accountMenu: any = false
-  private languageMenu: any = false
+  private accountMenu = false
+  private languageMenu = false
 
   private language: string = ''
   private languages: string[] = []

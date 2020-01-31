@@ -89,7 +89,7 @@ export default class CreateCategoryDialog extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
   private categoryModule = getModule(CategoryModule, this.$store)
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private loading = false
 

@@ -93,7 +93,7 @@ export default class UpdateCategoryDialog extends Vue {
   @Prop(Category)
   private readonly category?: Category
 
-  private dialog: any = false
+  private dialog = false
   private valid: any = null
   private loading = false
 
