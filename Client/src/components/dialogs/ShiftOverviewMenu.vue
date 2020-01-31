@@ -8,7 +8,6 @@
     offset-x
     offset-overflow
     :content-class="$vuetify.breakpoint.xsOnly ? 'menu-fullscreen' : ''"
-
   >
     <ShiftOverviewMenuDraft
       v-if="getShift.isDraft"
@@ -21,7 +20,7 @@
       :elevation="$vuetify.breakpoint.xsOnly ? 8 : undefined"
     >
       <v-toolbar
-        :color="getEventColor"
+        :color="getColor"
         dark
         flat
         short
@@ -46,7 +45,7 @@
       </v-toolbar>
 
       <v-toolbar
-        :color="getEventColor"
+        :color="getColor"
         dark
         flat
         short
@@ -178,11 +177,16 @@ export default class CreateTeamDialog extends Vue {
     return this.model?.event.shift
   }
 
-  private get getEventColor() {
-     if (this.getShift?.isScheduled) {
-       return 'green'
-     }
-     return 'navbar'
+  private get getColor() {
+    if (this.getShift?.isPlanned) {
+      return 'navbar'
+    } else if (this.getShift?.isScheduled) {
+      return 'green'
+    } else if (this.getShift?.isSuspended) {
+      return 'red'
+    } else if (this.getShift?.isCalledOff) {
+      return 'grey'
+    }
   }
 
   private openPerson() {}

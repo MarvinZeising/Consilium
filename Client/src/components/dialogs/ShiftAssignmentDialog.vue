@@ -17,7 +17,7 @@
     <v-card>
       <v-toolbar
         flat
-        :color="shift.isPlanned ? 'navbar' : shift.isScheduled ? 'green' : shift.isSuspended ? 'red' : ''"
+        :color="getColor"
       >
         <v-toolbar-title v-t="'shift.status.scheduling'" />
         <v-spacer />
@@ -168,6 +168,18 @@ export default class ShiftAssignmentDialog extends Vue {
       }
     }
     return false
+  }
+
+  private get getColor() {
+    if (this.shift?.isPlanned) {
+      return 'navbar'
+    } else if (this.shift?.isScheduled) {
+      return 'green'
+    } else if (this.shift?.isSuspended) {
+      return 'red'
+    } else if (this.shift?.isCalledOff) {
+      return 'grey'
+    }
   }
 
   private get isSaved() {
