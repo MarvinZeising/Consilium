@@ -45,10 +45,11 @@
         <v-spacer />
         <v-btn
           text
-          color="error"
-          v-t="'shift.status.unplan'"
-          :loading="unplanning"
-          @click.stop="unplan"
+          color="primary"
+          v-t="'shift.status.schedule'"
+          :loading="scheduling"
+          :disabled="saving || unplanning"
+          @click.stop="schedule"
         />
       </v-card-actions>
 
@@ -80,6 +81,38 @@
         />
       </v-card-actions>
 
+      <v-card-actions v-if="shift.isSuspended">
+        <v-btn
+          text
+          color="error"
+          v-t="'shift.status.callOff'"
+          :loading="callingOff"
+          :disabled="saving || scheduling"
+          @click.stop="callOff"
+        />
+        <v-spacer />
+        <v-btn
+          text
+          color="primary"
+          v-t="'shift.status.reschedule'"
+          :loading="scheduling"
+          :disabled="saving || callingOff"
+          @click.stop="schedule"
+        />
+      </v-card-actions>
+
+      <v-card-actions v-if="shift.isCalledOff">
+        <v-spacer />
+        <v-btn
+          text
+          color="primary"
+          v-t="'shift.status.reschedule'"
+          :loading="scheduling"
+          :disabled="saving || callingOff"
+          @click.stop="schedule"
+        />
+      </v-card-actions>
+
       <v-card-actions>
         <v-btn
           text
@@ -99,15 +132,6 @@
           :loading="saving"
           :disabled="releasing || isSaved"
           @click.stop="save"
-        />
-        <v-btn
-          v-if="!shift.isScheduled"
-          text
-          color="primary"
-          v-t="'shift.status.schedule'"
-          :loading="scheduling"
-          :disabled="saving"
-          @click.stop="schedule"
         />
       </v-card-actions>
 
@@ -258,8 +282,7 @@ export default class ShiftAssignmentDialog extends Vue {
       Vue.set(this, 'savedAssignments', copy)
 
       this.saving = false
-      this.emitSaved()
-      this.dialog = true
+      this.reopenDialog()
     }
   }
 
@@ -267,12 +290,13 @@ export default class ShiftAssignmentDialog extends Vue {
     if (this.shift) {
       this.unplanning = true
 
-      this.shiftModule.updateShiftStatus({
+      await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
         status: ShiftStatus.draft
       })
 
       this.unplanning = false
+      this.$emit('saved')
     }
   }
 
@@ -284,12 +308,13 @@ export default class ShiftAssignmentDialog extends Vue {
         await this.save()
       }
 
-      this.shiftModule.updateShiftStatus({
+      await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
         status: ShiftStatus.scheduled
       })
 
       this.scheduling = false
+      this.reopenDialog()
     }
   }
 
@@ -297,12 +322,13 @@ export default class ShiftAssignmentDialog extends Vue {
     if (this.shift) {
       this.unscheduling = true
 
-      this.shiftModule.updateShiftStatus({
+      await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
         status: ShiftStatus.planned
       })
 
       this.unscheduling = false
+      this.reopenDialog()
     }
   }
 
@@ -310,12 +336,13 @@ export default class ShiftAssignmentDialog extends Vue {
     if (this.shift) {
       this.suspending = true
 
-      this.shiftModule.updateShiftStatus({
+      await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
         status: ShiftStatus.suspended
       })
 
       this.suspending = false
+      this.reopenDialog()
     }
   }
 
@@ -323,16 +350,22 @@ export default class ShiftAssignmentDialog extends Vue {
     if (this.shift) {
       this.callingOff = true
 
-      this.shiftModule.updateShiftStatus({
+      await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
         status: ShiftStatus.calledOff
       })
 
       this.callingOff = false
+      this.reopenDialog()
     }
   }
 
-  @Emit('saved') private emitSaved() { /* nothing to do */ }
+  private reopenDialog() {
+    this.reopenMenu()
+    this.dialog = true
+  }
+
+  @Emit('saved') private reopenMenu() { /* nothing to do */ }
 
 }
 </script>
