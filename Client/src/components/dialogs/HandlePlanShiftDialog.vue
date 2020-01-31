@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch, Prop, Emit } from 'vue-property-decorator'
+import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import ShiftModule from '../../store/shifts'
@@ -66,7 +66,6 @@ export default class HandlePlanShiftDialog extends Vue {
   private dialog = false
   private loading = false
 
-  @Emit('planned')
   private async planShift() {
     if (this.shift) {
       this.loading = true

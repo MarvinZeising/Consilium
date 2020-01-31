@@ -23,10 +23,7 @@
     />
     <v-card-actions>
       <v-spacer />
-      <HandlePlanShiftDialog
-        :shift="shift"
-        @saved="model.model = true"
-      />
+      <HandlePlanShiftDialog :shift="shift" />
     </v-card-actions>
 
   </v-card>

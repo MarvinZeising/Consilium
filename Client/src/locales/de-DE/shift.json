@@ -19,11 +19,14 @@
     "planShiftDescription": "Möchtest du diese Schicht wirklich planen? Dadurch wird sie für die Teilnehmer sichtbar. Ist die Schicht offen, kann sich jeder mit ausreichenden Berechtigungen darauf bewerben. Bitte beachte: Ist die Schicht geplant, kannst du Zeit und Kategorie nicht mehr verändern.",
     "assignments": "Einteilung",
     "unplan": "In Entwurf umwandeln",
+    "unplanDescription": "Möchtest du diese Schicht wirklich wieder in Entwurf umwandeln? Dadurch werden alle Bewerbungen und Einteilungen für diese Schicht gelöscht.",
     "schedule": "Veröffentlichen",
     "scheduling": "Schicht einteilen",
     "unschedule": "Geheim machen",
+    "reschedule": "Wieder veröffentlichen",
     "suspend": "In Schwebe versetzen",
-    "callOff": "Absagen"
+    "callOff": "Absagen",
+    "calledOff": "Diese Schicht wurde abgesagt"
   },
   "category": {
     "categories": "Es wurden noch keine Kategorien angelegt. | Kategorie | Kategorien",

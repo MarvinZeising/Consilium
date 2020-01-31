@@ -41,6 +41,8 @@
       <v-divider />
 
       <v-card-actions v-if="shift.isPlanned">
+        <UpdateShiftToDraft :shift="shift" />
+        <v-spacer />
         <v-btn
           text
           color="error"
@@ -120,11 +122,13 @@ import { getModule } from 'vuex-module-decorators'
 import PersonModule from '../../store/persons'
 import ShiftModule from '../../store/shifts'
 import ShiftAssignmentDialogPlanning from './ShiftAssignmentDialogPlanning.vue'
+import UpdateShiftToDraft from './UpdateShiftToDraftDialog.vue'
 import { Shift, Person, ShiftStatus } from '../../models'
 
 @Component({
   components: {
     ShiftAssignmentDialogPlanning,
+    UpdateShiftToDraft,
   }
 })
 export default class ShiftAssignmentDialog extends Vue {
