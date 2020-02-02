@@ -36,8 +36,10 @@ namespace Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration["MySqlConnection:ConnectionString"];
-            services.AddDbContext<RepositoryContext>(o => o.UseMySql(connectionString));
+            // var connectionString = Configuration["MySqlConnection:ConnectionString"];
+            // services.AddDbContext<RepositoryContext>(o => o.UseMySql(connectionString));
+            var connectionString = Configuration["MsSqlConnection:ConnectionString"];
+            services.AddDbContext<RepositoryContext>(o => o.UseSqlServer(connectionString));
 
             services.AddAutoMapper(typeof(Startup));
 
