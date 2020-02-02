@@ -75,6 +75,8 @@ namespace Server.Controllers
                 if (!ModelState.IsValid) return BadRequest();
 
                 var user = _mapper.Map<User>(dto);
+                user.DateFormat = "YYYY-MM-DD";
+                user.TimeFormat = "h:mm a";
 
                 var createdUser = _db.User.Register(user, dto.Password);
 
