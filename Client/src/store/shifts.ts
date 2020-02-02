@@ -10,7 +10,7 @@ export default class ShiftModule extends VuexModule {
   public async loadShifts() {
     const { personId, projectId } = this.context.getters.resolvePersonAndProject
     if (personId && projectId) {
-      const response = await axios.get(`/persons/${personId}/projects/${projectId}/shifts/20200101-20200131`)
+      const response = await axios.get(`/persons/${personId}/projects/${projectId}/shifts/20200101-20200231`)
       const shifts: Shift[] = response.data.map((x: any) => Shift.create(x))
 
       const categories = shifts.reduce((storage: { [categoryId: string]: Shift[] }, item: Shift) => {
