@@ -109,7 +109,9 @@
       @click:date="viewDay"
       @click:more="viewDay"
       @click:event="showEvent"
-    />
+      @change="loadMonth"
+    >
+    </v-calendar>
 
     <ShiftOverviewMenu :model="shiftOverviewModel" />
 
@@ -155,7 +157,7 @@ export default class Calendar extends Vue {
   private teamModule = getModule(TeamModule, this.$store)
   private shiftModule = getModule(ShiftModule, this.$store)
 
-  private loading = true
+  private loading = 0
   private calendarHeight = 0
   private focus = moment().format('YYYY-MM-DD')
   private events: any = [{ name: '', start: '1900-01-01' }]
@@ -253,10 +255,9 @@ export default class Calendar extends Vue {
   }
 
   private async init() {
-    this.loading = true
+    this.loading++
 
     await this.categoryModule.loadCategories()
-    await this.shiftModule.loadShifts()
 
     if (this.canEdit) {
       await this.teamModule.loadTeams()
@@ -267,7 +268,7 @@ export default class Calendar extends Vue {
 
     this.setCalendarHeight()
 
-    this.loading = false
+    this.loading--
   }
 
   private showEvent({ nativeEvent, event }: { nativeEvent: any, event: any }) {
@@ -302,6 +303,17 @@ export default class Calendar extends Vue {
       } else {
       this.calendarHeight = window.innerHeight - 128
     }
+  }
+
+  private async loadMonth({ start, end }: { start: { date: string }, end: { date: string } }) {
+    this.loading++
+
+    await this.shiftModule.loadShifts({
+      start: start.date.replace(/-/g, ''),
+      end: end.date.replace(/-/g, ''),
+    })
+
+    this.loading--
   }
 
 }
