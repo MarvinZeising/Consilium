@@ -99,8 +99,9 @@
       color="navbar"
       :style="`border-left:0; min-height:${calendarHeight}px;`"
       v-model="focus"
-      :events="getEvents"
+      :events="events"
       :event-color="(event) => event.color"
+      :rawEvents="getEvents"
       :type="calendarTypeModel.type"
       :locale="userModule.getUser.language"
       :weekdays="weekdays"
@@ -157,7 +158,7 @@ export default class Calendar extends Vue {
   private loading = true
   private calendarHeight = 0
   private focus = moment().format('YYYY-MM-DD')
-  private events: any = []
+  private events: any = [{ name: '', start: '1900-01-01' }]
   private weekdays = [1, 2, 3, 4, 5, 6, 0]
 
   private calendarTypeModel = { type: 'month' }
@@ -206,7 +207,9 @@ export default class Calendar extends Vue {
           events = events.concat(x.shifts)
         })
 
-      events = events.map((x: Shift) => {
+      Vue.set(this, 'events', [{ name: 'Loading...', start: '1900-01-01' }])
+
+      events.forEach((x: Shift) => {
         const date = moment(x.date, 'YYYYMMDD').format('YYYY-MM-DD')
         const time = moment(x.time, 'Hmm').format('[T]HH:mm')
         const start = date + time
@@ -215,13 +218,13 @@ export default class Calendar extends Vue {
           .add(moment(x.duration, 'Hmm').format('mm'), 'minutes')
           .format('YYYY-MM-DD[T]HH:mm')
 
-        return {
+        this.events.push({
           name: x.category?.name,
           color: 'navbar',
           shift: x,
           start,
           end,
-        }
+        })
       })
 
       return events
