@@ -111,6 +111,12 @@
       @click:event="showEvent"
       @change="loadMonth"
     >
+      <template v-slot:event="{ event }">
+        <div class="pl-1">
+          <strong>{{ user.formatTime(event.shift.time, 'Hmm') }}</strong>
+          {{ event.name }}
+        </div>
+      </template>
     </v-calendar>
 
     <ShiftOverviewMenu :model="shiftOverviewModel" />
@@ -123,6 +129,22 @@
 
   </v-container>
 </template>
+
+<style lang="scss">
+  .v-event {
+    margin-left:3px;
+  }
+  .event-draft {
+    background: repeating-linear-gradient(
+      -45deg,
+      #222,
+      #222 5px,
+      var(--v-accent-darken1) 5px,
+      var(--v-accent-darken1) 10px,
+    );
+    text-shadow: 2px 2px #222;
+  }
+</style>
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
@@ -139,7 +161,7 @@ import CreateShiftDialog from '../../components/dialogs/CreateShiftDialog.vue'
 import ShiftOverviewMenu from '../../components/dialogs/ShiftOverviewMenu.vue'
 import CategoriesControl from '../../components/controls/CategoriesControl.vue'
 import CalendarTypeControl from '../../components/controls/CalendarTypeControl.vue'
-import { Shift, Category } from '../../models'
+import { Shift, Category, User } from '../../models'
 
 @Component({
   components: {
@@ -162,6 +184,7 @@ export default class Calendar extends Vue {
   private focus = moment().format('YYYY-MM-DD')
   private events: any = [{ name: '', start: '1900-01-01' }]
   private weekdays = [1, 2, 3, 4, 5, 6, 0]
+  private user?: User
 
   private calendarTypeModel = { type: 'month' }
   private categoryModel: { value?: Category } = { value: undefined }
@@ -213,17 +236,28 @@ export default class Calendar extends Vue {
 
       events.forEach((x: Shift) => {
         const date = moment(x.date, 'YYYYMMDD').format('YYYY-MM-DD')
-        const time = moment(x.time, 'Hmm').format('[T]HH:mm')
+        const time = moment(x.time, 'Hmm').format(' HH:mm')
         const start = date + time
         const end = moment(start)
           .add(moment(x.duration, 'Hmm').format('H'), 'hours')
           .add(moment(x.duration, 'Hmm').format('mm'), 'minutes')
-          .format('YYYY-MM-DD[T]HH:mm')
+          .format('YYYY-MM-DD HH:mm')
+        let color = 'event-draft'
+
+        if (x.isPlanned) {
+          color = 'navbar'
+        } else if (x.isScheduled) {
+          color = 'green'
+        } else if (x.isSuspended) {
+          color = 'red'
+        } else if (x.isCalledOff) {
+          color = 'grey'
+        }
 
         this.events.push({
           name: x.category?.name,
-          color: 'navbar',
           shift: x,
+          color,
           start,
           end,
         })
@@ -267,6 +301,8 @@ export default class Calendar extends Vue {
     this.categoryModel.value = this.categoriesModel.selected[0]
 
     this.setCalendarHeight()
+
+    this.user = this.userModule.getUser ?? undefined
 
     this.loading--
   }
