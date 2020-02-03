@@ -87,9 +87,9 @@ async function init() {
         router.push({ name: 'serverException' })
       }
     }
-
-    alertModule.updateLoading(false)
   }
+
+  alertModule.updateLoading(false)
 }
 
 init()
