@@ -57,7 +57,14 @@ class User {
   }
 
   public formatTime(datetime: string, format: string = 'H:mm') {
-    return moment(datetime, format).format(this.timeFormat)
+    const time = moment(datetime, format)
+    let timeFormat = this.timeFormat
+
+    if (time.format('mm') === '00') {
+      timeFormat = timeFormat.replace(/:mm/gi, '')
+    }
+
+    return time.format(timeFormat)
   }
 
   public formatDateTime(datetime: string) {
