@@ -8,6 +8,7 @@
     <v-toolbar dark flat>
       <v-toolbar-title>{{ shift.getTimespan(userModule.getUser) }}</v-toolbar-title>
       <v-spacer></v-spacer>
+      <UpdateShiftDialog :shift="getShift" />
       <v-btn
         icon
         :title="$t('core.close')"
@@ -47,11 +48,13 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '../../store/users'
+import UpdateShiftDialog from './UpdateShiftDialog.vue'
 import HandlePlanShiftDialog from './HandlePlanShiftDialog.vue'
 import { Shift } from '../../models'
 
 @Component({
   components: {
+    UpdateShiftDialog,
     HandlePlanShiftDialog,
   },
 })

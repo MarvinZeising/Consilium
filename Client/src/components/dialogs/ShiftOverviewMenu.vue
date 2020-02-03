@@ -31,10 +31,6 @@
           :shift="getShift"
           @saved="model.model = true"
         />
-        <UpdateShiftDialog
-          v-if="canEdit && getShift.isDraft"
-          :shift="getShift"
-        />
         <v-btn
           icon
           :title="$t('core.close')"
@@ -132,7 +128,6 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '../../store/users'
 import PersonModule from '../../store/persons'
-import UpdateShiftDialog from './UpdateShiftDialog.vue'
 import HandlePlanShiftDialog from './HandlePlanShiftDialog.vue'
 import ShiftAssignmentDialog from './ShiftAssignmentDialog.vue'
 import ShiftOverviewMenuDraft from './ShiftOverviewMenuDraft.vue'
@@ -141,7 +136,6 @@ import { Shift } from '../../models'
 
 @Component({
   components: {
-    UpdateShiftDialog,
     HandlePlanShiftDialog,
     ShiftAssignmentDialog,
     ShiftOverviewMenuDraft,
