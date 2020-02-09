@@ -14,7 +14,7 @@
         <v-list-item
           v-if="personModule.getPersons.length === 0"
           dark
-          class="warning"
+          class="accent"
         >
           {{ $tc('person.persons', 0) }}
         </v-list-item>

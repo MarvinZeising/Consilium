@@ -32,7 +32,9 @@
   "deleteHint": "Enter the person's firstname to continue",
   "home": {
     "welcome": "Welcome,",
-    "welcomeDescription": "This is your personal overview. Here, you'll have everything that is important for you."
+    "welcomeDescription": "This is your personal overview. Here, you'll have everything that is important for you.",
+    "noPerson": "You're account is not yet connected to any persons. Create a person to start.",
+    "noPersonLink": "Go to my Account"
   },
   "gender": {
     "gender": "Gender",

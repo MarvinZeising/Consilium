@@ -1,11 +1,6 @@
 <template>
   <div>
-
-    <v-navigation-drawer
-      app
-      v-model='drawer'
-      :clipped="$vuetify.breakpoint.lgAndUp"
-    >
+    <v-navigation-drawer app v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp">
       <NavbarSignedIn v-if="userModule.getUser" />
       <NavbarSignedOut v-else />
       <template v-slot:append>
@@ -14,44 +9,25 @@
       </template>
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      :clipped-left="$vuetify.breakpoint.lgAndUp"
-      color="navbar"
-      dark
-    >
+    <v-app-bar app :clipped-left="$vuetify.breakpoint.lgAndUp" color="navbar" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Consilium</v-toolbar-title>
 
       <v-spacer />
 
       <div v-if="this.userModule.getUser">
-        <v-menu
-          v-model="accountMenu"
-          left
-          bottom
-          offset-y
-        >
+        <v-menu v-model="accountMenu" left bottom offset-y>
           <template v-slot:activator="{ on }">
-            <v-btn
-              v-on="on"
-              icon
-            >
+            <v-btn v-on="on" icon>
               <v-icon>account_circle</v-icon>
             </v-btn>
           </template>
           <v-card style="min-width:300px; text-align:center;">
             <v-card-text class="text-center">
               <div class="mb-3">
-                <span
-                  class="subtitle-2"
-                  v-t="'account.signedInWith'"
-                />
-                <br>
-                <span
-                  class="subtitle-1 text--primary"
-                  v-text="userModule.getUser.email"
-                />
+                <span class="subtitle-2" v-t="'account.signedInWith'" />
+                <br />
+                <span class="subtitle-1 text--primary" v-text="userModule.getUser.email" />
               </div>
               <v-btn
                 outlined
@@ -72,31 +48,15 @@
             </v-card-actions>
             <v-divider />
             <v-card-text>
-              <v-btn
-                text
-                x-small
-                :to="{ name: 'termsOfUse' }"
-                v-t="'core.termsOfUse'"
-              />
+              <v-btn text x-small :to="{ name: 'termsOfUse' }" v-t="'core.termsOfUse'" />
               <v-icon x-small>fiber_manual_record</v-icon>
-              <v-btn
-                text
-                x-small
-                :to="{ name: 'privacyPolicy' }"
-                v-t="'core.privacyPolicy'"
-              />
+              <v-btn text x-small :to="{ name: 'privacyPolicy' }" v-t="'core.privacyPolicy'" />
             </v-card-text>
           </v-card>
         </v-menu>
       </div>
 
-      <v-menu
-        v-if="!this.userModule.getUser"
-        v-model="languageMenu"
-        left
-        bottom
-        offset-y
-      >
+      <v-menu v-if="!this.userModule.getUser" v-model="languageMenu" left bottom offset-y>
         <template v-slot:activator="{ on }">
           <v-toolbar-items style="margin-right:-16px;">
             <v-btn text v-on="on">
@@ -115,9 +75,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
-
     </v-app-bar>
-
   </div>
 </template>
 
@@ -134,14 +92,14 @@ import NavbarSignedOut from './NavbarSignedOut.vue'
 @Component({
   components: {
     NavbarSignedIn,
-    NavbarSignedOut
-  }
+    NavbarSignedOut,
+  },
 })
 export default class Navbar extends Vue {
   private userModule = getModule(UserModule, this.$store)
   private projectModule = getModule(ProjectModule, this.$store)
 
-  private drawer = true
+  private drawer = false
   private accountMenu = false
   private languageMenu = false
 
@@ -158,6 +116,8 @@ export default class Navbar extends Vue {
   }
 
   private async init() {
+    this.drawer = this.$vuetify.breakpoint.lgAndUp
+
     this.language = this.$i18n.locale
     this.languages = this.$i18n.availableLocales
 
@@ -174,6 +134,5 @@ export default class Navbar extends Vue {
     this.accountMenu = false
     this.$router.push({ name: 'signOut' })
   }
-
 }
 </script>

@@ -26,8 +26,9 @@ export default class UserModule extends VuexModule {
 
     const persons = response.data.persons.map((rawPerson: Person) => Person.create(rawPerson))
 
-    const currentlyActivePerson = this.context.getters.getPersons
-      .find((x: Person) => x.id === this.context.getters.getActivePersonId)
+    const currentlyActivePerson = this.context.getters.getPersons.find(
+      (x: Person) => x.id === this.context.getters.getActivePersonId
+    )
 
     this.context.commit('setPersons', persons)
 
@@ -39,7 +40,7 @@ export default class UserModule extends VuexModule {
 
       if (activePersonIdByCookie && personExists) {
         await this.context.dispatch('activatePerson', activePersonIdByCookie)
-      } else {
+      } else if (persons.length > 0) {
         await this.context.dispatch('activatePerson', persons[0].id)
       }
     }
@@ -52,20 +53,25 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  public async signIn(credentials: { email: string, password: string }) {
+  public async signIn(credentials: { email: string; password: string }) {
     await this.context.dispatch('signOut')
 
-    const response: any = await axios.post('/users/authenticate', {
-      email: credentials.email,
-      password: hashPassword(credentials.password),
-    }).catch(() => false)
-
-    if (response.data !== null && typeof(response.data) === 'string') {
-      const jwtToken = response.data
-      localStorage.setItem('user', JSON.stringify({
-        token: jwtToken,
+    const response: any = await axios
+      .post('/users/authenticate', {
         email: credentials.email,
-      }))
+        password: hashPassword(credentials.password),
+      })
+      .catch(() => false)
+
+    if (response.data !== null && typeof response.data === 'string') {
+      const jwtToken = response.data
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          token: jwtToken,
+          email: credentials.email,
+        })
+      )
       axios.defaults.headers.common.Authorization = `Bearer ${jwtToken}`
 
       await this.context.dispatch('loadNavbar', credentials.email)
@@ -77,12 +83,7 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  public async signUp(credentials: {
-    email: string,
-    password: string,
-    language: string,
-    theme: string
-  }) {
+  public async signUp(credentials: { email: string; password: string; language: string; theme: string }) {
     await axios.post('/users', {
       email: credentials.email,
       password: hashPassword(credentials.password),
@@ -102,11 +103,11 @@ export default class UserModule extends VuexModule {
 
   @Action
   public async updateInterface(accountInterface: {
-    language: Language,
-    theme: string,
-    dateFormat: string,
-    timeFormat: string,
-   }) {
+    language: Language
+    theme: string
+    dateFormat: string
+    timeFormat: string
+  }) {
     const user = this.user
     if (user) {
       await axios.put('/users/interface', {
@@ -126,7 +127,7 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  public async updatePassword(passwords: { old: string, new: string }) {
+  public async updatePassword(passwords: { old: string; new: string }) {
     if (this.user) {
       await axios.put('/users/password', {
         oldPassword: hashPassword(passwords.old),
@@ -178,5 +179,4 @@ export default class UserModule extends VuexModule {
       document.getElementsByTagName('body')[0].style.backgroundColor = ''
     }
   }
-
 }
