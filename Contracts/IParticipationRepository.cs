@@ -1,12 +1,12 @@
 ﻿using System;
-using Entities.Models;
+using Server.Entities.Models;
 
-namespace Contracts
+namespace Server.Contracts
 {
     public interface IParticipationRepository : IRepositoryBase<Participation>
     {
-        Participation GetParticipation(Guid personId, Guid projectId);
-        Role GetRole(Guid personId, Guid projectId);
-        Eligibility GetEligibilityByCategory(Guid personId, Guid projectId, Guid categoryId);
+        Participation GetParticipation (Guid personId, Guid projectId);
+        Role GetRole (Guid personId, Guid projectId);
+        Eligibility GetEligibilityByCategory (Guid personId, Guid projectId, Guid categoryId);
     }
 }

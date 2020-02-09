@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class CreateApplicationDto
     {
@@ -11,7 +11,7 @@ namespace Entities.DataTransferObjects
         [Required]
         public bool AvailableAfter { get; set; }
 
-        [MaxLength(200)]
+        [MaxLength (200)]
         public string Notes { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Entities.Validators;
+using Server.Entities.Validators;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class CreateUserDto
     {
@@ -10,8 +10,8 @@ namespace Entities.DataTransferObjects
         public string Email { get; set; }
 
         [Required]
-        [MinLength(128)]
-        [MaxLength(128)]
+        [MinLength (128)]
+        [MaxLength (128)]
         public string Password { get; set; }
 
         [Required]

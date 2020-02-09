@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Entities.Validators;
+using Server.Entities.Validators;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class UpdateCongregationDto
     {
@@ -9,7 +9,7 @@ namespace Entities.DataTransferObjects
         [ValidName]
         public string Name { get; set; }
 
-        [MaxLength(10)]
+        [MaxLength (10)]
         public string Number { get; set; }
     }
 }

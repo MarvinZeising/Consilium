@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Validators
+namespace Server.Entities.Validators
 {
     public class ValidShiftStatusAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid (object value)
         {
             if (value == null)
             {
@@ -16,11 +16,11 @@ namespace Entities.Validators
                 return false;
             }
 
-            return valueAsString == "draft"
-                || valueAsString == "pending"
-                || valueAsString == "planned"
-                || valueAsString == "suspense"
-                || valueAsString == "calledOff";
+            return valueAsString == "draft" ||
+                valueAsString == "pending" ||
+                valueAsString == "planned" ||
+                valueAsString == "suspense" ||
+                valueAsString == "calledOff";
         }
     }
 }

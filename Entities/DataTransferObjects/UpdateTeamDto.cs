@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Entities.Validators;
+using Server.Entities.Validators;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class UpdateTeamDto
     {
@@ -9,10 +9,10 @@ namespace Entities.DataTransferObjects
         [ValidName]
         public string Name { get; set; }
 
-        [MaxLength(1000)]
+        [MaxLength (1000)]
         public string Description { get; set; }
 
-        [MaxLength(1000)]
+        [MaxLength (1000)]
         public string HelpLink { get; set; }
     }
 }

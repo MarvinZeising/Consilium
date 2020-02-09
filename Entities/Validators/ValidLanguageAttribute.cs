@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Validators
+namespace Server.Entities.Validators
 {
     public class ValidLanguageAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid (object value)
         {
             if (value == null)
             {
@@ -16,8 +16,8 @@ namespace Entities.Validators
                 return false;
             }
 
-            return valueAsString == "en-US"
-                || valueAsString == "de-DE";
+            return valueAsString == "en-US" ||
+                valueAsString == "de-DE";
         }
     }
 }

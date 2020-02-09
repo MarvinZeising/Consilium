@@ -1,19 +1,19 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Entities.Validators;
+using Server.Entities.Validators;
 
-namespace Entities.Models
+namespace Server.Entities.Models
 {
-    [Table("topic")]
+    [Table ("topic")]
     public class Topic
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; } = Guid.NewGuid ();
 
         [Required]
-        [ForeignKey(nameof(Project))]
+        [ForeignKey (nameof (Project))]
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
 
@@ -21,10 +21,10 @@ namespace Entities.Models
         [ValidName]
         public string Name { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated (DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
     }
 }

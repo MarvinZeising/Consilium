@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class CategoryDto
     {

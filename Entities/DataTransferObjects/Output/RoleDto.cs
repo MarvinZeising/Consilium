@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Entities.Models;
+using Server.Entities.Models;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class RoleDto
     {

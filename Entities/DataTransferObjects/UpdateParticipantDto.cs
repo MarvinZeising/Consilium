@@ -1,8 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using Entities.Validators;
+using Server.Entities.Validators;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class UpdateParticipantDto
     {
@@ -25,7 +25,7 @@ namespace Entities.DataTransferObjects
         [ValidLanguage]
         public string Language { get; set; }
 
-        [MaxLength(40)]
+        [MaxLength (40)]
         public string Phone { get; set; }
 
         [Required]
@@ -36,12 +36,12 @@ namespace Entities.DataTransferObjects
         [ValidPrivilege]
         public string Privilege { get; set; }
 
-        [MaxLength(100)]
+        [MaxLength (100)]
         public string Languages { get; set; }
 
         public Guid? CongregationId { get; set; }
 
-        [MaxLength(1000)]
+        [MaxLength (1000)]
         public string Notes { get; set; }
     }
 }

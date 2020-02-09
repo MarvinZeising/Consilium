@@ -1,10 +1,10 @@
 ﻿using System;
-using Entities.Models;
+using Server.Entities.Models;
 
-namespace Contracts
+namespace Server.Contracts
 {
     public interface IProjectRepository : IRepositoryBase<Project>
     {
-        Project GetById(Guid projectId, bool includeParticipants = false);
+        Project GetById (Guid projectId, bool includeParticipants = false);
     }
 }

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Entities.Validators;
+using Server.Entities.Validators;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class UpdatePersonContactDto
     {
@@ -11,7 +11,7 @@ namespace Entities.DataTransferObjects
         [ValidLanguage]
         public string Language { get; set; }
 
-        [MaxLength(40)]
+        [MaxLength (40)]
         public string Phone { get; set; }
     }
 }

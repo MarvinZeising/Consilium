@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Validators
+namespace Server.Entities.Validators
 {
     public class ValidShiftModeAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid (object value)
         {
             if (value == null)
             {
@@ -16,9 +16,9 @@ namespace Entities.Validators
                 return false;
             }
 
-            return valueAsString == "open"
-                || valueAsString == "captainsOnly"
-                || valueAsString == "closed";
+            return valueAsString == "open" ||
+                valueAsString == "captainsOnly" ||
+                valueAsString == "closed";
         }
     }
 }

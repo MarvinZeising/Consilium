@@ -1,14 +1,11 @@
-﻿using Contracts;
-using Entities;
-using Entities.Models;
+﻿using Server.Contracts;
+using Server.Entities;
+using Server.Entities.Models;
 
-namespace Repository
+namespace Server.Repository
 {
     public class TopicRepository : RepositoryBase<Topic>, ITopicRepository
     {
-        public TopicRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext)
-        {
-        }
+        public TopicRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
     }
 }

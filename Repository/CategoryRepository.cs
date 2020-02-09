@@ -1,14 +1,11 @@
-﻿using Contracts;
-using Entities;
-using Entities.Models;
+﻿using Server.Contracts;
+using Server.Entities;
+using Server.Entities.Models;
 
-namespace Repository
+namespace Server.Repository
 {
     public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
     {
-        public CategoryRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext)
-        {
-        }
+        public CategoryRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
     }
 }

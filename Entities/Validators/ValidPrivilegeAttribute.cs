@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Validators
+namespace Server.Entities.Validators
 {
     public class ValidPrivilegeAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid (object value)
         {
             if (value == null)
             {
@@ -16,13 +16,13 @@ namespace Entities.Validators
                 return false;
             }
 
-            return valueAsString == "publisher"
-                || valueAsString == "auxiliary"
-                || valueAsString == "regular"
-                || valueAsString == "special"
-                || valueAsString == "circuit"
-                || valueAsString == "bethelite"
-                || valueAsString == "construction";
+            return valueAsString == "publisher" ||
+                valueAsString == "auxiliary" ||
+                valueAsString == "regular" ||
+                valueAsString == "special" ||
+                valueAsString == "circuit" ||
+                valueAsString == "bethelite" ||
+                valueAsString == "construction";
         }
     }
 }

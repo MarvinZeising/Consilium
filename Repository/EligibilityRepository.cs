@@ -1,14 +1,11 @@
-﻿using Contracts;
-using Entities;
-using Entities.Models;
+﻿using Server.Contracts;
+using Server.Entities;
+using Server.Entities.Models;
 
-namespace Repository
+namespace Server.Repository
 {
     public class EligibilityRepository : RepositoryBase<Eligibility>, IEligibilityRepository
     {
-        public EligibilityRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext)
-        {
-        }
+        public EligibilityRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Contracts
+﻿namespace Server.Contracts
 {
     public interface IRepositoryWrapper
     {
@@ -16,6 +16,6 @@
         ICongregationRepository Congregation { get; }
         ITopicRepository Topic { get; }
         IArticleRepository Article { get; }
-        void Save();
+        void Save ();
     }
 }

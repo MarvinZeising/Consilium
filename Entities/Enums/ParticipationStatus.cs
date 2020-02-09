@@ -1,4 +1,4 @@
-namespace Entities.Enums
+namespace Server.Entities.Enums
 {
     public enum ParticipationStatus
     {

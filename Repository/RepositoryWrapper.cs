@@ -1,10 +1,10 @@
 ﻿using System;
-using Contracts;
-using Entities;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
+using Server.Contracts;
+using Server.Entities;
 
-namespace Repository
+namespace Server.Repository
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
@@ -30,7 +30,7 @@ namespace Repository
             {
                 if (_user == null)
                 {
-                    _user = new UserRepository(_repositoryContext, Configuration);
+                    _user = new UserRepository (_repositoryContext, Configuration);
                 }
                 return _user;
             }
@@ -42,7 +42,7 @@ namespace Repository
             {
                 if (_person == null)
                 {
-                    _person = new PersonRepository(_repositoryContext);
+                    _person = new PersonRepository (_repositoryContext);
                 }
                 return _person;
             }
@@ -54,7 +54,7 @@ namespace Repository
             {
                 if (_project == null)
                 {
-                    _project = new ProjectRepository(_repositoryContext);
+                    _project = new ProjectRepository (_repositoryContext);
                 }
                 return _project;
             }
@@ -66,7 +66,7 @@ namespace Repository
             {
                 if (_participation == null)
                 {
-                    _participation = new ParticipationRepository(_repositoryContext);
+                    _participation = new ParticipationRepository (_repositoryContext);
                 }
                 return _participation;
             }
@@ -78,7 +78,7 @@ namespace Repository
             {
                 if (_role == null)
                 {
-                    _role = new RoleRepository(_repositoryContext);
+                    _role = new RoleRepository (_repositoryContext);
                 }
                 return _role;
             }
@@ -90,7 +90,7 @@ namespace Repository
             {
                 if (_category == null)
                 {
-                    _category = new CategoryRepository(_repositoryContext);
+                    _category = new CategoryRepository (_repositoryContext);
                 }
                 return _category;
             }
@@ -102,7 +102,7 @@ namespace Repository
             {
                 if (_shift == null)
                 {
-                    _shift = new ShiftRepository(_repositoryContext);
+                    _shift = new ShiftRepository (_repositoryContext);
                 }
                 return _shift;
             }
@@ -114,7 +114,7 @@ namespace Repository
             {
                 if (_application == null)
                 {
-                    _application = new ApplicationRepository(_repositoryContext);
+                    _application = new ApplicationRepository (_repositoryContext);
                 }
                 return _application;
             }
@@ -126,7 +126,7 @@ namespace Repository
             {
                 if (_team == null)
                 {
-                    _team = new TeamRepository(_repositoryContext);
+                    _team = new TeamRepository (_repositoryContext);
                 }
                 return _team;
             }
@@ -138,7 +138,7 @@ namespace Repository
             {
                 if (_attendee == null)
                 {
-                    _attendee = new AttendeeRepository(_repositoryContext);
+                    _attendee = new AttendeeRepository (_repositoryContext);
                 }
                 return _attendee;
             }
@@ -150,7 +150,7 @@ namespace Repository
             {
                 if (_eligibility == null)
                 {
-                    _eligibility = new EligibilityRepository(_repositoryContext);
+                    _eligibility = new EligibilityRepository (_repositoryContext);
                 }
                 return _eligibility;
             }
@@ -162,7 +162,7 @@ namespace Repository
             {
                 if (_congregation == null)
                 {
-                    _congregation = new CongregationRepository(_repositoryContext);
+                    _congregation = new CongregationRepository (_repositoryContext);
                 }
                 return _congregation;
             }
@@ -174,7 +174,7 @@ namespace Repository
             {
                 if (_topic == null)
                 {
-                    _topic = new TopicRepository(_repositoryContext);
+                    _topic = new TopicRepository (_repositoryContext);
                 }
                 return _topic;
             }
@@ -186,7 +186,7 @@ namespace Repository
             {
                 if (_article == null)
                 {
-                    _article = new ArticleRepository(_repositoryContext);
+                    _article = new ArticleRepository (_repositoryContext);
                 }
                 return _article;
             }
@@ -194,7 +194,7 @@ namespace Repository
 
         public IConfiguration Configuration { get; }
 
-        public RepositoryWrapper(
+        public RepositoryWrapper (
             RepositoryContext repositoryContext,
             IConfiguration configuration)
         {
@@ -202,18 +202,18 @@ namespace Repository
             Configuration = configuration;
         }
 
-        public void Save()
+        public void Save ()
         {
-            using (IDbContextTransaction transaction = _repositoryContext.Database.BeginTransaction())
+            using (IDbContextTransaction transaction = _repositoryContext.Database.BeginTransaction ())
             {
                 try
                 {
-                    _repositoryContext.SaveChanges();
-                    transaction.Commit();
+                    _repositoryContext.SaveChanges ();
+                    transaction.Commit ();
                 }
                 catch (Exception e)
                 {
-                    transaction.Rollback();
+                    transaction.Rollback ();
                     throw e;
                 }
             }

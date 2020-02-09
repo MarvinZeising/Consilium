@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Validators
+namespace Server.Entities.Validators
 {
     public class ValidAssignmentAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid (object value)
         {
             if (value == null)
             {
@@ -16,12 +16,12 @@ namespace Entities.Validators
                 return false;
             }
 
-            return valueAsString == "publisher"
-                || valueAsString == "ministerial"
-                || valueAsString == "elder"
-                || valueAsString == "cobe"
-                || valueAsString == "secretary"
-                || valueAsString == "serviceOverseer";
+            return valueAsString == "publisher" ||
+                valueAsString == "ministerial" ||
+                valueAsString == "elder" ||
+                valueAsString == "cobe" ||
+                valueAsString == "secretary" ||
+                valueAsString == "serviceOverseer";
         }
     }
 }

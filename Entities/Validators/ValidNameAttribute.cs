@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Validators
+namespace Server.Entities.Validators
 {
     public class ValidNameAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid (object value)
         {
             if (value == null)
             {
@@ -16,8 +16,8 @@ namespace Entities.Validators
                 return false;
             }
 
-            return valueAsString.Trim().Length >= 2
-                && valueAsString.Length <= 40;
+            return valueAsString.Trim ().Length >= 2 &&
+                valueAsString.Length <= 40;
         }
     }
 }

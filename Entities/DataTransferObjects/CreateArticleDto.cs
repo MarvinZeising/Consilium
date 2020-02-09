@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class CreateArticleDto
     {
         [Required]
-        [MaxLength(100)]
+        [MaxLength (100)]
         public string Title { get; set; }
 
         [Required]
-        [MaxLength(10000)]
+        [MaxLength (10000)]
         public string Content { get; set; }
     }
 }

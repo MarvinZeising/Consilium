@@ -1,12 +1,12 @@
 ﻿using System;
 using AutoMapper;
-using Entities.DataTransferObjects;
-using Entities.Models;
+using Server.Entities.DataTransferObjects;
+using Server.Entities.Models;
 
-namespace Contracts
+namespace Server.Contracts
 {
     public interface IShiftRepository : IRepositoryBase<Shift>
     {
-        ShiftDto GetFullShift(IMapper mapper, Guid shiftId, Guid personId);
+        ShiftDto GetFullShift (IMapper mapper, Guid shiftId, Guid personId);
     }
 }

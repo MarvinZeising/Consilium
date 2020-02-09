@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class TeamDto
     {

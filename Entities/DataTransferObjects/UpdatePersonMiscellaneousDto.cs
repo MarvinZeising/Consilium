@@ -1,13 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.DataTransferObjects
+namespace Server.Entities.DataTransferObjects
 {
     public class UpdatePersonMiscellaneousDto
     {
-        [MaxLength(100)]
+        [MaxLength (100)]
         public string Languages { get; set; }
 
-        [MaxLength(1000)]
+        [MaxLength (1000)]
         public string Notes { get; set; }
     }
 }

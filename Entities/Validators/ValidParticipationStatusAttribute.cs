@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Validators
+namespace Server.Entities.Validators
 {
     public class ValidParticipationStatusAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid (object value)
         {
             if (value == null)
             {
@@ -16,10 +16,10 @@ namespace Entities.Validators
                 return false;
             }
 
-            return valueAsString == "active"
-                || valueAsString == "inactive"
-                || valueAsString == "invited"
-                || valueAsString == "requested";
+            return valueAsString == "active" ||
+                valueAsString == "inactive" ||
+                valueAsString == "invited" ||
+                valueAsString == "requested";
         }
     }
 }

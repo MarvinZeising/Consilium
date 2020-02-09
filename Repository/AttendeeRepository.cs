@@ -1,14 +1,11 @@
-﻿using Contracts;
-using Entities;
-using Entities.Models;
+﻿using Server.Contracts;
+using Server.Entities;
+using Server.Entities.Models;
 
-namespace Repository
+namespace Server.Repository
 {
     public class AttendeeRepository : RepositoryBase<Attendee>, IAttendeeRepository
     {
-        public AttendeeRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext)
-        {
-        }
+        public AttendeeRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
     }
 }

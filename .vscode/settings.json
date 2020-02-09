@@ -1,0 +1,10 @@
+{
+  "csharpfixformat.style.braces.onSameLine": false,
+  "csharpfixformat.style.newline.elseCatch": true,
+  "csharpfixformat.style.newline.atEnd": true,
+  "csharpfixformat.style.spaces.afterParenthesis": false,
+  "csharpfixformat.style.spaces.afterBracket": false,
+  "csharpfixformat.style.spaces.beforeParenthesis": false,
+  "csharpfixformat.style.spaces.insideEmptyBraces": false,
+  "git.ignoreLimitWarning": true
+}

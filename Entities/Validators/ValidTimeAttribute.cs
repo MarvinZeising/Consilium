@@ -1,11 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Validators
+namespace Server.Entities.Validators
 {
     public class ValidTimeAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid (object value)
         {
             if (value == null)
             {
@@ -17,8 +17,8 @@ namespace Entities.Validators
                 return false;
             }
 
-            return valueAsInt >= 0
-                && valueAsInt < 2400;
+            return valueAsInt >= 0 &&
+                valueAsInt < 2400;
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using Entities.Models;
+﻿using Server.Entities.Models;
 
-namespace Contracts
+namespace Server.Contracts
 {
-    public interface IRoleRepository : IRepositoryBase<Role>
-    {
-    }
+    public interface IRoleRepository : IRepositoryBase<Role> { }
 }
