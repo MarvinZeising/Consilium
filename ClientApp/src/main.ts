@@ -35,6 +35,8 @@ async function init() {
     render: (h) => h(App),
   }).$mount('#app')
 
+  console.log(process.env)
+
   axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL || 'https://localhost:5001/api'
   axios.defaults.timeout = 5000
   axios.interceptors.response.use(
