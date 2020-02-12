@@ -67,6 +67,9 @@ namespace Server.Controllers
 
                 person.UserId = new Guid(userId);
                 person.CongregationId = null;
+                person.Assignment = "publisher";
+                person.Privilege = "publisher";
+                person.Language = user.Language;
 
                 _db.Person.Create(person);
                 _db.Save();
