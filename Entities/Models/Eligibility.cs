@@ -4,20 +4,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Entities.Models
 {
-    [Table ("eligibility")]
+    [Table("eligibility")]
     public class Eligibility
     {
         [Key]
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; } = Guid.NewGuid ();
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        [ForeignKey (nameof (Role))]
+        [ForeignKey(nameof(Role))]
         public Guid RoleId { get; set; }
         public Role Role { get; set; }
 
         [Required]
-        [ForeignKey (nameof (Category))]
+        [ForeignKey(nameof(Category))]
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
 
@@ -33,10 +33,10 @@ namespace Server.Entities.Models
         [Required]
         public bool IsSubstituteCaptain { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
     }
 }

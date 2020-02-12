@@ -6,15 +6,15 @@ using Server.Entities.Validators;
 
 namespace Server.Entities.Models
 {
-    [Table ("project")]
+    [Table("project")]
     public class Project
     {
         [Key]
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; } = Guid.NewGuid ();
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        [MinLength (3)]
+        [MinLength(3)]
         [ValidName]
         public string Name { get; set; }
 
@@ -25,10 +25,10 @@ namespace Server.Entities.Models
         [Required]
         public bool AllowRequests { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
 
         public ICollection<Participation> Participants { get; set; }

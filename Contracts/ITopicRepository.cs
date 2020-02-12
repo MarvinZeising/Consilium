@@ -2,5 +2,5 @@
 
 namespace Server.Contracts
 {
-    public interface ITopicRepository : IRepositoryBase<Topic> { }
+    public interface ITopicRepository : IRepositoryBase<Topic> {}
 }

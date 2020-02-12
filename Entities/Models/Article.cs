@@ -5,30 +5,30 @@ using Server.Entities.Validators;
 
 namespace Server.Entities.Models
 {
-    [Table ("article")]
+    [Table("article")]
     public class Article
     {
         [Key]
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; } = Guid.NewGuid ();
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        [ForeignKey (nameof (Topic))]
+        [ForeignKey(nameof(Topic))]
         public Guid TopicId { get; set; }
         public Topic Topic { get; set; }
 
         [Required]
-        [MaxLength (100)]
+        [MaxLength(100)]
         public string Title { get; set; }
 
         [Required]
-        [MaxLength (10000)]
+        [MaxLength(10000)]
         public string Content { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
     }
 }

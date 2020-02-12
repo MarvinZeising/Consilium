@@ -6,6 +6,6 @@ namespace Server.Repository
 {
     public class RoleRepository : RepositoryBase<Role>, IRoleRepository
     {
-        public RoleRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
+        public RoleRepository(RepositoryContext repositoryContext) : base(repositoryContext) {}
     }
 }

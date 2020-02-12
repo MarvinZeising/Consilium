@@ -6,6 +6,6 @@ namespace Server.Repository
 {
     public class AttendeeRepository : RepositoryBase<Attendee>, IAttendeeRepository
     {
-        public AttendeeRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
+        public AttendeeRepository(RepositoryContext repositoryContext) : base(repositoryContext) {}
     }
 }

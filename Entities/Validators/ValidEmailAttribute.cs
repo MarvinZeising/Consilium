@@ -5,7 +5,7 @@ namespace Server.Entities.Validators
 {
     public class ValidEmailAttribute : ValidationAttribute
     {
-        public override bool IsValid (object value)
+        public override bool IsValid(object value)
         {
             if (value == null)
             {
@@ -18,7 +18,7 @@ namespace Server.Entities.Validators
             }
 
             return valueAsString.Length == 0 ||
-                (Regex.IsMatch (valueAsString, ".+@.+\\..+") &&
+                (Regex.IsMatch(valueAsString, ".+@.+\\..+") &&
                     valueAsString.Length <= 100);
         }
     }

@@ -6,6 +6,6 @@ namespace Server.Repository
 {
     public class EligibilityRepository : RepositoryBase<Eligibility>, IEligibilityRepository
     {
-        public EligibilityRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
+        public EligibilityRepository(RepositoryContext repositoryContext) : base(repositoryContext) {}
     }
 }

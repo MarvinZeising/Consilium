@@ -6,24 +6,24 @@ using Server.Entities.Validators;
 
 namespace Server.Entities.Models
 {
-    [Table ("congregation")]
+    [Table("congregation")]
     public class Congregation
     {
         [Key]
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; } = Guid.NewGuid ();
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
         [ValidName]
         public string Name { get; set; }
 
-        [MaxLength (10)]
+        [MaxLength(10)]
         public string Number { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
 
         public ICollection<Person> Persons { get; set; }

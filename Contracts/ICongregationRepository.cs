@@ -2,5 +2,5 @@
 
 namespace Server.Contracts
 {
-    public interface ICongregationRepository : IRepositoryBase<Congregation> { }
+    public interface ICongregationRepository : IRepositoryBase<Congregation> {}
 }

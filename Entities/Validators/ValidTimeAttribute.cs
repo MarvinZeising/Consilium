@@ -5,7 +5,7 @@ namespace Server.Entities.Validators
 {
     public class ValidTimeAttribute : ValidationAttribute
     {
-        public override bool IsValid (object value)
+        public override bool IsValid(object value)
         {
             if (value == null)
             {

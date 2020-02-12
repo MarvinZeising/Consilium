@@ -6,6 +6,6 @@ namespace Server.Repository
 {
     public class TeamRepository : RepositoryBase<Team>, ITeamRepository
     {
-        public TeamRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
+        public TeamRepository(RepositoryContext repositoryContext) : base(repositoryContext) {}
     }
 }

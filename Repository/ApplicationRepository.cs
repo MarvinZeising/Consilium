@@ -6,6 +6,6 @@ namespace Server.Repository
 {
     public class ApplicationRepository : RepositoryBase<Application>, IApplicationRepository
     {
-        public ApplicationRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
+        public ApplicationRepository(RepositoryContext repositoryContext) : base(repositoryContext) {}
     }
 }

@@ -2,5 +2,5 @@
 
 namespace Server.Contracts
 {
-    public interface IArticleRepository : IRepositoryBase<Article> { }
+    public interface IArticleRepository : IRepositoryBase<Article> {}
 }

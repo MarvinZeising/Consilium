@@ -6,12 +6,12 @@ using Server.Entities.Validators;
 
 namespace Server.Entities.Models
 {
-    [Table ("user")]
+    [Table("user")]
     public class User
     {
         [Key]
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; } = Guid.NewGuid ();
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
         [ValidEmail]
@@ -37,10 +37,10 @@ namespace Server.Entities.Models
         [Required]
         public string TimeFormat { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
 
         public ICollection<Person> Persons { get; set; }

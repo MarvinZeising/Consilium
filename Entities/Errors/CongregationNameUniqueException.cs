@@ -1,5 +1,3 @@
 using System;
 
-public class CongregationNameUniqueException : Exception
-{
-}
+public class CongregationNameUniqueException : Exception {}

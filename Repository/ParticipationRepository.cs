@@ -9,23 +9,23 @@ namespace Server.Repository
 {
     public class ParticipationRepository : RepositoryBase<Participation>, IParticipationRepository
     {
-        public ParticipationRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
+        public ParticipationRepository(RepositoryContext repositoryContext) : base(repositoryContext) {}
 
-        public Participation GetParticipation (Guid personId, Guid projectId)
+        public Participation GetParticipation(Guid personId, Guid projectId)
         {
-            return FindByCondition (x => x.PersonId == personId && x.ProjectId == projectId)
-                .Include (x => x.Role).ThenInclude (x => x.Eligibilities)
-                .SingleOrDefault ();
+            return FindByCondition(x => x.PersonId == personId && x.ProjectId == projectId)
+                .Include(x => x.Role).ThenInclude(x => x.Eligibilities)
+                .SingleOrDefault();
         }
 
-        public Role GetRole (Guid personId, Guid projectId)
+        public Role GetRole(Guid personId, Guid projectId)
         {
-            return GetParticipation (personId, projectId)?.Role;
+            return GetParticipation(personId, projectId)?.Role;
         }
 
-        public Eligibility GetEligibilityByCategory (Guid personId, Guid projectId, Guid categoryId)
+        public Eligibility GetEligibilityByCategory(Guid personId, Guid projectId, Guid categoryId)
         {
-            return GetRole (personId, projectId)?.Eligibilities.Where (x => x.CategoryId == categoryId).SingleOrDefault ();
+            return GetRole(personId, projectId)?.Eligibilities.Where(x => x.CategoryId == categoryId).SingleOrDefault();
         }
 
     }

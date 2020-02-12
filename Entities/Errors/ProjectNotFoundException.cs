@@ -1,5 +1,3 @@
 using System;
 
-public class ProjectNotFoundException : Exception
-{
-}
+public class ProjectNotFoundException : Exception {}

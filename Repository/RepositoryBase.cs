@@ -13,44 +13,44 @@ namespace Server.Repository
         {
             protected RepositoryContext RepositoryContext { get; set; }
 
-            public RepositoryBase (RepositoryContext repositoryContext)
+            public RepositoryBase(RepositoryContext repositoryContext)
             {
                 RepositoryContext = repositoryContext;
             }
 
-            public IQueryable<T> FindAll ()
+            public IQueryable<T> FindAll()
             {
-                return RepositoryContext.Set<T> ().AsNoTracking ();
+                return RepositoryContext.Set<T>().AsNoTracking();
             }
 
-            public IQueryable<T> FindByCondition (Expression<Func<T, bool>> expression)
+            public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
             {
-                return RepositoryContext.Set<T> ().Where (expression).AsNoTracking ();
+                return RepositoryContext.Set<T>().Where(expression).AsNoTracking();
             }
 
-            public void Create (T entity)
+            public void Create(T entity)
             {
-                RepositoryContext.Set<T> ().Add (entity);
+                RepositoryContext.Set<T>().Add(entity);
             }
 
-            public void Update (T entity)
+            public void Update(T entity)
             {
-                RepositoryContext.Set<T> ().Update (entity);
+                RepositoryContext.Set<T>().Update(entity);
             }
 
-            public void Delete (T entity)
+            public void Delete(T entity)
             {
-                RepositoryContext.Set<T> ().Remove (entity);
+                RepositoryContext.Set<T>().Remove(entity);
             }
 
-            public void Delete (IEnumerable<T> entities)
+            public void Delete(IEnumerable<T> entities)
             {
-                RepositoryContext.Set<T> ().RemoveRange (entities);
+                RepositoryContext.Set<T>().RemoveRange(entities);
             }
 
-            public void Save ()
+            public void Save()
             {
-                RepositoryContext.SaveChanges ();
+                RepositoryContext.SaveChanges();
             }
         }
 }

@@ -1,5 +1,3 @@
 using System;
 
-public class RequestsNotAllowedException : Exception
-{
-}
+public class RequestsNotAllowedException : Exception {}

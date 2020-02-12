@@ -6,19 +6,19 @@ using Server.Entities.Validators;
 
 namespace Server.Entities.Models
 {
-    [Table ("person")]
+    [Table("person")]
     public class Person
     {
         [Key]
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; } = Guid.NewGuid ();
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        [ForeignKey (nameof (User))]
+        [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
         public User User { get; set; }
 
-        [ForeignKey (nameof (Congregation))]
+        [ForeignKey(nameof(Congregation))]
         public Guid? CongregationId { get; set; }
         public Congregation Congregation { get; set; }
 
@@ -43,7 +43,7 @@ namespace Server.Entities.Models
         public string Language { get; set; }
 
         [Required]
-        [MaxLength (40)]
+        [MaxLength(40)]
         public string Phone { get; set; }
 
         [Required]
@@ -55,17 +55,17 @@ namespace Server.Entities.Models
         public string Assignment { get; set; }
 
         [Required]
-        [MaxLength (100)]
+        [MaxLength(100)]
         public string Languages { get; set; }
 
         [Required]
-        [MaxLength (1000)]
+        [MaxLength(1000)]
         public string Notes { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
 
         public ICollection<Participation> Participations { get; set; }

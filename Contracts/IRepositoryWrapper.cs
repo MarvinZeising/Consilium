@@ -16,6 +16,6 @@
         ICongregationRepository Congregation { get; }
         ITopicRepository Topic { get; }
         IArticleRepository Article { get; }
-        void Save ();
+        void Save();
     }
 }

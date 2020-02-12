@@ -1,5 +1,3 @@
 using System;
 
-public class PersonNotFoundException : Exception
-{
-}
+public class PersonNotFoundException : Exception {}

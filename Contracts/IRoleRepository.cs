@@ -2,5 +2,5 @@
 
 namespace Server.Contracts
 {
-    public interface IRoleRepository : IRepositoryBase<Role> { }
+    public interface IRoleRepository : IRepositoryBase<Role> {}
 }

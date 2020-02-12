@@ -13,14 +13,14 @@ namespace Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route ("api/users")]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
         private readonly IRepositoryWrapper _db;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
-        public UserController (
+        public UserController(
             IRepositoryWrapper db,
             ILoggerManager logger,
             IMapper mapper)
@@ -31,173 +31,173 @@ namespace Server.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet ("email-available/{email}")]
-        public ActionResult<bool> IsEmailAvailable (string email)
+        [HttpGet("email-available/{email}")]
+        public ActionResult<bool> IsEmailAvailable(string email)
         {
             try
             {
-                var userWithEmail = _db.User.FindByCondition (x => x.Email == email).SingleOrDefault ();
-                return Ok (userWithEmail == null);
+                var userWithEmail = _db.User.FindByCondition(x => x.Email == email).SingleOrDefault();
+                return Ok(userWithEmail == null);
             }
             catch (Exception e)
             {
-                _logger.LogError ($"ERROR in IsEmailAvailable: {e.Message}");
-                return StatusCode (500, "Internal server error");
+                _logger.LogError($"ERROR in IsEmailAvailable: {e.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
         [AllowAnonymous]
-        [HttpPost ("authenticate")]
-        public ActionResult<string> SignIn ([FromBody] AuthenticateDto dto)
+        [HttpPost("authenticate")]
+        public ActionResult<string> SignIn([FromBody] AuthenticateDto dto)
         {
             try
             {
-                if (!ModelState.IsValid)return BadRequest ();
+                if (!ModelState.IsValid) return BadRequest();
 
-                var token = _db.User.Authenticate (dto.Email, dto.Password);
-                if (token == null)return BadRequest ();
+                var token = _db.User.Authenticate(dto.Email, dto.Password);
+                if (token == null) return BadRequest();
 
-                return Ok (token);
+                return Ok(token);
             }
             catch (Exception e)
             {
-                _logger.LogError ($"ERROR in SignIn: {e.Message}");
-                return StatusCode (500, "Internal server error");
+                _logger.LogError($"ERROR in SignIn: {e.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult<UserDto> SignUp ([FromBody] CreateUserDto dto)
+        public ActionResult<UserDto> SignUp([FromBody] CreateUserDto dto)
         {
             try
             {
-                if (!ModelState.IsValid)return BadRequest ();
+                if (!ModelState.IsValid) return BadRequest();
 
-                var user = _mapper.Map<User> (dto);
+                var user = _mapper.Map<User>(dto);
                 user.DateFormat = "YYYY-MM-DD";
                 user.TimeFormat = "h:mm a";
 
-                var createdUser = _db.User.Register (user, dto.Password);
+                var createdUser = _db.User.Register(user, dto.Password);
 
-                return base.Ok (_mapper.Map<UserDto> (createdUser));
+                return base.Ok(_mapper.Map<UserDto>(createdUser));
             }
             catch (Exception e)
             {
-                _logger.LogError ($"ERROR in SignUp: {e.Message}");
-                return StatusCode (500, "Internal server error");
+                _logger.LogError($"ERROR in SignUp: {e.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpGet ("current")]
-        public ActionResult<UserDto> GetCurrentUser ()
+        [HttpGet("current")]
+        public ActionResult<UserDto> GetCurrentUser()
         {
             try
             {
-                var userId = HttpContext.User.FindFirst (ClaimTypes.Sid)?.Value;
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
 
                 var user = _db.User
-                    .FindByCondition (x => x.Id == new Guid (userId))
-                    .Include (x => x.Persons).ThenInclude (x => x.Congregation)
-                    .SingleOrDefault ();
+                    .FindByCondition(x => x.Id == new Guid(userId))
+                    .Include(x => x.Persons).ThenInclude(x => x.Congregation)
+                    .SingleOrDefault();
 
-                return Ok (_mapper.Map<UserDto> (user));
+                return Ok(_mapper.Map<UserDto>(user));
             }
             catch (Exception e)
             {
-                _logger.LogError ($"ERROR in GetCurrentUser: {e.Message}");
-                return StatusCode (500, "Internal server error");
+                _logger.LogError($"ERROR in GetCurrentUser: {e.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpPut]
-        public ActionResult<UserDto> UpdateGeneral ([FromBody] UpdateUserGeneralDto dto)
+        public ActionResult<UserDto> UpdateGeneral([FromBody] UpdateUserGeneralDto dto)
         {
             try
             {
-                if (!ModelState.IsValid)return BadRequest ();
+                if (!ModelState.IsValid) return BadRequest();
 
-                var userId = HttpContext.User.FindFirst (ClaimTypes.Sid)?.Value;
-                var user = _db.User.GetById (new Guid (userId));
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
+                var user = _db.User.GetById(new Guid(userId));
 
                 user.Email = dto.Email;
 
-                _db.User.Update (user);
-                _db.Save ();
+                _db.User.Update(user);
+                _db.Save();
 
-                return Ok (_mapper.Map<UserDto> (user));
+                return Ok(_mapper.Map<UserDto>(user));
             }
             catch (Exception e)
             {
-                _logger.LogError ($"ERROR in UpdateGeneral: {e.Message}");
-                return StatusCode (500, "Internal server error");
+                _logger.LogError($"ERROR in UpdateGeneral: {e.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpPut ("interface")]
-        public ActionResult<UserDto> UpdateInterface ([FromBody] UpdateUserInterfaceDto dto)
+        [HttpPut("interface")]
+        public ActionResult<UserDto> UpdateInterface([FromBody] UpdateUserInterfaceDto dto)
         {
             try
             {
-                if (!ModelState.IsValid)return BadRequest ();
+                if (!ModelState.IsValid) return BadRequest();
 
-                var userId = HttpContext.User.FindFirst (ClaimTypes.Sid)?.Value;
-                var user = _db.User.GetById (new Guid (userId));
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
+                var user = _db.User.GetById(new Guid(userId));
 
                 user.Language = dto.Language;
                 user.Theme = dto.Theme;
                 user.DateFormat = dto.DateFormat;
                 user.TimeFormat = dto.TimeFormat;
 
-                _db.User.Update (user);
-                _db.Save ();
+                _db.User.Update(user);
+                _db.Save();
 
-                return Ok (_mapper.Map<UserDto> (user));
+                return Ok(_mapper.Map<UserDto>(user));
             }
             catch (Exception e)
             {
-                _logger.LogError ($"ERROR in UpdateInterface: {e.Message}");
-                return StatusCode (500, "Internal server error");
+                _logger.LogError($"ERROR in UpdateInterface: {e.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpPut ("password")]
-        public IActionResult UpdatePassword ([FromBody] UpdatePasswordDto dto)
+        [HttpPut("password")]
+        public IActionResult UpdatePassword([FromBody] UpdatePasswordDto dto)
         {
             try
             {
-                if (!ModelState.IsValid)return BadRequest ();
+                if (!ModelState.IsValid) return BadRequest();
 
-                var userId = HttpContext.User.FindFirst (ClaimTypes.Sid)?.Value;
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
 
-                var success = _db.User.ChangePassword (new Guid (userId), dto.OldPassword, dto.NewPassword);
-                if (success)return NoContent ();
+                var success = _db.User.ChangePassword(new Guid(userId), dto.OldPassword, dto.NewPassword);
+                if (success) return NoContent();
 
-                return BadRequest ();
+                return BadRequest();
             }
             catch (Exception e)
             {
-                _logger.LogError ($"ERROR in UpdateInterface: {e.Message}");
-                return StatusCode (500, "Internal server error");
+                _logger.LogError($"ERROR in UpdateInterface: {e.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpDelete]
-        public IActionResult DeleteUser ()
+        public IActionResult DeleteUser()
         {
             try
             {
-                var userId = HttpContext.User.FindFirst (ClaimTypes.Sid)?.Value;
+                var userId = HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value;
 
-                _db.User.Delete (new User { Id = new Guid (userId) });
-                _db.Save ();
+                _db.User.Delete(new User { Id = new Guid(userId) });
+                _db.Save();
 
-                return NoContent ();
+                return NoContent();
             }
             catch (Exception e)
             {
-                _logger.LogError ($"ERROR in DeleteUser: {e.Message}");
-                return StatusCode (500, "Internal server error");
+                _logger.LogError($"ERROR in DeleteUser: {e.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 

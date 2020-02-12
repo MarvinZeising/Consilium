@@ -11,25 +11,25 @@ namespace Server.Repository
 {
     public class PersonRepository : RepositoryBase<Person>, IPersonRepository
     {
-        public PersonRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
+        public PersonRepository(RepositoryContext repositoryContext) : base(repositoryContext) {}
 
-        public bool BelongsToUser (Guid personId, HttpContext context)
+        public bool BelongsToUser(Guid personId, HttpContext context)
         {
-            var userId = context.User.FindFirst (ClaimTypes.Sid).Value;
-            var person = GetById (personId);
-            return person?.UserId == new Guid (userId);
+            var userId = context.User.FindFirst(ClaimTypes.Sid).Value;
+            var person = GetById(personId);
+            return person?.UserId == new Guid(userId);
         }
 
-        public Person GetById (Guid personId, bool includeParticipations = false)
+        public Person GetById(Guid personId, bool includeParticipations = false)
         {
-            var query = FindByCondition (x => x.Id == personId);
+            var query = FindByCondition(x => x.Id == personId);
 
             if (includeParticipations)
             {
-                query = query.Include (x => x.Participations);
+                query = query.Include(x => x.Participations);
             }
 
-            return query.SingleOrDefault ();
+            return query.SingleOrDefault();
         }
 
     }

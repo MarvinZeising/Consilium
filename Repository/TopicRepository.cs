@@ -6,6 +6,6 @@ namespace Server.Repository
 {
     public class TopicRepository : RepositoryBase<Topic>, ITopicRepository
     {
-        public TopicRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
+        public TopicRepository(RepositoryContext repositoryContext) : base(repositoryContext) {}
     }
 }

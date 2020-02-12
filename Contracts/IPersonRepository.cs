@@ -6,7 +6,7 @@ namespace Server.Contracts
 {
     public interface IPersonRepository : IRepositoryBase<Person>
     {
-        Person GetById (Guid id, bool includeParticipations = false);
-        bool BelongsToUser (Guid personId, HttpContext context);
+        Person GetById(Guid id, bool includeParticipations = false);
+        bool BelongsToUser(Guid personId, HttpContext context);
     }
 }

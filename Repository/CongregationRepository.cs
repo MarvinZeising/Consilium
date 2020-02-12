@@ -6,7 +6,7 @@ namespace Server.Repository
 {
     public class CongregationRepository : RepositoryBase<Congregation>, ICongregationRepository
     {
-        public CongregationRepository (RepositoryContext repositoryContext) : base (repositoryContext) { }
+        public CongregationRepository(RepositoryContext repositoryContext) : base(repositoryContext) {}
 
     }
 }

@@ -2,5 +2,5 @@
 
 namespace Server.Contracts
 {
-    public interface IAttendeeRepository : IRepositoryBase<Attendee> { }
+    public interface IAttendeeRepository : IRepositoryBase<Attendee> {}
 }

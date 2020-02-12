@@ -1,5 +1,3 @@
 using System;
 
-public class ProjectNameUniqueException : Exception
-{
-}
+public class ProjectNameUniqueException : Exception {}

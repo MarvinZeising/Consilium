@@ -5,24 +5,24 @@ using Server.Entities.Validators;
 
 namespace Server.Entities.Models
 {
-    [Table ("participation")]
+    [Table("participation")]
     public class Participation
     {
         [Key]
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; } = Guid.NewGuid ();
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        [ForeignKey (nameof (Person))]
+        [ForeignKey(nameof(Person))]
         public Guid PersonId { get; set; }
         public Person Person { get; set; }
 
         [Required]
-        [ForeignKey (nameof (Project))]
+        [ForeignKey(nameof(Project))]
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
 
-        [ForeignKey (nameof (Role))]
+        [ForeignKey(nameof(Role))]
         public Guid? RoleId { get; set; }
         public Role Role { get; set; }
 
@@ -30,10 +30,10 @@ namespace Server.Entities.Models
         [ValidParticipationStatus]
         public string Status { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }
 
-        [DatabaseGenerated (DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
     }
 }

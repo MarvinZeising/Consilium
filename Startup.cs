@@ -106,7 +106,7 @@ namespace Server
                 });
             });
 
-            services.Configure<IISOptions>(options => { });
+            services.Configure<IISOptions>(options => {});
 
             services.AddSingleton<ILoggerManager, LoggerManager>();
         }
