@@ -69,5 +69,16 @@ namespace Server.Entities.Models
         public DateTime LastUpdatedTime { get; set; }
 
         public ICollection<Participation> Participations { get; set; }
+
+        public Person()
+        {
+            Email = "";
+            Language = "en-US";
+            Phone = "";
+            Privilege = "publisher";
+            Assignment = "publisher";
+            Languages = "";
+            Notes = "";
+        }
     }
 }

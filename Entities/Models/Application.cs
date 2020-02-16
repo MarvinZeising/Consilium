@@ -32,5 +32,10 @@ namespace Server.Entities.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdatedTime { get; set; }
+
+        public Application()
+        {
+            Notes = "";
+        }
     }
 }

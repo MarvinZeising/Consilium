@@ -32,6 +32,7 @@ namespace Server.Entities.Models
         public DateTime LastUpdatedTime { get; set; }
 
         public ICollection<Participation> Participants { get; set; }
+
         public ICollection<Topic> Topics { get; set; }
     }
 }
