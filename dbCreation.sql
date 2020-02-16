@@ -1,11 +1,22 @@
 BEGIN TRANSACTION
 
---
--- Table structure for table `user`
---
-
+DROP TABLE IF EXISTS [participation];
+DROP TABLE IF EXISTS [eligibility];
+DROP TABLE IF EXISTS [role];
+DROP TABLE IF EXISTS [attendee];
+DROP TABLE IF EXISTS [article];
+DROP TABLE IF EXISTS [topic];
+DROP TABLE IF EXISTS [application];
+DROP TABLE IF EXISTS [team];
+DROP TABLE IF EXISTS [shift];
+DROP TABLE IF EXISTS [category];
+DROP TABLE IF EXISTS [project];
+DROP TABLE IF EXISTS [person];
+DROP TABLE IF EXISTS [congregation];
 DROP TABLE IF EXISTS [user];
-CREATE TABLE [user] (
+
+CREATE TABLE [user]
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [email] NVARCHAR(100) NOT NULL,
   [language] NVARCHAR(5) NOT NULL DEFAULT 'en-US',
@@ -19,14 +30,11 @@ CREATE TABLE [user] (
   PRIMARY KEY ([id]),
   CONSTRAINT [user_email_UNIQUE] UNIQUE  ([email]),
   CONSTRAINT [user_id_UNIQUE] UNIQUE  ([id])
-) ;
+)
+;
 
---
--- Table structure for table `congregation`
---
-
-DROP TABLE IF EXISTS [congregation];
-CREATE TABLE congregation (
+CREATE TABLE congregation
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [name] NVARCHAR(40) NOT NULL,
   [number] NVARCHAR(10) DEFAULT NULL,
@@ -36,14 +44,11 @@ CREATE TABLE congregation (
   CONSTRAINT [congregation_id_UNIQUE] UNIQUE  ([id]),
   CONSTRAINT [congregation_name_UNIQUE] UNIQUE  ([name]),
   CONSTRAINT [congregation_number_UNIQUE] UNIQUE  ([number])
-) ;
+)
+;
 
---
--- Table structure for table `person`
---
-
-DROP TABLE IF EXISTS [person];
-CREATE TABLE person (
+CREATE TABLE person
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [userId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [firstname] NVARCHAR(40) NOT NULL,
@@ -52,10 +57,10 @@ CREATE TABLE person (
   [congregationId] UNIQUEIDENTIFIER DEFAULT NULL,
   [createdTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
   [lastUpdatedTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
-  [email] NVARCHAR(100),
-  [phone] NVARCHAR(40),
-  [languages] NVARCHAR(100),
-  [notes] NVARCHAR(1000),
+  [email] NVARCHAR(100) NOT NULL DEFAULT '',
+  [phone] NVARCHAR(40) NOT NULL DEFAULT '',
+  [languages] NVARCHAR(100) NOT NULL DEFAULT '',
+  [notes] NVARCHAR(1000) NOT NULL DEFAULT '',
   [assignment] NVARCHAR(15) NOT NULL DEFAULT 'publisher',
   [privilege] NVARCHAR(12) NOT NULL DEFAULT 'publisher',
   [language] NVARCHAR(5) NOT NULL DEFAULT 'en-US',
@@ -64,14 +69,11 @@ CREATE TABLE person (
  ,
   CONSTRAINT [fk_person_congregation] FOREIGN KEY ([congregationId]) REFERENCES congregation ([id]) ON DELETE CASCADE,
   CONSTRAINT [fk_person_user] FOREIGN KEY ([userId]) REFERENCES [user] ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-) ;
+)
+;
 
---
--- Table structure for table `project`
---
-
-DROP TABLE IF EXISTS [project];
-CREATE TABLE project (
+CREATE TABLE project
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [name] NVARCHAR(40) NOT NULL,
   [email] NVARCHAR(100) NOT NULL,
@@ -81,14 +83,11 @@ CREATE TABLE project (
   PRIMARY KEY ([id]),
   CONSTRAINT [project_id_UNIQUE] UNIQUE  ([id]),
   CONSTRAINT [name_UNIQUE] UNIQUE  ([name])
-) ;
+)
+;
 
---
--- Table structure for table `category`
---
-
-DROP TABLE IF EXISTS [category];
-CREATE TABLE category (
+CREATE TABLE category
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [projectId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [name] NVARCHAR(40) NOT NULL,
@@ -98,14 +97,11 @@ CREATE TABLE category (
   CONSTRAINT [category_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_category_project] FOREIGN KEY ([projectId]) REFERENCES project ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-) ;
+)
+;
 
---
--- Table structure for table `shift`
---
-
-DROP TABLE IF EXISTS [shift];
-CREATE TABLE shift (
+CREATE TABLE shift
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [categoryId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [createdTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
@@ -120,38 +116,32 @@ CREATE TABLE shift (
   CONSTRAINT [shift_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_shift_category] FOREIGN KEY ([categoryId]) REFERENCES category ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-) ;
+)
+;
 
---
--- Table structure for table `team`
---
-
-DROP TABLE IF EXISTS [team];
-CREATE TABLE team (
+CREATE TABLE team
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [projectId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [name] NVARCHAR(40) NOT NULL,
-  [description] NVARCHAR(1000),
-  [helpLink] NVARCHAR(1000),
+  [description] NVARCHAR(1000) NOT NULL DEFAULT '',
+  [helpLink] NVARCHAR(1000) NOT NULL DEFAULT '',
   [createdTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
   [lastUpdatedTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
   PRIMARY KEY ([id]),
   CONSTRAINT [team_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_task_project] FOREIGN KEY ([projectId]) REFERENCES project ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-) ;
+)
+;
 
---
--- Table structure for table `application`
---
-
-DROP TABLE IF EXISTS [application];
-CREATE TABLE application (
+CREATE TABLE application
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [shiftId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [personId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [availableAfter] BIT NOT NULL DEFAULT 1,
-  [notes] NVARCHAR(200),
+  [notes] NVARCHAR(200) NOT NULL DEFAULT '',
   [createdTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
   [lastUpdatedTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
   PRIMARY KEY ([id]),
@@ -159,14 +149,11 @@ CREATE TABLE application (
  ,
   CONSTRAINT [fk_application_person] FOREIGN KEY ([personId]) REFERENCES person ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT [fk_application_shift] FOREIGN KEY ([shiftId]) REFERENCES shift ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-) ;
+)
+;
 
---
--- Table structure for table `topic`
---
-
-DROP TABLE IF EXISTS [topic];
-CREATE TABLE topic (
+CREATE TABLE topic
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [projectId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [name] NVARCHAR(40) NOT NULL,
@@ -176,14 +163,11 @@ CREATE TABLE topic (
   CONSTRAINT [topic_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_topic_project] FOREIGN KEY ([projectId]) REFERENCES project ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-) ;
+)
+;
 
---
--- Table structure for table `article`
---
-
-DROP TABLE IF EXISTS [article];
-CREATE TABLE article (
+CREATE TABLE article
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [topicId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [title] NVARCHAR(100) NOT NULL,
@@ -194,14 +178,11 @@ CREATE TABLE article (
   CONSTRAINT [article_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_article_topic] FOREIGN KEY ([topicId]) REFERENCES topic ([id])
-) ;
+)
+;
 
---
--- Table structure for table `attendee`
---
-
-DROP TABLE IF EXISTS [attendee];
-CREATE TABLE attendee (
+CREATE TABLE attendee
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [shiftId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [personId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
@@ -221,14 +202,11 @@ CREATE TABLE attendee (
   -- TODO: CONSTRAINT [fk_attendee_shift] FOREIGN KEY ([shiftId]) REFERENCES shift ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT [fk_attendee_team] FOREIGN KEY ([teamId]) REFERENCES team ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION
   -- TODO: CONSTRAINT [fk_attendee_team] FOREIGN KEY ([teamId]) REFERENCES team ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-) ;
+)
+;
 
---
--- Table structure for table `role`
---
-
-DROP TABLE IF EXISTS [role];
-CREATE TABLE role (
+CREATE TABLE role
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [projectId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [name] NVARCHAR(40) NOT NULL,
@@ -249,14 +227,11 @@ CREATE TABLE role (
   CONSTRAINT [role_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_role_project] FOREIGN KEY ([projectId]) REFERENCES project ([id])
-) ;
+)
+;
 
---
--- Table structure for table `eligibility`
---
-
-DROP TABLE IF EXISTS [eligibility];
-CREATE TABLE eligibility (
+CREATE TABLE eligibility
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [roleId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [categoryId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
@@ -271,14 +246,11 @@ CREATE TABLE eligibility (
  ,
   CONSTRAINT [fk_eligibility_category] FOREIGN KEY ([categoryId]) REFERENCES category ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT [fk_eligibility_role] FOREIGN KEY ([roleId]) REFERENCES role ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-) ;
+)
+;
 
---
--- Table structure for table `participation`
---
-
-DROP TABLE IF EXISTS [participation];
-CREATE TABLE participation (
+CREATE TABLE participation
+(
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [personId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [projectId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
@@ -293,6 +265,7 @@ CREATE TABLE participation (
   CONSTRAINT [fk_participation_person] FOREIGN KEY ([personId]) REFERENCES person ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT [fk_participation_project] FOREIGN KEY ([projectId]) REFERENCES project ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT [fk_participation_role] FOREIGN KEY ([roleId]) REFERENCES role ([id])
-) ;
+)
+;
 
 COMMIT TRANSACTION
