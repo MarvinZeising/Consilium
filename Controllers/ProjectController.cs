@@ -68,6 +68,8 @@ namespace Server.Controllers
                 {
                     ProjectId = project.Id,
                     Name = "Administrator",
+                    CalendarRead = true,
+                    CalendarWrite = true,
                     KnowledgeBaseRead = true,
                     KnowledgeBaseWrite = true,
                     ParticipantsRead = true,

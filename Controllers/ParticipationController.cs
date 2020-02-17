@@ -40,9 +40,7 @@ namespace Server.Controllers
                 if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
 
                 var participations = _db.Participation
-                    .FindByCondition(x =>
-                        x.ProjectId == projectId &&
-                        Enum.Parse<ParticipationStatus>(x.Status) == ParticipationStatus.Invited)
+                    .FindByCondition(x => x.ProjectId == projectId && x.Status == "invited")
                     .Include(x => x.Person)
                     .Include(x => x.Role)
                     .ToList();
@@ -65,9 +63,7 @@ namespace Server.Controllers
                 if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
 
                 var participations = _db.Participation
-                    .FindByCondition(x =>
-                        x.ProjectId == projectId &&
-                        Enum.Parse<ParticipationStatus>(x.Status) == ParticipationStatus.Requested)
+                    .FindByCondition(x => x.ProjectId == projectId && x.Status == "requested")
                     .Include(x => x.Person)
                     .Include(x => x.Role)
                     .ToList();
@@ -90,10 +86,7 @@ namespace Server.Controllers
                 if (_db.Participation.GetRole(personId, projectId)?.ParticipantsWrite != true) return Forbid();
 
                 var participations = _db.Participation
-                    .FindByCondition(x =>
-                        x.ProjectId == projectId &&
-                        (Enum.Parse<ParticipationStatus>(x.Status) == ParticipationStatus.Active ||
-                            Enum.Parse<ParticipationStatus>(x.Status) == ParticipationStatus.Inactive))
+                    .FindByCondition(x => x.ProjectId == projectId && (x.Status == "active" || x.Status == "inactive"))
                     .Include(x => x.Person)
                     .Include(x => x.Role)
                     .ToList();
