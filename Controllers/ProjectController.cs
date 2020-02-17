@@ -164,9 +164,21 @@ namespace Server.Controllers
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
                 if (_db.Participation.GetRole(personId, projectId)?.SettingsWrite != true) return Forbid();
 
-                // TODO: delete topics
-                // TODO: delete articles
-                // TODO: delete shifts
+                var topics = _db.Topic.FindByCondition(x => x.ProjectId == projectId).ToList();
+                foreach (var topic in topics)
+                {
+                    var articles = _db.Article.FindByCondition(x => x.TopicId == topic.Id).ToList();
+                    _db.Article.Delete(articles);
+                }
+                _db.Topic.Delete(topics);
+
+                var categories = _db.Category.FindByCondition(x => x.ProjectId == projectId).ToList();
+                foreach (var category in categories)
+                {
+                    var shifts = _db.Shift.FindByCondition(x => x.CategoryId == category.Id).ToList();
+                    _db.Shift.Delete(shifts);
+                }
+                _db.Category.Delete(categories);
 
                 var participations = _db.Participation.FindByCondition(x => x.ProjectId == projectId).ToList();
                 _db.Participation.Delete(participations);
