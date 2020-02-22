@@ -11,13 +11,20 @@ import { getCookie, hashPassword } from './_helpers'
 @Module({ dynamic: true, store, name: 'UserModule' })
 export default class UserModule extends VuexModule {
   public user: User | null = null
+  public version?: string = undefined
 
-  public get getUser(): User | null {
+  public get getUser() {
     return this.user
+  }
+
+  public get getVersion() {
+    return this.version || 'development'
   }
 
   @Action
   public async loadNavbar() {
+    this.context.dispatch('loadVersion')
+
     const response = await axios.get(`/users/current`)
 
     this.context.commit('setUser', User.create(response.data))
@@ -43,6 +50,14 @@ export default class UserModule extends VuexModule {
       } else if (persons.length > 0) {
         await this.context.dispatch('activatePerson', persons[0].id)
       }
+    }
+  }
+
+  @Action
+  public async loadVersion() {
+    if (process.env.NODE_ENV !== 'development') {
+      const response = await axios.get('/version')
+      this.context.commit('setVersion', response.data)
     }
   }
 
@@ -159,6 +174,11 @@ export default class UserModule extends VuexModule {
   @Mutation
   protected setUser(user: User | null) {
     this.user = user
+  }
+
+  @Mutation
+  protected setVersion(version: string) {
+    this.version = version
   }
 
   @Mutation

@@ -6,7 +6,7 @@
 
       <template v-slot:append>
         <v-divider />
-        <div class="text-center pa-2 caption" v-text="commitHash" />
+        <div class="text-center pa-2 caption" v-text="userModule.getVersion" />
       </template>
     </v-navigation-drawer>
 
@@ -105,8 +105,6 @@ export default class Navbar extends Vue {
   private accountMenu = false
   private languageMenu = false
 
-  private commitHash = 'development'
-
   private language: string = ''
   private languages: string[] = []
 
@@ -127,11 +125,6 @@ export default class Navbar extends Vue {
 
     this.accountMenu = false
     this.languageMenu = false
-
-    if (process.env.NODE_ENV !== 'development') {
-      const response = await axios.get('/version')
-      this.commitHash = response.data
-    }
   }
 
   private updateLanguage(language: string) {
