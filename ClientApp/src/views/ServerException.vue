@@ -6,7 +6,7 @@
     fill-height
   >
     <h1 class="mb-4">Cannot connect to server</h1>
-    <p>Due to maintenance, the server is not reachable at the moment.</p>
+    <p>Probably due to maintenance, the server is not reachable at the moment.</p>
     <p>Please try again later</p>
     <v-btn
       class="mt-3"
