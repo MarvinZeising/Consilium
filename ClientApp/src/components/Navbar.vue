@@ -3,9 +3,10 @@
     <v-navigation-drawer app v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp">
       <NavbarSignedIn v-if="userModule.getUser" />
       <NavbarSignedOut v-else />
+
       <template v-slot:append>
         <v-divider />
-        <div class="text-center pa-2 caption">v0.1.0</div>
+        <div class="text-center pa-2 caption" v-text="commitHash" />
       </template>
     </v-navigation-drawer>
 
@@ -88,6 +89,7 @@ import ProjectModule from '../store/projects'
 import UserModule from '../store/users'
 import NavbarSignedIn from './NavbarSignedIn.vue'
 import NavbarSignedOut from './NavbarSignedOut.vue'
+import axios from 'axios';
 
 @Component({
   components: {
@@ -103,6 +105,8 @@ export default class Navbar extends Vue {
   private accountMenu = false
   private languageMenu = false
 
+  private commitHash = 'development'
+
   private language: string = ''
   private languages: string[] = []
 
@@ -112,7 +116,7 @@ export default class Navbar extends Vue {
   }
 
   private async created() {
-    this.init()
+    await this.init()
   }
 
   private async init() {
@@ -123,6 +127,11 @@ export default class Navbar extends Vue {
 
     this.accountMenu = false
     this.languageMenu = false
+
+    if (process.env.NODE_ENV !== 'development') {
+      const response = await axios.get('/version')
+      this.commitHash = response.data
+    }
   }
 
   private updateLanguage(language: string) {
