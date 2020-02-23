@@ -23,10 +23,7 @@ export default class PersonModule extends VuexModule {
   }
 
   public get getActiveRole() {
-    return this.getActivePerson
-      ?.participations
-      ?.find((x) => x.projectId === router.currentRoute.params.projectId)
-      ?.role
+    return this.getActivePerson?.participations?.find((x) => x.projectId === router.currentRoute.params.projectId)?.role
   }
 
   @MutationAction({ mutate: ['persons', 'activePersonId'] })
@@ -35,11 +32,11 @@ export default class PersonModule extends VuexModule {
   }
 
   @Action
-  public async createPerson(person: { firstname: string, lastname: string }) {
+  public async createPerson(person: { firstname: string; lastname: string; gender: string }) {
     const response = await axios.post('/persons', {
       firstname: person.firstname,
       lastname: person.lastname,
-      gender: Gender.Male,
+      gender: person.gender,
     })
     const newPerson = Person.create(response.data)
 
@@ -48,12 +45,7 @@ export default class PersonModule extends VuexModule {
   }
 
   @Action
-  public async updatePersonGeneral(person: {
-    id: string,
-    firstname: string,
-    lastname: string,
-    gender: string,
-  }) {
+  public async updatePersonGeneral(person: { id: string; firstname: string; lastname: string; gender: string }) {
     const response = await axios.put(`/persons/${person.id}/general`, {
       firstname: person.firstname,
       lastname: person.lastname,
@@ -65,11 +57,7 @@ export default class PersonModule extends VuexModule {
   }
 
   @Action
-  public async updatePersonTheocratic(data: {
-    assignment: Assignment,
-    privilege: Privilege,
-    congregationId?: string,
-  }) {
+  public async updatePersonTheocratic(data: { assignment: Assignment; privilege: Privilege; congregationId?: string }) {
     const response = await axios.put(`/persons/${this.getActivePersonId}/theocratic`, {
       assignment: data.assignment,
       privilege: data.privilege,
@@ -81,10 +69,7 @@ export default class PersonModule extends VuexModule {
   }
 
   @Action
-  public async updatePersonMiscellaneous(data: {
-    languages: string,
-    notes: string,
-  }) {
+  public async updatePersonMiscellaneous(data: { languages: string; notes: string }) {
     const response = await axios.put(`/persons/${this.getActivePersonId}/miscellaneous`, {
       languages: data.languages,
       notes: data.notes,
@@ -95,11 +80,7 @@ export default class PersonModule extends VuexModule {
   }
 
   @Action
-  public async updatePersonContact(data: {
-    email: string,
-    language: Language,
-    phone: string,
-  }) {
+  public async updatePersonContact(data: { email: string; language: Language; phone: string }) {
     const response = await axios.put(`/persons/${this.getActivePersonId}/contact`, {
       email: data.email,
       language: data.language,
@@ -205,5 +186,4 @@ export default class PersonModule extends VuexModule {
       this.persons.splice(this.persons.indexOf(person), 1)
     }
   }
-
 }

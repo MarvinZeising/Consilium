@@ -1,15 +1,12 @@
 <template>
   <div>
-    <v-card-text
-      class="pb-0 subtitle-1"
-    >
+    <v-card-text class="pb-0 subtitle-1">
       <span v-if="eligibility.role">{{ eligibility.role.name }}</span>
       <span v-if="eligibility.category">{{ eligibility.category.name }}</span>
     </v-card-text>
 
     <v-card-text class="pa-2">
       <v-layout wrap>
-
         <PermissionControl
           :model="eligibilityModel"
           translationPath="project.role.category"
@@ -39,10 +36,8 @@
             @change="toggleSubstituteCaptain"
           />
         </v-flex>
-
       </v-layout>
     </v-card-text>
-
   </div>
 </template>
 
@@ -59,7 +54,6 @@ import PermissionControl from './PermissionControl.vue'
   },
 })
 export default class EligibilityControl extends Vue {
-
   @Prop(Eligibility)
   private readonly eligibility?: Eligibility
 
@@ -103,6 +97,5 @@ export default class EligibilityControl extends Vue {
       }
     }
   }
-
 }
 </script>

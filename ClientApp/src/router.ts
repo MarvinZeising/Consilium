@@ -92,11 +92,6 @@ const router = new VueRouter({
       component: () => import('./views/account/Account.vue'),
     },
     {
-      path: '/account/create-person',
-      name: 'createPerson',
-      component: () => import('./views/account/CreatePerson.vue'),
-    },
-    {
       path: '/token',
       name: 'token',
       component: () => import('./views/authentication/Token.vue'),
