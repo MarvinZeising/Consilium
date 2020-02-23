@@ -1,58 +1,41 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="1000px"
-  >
+  <v-dialog v-model="dialog" max-width="1000px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'core.edit'"
-        @click="opened"
-      />
+      <v-btn v-on="on" text v-t="'core.edit'" @click="opened" />
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
-        <v-toolbar
-          flat
-          color="accent"
-        >
+      <v-form v-model="valid" ref="form">
+        <v-toolbar flat color="accent">
           <v-toolbar-title v-t="'shift.category.update'" />
+          <v-spacer />
+          <v-btn icon class="mr-0" @click="showHelp = !showHelp">
+            <v-icon v-if="showHelp">help_outline</v-icon>
+            <v-icon v-else>help</v-icon>
+          </v-btn>
         </v-toolbar>
-        <v-card-text>
-          <i
-            class="subtitle-1"
-            v-t="'shift.category.updateDescription'"
-          />
+        <v-card-text v-if="showHelp">
+          <i class="subtitle-1" v-t="'shift.category.updateDescription'" />
         </v-card-text>
+
         <v-card-text class="pa-2">
-
-          <NameControl
-            :model="nameModel"
-            translationPath="shift.category.nameDescription"
-          />
-
+          <NameControl :model="nameModel" translationPath="shift.category.nameDescription" />
         </v-card-text>
-        <v-divider />
-        <v-card-text>
 
+        <v-divider />
+
+        <v-card-text>
           <EligibilityControl
             v-for="(eligibility, index) in category.eligibilities"
             :key="index"
             :eligibility="eligibility"
+            :showDescription="showHelp"
           />
-
         </v-card-text>
+
         <v-divider />
+
         <v-card-actions>
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-spacer />
           <DeleteCategoryDialog :category="category" />
           <v-btn
@@ -96,6 +79,7 @@ export default class UpdateCategoryDialog extends Vue {
   private dialog = false
   private valid: any = null
   private loading = false
+  private showHelp = false
 
   private nameModel = { value: '' }
 
@@ -103,7 +87,7 @@ export default class UpdateCategoryDialog extends Vue {
     this.nameModel = { value: this.category?.name || '' }
 
     if (this.category) {
-      this.category.eligibilities.forEach((x) => x.category = undefined)
+      this.category.eligibilities.forEach((x) => (x.category = undefined))
     }
   }
 
@@ -119,6 +103,5 @@ export default class UpdateCategoryDialog extends Vue {
       this.dialog = false
     }
   }
-
 }
 </script>

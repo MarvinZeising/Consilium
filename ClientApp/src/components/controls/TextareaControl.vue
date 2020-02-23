@@ -1,17 +1,15 @@
 <template>
-  <v-flex
-    xs12 sm6 md4
-    class="pa-2"
-  >
-    <span v-if="description">
+  <v-flex xs12 sm6 md4 class="pa-2">
+    <span v-if="showDescription">
       {{ $t(description) }}
       <i v-if="!required">({{ $t('core.optional') }})</i>
     </span>
     <v-textarea
       v-model="model.value"
-      :label="label ? $t(label) : false"
+      :label="label ? $t(label) + $t('core.multilineSuffix') : false"
       :rules="rules"
       :counter="getCounter"
+      rows="1"
       auto-grow
       filled
       required
@@ -26,7 +24,6 @@ import i18n from '../../i18n'
 
 @Component
 export default class TextareaControl extends Vue {
-
   @Prop(Object)
   private readonly model?: { value: string }
 
@@ -43,6 +40,9 @@ export default class TextareaControl extends Vue {
   private readonly maxLength?: number
 
   @Prop(Boolean)
+  private showDescription?: boolean
+
+  @Prop(Boolean)
   private required = false
 
   private get getCounter() {
@@ -53,16 +53,11 @@ export default class TextareaControl extends Vue {
   }
 
   private rules: any[] = [
-    (v: string) => !this.required
-                   || !!v
-                   || i18n.t('core.fieldRequired'),
-    (v: string) => this.minLength === undefined
-                   || v.length >= this.minLength
-                   || i18n.t('core.fieldMin', { count: this.minLength }),
-    (v: string) => this.maxLength === undefined
-                   || v.length <= this.maxLength
-                   || i18n.t('core.fieldMax', { count: this.maxLength }),
+    (v: string) => !this.required || !!v || i18n.t('core.fieldRequired'),
+    (v: string) =>
+      this.minLength === undefined || v.length >= this.minLength || i18n.t('core.fieldMin', { count: this.minLength }),
+    (v: string) =>
+      this.maxLength === undefined || v.length <= this.maxLength || i18n.t('core.fieldMax', { count: this.maxLength }),
   ]
-
 }
 </script>

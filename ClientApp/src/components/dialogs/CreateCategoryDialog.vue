@@ -1,40 +1,23 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="1000px"
-  >
+  <v-dialog v-model="dialog" max-width="1000px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'shift.category.create'"
-        @click="opened"
-      />
+      <v-btn v-on="on" text v-t="'shift.category.create'" @click="opened" />
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
-        <v-toolbar
-          flat
-          color="accent"
-        >
+      <v-form v-model="valid" ref="form">
+        <v-toolbar flat color="accent">
           <v-toolbar-title v-t="'shift.category.create'" />
+          <v-spacer />
+          <v-btn icon class="mr-0" @click="showHelp = !showHelp">
+            <v-icon v-if="showHelp">help_outline</v-icon>
+            <v-icon v-else>help</v-icon>
+          </v-btn>
         </v-toolbar>
-        <v-card-text>
-          <i
-            class="subtitle-1"
-            v-t="'shift.category.createDescription'"
-          />
+        <v-card-text v-if="showHelp">
+          <i class="subtitle-1" v-t="'shift.category.createDescription'" />
         </v-card-text>
         <v-card-text class="pa-2">
-
-          <NameControl
-            :model="nameModel"
-            translationPath="shift.category.nameDescription"
-          />
-
+          <NameControl :model="nameModel" translationPath="shift.category.nameDescription" />
         </v-card-text>
 
         <v-divider />
@@ -43,17 +26,14 @@
           v-for="(eligibility, index) in category.eligibilities"
           :key="index"
           :eligibility="eligibility"
+          :showDescription="showHelp"
         />
 
         <v-divider />
 
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-btn
             text
             type="submit"
@@ -92,9 +72,10 @@ export default class CreateCategoryDialog extends Vue {
   private dialog = false
   private valid: any = null
   private loading = false
+  private showHelp = false
 
   private category = Category.create({
-    eligibilities: []
+    eligibilities: [],
   })
   private nameModel = { value: '' }
 
@@ -125,6 +106,5 @@ export default class CreateCategoryDialog extends Vue {
       this.dialog = false
     }
   }
-
 }
 </script>

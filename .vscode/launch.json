@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (web)",
+      "name": "Build",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
@@ -25,10 +25,24 @@
       }
     },
     {
-      "name": ".NET Core Attach",
+      "name": "Watch",
       "type": "coreclr",
-      "request": "attach",
-      "processId": "${command:pickProcess}"
+      "request": "launch",
+      "preLaunchTask": "watch",
+      "program": "${workspaceFolder}/bin/Debug/netcoreapp3.1/Consilium.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
     }
   ]
 }

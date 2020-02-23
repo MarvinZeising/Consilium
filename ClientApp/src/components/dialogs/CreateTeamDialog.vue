@@ -1,38 +1,29 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="1000px"
-  >
+  <v-dialog v-model="dialog" max-width="1000px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'shift.team.create'"
-      />
+      <v-btn v-on="on" text v-t="'shift.team.create'" />
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
-        <v-toolbar
-          flat
-          color="accent"
-        >
+      <v-form v-model="valid" ref="form">
+        <v-toolbar flat color="accent">
           <v-toolbar-title v-t="'shift.team.create'" />
+          <v-spacer />
+          <v-btn icon class="mr-0" @click="showHelp = !showHelp">
+            <v-icon v-if="showHelp">help_outline</v-icon>
+            <v-icon v-else>help</v-icon>
+          </v-btn>
         </v-toolbar>
-        <v-card-text>
-          <i
-            class="subtitle-1"
-            v-t="'shift.team.createDescription'"
-          />
+
+        <v-card-text v-if="showHelp">
+          <i class="subtitle-1" v-t="'shift.team.createDescription'" />
         </v-card-text>
+
         <v-card-text class="pa-2">
           <v-layout wrap>
-
             <NameControl
               :model="nameModel"
               description="shift.team.nameDescription"
+              :showDescription="showHelp"
             />
 
             <TextareaControl
@@ -40,6 +31,7 @@
               label="core.description"
               description="shift.team.descriptionDescription"
               :maxLength="1000"
+              :showDescription="showHelp"
             />
 
             <TextControl
@@ -48,8 +40,8 @@
               description="shift.team.helpLinkDescription"
               :maxLength="1000"
               :customRules="linkRules"
+              :showDescription="showHelp"
             />
-
           </v-layout>
         </v-card-text>
 
@@ -57,11 +49,7 @@
 
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-btn
             text
             type="submit"
@@ -102,14 +90,13 @@ export default class CreateTeamDialog extends Vue {
   private dialog = false
   private valid: any = null
   private loading = false
+  private showHelp = false
 
   private team = Team.create({})
   private nameModel = { value: '' }
   private descriptionModel = { value: '' }
   private helpLinkModel = { value: '' }
-  private linkRules = [
-    (v: string) => !v || /^https:\/\/.+\..{2,}$/.test(v) || i18n.t('shift.team.helpLinkFormat')
-  ]
+  private linkRules = [(v: string) => !v || /^https:\/\/.+\..{2,}$/.test(v) || i18n.t('shift.team.helpLinkFormat')]
 
   private async save() {
     if (this.valid) {
@@ -125,6 +112,5 @@ export default class CreateTeamDialog extends Vue {
       this.dialog = false
     }
   }
-
 }
 </script>

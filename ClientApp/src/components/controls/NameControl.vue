@@ -5,6 +5,7 @@
     :description="description"
     :minLength="0"
     :maxLength="40"
+    :showDescription="showDescription"
     required
   />
 </template>
@@ -18,15 +19,16 @@ import TextControl from './TextControl.vue'
 @Component({
   components: {
     TextControl,
-  }
+  },
 })
 export default class NameControl extends Vue {
-
   @Prop(Object)
   private readonly model: { value: string } = { value: '' }
 
   @Prop(String)
   private readonly description: string = ''
 
+  @Prop(Boolean)
+  private readonly showDescription?: boolean
 }
 </script>

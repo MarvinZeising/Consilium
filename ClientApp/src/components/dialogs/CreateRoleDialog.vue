@@ -1,68 +1,58 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="1000px"
-  >
+  <v-dialog v-model="dialog" max-width="1000px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'project.role.create'"
-        @click="opened"
-      />
+      <v-btn v-on="on" text v-t="'project.role.create'" @click="opened" />
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
-        <v-toolbar
-          flat
-          color="accent"
-        >
+      <v-form v-model="valid" ref="form">
+        <v-toolbar flat color="accent">
           <v-toolbar-title v-t="'project.role.create'" />
+          <v-spacer />
+          <v-btn icon class="mr-0" @click="showHelp = !showHelp">
+            <v-icon v-if="showHelp">help_outline</v-icon>
+            <v-icon v-else>help</v-icon>
+          </v-btn>
         </v-toolbar>
-        <v-card-text>
-          <i
-            class="subtitle-1"
-            v-t="'project.role.createDescription'"
-          />
+        <v-card-text v-if="showHelp">
+          <i class="subtitle-1" v-t="'project.role.createDescription'" />
         </v-card-text>
         <v-card-text class="pa-2">
+          <NameControl :model="nameModel" translationPath="project.role.nameDescription" />
+        </v-card-text>
 
-          <NameControl
-            :model="nameModel"
-            translationPath="project.role.nameDescription"
-          />
+        <v-divider />
 
-          <v-divider />
+        <v-card-text>
           <v-layout wrap>
-
             <PermissionControl
               :model="calendarModel"
               translationPath="project.role.calendar"
+              :showDescription="showHelp"
             />
 
             <PermissionControl
               :model="settingsModel"
               translationPath="project.role.settings"
+              :showDescription="showHelp"
             />
 
             <PermissionControl
               :model="rolesModel"
               translationPath="project.role.roles"
+              :showDescription="showHelp"
             />
 
             <PermissionControl
               :model="participantsModel"
               translationPath="project.role.participants"
+              :showDescription="showHelp"
             />
 
             <PermissionControl
               :model="knowledgeBaseModel"
               translationPath="project.role.knowledgeBase"
+              :showDescription="showHelp"
             />
-
           </v-layout>
         </v-card-text>
 
@@ -72,17 +62,14 @@
           v-for="(eligibility, index) in role.eligibilities"
           :key="index"
           :eligibility="eligibility"
+          :showDescription="showHelp"
         />
 
         <v-divider />
 
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-btn
             text
             type="submit"
@@ -123,9 +110,10 @@ export default class CreateRoleDialog extends Vue {
   private dialog = false
   private valid: any = null
   private loading = false
+  private showHelp = false
 
   private role = Role.create({
-    eligibilities: []
+    eligibilities: [],
   })
 
   private nameModel = { value: '' }
@@ -168,6 +156,5 @@ export default class CreateRoleDialog extends Vue {
       this.dialog = false
     }
   }
-
 }
 </script>

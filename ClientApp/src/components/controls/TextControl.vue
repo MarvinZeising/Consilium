@@ -1,9 +1,6 @@
 <template>
-  <v-flex
-    xs12 sm6 md4
-    class="pa-2"
-  >
-    <span v-if="description">
+  <v-flex xs12 sm6 md4 class="pa-2">
+    <span v-if="showDescription">
       {{ $t(description) }}
       <i v-if="!required">({{ $t('core.optional') }})</i>
     </span>
@@ -12,6 +9,7 @@
       :label="label ? $t(label) : false"
       :rules="getRules"
       :counter="getCounter"
+      hide-details="auto"
       filled
       required
     />
@@ -25,7 +23,6 @@ import i18n from '../../i18n'
 
 @Component
 export default class TextControl extends Vue {
-
   @Prop(Object)
   private readonly model?: { value: string }
 
@@ -45,18 +42,17 @@ export default class TextControl extends Vue {
   private readonly customRules?: any[]
 
   @Prop(Boolean)
+  private showDescription?: boolean
+
+  @Prop(Boolean)
   private required = false
 
   private rules = [
-    (v: string) => !this.required
-                   || !!v
-                   || i18n.t('core.fieldRequired'),
-    (v: string) => this.minLength === undefined
-                   || v.length >= this.minLength
-                   || i18n.t('core.fieldMin', { count: this.minLength }),
-    (v: string) => this.maxLength === undefined
-                   || v.length <= this.maxLength
-                   || i18n.t('core.fieldMax', { count: this.maxLength }),
+    (v: string) => !this.required || !!v || i18n.t('core.fieldRequired'),
+    (v: string) =>
+      this.minLength === undefined || v.length >= this.minLength || i18n.t('core.fieldMin', { count: this.minLength }),
+    (v: string) =>
+      this.maxLength === undefined || v.length <= this.maxLength || i18n.t('core.fieldMax', { count: this.maxLength }),
   ]
 
   private get getCounter() {
@@ -72,6 +68,5 @@ export default class TextControl extends Vue {
     }
     return this.rules
   }
-
 }
 </script>

@@ -1,78 +1,64 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="1000px"
-  >
+  <v-dialog v-model="dialog" max-width="1000px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'core.edit'"
-        @click="opened"
-      />
+      <v-btn v-on="on" text v-t="'core.edit'" @click="opened" />
     </template>
     <v-card>
-      <v-form
-        ref="form"
-        v-model="valid"
-      >
-        <v-toolbar
-          flat
-          color="accent"
-        >
+      <v-form ref="form" v-model="valid">
+        <v-toolbar flat color="accent">
           <v-toolbar-title v-t="'project.role.update'" />
+          <v-spacer />
+          <v-btn icon class="mr-0" @click="showHelp = !showHelp">
+            <v-icon v-if="showHelp">help_outline</v-icon>
+            <v-icon v-else>help</v-icon>
+          </v-btn>
         </v-toolbar>
-        <v-card-text>
-          <i
-            class="subtitle-1"
-            v-t="'project.role.updateDescription'"
-          />
+        <v-card-text v-if="showHelp">
+          <i class="subtitle-1" v-t="'project.role.updateDescription'" />
         </v-card-text>
         <v-card-text class="pa-2">
-
-          <NameControl
-            :model="nameModel"
-            translationPath="project.role.nameDescription"
-          />
-
+          <NameControl :model="nameModel" translationPath="project.role.nameDescription" />
         </v-card-text>
         <div v-if="role.editable">
           <v-divider />
           <v-card-text class="pa-2">
-
             <v-layout wrap>
               <v-divider />
 
               <PermissionControl
                 :model="calendarModel"
                 translationPath="project.role.calendar"
+                :showDescription="showHelp"
                 @change="(value) => role.setPermissionModel('calendar', value)"
               />
 
               <PermissionControl
                 :model="settingsModel"
                 translationPath="project.role.settings"
+                :showDescription="showHelp"
                 @change="(value) => role.setPermissionModel('settings', value)"
               />
 
               <PermissionControl
                 :model="rolesModel"
                 translationPath="project.role.roles"
+                :showDescription="showHelp"
                 @change="(value) => role.setPermissionModel('roles', value)"
               />
 
               <PermissionControl
                 :model="participantsModel"
                 translationPath="project.role.participants"
+                :showDescription="showHelp"
                 @change="(value) => role.setPermissionModel('participants', value)"
               />
 
               <PermissionControl
                 :model="knowledgeBaseModel"
                 translationPath="project.role.knowledgeBase"
+                :showDescription="showHelp"
                 @change="(value) => role.setPermissionModel('knowledgeBase', value)"
               />
-
             </v-layout>
           </v-card-text>
         </div>
@@ -83,20 +69,14 @@
           v-for="(eligibility, index) in eligibilities"
           :key="index"
           :eligibility="eligibility"
+          :showDescription="showHelp"
         />
 
         <v-divider />
 
         <v-card-actions>
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
-          <DeleteRoleDialog
-            v-if="canBeDeleted && role.editable"
-            :roleId="role.id"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
+          <DeleteRoleDialog v-if="canBeDeleted && role.editable" :roleId="role.id" />
           <v-spacer />
           <v-btn
             text
@@ -146,6 +126,7 @@ export default class UpdateRoleDialog extends Vue {
   private dialog = false
   private valid: any = null
   private loading = false
+  private showHelp = false
 
   private nameModel = { value: '' }
   private calendarModel = { value: 'none' }
@@ -184,6 +165,5 @@ export default class UpdateRoleDialog extends Vue {
       this.dialog = false
     }
   }
-
 }
 </script>

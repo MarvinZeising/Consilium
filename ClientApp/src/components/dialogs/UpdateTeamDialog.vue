@@ -1,45 +1,36 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="1000px"
-  >
+  <v-dialog v-model="dialog" max-width="1000px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'core.edit'"
-        @click="opened"
-      />
+      <v-btn v-on="on" text v-t="'core.edit'" @click="opened" />
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
-        <v-toolbar
-          flat
-          color="accent"
-        >
+      <v-form v-model="valid" ref="form">
+        <v-toolbar flat color="accent">
           <v-toolbar-title v-t="'shift.team.update'" />
+          <v-spacer />
+          <v-btn icon class="mr-0" @click="showHelp = !showHelp">
+            <v-icon v-if="showHelp">help_outline</v-icon>
+            <v-icon v-else>help</v-icon>
+          </v-btn>
         </v-toolbar>
-        <v-card-text>
-          <i
-            class="subtitle-1"
-            v-t="'shift.team.updateDescription'"
-          />
+
+        <v-card-text v-if="showHelp">
+          <i class="subtitle-1" v-t="'shift.team.updateDescription'" />
         </v-card-text>
+
         <v-card-text class="pa-2">
           <v-layout wrap>
-
             <NameControl
               :model="nameModel"
               description="shift.team.nameDescription"
+              :showDescription="showHelp"
             />
 
             <TextareaControl
               :model="descriptionModel"
               label="core.description"
               description="shift.team.descriptionDescription"
+              :showDescription="showHelp"
               :maxLength="1000"
             />
 
@@ -47,21 +38,17 @@
               :model="helpLinkModel"
               label="shift.team.helpLink"
               description="shift.team.helpLinkDescription"
+              :showDescription="showHelp"
               :maxLength="1000"
               :customRules="linkRules"
             />
-
           </v-layout>
         </v-card-text>
 
         <v-divider />
 
         <v-card-actions>
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-spacer />
           <DeleteTeamDialog :team="team" />
           <v-btn
@@ -107,13 +94,12 @@ export default class UpdateTeamDialog extends Vue {
   private dialog = false
   private valid: any = null
   private loading = false
+  private showHelp = false
 
   private nameModel = { value: '' }
   private descriptionModel = { value: '' }
   private helpLinkModel = { value: '' }
-  private linkRules = [
-    (v: string) => !v || /^https:\/\/.+\..{2,}$/.test(v) || i18n.t('shift.team.helpLinkFormat')
-  ]
+  private linkRules = [(v: string) => !v || /^https:\/\/.+\..{2,}$/.test(v) || i18n.t('shift.team.helpLinkFormat')]
 
   private opened() {
     this.nameModel = { value: this.team?.name || '' }
@@ -135,6 +121,5 @@ export default class UpdateTeamDialog extends Vue {
       this.dialog = false
     }
   }
-
 }
 </script>
