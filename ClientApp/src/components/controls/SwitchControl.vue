@@ -7,14 +7,15 @@
       :label="label ? $t(label) : false"
       color="primary"
       inset
-      hide-details
-      @change="toggleTeamCaptain"
+      hide-details="auto"
+      :disabled="disabled"
+      @change="emitChange"
     />
   </v-flex>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
+import { Vue, Component, Watch, Prop, Emit } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 
@@ -28,5 +29,13 @@ export default class SwitchControl extends Vue {
 
   @Prop(String)
   private readonly description?: string
+
+  @Prop(Boolean)
+  private readonly disabled?: boolean
+
+  @Emit('change')
+  private emitChange() {
+    return this.model?.value
+  }
 }
 </script>

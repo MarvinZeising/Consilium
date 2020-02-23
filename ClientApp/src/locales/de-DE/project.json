@@ -138,7 +138,12 @@
     "knowledgeBaseDescription": "Informationen. Lesen erlaubt das Sehen des Informationscenters und das Lesen aller angelegten Artikel. Bearbeiten erlaubt das Bearbeiten der Themen und der Artikel innerhalb eines Themas.",
     "category": "Kategorie Berechtigung",
     "categoryDescription": "Kategorie Berechtigung. Lesen erlaubt das Sehen der (und bewerben auf die) Schichten dieser Kategorie. Bearbeiten erlaubt das Erstellen neuer Schichten, sowie das Einteilen und Löschen bestehender Schichten.",
-    "teamCaptain": "Ob der Teilnehmer in Schichten dieser Kategorie als Teamleiter eingeteilt werden darf.",
-    "substituteCaptain": "Ob der Teilnehmer in Schichten dieser Kategorie als stellvertretender Teamleiter eingeteilt werden darf (wenn kein Teamleiter sich beworben hat)."
+    "leadership": {
+      "leadership": "Führungsrolle",
+      "description": "Führungsrolle. Teamleiter erlaubt das Dienen als Teamleiter in einer Schicht. Backup Teamleiter erlaubt das Dienen als stellvertretender Teamleiter falls kein anderer Teamleiter zur Verfügung steht.",
+      "member": "Teilnehmer",
+      "captain": "Teamleiter",
+      "substituteCaptain": "Backup Teamleiter"
+    }
   }
 }

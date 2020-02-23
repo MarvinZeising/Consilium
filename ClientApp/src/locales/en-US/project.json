@@ -138,7 +138,12 @@
     "knowledgeBaseDescription": "Knowledge Base. Read allows to see the knowledge base and read everything. Write allows to define topics and edit articles.",
     "category": "Category permission",
     "categoryDescription": "Category permission. Read allow to see shifts of this category and request participation. Write allows to create, edit and delete shifts as well as to schedule participants.",
-    "teamCaptain": "Whether or not the participant can serve as team captain in these category's shifts.",
-    "substituteCaptain": "Whether or not the participant can serve as substitute team captain (if no team captain is available) in these category's shifts."
+    "leadership": {
+      "leadership": "Leadership role",
+      "description": "Leadership role. Captain allows to serve as team captain in a shift. Substitute captain allows to serve as a substitute team captain in case no team captain is available.",
+      "member": "Member",
+      "captain": "Captain",
+      "substituteCaptain": "Substitute captain"
+    }
   }
 }

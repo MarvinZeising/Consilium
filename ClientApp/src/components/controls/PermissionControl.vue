@@ -3,7 +3,7 @@
     :model="model"
     :values="['none', 'read', 'write']"
     :label="translationPath"
-    :description="translationPath + 'Description'"
+    :description="showDescription ? translationPath + 'Description' : false"
     itemString="core."
     @change="emitChange"
   />
@@ -28,6 +28,9 @@ export default class PermissionControl extends Vue {
 
   @Prop(String)
   private readonly translationPath?: string
+
+  @Prop(Boolean)
+  private readonly showDescription?: boolean
 
   @Emit('change')
   private emitChange() {

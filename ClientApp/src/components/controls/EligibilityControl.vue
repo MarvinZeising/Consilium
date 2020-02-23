@@ -10,32 +10,18 @@
         <PermissionControl
           :model="eligibilityModel"
           translationPath="project.role.category"
+          :showDescription="showDescription"
           @change="(value) => eligibility.setPermissionModel('shifts', value)"
         />
 
-        <v-flex xs12 sm6 md4>
-          <v-switch
-            v-model="isTeamCaptain"
-            :label="$t(`project.role.teamCaptain`)"
-            color="primary"
-            inset
-            hide-details
-            :disabled="isPermissionNone"
-            @change="toggleTeamCaptain"
-          />
-        </v-flex>
-
-        <v-flex xs12 sm6 md4>
-          <v-switch
-            v-model="isSubstituteCaptain"
-            :label="$t(`project.role.substituteCaptain`)"
-            color="primary"
-            inset
-            hide-details
-            :disabled="isPermissionNone"
-            @change="toggleSubstituteCaptain"
-          />
-        </v-flex>
+        <SelectControl
+          :model="leadershipModel"
+          label="project.role.leadership.leadership"
+          :description="showDescription ? 'project.role.leadership.description' : ''"
+          itemString="project.role.leadership."
+          :values="['member','captain','substituteCaptain']"
+          @change="(value) => eligibility.setPermissionModel('shifts', value)"
+        />
       </v-layout>
     </v-card-text>
   </div>
@@ -47,15 +33,20 @@ import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import { Eligibility } from '../../models'
 import PermissionControl from './PermissionControl.vue'
+import SelectControl from './SelectControl.vue'
 
 @Component({
   components: {
     PermissionControl,
+    SelectControl,
   },
 })
 export default class EligibilityControl extends Vue {
   @Prop(Eligibility)
   private readonly eligibility?: Eligibility
+
+  @Prop(Boolean)
+  private readonly showDescription?: boolean
 
   private get isPermissionNone() {
     return this.eligibilityModel.value === 'none'
@@ -70,31 +61,19 @@ export default class EligibilityControl extends Vue {
   }
 
   private eligibilityModel = { value: 'none' }
+  private leadershipModel = { value: 'member' }
 
   private created() {
     if (this.eligibility) {
       this.eligibilityModel = this.eligibility.getPermissionModel('shifts')
+      this.leadershipModel = { value: 'member' }
     }
   }
 
-  // TODO: replace switches with a select
-  private toggleTeamCaptain(value: boolean) {
+  private setLeadership(value: string) {
     if (this.eligibility) {
-      this.eligibility.isTeamCaptain = value
-
-      if (value) {
-        this.eligibility.isSubstituteCaptain = false
-      }
-    }
-  }
-
-  private toggleSubstituteCaptain(value: boolean) {
-    if (this.eligibility) {
-      this.eligibility.isSubstituteCaptain = value
-
-      if (value) {
-        this.eligibility.isTeamCaptain = false
-      }
+      this.eligibility.isTeamCaptain = value === 'captain'
+      this.eligibility.isSubstituteCaptain = value === 'substituteCaptain'
     }
   }
 }
