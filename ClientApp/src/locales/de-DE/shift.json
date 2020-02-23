@@ -45,7 +45,7 @@
     "create": "Team hinzufügen",
     "createDescription": "Erstelle ein neues Team.",
     "update": "Team bearbeiten",
-    "updateDescription": "Die kannst dieses Team bearbeiten.",
+    "updateDescription": "Du kannst dieses Team bearbeiten.",
     "delete": "Team löschen",
     "deleteDescription": "Möchtest du dieses Team wirklich löschen?",
     "nameDescription": "Der Name des Teams.",

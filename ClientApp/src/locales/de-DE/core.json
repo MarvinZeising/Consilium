@@ -31,6 +31,7 @@
   "email": "Email-Adresse",
   "emailInvalid": "Die Email-Addresse muss gültig sein",
   "phone": "Telefon",
+  "multilineSuffix": " (mehrzeilig)",
   "fieldInvalidGuid": "Dies ist keine gültige ID",
   "fieldRequired": "Dies ist ein Pflichtfeld",
   "fieldMin": "Dieses Feld muss mindestens {count} Zeichen lang sein",

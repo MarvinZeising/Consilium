@@ -1,6 +1,6 @@
 <template>
   <v-flex xs12 sm6 md4 class="pa-2">
-    <span v-if="description">
+    <span v-if="showDescription">
       {{ $t(description) }}
       <i v-if="!required">({{ $t('core.optional') }})</i>
     </span>
@@ -40,6 +40,9 @@ export default class TextControl extends Vue {
 
   @Prop(Object)
   private readonly customRules?: any[]
+
+  @Prop(Boolean)
+  private showDescription?: boolean
 
   @Prop(Boolean)
   private required = false
