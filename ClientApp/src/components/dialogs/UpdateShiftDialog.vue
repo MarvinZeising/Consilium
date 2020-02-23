@@ -1,63 +1,30 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="600px"
-  >
+  <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        icon
-        :title="$t('shift.update')"
-        @click="opened"
-      >
+      <v-btn v-on="on" icon :title="$t('shift.update')" @click="opened">
         <v-icon>edit</v-icon>
       </v-btn>
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
-        <v-toolbar
-          flat
-          color="accent"
-        >
+      <v-form v-model="valid" ref="form">
+        <v-toolbar flat color="accent">
           <v-toolbar-title v-t="'shift.update'" />
           <v-spacer />
-          <v-btn
-            icon
-            class="mr-0"
-            @click="showHelpText = !showHelpText"
-          >
+          <v-btn icon class="mr-0" @click="showHelp = !showHelp">
             <v-icon>help</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-card-text v-if="showHelpText">
-          <i
-            class="subtitle-1"
-            v-t="'shift.updateDescription'"
-          />
+        <v-card-text v-if="showHelp">
+          <i class="subtitle-1" v-t="'shift.updateDescription'" />
         </v-card-text>
         <v-card-text class="pa-2">
           <v-layout wrap>
-
             <!--//TODO: only display category I have write permissions for -->
-            <CategoryControl
-              :model="categoryModel"
-              required
-            />
+            <CategoryControl :model="categoryModel" required />
 
-            <DateControl
-              :model="dateModel"
-              label="shift.date"
-              required
-            />
+            <DateControl :model="dateModel" label="shift.date" required />
 
-            <TimeControl
-              :model="timeModel"
-              label="shift.time"
-              required
-            />
+            <TimeControl :model="timeModel" label="shift.time" required />
 
             <TimeControl
               :model="durationModel"
@@ -65,18 +32,13 @@
               :format="`H:mm [${$t('shift.hours')}]`"
               required
             />
-
           </v-layout>
         </v-card-text>
 
         <v-divider />
 
         <v-card-actions>
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <DeleteShiftDialog :shift="shift" />
           <v-spacer />
           <v-btn
@@ -126,7 +88,7 @@ export default class UpdateShiftDialog extends Vue {
 
   private dialog = false
   private valid: any = null
-  private showHelpText = false
+  private showHelp = false
   private loading = false
 
   private categoryModel: { value?: Category } = {}
@@ -147,9 +109,8 @@ export default class UpdateShiftDialog extends Vue {
     if (this.valid && this.shift) {
       this.loading = true
 
-      const oldCategoryId = this.shift.categoryId !== this.categoryModel?.value?.id
-        ? this.shift.categoryId + ''
-        : undefined
+      const oldCategoryId =
+        this.shift.categoryId !== this.categoryModel?.value?.id ? this.shift.categoryId + '' : undefined
 
       this.shift.categoryId = this.categoryModel?.value?.id || ''
       this.shift.date = this.dateModel.value
@@ -165,6 +126,5 @@ export default class UpdateShiftDialog extends Vue {
       this.dialog = false
     }
   }
-
 }
 </script>

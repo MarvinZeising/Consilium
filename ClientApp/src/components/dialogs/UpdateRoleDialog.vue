@@ -8,12 +8,12 @@
         <v-toolbar flat color="accent">
           <v-toolbar-title v-t="'project.role.update'" />
           <v-spacer />
-          <v-btn icon class="mr-0" @click="showHelpText = !showHelpText">
-            <v-icon v-if="showHelpText">help_outline</v-icon>
+          <v-btn icon class="mr-0" @click="showHelp = !showHelp">
+            <v-icon v-if="showHelp">help_outline</v-icon>
             <v-icon v-else>help</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-card-text v-if="showHelpText">
+        <v-card-text v-if="showHelp">
           <i class="subtitle-1" v-t="'project.role.updateDescription'" />
         </v-card-text>
         <v-card-text class="pa-2">
@@ -28,35 +28,35 @@
               <PermissionControl
                 :model="calendarModel"
                 translationPath="project.role.calendar"
-                :showDescription="showHelpText"
+                :showDescription="showHelp"
                 @change="(value) => role.setPermissionModel('calendar', value)"
               />
 
               <PermissionControl
                 :model="settingsModel"
                 translationPath="project.role.settings"
-                :showDescription="showHelpText"
+                :showDescription="showHelp"
                 @change="(value) => role.setPermissionModel('settings', value)"
               />
 
               <PermissionControl
                 :model="rolesModel"
                 translationPath="project.role.roles"
-                :showDescription="showHelpText"
+                :showDescription="showHelp"
                 @change="(value) => role.setPermissionModel('roles', value)"
               />
 
               <PermissionControl
                 :model="participantsModel"
                 translationPath="project.role.participants"
-                :showDescription="showHelpText"
+                :showDescription="showHelp"
                 @change="(value) => role.setPermissionModel('participants', value)"
               />
 
               <PermissionControl
                 :model="knowledgeBaseModel"
                 translationPath="project.role.knowledgeBase"
-                :showDescription="showHelpText"
+                :showDescription="showHelp"
                 @change="(value) => role.setPermissionModel('knowledgeBase', value)"
               />
             </v-layout>
@@ -69,7 +69,7 @@
           v-for="(eligibility, index) in eligibilities"
           :key="index"
           :eligibility="eligibility"
-          :showDescription="showHelpText"
+          :showDescription="showHelp"
         />
 
         <v-divider />
@@ -126,7 +126,7 @@ export default class UpdateRoleDialog extends Vue {
   private dialog = false
   private valid: any = null
   private loading = false
-  private showHelpText = false
+  private showHelp = false
 
   private nameModel = { value: '' }
   private calendarModel = { value: 'none' }

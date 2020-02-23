@@ -8,12 +8,12 @@
         <v-toolbar flat color="accent">
           <v-toolbar-title v-t="'person.create'" />
           <v-spacer />
-          <v-btn icon class="mr-0" @click="showHelpText = !showHelpText">
-            <v-icon v-if="showHelpText">help_outline</v-icon>
+          <v-btn icon class="mr-0" @click="showHelp = !showHelp">
+            <v-icon v-if="showHelp">help_outline</v-icon>
             <v-icon v-else>help</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-card-text v-if="showHelpText">
+        <v-card-text v-if="showHelp">
           <i class="subtitle-1">
             {{ $t('person.createDescription1') }}
             <br />
@@ -27,7 +27,7 @@
             <TextControl
               :model="firstnameModel"
               label="person.firstname"
-              :description="showHelpText ? 'person.firstnameDescription' : ''"
+              :description="showHelp ? 'person.firstnameDescription' : ''"
               :minLength="0"
               :maxLength="40"
               required
@@ -36,7 +36,7 @@
             <TextControl
               :model="lastnameModel"
               label="person.lastname"
-              :description="showHelpText ? 'person.lastnameDescription' : ''"
+              :description="showHelp ? 'person.lastnameDescription' : ''"
               :minLength="0"
               :maxLength="40"
               required
@@ -46,7 +46,7 @@
               :model="genderModel"
               label="person.gender.gender"
               :values="['male', 'female']"
-              :description="showHelpText ? 'person.gender.description' : ''"
+              :description="showHelp ? 'person.gender.description' : ''"
               itemString="person.gender."
             />
           </v-layout>
@@ -93,7 +93,7 @@ export default class CreatePersonDialog extends Vue {
   private dialog = false
   private valid: any = null
   private loading = false
-  private showHelpText = false
+  private showHelp = false
 
   private firstnameModel = { value: '' }
   private lastnameModel = { value: '' }

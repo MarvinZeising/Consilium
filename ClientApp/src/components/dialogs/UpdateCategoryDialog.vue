@@ -8,12 +8,12 @@
         <v-toolbar flat color="accent">
           <v-toolbar-title v-t="'shift.category.update'" />
           <v-spacer />
-          <v-btn icon class="mr-0" @click="showHelpText = !showHelpText">
-            <v-icon v-if="showHelpText">help_outline</v-icon>
+          <v-btn icon class="mr-0" @click="showHelp = !showHelp">
+            <v-icon v-if="showHelp">help_outline</v-icon>
             <v-icon v-else>help</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-card-text v-if="showHelpText">
+        <v-card-text v-if="showHelp">
           <i class="subtitle-1" v-t="'shift.category.updateDescription'" />
         </v-card-text>
 
@@ -28,7 +28,7 @@
             v-for="(eligibility, index) in category.eligibilities"
             :key="index"
             :eligibility="eligibility"
-            :showDescription="showHelpText"
+            :showDescription="showHelp"
           />
         </v-card-text>
 
@@ -79,7 +79,7 @@ export default class UpdateCategoryDialog extends Vue {
   private dialog = false
   private valid: any = null
   private loading = false
-  private showHelpText = false
+  private showHelp = false
 
   private nameModel = { value: '' }
 
