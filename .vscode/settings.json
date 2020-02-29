@@ -4,5 +4,7 @@
   "csharpfixformat.style.newline.atEnd": true,
   "csharpfixformat.style.spaces.beforeParenthesis": false,
   "csharpfixformat.style.spaces.insideEmptyBraces": false,
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "appService.preDeployTask": "publish-release",
+  "appService.deploySubpath": "bin/Release/netcoreapp3.1/publish"
 }
