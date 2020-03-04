@@ -1,42 +1,23 @@
 <template>
-
-  <v-dialog
-    v-model="dialog"
-    :fullscreen="$vuetify.breakpoint.smAndDown"
-    max-width="1000px"
-  >
+  <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.smAndDown" max-width="1000px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        icon
-        @click="opened"
-      >
+      <v-btn v-on="on" icon @click="opened">
         <v-icon>edit</v-icon>
       </v-btn>
     </template>
     <v-card>
-      <v-toolbar
-        flat
-        :color="getColor"
-      >
+      <v-toolbar flat :color="getColor">
         <v-toolbar-title v-t="'shift.status.scheduling'" />
         <v-spacer />
         <v-btn icon>
           <v-icon>info</v-icon>
         </v-btn>
-        <v-btn
-          v-if="$vuetify.breakpoint.smAndDown"
-          icon
-          @click="dialog = false"
-        >
+        <v-btn v-if="$vuetify.breakpoint.smAndDown" icon @click="dialog = false">
           <v-icon>close</v-icon>
         </v-btn>
       </v-toolbar>
 
-      <ShiftAssignmentDialogPlanning
-        :shift="shift"
-        :assignments="assignments"
-      />
+      <ShiftAssignmentDialogPlanning :shift="shift" :assignments="assignments" />
 
       <v-divider />
 
@@ -114,11 +95,7 @@
       </v-card-actions>
 
       <v-card-actions>
-        <v-btn
-          text
-          v-t="'core.cancel'"
-          @click.stop="dialog = false"
-        />
+        <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
         <v-spacer />
         <v-btn
           text
@@ -134,10 +111,8 @@
           @click.stop="save"
         />
       </v-card-actions>
-
     </v-card>
   </v-dialog>
-
 </template>
 
 <script lang="ts">
@@ -153,7 +128,7 @@ import { Shift, Person, ShiftStatus } from '../../models'
   components: {
     ShiftAssignmentDialogPlanning,
     UpdateShiftToDraft,
-  }
+  },
 })
 export default class ShiftAssignmentDialog extends Vue {
   private personModule = getModule(PersonModule, this.$store)
@@ -172,13 +147,13 @@ export default class ShiftAssignmentDialog extends Vue {
 
   private savedAssignments: {
     [personId: string]: {
-      teamId: string,
+      teamId: string
       isCaptain: boolean
     }
   } = {}
   private assignments: {
     [personId: string]: {
-      teamId: string,
+      teamId: string
       isCaptain: boolean
     }
   } = {}
@@ -198,7 +173,7 @@ export default class ShiftAssignmentDialog extends Vue {
     if (this.shift?.isPlanned) {
       return 'navbar'
     } else if (this.shift?.isScheduled) {
-      return 'green'
+      return 'green darken-3'
     } else if (this.shift?.isSuspended) {
       return 'red'
     } else if (this.shift?.isCalledOff) {
@@ -212,8 +187,10 @@ export default class ShiftAssignmentDialog extends Vue {
     }
 
     for (const personId of Object.keys(this.assignments)) {
-      if (this.assignments[personId]?.teamId !== this.savedAssignments[personId]?.teamId
-       || this.assignments[personId]?.isCaptain !== this.savedAssignments[personId]?.isCaptain) {
+      if (
+        this.assignments[personId]?.teamId !== this.savedAssignments[personId]?.teamId ||
+        this.assignments[personId]?.isCaptain !== this.savedAssignments[personId]?.isCaptain
+      ) {
         return false
       }
     }
@@ -292,7 +269,7 @@ export default class ShiftAssignmentDialog extends Vue {
 
       await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
-        status: ShiftStatus.draft
+        status: ShiftStatus.draft,
       })
 
       this.unplanning = false
@@ -310,7 +287,7 @@ export default class ShiftAssignmentDialog extends Vue {
 
       await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
-        status: ShiftStatus.scheduled
+        status: ShiftStatus.scheduled,
       })
 
       this.scheduling = false
@@ -324,7 +301,7 @@ export default class ShiftAssignmentDialog extends Vue {
 
       await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
-        status: ShiftStatus.planned
+        status: ShiftStatus.planned,
       })
 
       this.unscheduling = false
@@ -338,7 +315,7 @@ export default class ShiftAssignmentDialog extends Vue {
 
       await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
-        status: ShiftStatus.suspended
+        status: ShiftStatus.suspended,
       })
 
       this.suspending = false
@@ -352,7 +329,7 @@ export default class ShiftAssignmentDialog extends Vue {
 
       await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
-        status: ShiftStatus.calledOff
+        status: ShiftStatus.calledOff,
       })
 
       this.callingOff = false
@@ -365,7 +342,8 @@ export default class ShiftAssignmentDialog extends Vue {
     this.dialog = true
   }
 
-  @Emit('saved') private reopenMenu() { /* nothing to do */ }
-
+  @Emit('saved') private reopenMenu() {
+    /* nothing to do */
+  }
 }
 </script>

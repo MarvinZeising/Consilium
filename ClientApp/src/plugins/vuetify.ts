@@ -15,7 +15,7 @@ export default new Vuetify({
         error: colors.red.base,
         warning: colors.orange.base,
         info: colors.cyan.base,
-        success: colors.green.base,
+        success: colors.green.darken3,
       },
       dark: {
         navbar: colors.blue.darken3,
@@ -24,7 +24,7 @@ export default new Vuetify({
         error: colors.red.base,
         warning: colors.orange.base,
         info: colors.cyan.base,
-        success: colors.green.base,
+        success: colors.green.darken3,
       },
     },
     dark: false,
@@ -33,4 +33,4 @@ export default new Vuetify({
     },
   },
   iconfont: 'md',
-});
+})
