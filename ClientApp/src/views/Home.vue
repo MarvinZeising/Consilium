@@ -1,7 +1,6 @@
 <template>
   <v-container fluid>
     <v-layout wrap>
-
       <v-flex v-if="personModule.getActivePerson" xs12 class="mb-5">
         <h1>
           {{ $t('person.home.welcome') }}
@@ -19,10 +18,11 @@
         </div>
       </div>
 
+      <HomeAttendances v-if="personModule.getActivePerson" />
+
       <HomeApplications v-if="personModule.getActivePerson" />
 
       <!-- <h1>Missing Shift Reports</h1>
-      <h1>Upcoming Shifts</h1>
       <h1>Notifications</h1>
       <h1>Project Enquiries</h1>-->
     </v-layout>
@@ -37,11 +37,13 @@ import PersonModule from '../store/persons'
 import ApplicationModule from '../store/applications'
 import ProjectModule from '../store/projects'
 import HomeApplications from '../components/HomeApplications.vue'
+import HomeAttendances from '../components/HomeAttendances.vue'
 import { Project, Topic } from '../models'
 
 @Component({
   components: {
     HomeApplications,
+    HomeAttendances,
   },
 })
 export default class Home extends Vue {

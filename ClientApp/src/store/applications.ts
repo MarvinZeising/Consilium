@@ -5,7 +5,6 @@ import { Application, Shift, Person, Attendee } from '../models'
 
 @Module({ dynamic: true, store, name: 'ApplicationModule' })
 export default class ApplicationModule extends VuexModule {
-
   @Action
   public async loadMyApplications() {
     const personId = this.context.getters.getActivePersonId
@@ -15,6 +14,18 @@ export default class ApplicationModule extends VuexModule {
 
       const person: Person = this.context.getters.getActivePerson
       person.applications = applications
+    }
+  }
+
+  @Action
+  public async loadMyAttendances() {
+    const personId = this.context.getters.getActivePersonId
+    if (personId) {
+      const response = await axios.get(`/persons/${personId}/attendances`)
+      const attendances = response.data.map((x: Attendee) => Attendee.create(x))
+
+      const person: Person = this.context.getters.getActivePerson
+      person.attendances = attendances
     }
   }
 
@@ -58,5 +69,4 @@ export default class ApplicationModule extends VuexModule {
       shift.applications = shift.applications.filter((x) => x.personId !== personId)
     }
   }
-
 }

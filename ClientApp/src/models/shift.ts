@@ -29,7 +29,8 @@ class Shift {
       data.isApplicant,
       data.isAttendee,
       data.createdTime,
-      data.lastUpdatedTime)
+      data.lastUpdatedTime
+    )
 
     shift.category = data.category ? Category.create(data.category) : undefined
     if (data.applications) {
@@ -152,23 +153,23 @@ class Shift {
   }
 
   public get isDraft() {
-    return this.status === ShiftStatus.draft
+    return this.status.toLowerCase() === ShiftStatus.draft
   }
 
   public get isPlanned() {
-    return this.status === ShiftStatus.planned
+    return this.status.toLowerCase() === ShiftStatus.planned
   }
 
   public get isScheduled() {
-    return this.status === ShiftStatus.scheduled
+    return this.status.toLowerCase() === ShiftStatus.scheduled
   }
 
   public get isSuspended() {
-    return this.status === ShiftStatus.suspended
+    return this.status.toLowerCase() === ShiftStatus.suspended
   }
 
   public get isCalledOff() {
-    return this.status === ShiftStatus.calledOff
+    return this.status.toLowerCase() === ShiftStatus.calledOff
   }
 
   public copyFrom(shift: Shift) {
@@ -188,7 +189,6 @@ class Shift {
     this.applications = shift.applications
     this.attendees = shift.attendees
   }
-
 }
 
 class Application {
@@ -200,7 +200,8 @@ class Application {
       data.availableAfter,
       data.notes,
       data.createdTime,
-      data.lastUpdatedTime)
+      data.lastUpdatedTime
+    )
     application.shift = data.shift ? Shift.create(data.shift) : undefined
     application.person = data.person ? Person.create(data.person) : undefined
     return application
@@ -243,7 +244,6 @@ class Application {
     this.createdTime = application.createdTime
     this.lastUpdatedTime = application.lastUpdatedTime
   }
-
 }
 
 class Attendee {
@@ -256,7 +256,8 @@ class Attendee {
       data.applicationId,
       data.isCaptain,
       data.createdTime,
-      data.lastUpdatedTime)
+      data.lastUpdatedTime
+    )
     attendee.shift = data.shift ? Shift.create(data.shift) : undefined
     attendee.person = data.person ? Person.create(data.person) : undefined
     attendee.team = data.team ? Team.create(data.team) : undefined
@@ -311,7 +312,6 @@ class Attendee {
     this.createdTime = attendee.createdTime
     this.lastUpdatedTime = attendee.lastUpdatedTime
   }
-
 }
 
 class Team {
@@ -323,7 +323,8 @@ class Team {
       data.description,
       data.helpLink,
       data.createdTime,
-      data.lastUpdatedTime)
+      data.lastUpdatedTime
+    )
 
     team.project = data.project ? Project.create(data.project) : undefined
     return team
@@ -345,7 +346,7 @@ class Team {
     description: string,
     helpLink: string,
     createdTime: string,
-    lastUpdatedTime: string,
+    lastUpdatedTime: string
   ) {
     this.id = id
     this.projectId = projectId
@@ -370,12 +371,7 @@ class Team {
 
 class Category {
   public static create(data: any) {
-    const category = new Category(
-      data.id,
-      data.projectId,
-      data.name,
-      data.createdTime,
-      data.lastUpdatedTime)
+    const category = new Category(data.id, data.projectId, data.name, data.createdTime, data.lastUpdatedTime)
 
     category.project = data.project ? Project.create(data.project) : undefined
 
@@ -397,13 +393,7 @@ class Category {
   public shifts: Shift[] = []
   public eligibilities: Eligibility[] = []
 
-  constructor(
-    id: string,
-    projectId: string,
-    name: string,
-    createdTime: string,
-    lastUpdatedTime: string,
-  ) {
+  constructor(id: string, projectId: string, name: string, createdTime: string, lastUpdatedTime: string) {
     this.id = id
     this.projectId = projectId
     this.name = name
@@ -452,7 +442,8 @@ class Eligibility {
       data.shiftsRead,
       data.shiftsWrite,
       data.isTeamCaptain,
-      data.isSubstituteCaptain)
+      data.isSubstituteCaptain
+    )
     eligibility.role = data.role ? Role.create(data.role) : undefined
     eligibility.category = data.category ? Category.create(data.category) : undefined
     return eligibility
@@ -475,7 +466,7 @@ class Eligibility {
     shiftsRead: boolean,
     shiftsWrite: boolean,
     isTeamCaptain: boolean,
-    isSubstituteCaptain: boolean,
+    isSubstituteCaptain: boolean
   ) {
     this.id = id
     this.roleId = roleId
@@ -505,24 +496,11 @@ class Eligibility {
     return { value: write ? 'write' : read ? 'read' : 'none' }
   }
 
-  public setPermissionModel(
-    area: 'shifts',
-    modelValue: 'none' | 'read' | 'write'
-  ) {
+  public setPermissionModel(area: 'shifts', modelValue: 'none' | 'read' | 'write') {
     const role: any = this
     role[area + 'Read'] = modelValue !== 'none'
     role[area + 'Write'] = modelValue === 'write'
   }
-
 }
 
-export {
-  Team,
-  Category,
-  Eligibility,
-  Shift,
-  ShiftStatus,
-  ShiftMode,
-  Application,
-  Attendee,
-}
+export { Team, Category, Eligibility, Shift, ShiftStatus, ShiftMode, Application, Attendee }

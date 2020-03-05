@@ -1,4 +1,4 @@
-import { Participation, Language, Application } from '.'
+import { Participation, Language, Application, Attendee } from '.'
 
 enum Gender {
   Male = 'male',
@@ -34,7 +34,8 @@ class Congregation {
       data.createdBy,
       data.lastUpdatedBy,
       data.createdTime,
-      data.lastUpdatedTime)
+      data.lastUpdatedTime
+    )
   }
 
   public id: string
@@ -83,7 +84,8 @@ class Person {
       data.assignment || Assignment.Publisher,
       data.notes || '',
       data.createdTime,
-      data.lastUpdatedTime)
+      data.lastUpdatedTime
+    )
 
     person.congregationId = data.congregationId ? data.congregationId : undefined
     person.congregation = data.congregation ? Congregation.create(data.congregation) : undefined
@@ -93,6 +95,9 @@ class Person {
     }
     if (data.applications) {
       person.applications = data.applications.map((x: any) => Application.create(x))
+    }
+    if (data.attendances) {
+      person.attendances = data.attendances.map((x: any) => Attendee.create(x))
     }
 
     return person
@@ -113,6 +118,7 @@ class Person {
   public notes: string
   public participations: Participation[] = []
   public applications: Application[] = []
+  public attendances: Attendee[] = []
   public createdTime: string
   public lastUpdatedTime: string
 
@@ -129,7 +135,7 @@ class Person {
     assignment: Assignment,
     notes: string,
     createdTime: string,
-    lastUpdatedTime: string,
+    lastUpdatedTime: string
   ) {
     this.id = id
     this.firstname = firstname
@@ -190,6 +196,28 @@ class Person {
     })
   }
 
+  public get getAttendances() {
+    return [...this.attendances].sort((a, b) => {
+      if (a.shift && b.shift) {
+        if (a.shift.date < b.shift.date) {
+          return -1
+        } else if (a.shift.date > b.shift.date) {
+          return 1
+        } else if (a.shift.time < b.shift.time) {
+          return -1
+        } else if (a.shift.time > b.shift.time) {
+          return 1
+        } else if (a.shift.duration < b.shift.duration) {
+          return -1
+        } else if (a.shift.duration > b.shift.duration) {
+          return 1
+        }
+        return 0
+      }
+      return 0
+    })
+  }
+
   public copyFrom(person: Person) {
     this.firstname = person.firstname
     this.lastname = person.lastname
@@ -206,13 +234,6 @@ class Person {
     this.participations = person.participations
     this.applications = person.applications
   }
-
 }
 
-export {
-  Person,
-  Gender,
-  Congregation,
-  Assignment,
-  Privilege,
-}
+export { Person, Gender, Congregation, Assignment, Privilege }

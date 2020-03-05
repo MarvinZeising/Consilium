@@ -64,7 +64,12 @@
   },
   "application": {
     "applications": "Keine offenen Bewerbungen. | Bewerbung | Bewerbungen",
-    "description": "Hier siehst du deine offenen Bewerbungen. Diese Bewerbungen sind offen bis sich entweder genug Bewerber für die Schicht gefunden haben, oder sie manuell von einem Administrator genehmigt wird.",
+    "description": "Hier siehst du deine offenen Bewerbungen. Diese Bewerbungen sind offen bis sich entweder genug Bewerber für die Schicht gefunden haben, oder sie manuell von einem Administrator genehmigt werden.",
+    "at": "um"
+  },
+  "attendance": {
+    "attendances": "Keine geplanten Einsätze. | Geplanter Einsatz | Geplante Einsätze",
+    "description": "Hier siehst du deine zukünftigen Schicht-Einsätze.",
     "at": "um"
   }
 }

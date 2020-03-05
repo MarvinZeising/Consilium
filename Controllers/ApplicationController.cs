@@ -51,6 +51,27 @@ namespace Server.Controllers
             }
         }
 
+        [HttpGet("attendances")]
+        public ActionResult<IEnumerable<AttendeeDto>> GetAttendances(Guid personId)
+        {
+            try
+            {
+                if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
+
+                var attendances = _db.Attendee
+                    .FindByCondition(x => x.PersonId == personId)
+                    .Include(x => x.Shift).ThenInclude(x => x.Category).ThenInclude(x => x.Project)
+                    .ToList();
+
+                return Ok(_mapper.Map<IEnumerable<AttendeeDto>>(attendances));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ERROR in GetAttendances: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpPost("applications")]
         public ActionResult<ApplicationDto> CreateApplication(Guid personId, [FromBody] CreateApplicationDto dto)
         {
