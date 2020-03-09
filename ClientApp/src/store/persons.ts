@@ -122,16 +122,16 @@ export default class PersonModule extends VuexModule {
   }
 
   @Mutation
-  public upsertPerson(person: Person) {
-    if (this.persons.find((x) => x.id === person.id)) {
-      this.persons = this.persons.map((p) => {
-        if (p.id === person.id) {
-          p.copyFrom(person)
+  public upsertPerson(newPerson: Person) {
+    if (this.persons.find((x) => x.id === newPerson.id)) {
+      this.persons = this.persons.map((person) => {
+        if (person.id === newPerson.id) {
+          person.copyFrom(newPerson)
         }
-        return p
+        return person
       })
     } else {
-      this.persons.push(person)
+      this.persons.push(newPerson)
     }
   }
 

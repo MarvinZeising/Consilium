@@ -218,7 +218,7 @@ class Person {
     })
   }
 
-  public copyFrom(person: Person) {
+  public copyFrom(person: any) {
     this.firstname = person.firstname
     this.lastname = person.lastname
     this.gender = person.gender
@@ -228,11 +228,24 @@ class Person {
     this.languages = person.languages
     this.privilege = person.privilege
     this.assignment = person.assignment
-    this.congregation = person.congregation
     this.congregationId = person.congregationId
     this.notes = person.notes
-    this.participations = person.participations
-    this.applications = person.applications
+
+    if (person.congregation) {
+      this.congregation = Congregation.create(person.congregation)
+    } else {
+      this.congregation = undefined
+    }
+
+    if (person.participations?.length > 0) {
+      this.participations = person.participations.map((x: any) => Participation.create(x))
+    }
+    if (person.applications?.length > 0) {
+      this.applications = person.applications.map((x: any) => Application.create(x))
+    }
+    if (person.attendances?.length > 0) {
+      this.attendances = person.attendances.map((x: any) => Attendee.create(x))
+    }
   }
 }
 
