@@ -23,8 +23,6 @@ export default class UserModule extends VuexModule {
 
   @Action
   public async loadNavbar() {
-    this.context.dispatch('loadVersion')
-
     const response = await axios.get(`/users/current`)
 
     this.context.commit('setUser', User.create(response.data))

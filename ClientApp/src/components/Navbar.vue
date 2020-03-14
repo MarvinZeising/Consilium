@@ -125,6 +125,8 @@ export default class Navbar extends Vue {
 
     this.accountMenu = false
     this.languageMenu = false
+
+    this.userModule.loadVersion()
   }
 
   private updateLanguage(language: string) {
