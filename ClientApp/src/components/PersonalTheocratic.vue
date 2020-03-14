@@ -148,6 +148,7 @@ export default class PersonalTheocratic extends Vue {
 
   private async toggleEditMode() {
     this.editMode = !this.editMode
+    this.loading = false
 
     if (this.editMode) {
       this.privilege = this.personModule.getActivePerson?.privilege || Privilege.Publisher
@@ -176,7 +177,6 @@ export default class PersonalTheocratic extends Vue {
         congregationId: this.congregationId,
       })
 
-      this.loading = false
       this.toggleEditMode()
     }
   }

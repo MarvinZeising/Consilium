@@ -182,6 +182,7 @@ export default class PersonalGeneral extends Vue {
 
   private toggleEditMode() {
     this.editMode = !this.editMode
+    this.loading = false
 
     if (this.editMode) {
       this.firstname = this.personModule.getActivePerson?.firstname || ''
