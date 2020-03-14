@@ -1,16 +1,6 @@
 <template>
-
-  <v-row
-    v-if="shift && assignments"
-    class="my-4"
-    no-gutters
-  >
-    <v-col
-      sm="7"
-      md="8"
-      style="min-height:100px;"
-    >
-
+  <v-row v-if="shift && assignments" class="my-4" no-gutters>
+    <v-col sm="7" md="8" style="min-height:100px;">
       <v-list v-if="shift.applications.length > 0">
         <v-list-item
           v-for="(application, applicationIndex) in shift.getApplications"
@@ -36,67 +26,32 @@
             </div>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn
-              icon
-              @click="openPerson()"
-            >
+            <v-btn icon @click="openPerson()">
               <v-icon>info</v-icon>
             </v-btn>
           </v-list-item-action>
         </v-list-item>
       </v-list>
-      <div
-        v-else
-        class="d-flex align-center justify-center"
-        style="height:100%;"
-      >
+      <div v-else class="d-flex align-center justify-center" style="height:100%;">
         <div v-text="$tc('shift.application.applicants', 0)" />
       </div>
-
     </v-col>
 
-    <v-divider
-      v-if="!$vuetify.breakpoint.smAndDown"
-      vertical
-    />
+    <v-divider v-if="!$vuetify.breakpoint.smAndDown" vertical />
 
     <v-col>
-
-      <v-card-text
-        v-if="$vuetify.breakpoint.smAndDown"
-        class="pb-0"
-      >
+      <v-card-text v-if="$vuetify.breakpoint.smAndDown" class="pb-0">
         <v-divider class="mb-4" />
-        <span
-          v-t="'shift.status.assignments'"
-          class="title"
-        />
+        <span v-t="'shift.status.assignments'" class="title" />
       </v-card-text>
 
-      <v-list
-        v-if="getHasAttendee"
-        dense
-      >
-        <div
-          v-for="(team, teamIndex) in projectModule.getActiveProject.getTeams"
-          :key="teamIndex"
-        >
+      <v-list v-if="getHasAttendee" dense>
+        <div v-for="(team, teamIndex) in projectModule.getActiveProject.getTeams" :key="teamIndex">
           <v-subheader v-if="getAttendees(team.id).length > 0">
             {{ team.name }}
             <v-spacer />
-            <v-chip
-              x-small
-              v-t="'shift.attendee.noCaptain'"
-              class="ml-1"
-              color="error"
-            />
-            <v-chip
-              x-small
-              class="ml-1"
-              color="error"
-            >
-              {{ getAttendees(team.id).length }} / 5
-            </v-chip>
+            <v-chip x-small v-t="'shift.attendee.noCaptain'" class="ml-1" color="error" />
+            <v-chip x-small class="ml-1" color="error">{{ getAttendees(team.id).length }} / 5</v-chip>
           </v-subheader>
 
           <v-menu
@@ -117,62 +72,28 @@
                 </v-list-item-action>
               </v-list-item>
             </template>
-            <v-list
-              v-if="attendee"
-              dense
-            >
-              <v-list-item
-                v-if="assignments[attendee.id].isCaptain"
-                @click="demote(attendee.id)"
-              >
-                <v-list-item-avatar
-                  class="ma-0"
-                  min-width="20px"
-                  width="20px"
-                  height="20px"
-                  left
-                >
+            <v-list v-if="attendee" dense>
+              <v-list-item v-if="assignments[attendee.id].isCaptain" @click="demote(attendee.id)">
+                <v-list-item-avatar class="ma-0" min-width="20px" width="20px" height="20px" left>
                   <v-icon small>outlined_flag</v-icon>
                 </v-list-item-avatar>
-                <v-list-item-title
-                  v-t="'shift.attendee.demote'"
-                  class="ml-2"
-                />
+                <v-list-item-title v-t="'shift.attendee.demote'" class="ml-2" />
               </v-list-item>
-              <v-list-item
-                v-else
-                @click="promote(attendee.id)"
-              >
-                <v-list-item-avatar
-                  class="ma-0"
-                  min-width="20px"
-                  width="20px"
-                  height="20px"
-                  left
-                >
+              <v-list-item v-else @click="promote(attendee.id)">
+                <v-list-item-avatar class="ma-0" min-width="20px" width="20px" height="20px" left>
                   <v-icon small>flag</v-icon>
                 </v-list-item-avatar>
-                <v-list-item-title
-                  v-t="'shift.attendee.promote'"
-                  class="ml-2"
-                />
+                <v-list-item-title v-t="'shift.attendee.promote'" class="ml-2" />
               </v-list-item>
             </v-list>
           </v-menu>
-
         </div>
       </v-list>
-      <div
-        v-else
-        class="d-flex align-center justify-center"
-        style="height:100%;"
-      >
+      <div v-else class="d-flex align-center justify-center" style="height:100%;">
         <div v-text="$tc('shift.attendee.attendees', 0)" />
       </div>
-
     </v-col>
   </v-row>
-
 </template>
 
 <script lang="ts">
@@ -191,7 +112,7 @@ export default class ShiftAssignmentDialogPlanning extends Vue {
   @Prop(Object)
   private readonly assignments?: {
     [personId: string]: {
-      teamId: string,
+      teamId: string
       isCaptain: boolean
     }
   }
@@ -245,7 +166,7 @@ export default class ShiftAssignmentDialogPlanning extends Vue {
         if (this.shift?.isPlanned) {
           return 'navbar'
         } else if (this.shift?.isScheduled) {
-          return 'green'
+          return 'green darken-3'
         } else if (this.shift?.isSuspended) {
           return 'red'
         } else if (this.shift?.isCalledOff) {
@@ -286,6 +207,5 @@ export default class ShiftAssignmentDialogPlanning extends Vue {
   }
 
   private openPerson() {}
-
 }
 </script>

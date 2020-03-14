@@ -67,5 +67,10 @@
     "applications": "No pending applications. | Application | Applications",
     "description": "Here are your pending shift applications. These applications are pending until either enough applicants have gathered for this shift, or it's manually approved by an administrator.",
     "at": "at"
+  },
+  "attendance": {
+    "attendances": "No upcoming attendances. | Attendance | Attendances",
+    "description": "Here are your upcoming attendances.",
+    "at": "at"
   }
 }

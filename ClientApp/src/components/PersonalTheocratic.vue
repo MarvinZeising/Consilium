@@ -1,69 +1,38 @@
 <template>
-
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2
-      class="headline mb-3"
-      v-t="'person.theocratic'"
-    />
-    <v-card
-      v-if="personModule.getActivePerson"
-      flat
-      class="ma-2 mb-5"
-    >
-
+    <h2 class="headline mb-3" v-t="'person.theocratic'" />
+    <v-card v-if="personModule.getActivePerson" flat class="ma-2 mb-5">
       <!-- //* READ -->
-      <v-card-text
-        v-if="!editMode"
-        class="text--primary"
-      >
+      <v-card-text v-if="!editMode" class="text--primary">
         <v-layout wrap>
-
           <v-flex xs12 sm6>
+            <p class="caption mb-0 grey--text" v-t="'person.privilege.privilege'" />
             <p
-              class="caption mb-0 grey--text"
-              v-t="'person.privilege.privilege'"
-            />
-            <p class="subtitle-1">
-              {{ $t('person.privilege.' + personModule.getActivePerson.privilege) }}
-            </p>
+              class="subtitle-1"
+            >{{ $t('person.privilege.' + personModule.getActivePerson.privilege) }}</p>
           </v-flex>
 
           <v-flex xs12 sm6>
+            <p class="caption mb-0 grey--text" v-t="'person.assignment.assignment'" />
             <p
-              class="caption mb-0 grey--text"
-              v-t="'person.assignment.assignment'"
-            />
-            <p class="subtitle-1">
-              {{ $t('person.assignment.' + personModule.getActivePerson.assignment) }}
-            </p>
+              class="subtitle-1"
+            >{{ $t('person.assignment.' + personModule.getActivePerson.assignment) }}</p>
           </v-flex>
 
           <v-flex xs12 sm6 sm->
-            <p class="caption mb-0 grey--text">
-              {{ $tc('project.congregation.congregations', 1) }}
-            </p>
+            <p class="caption mb-0 grey--text">{{ $tc('project.congregation.congregations', 1) }}</p>
             <p
               v-if="personModule.getActivePerson.congregation"
               class="subtitle-1"
-            >
-              {{ personModule.getActivePerson.congregation.name }}
-            </p>
-            <p
-              v-else
-              v-t="'core.na'"
-            />
+            >{{ personModule.getActivePerson.congregation.name }}</p>
+            <p v-else v-t="'core.na'" />
           </v-flex>
-
         </v-layout>
       </v-card-text>
 
       <!-- //* UPDATE -->
       <v-card-text v-else>
-        <v-form
-          ref="form"
-          v-model="valid"
-        >
-
+        <v-form ref="form" v-model="valid">
           <p v-t="'person.privilege.description'" />
           <v-select
             v-model="privilege"
@@ -111,26 +80,17 @@
             filled
             :loading="congregationLoading"
             autocomplete="off"
+            name="congregation-name"
+            clearable
           />
-
         </v-form>
       </v-card-text>
 
       <!-- //* ACTIONS -->
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          v-if="!editMode"
-          text
-          v-t="'core.edit'"
-          @click.stop="toggleEditMode"
-        />
-        <v-btn
-          v-if="editMode"
-          text
-          v-t="'core.cancel'"
-          @click.stop="toggleEditMode"
-        />
+        <v-btn v-if="!editMode" text v-t="'core.edit'" @click.stop="toggleEditMode" />
+        <v-btn v-if="editMode" text v-t="'core.cancel'" @click.stop="toggleEditMode" />
         <v-btn
           v-if="editMode"
           text
@@ -143,7 +103,6 @@
       </v-card-actions>
     </v-card>
   </v-flex>
-
 </template>
 
 <script lang="ts">
@@ -172,22 +131,17 @@ export default class PersonalTheocratic extends Vue {
     'special',
     'circuit',
     'bethelite',
-    'construction'
+    'construction',
   ].map((value) => {
     return { value }
   })
 
   private assignment?: Assignment
-  private assignmentValues: any[] = [
-    'publisher',
-    'ministerial',
-    'elder',
-    'cobe',
-    'secretary',
-    'serviceOverseer'
-  ].map((value) => {
-    return { value }
-  })
+  private assignmentValues: any[] = ['publisher', 'ministerial', 'elder', 'cobe', 'secretary', 'serviceOverseer'].map(
+    (value) => {
+      return { value }
+    }
+  )
 
   private congregationId?: string
   private congregationValues: any[] = []

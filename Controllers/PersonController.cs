@@ -91,7 +91,7 @@ namespace Server.Controllers
                 if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
-                var person = _db.Person.GetById(personId);
+                var person = _db.Person.GetById(personId, includeParticipations : true);
 
                 person.Firstname = dto.Firstname;
                 person.Lastname = dto.Lastname;
@@ -117,7 +117,7 @@ namespace Server.Controllers
                 if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
-                var person = _db.Person.GetById(personId);
+                var person = _db.Person.GetById(personId, includeParticipations : true);
 
                 person.Email = dto.Email;
                 person.Language = dto.Language;
@@ -143,7 +143,7 @@ namespace Server.Controllers
                 if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
-                var person = _db.Person.GetById(personId);
+                var person = _db.Person.GetById(personId, includeParticipations : true);
 
                 if (dto.CongregationId != null)
                 {
@@ -177,7 +177,7 @@ namespace Server.Controllers
                 if (!ModelState.IsValid) return BadRequest();
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
-                var person = _db.Person.GetById(personId);
+                var person = _db.Person.GetById(personId, includeParticipations : true);
 
                 person.Languages = dto.Languages;
                 person.Notes = dto.Notes;

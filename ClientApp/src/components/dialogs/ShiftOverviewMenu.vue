@@ -1,5 +1,4 @@
 <template>
-
   <v-menu
     v-if="getShift"
     v-model="model.model"
@@ -9,61 +8,36 @@
     offset-overflow
     :content-class="$vuetify.breakpoint.xsOnly ? 'menu-fullscreen' : ''"
   >
-    <ShiftOverviewMenuDraft
-      v-if="getShift.isDraft"
-      :shift="getShift"
-    />
+    <ShiftOverviewMenuDraft v-if="getShift.isDraft" :shift="getShift" />
     <v-card
       v-else
       min-width="350px"
       max-width="500px"
       :elevation="$vuetify.breakpoint.xsOnly ? 8 : undefined"
     >
-      <v-toolbar
-        :color="getColor"
-        dark
-        flat
-        short
-      >
+      <v-toolbar :color="getColor" dark flat short>
         <v-spacer></v-spacer>
         <ShiftAssignmentDialog
           v-if="canEdit && !getShift.isDraft"
           :shift="getShift"
           @saved="model.model = true"
         />
-        <v-btn
-          icon
-          :title="$t('core.close')"
-          @click="model.model = false"
-        >
+        <v-btn icon :title="$t('core.close')" @click="model.model = false">
           <v-icon>close</v-icon>
         </v-btn>
       </v-toolbar>
 
-      <v-toolbar
-        :color="getColor"
-        dark
-        flat
-        short
-      >
+      <v-toolbar :color="getColor" dark flat short>
         <v-toolbar-title>{{ getShift.getTimespan(userModule.getUser) }}</v-toolbar-title>
         <v-spacer />
         <v-toolbar-title>{{ userModule.getUser.formatDate(getShift.date) }}</v-toolbar-title>
       </v-toolbar>
 
-      <ShiftOverviewMenuActions
-        :shift="getShift"
-      />
+      <ShiftOverviewMenuActions :shift="getShift" />
 
-      <v-list-group
-        v-if="getShift.attendees.length > 0"
-        :value="showAttendees"
-        color="/*none*/"
-      >
+      <v-list-group v-if="getShift.attendees.length > 0" :value="showAttendees" color="/*none*/">
         <template v-slot:activator>
-          <v-list-item-title>
-            {{ $tc('shift.attendee.attendees', 2) }}
-          </v-list-item-title>
+          <v-list-item-title>{{ $tc('shift.attendee.attendees', 2) }}</v-list-item-title>
         </template>
         <v-list-item
           v-for="(attendee, index) in getShift.getAttendees"
@@ -75,7 +49,9 @@
               {{ attendee.person.getFullName }}
               <v-icon small v-if="attendee.isCaptain">flag</v-icon>
             </v-list-item-title>
-            <v-list-item-subtitle>{{ attendee.person.congregation.name }}</v-list-item-subtitle>
+            <v-list-item-subtitle
+              v-if="attendee.person.congregation"
+            >{{ attendee.person.congregation.name }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-icon>info</v-icon>
@@ -89,9 +65,7 @@
         color="/*none*/"
       >
         <template v-slot:activator>
-          <v-list-item-title>
-            {{ $tc('shift.application.applicants', 2) }}
-          </v-list-item-title>
+          <v-list-item-title>{{ $tc('shift.application.applicants', 2) }}</v-list-item-title>
         </template>
         <v-list-item
           v-for="(application, index) in getShift.getApplications"
@@ -107,20 +81,18 @@
           </v-list-item-content>
         </v-list-item>
       </v-list-group>
-
     </v-card>
   </v-menu>
-
 </template>
 
 <style lang="scss" scoped>
-  .menu-fullscreen {
-    top: 0px !important;
-    left: 0px !important;
-    min-width: 100% !important;
-    padding: 12px !important;
-    box-shadow: none;
-  }
+.menu-fullscreen {
+  top: 0px !important;
+  left: 0px !important;
+  min-width: 100% !important;
+  padding: 12px !important;
+  box-shadow: none;
+}
 </style>
 
 <script lang="ts">
@@ -148,9 +120,9 @@ export default class CreateTeamDialog extends Vue {
 
   @Prop(Object)
   private readonly model?: {
-    model: any,
-    element: any,
-    event: any,
+    model: any
+    element: any
+    event: any
   }
 
   private showApplicants = true
@@ -175,7 +147,7 @@ export default class CreateTeamDialog extends Vue {
     if (this.getShift?.isPlanned) {
       return 'navbar'
     } else if (this.getShift?.isScheduled) {
-      return 'green'
+      return 'green darken-3'
     } else if (this.getShift?.isSuspended) {
       return 'red'
     } else if (this.getShift?.isCalledOff) {
@@ -184,6 +156,5 @@ export default class CreateTeamDialog extends Vue {
   }
 
   private openPerson() {}
-
 }
 </script>

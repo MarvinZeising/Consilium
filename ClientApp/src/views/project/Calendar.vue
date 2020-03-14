@@ -1,38 +1,14 @@
 <template>
-  <v-container
-    v-if="canView"
-    fluid
-    class="pa-0"
-    v-resize="setCalendarHeight"
-  >
-
+  <v-container v-if="canView" fluid class="pa-0" v-resize="setCalendarHeight">
     <!-- // * big toolbar -->
-    <v-toolbar
-      class="d-none d-sm-block"
-      flat
-    >
-      <v-btn
-        v-t="'shift.today'"
-        class="mr-4 d-none d-md-flex"
-        outlined
-        @click="setToday"
-      />
+    <v-toolbar class="d-none d-sm-block" flat>
+      <v-btn v-t="'shift.today'" class="mr-4 d-none d-md-flex" outlined @click="setToday" />
 
-      <v-btn
-        fab
-        text
-        small
-        @click="$refs.calendar.prev()"
-      >
+      <v-btn fab text small @click="$refs.calendar.prev()">
         <v-icon>keyboard_arrow_left</v-icon>
       </v-btn>
 
-      <v-btn
-        fab
-        text
-        small
-        @click="$refs.calendar.next()"
-      >
+      <v-btn fab text small @click="$refs.calendar.next()">
         <v-icon>keyboard_arrow_right</v-icon>
       </v-btn>
 
@@ -47,25 +23,12 @@
 
       <CalendarTypeControl :model="calendarTypeModel" />
 
-      <v-progress-linear
-        :active="loading"
-        :indeterminate="loading"
-        absolute
-        bottom
-      />
+      <v-progress-linear :active="loading" :indeterminate="loading" absolute bottom />
     </v-toolbar>
 
     <!-- // * small toolbar -->
-    <v-toolbar
-      class="d-xs-block d-sm-none"
-      flat
-    >
-      <v-btn
-        fab
-        text
-        small
-        @click="$refs.calendar.prev()"
-      >
+    <v-toolbar class="d-xs-block d-sm-none" flat>
+      <v-btn fab text small @click="$refs.calendar.prev()">
         <v-icon>keyboard_arrow_left</v-icon>
       </v-btn>
 
@@ -75,21 +38,11 @@
 
       <v-spacer />
 
-      <v-btn
-        fab
-        text
-        small
-        @click="$refs.calendar.next()"
-      >
+      <v-btn fab text small @click="$refs.calendar.next()">
         <v-icon>keyboard_arrow_right</v-icon>
       </v-btn>
 
-      <v-progress-linear
-        :active="loading"
-        :indeterminate="loading"
-        absolute
-        bottom
-      />
+      <v-progress-linear :active="loading" :indeterminate="loading" absolute bottom />
     </v-toolbar>
 
     <!--//* Calendar -->
@@ -121,29 +74,24 @@
 
     <ShiftOverviewMenu :model="shiftOverviewModel" />
 
-    <CreateShiftDialog
-      v-if="canEdit"
-      :date="focus"
-      :categoryModel="categoryModel"
-    />
-
+    <CreateShiftDialog v-if="canEdit" :date="focus" :categoryModel="categoryModel" />
   </v-container>
 </template>
 
 <style lang="scss">
-  .v-event {
-    margin-left:3px;
-  }
-  .event-draft {
-    background: repeating-linear-gradient(
-      -45deg,
-      #222,
-      #222 5px,
-      var(--v-accent-darken1) 5px,
-      var(--v-accent-darken1) 10px,
-    );
-    text-shadow: 2px 2px #222;
-  }
+.v-event {
+  margin-left: 3px;
+}
+.event-draft {
+  background: repeating-linear-gradient(
+    -45deg,
+    #222,
+    #222 5px,
+    var(--v-accent-darken1) 5px,
+    var(--v-accent-darken1) 10px
+  );
+  text-shadow: 2px 2px #222;
+}
 </style>
 
 <script lang="ts">
@@ -169,7 +117,7 @@ import { Shift, Category, User } from '../../models'
     ShiftOverviewMenu,
     CategoriesControl,
     CalendarTypeControl,
-  }
+  },
 })
 export default class Calendar extends Vue {
   private userModule = getModule(UserModule, this.$store)
@@ -247,7 +195,7 @@ export default class Calendar extends Vue {
         if (x.isPlanned) {
           color = 'navbar'
         } else if (x.isScheduled) {
-          color = 'green'
+          color = 'green darken-3'
         } else if (x.isSuspended) {
           color = 'red'
         } else if (x.isCalledOff) {
@@ -307,11 +255,11 @@ export default class Calendar extends Vue {
     this.loading--
   }
 
-  private showEvent({ nativeEvent, event }: { nativeEvent: any, event: any }) {
+  private showEvent({ nativeEvent, event }: { nativeEvent: any; event: any }) {
     const open = () => {
       this.shiftOverviewModel.event = event
       this.shiftOverviewModel.element = nativeEvent.target
-      setTimeout(() => this.shiftOverviewModel.model = true, 10)
+      setTimeout(() => (this.shiftOverviewModel.model = true), 10)
     }
 
     if (this.shiftOverviewModel.model) {
@@ -336,12 +284,12 @@ export default class Calendar extends Vue {
   private setCalendarHeight() {
     if (this.$vuetify.breakpoint.smAndDown) {
       this.calendarHeight = window.innerHeight - 112
-      } else {
+    } else {
       this.calendarHeight = window.innerHeight - 128
     }
   }
 
-  private async loadMonth({ start, end }: { start: { date: string }, end: { date: string } }) {
+  private async loadMonth({ start, end }: { start: { date: string }; end: { date: string } }) {
     this.loading++
 
     await this.shiftModule.loadShifts({
@@ -351,6 +299,5 @@ export default class Calendar extends Vue {
 
     this.loading--
   }
-
 }
 </script>

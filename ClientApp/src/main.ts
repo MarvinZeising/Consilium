@@ -27,14 +27,6 @@ Vue.config.warnHandler = (msg: string | null, vm: Vue | null, trace: string | nu
 async function init() {
   Vue.config.productionTip = false
 
-  new Vue({
-    vuetify,
-    store,
-    router,
-    i18n,
-    render: (h) => h(App),
-  }).$mount('#app')
-
   axios.defaults.baseURL = window.location.origin + '/api'
   axios.defaults.timeout = 5000
   axios.interceptors.response.use(
@@ -71,6 +63,14 @@ async function init() {
       return Promise.reject(error)
     }
   )
+
+  new Vue({
+    vuetify,
+    store,
+    router,
+    i18n,
+    render: (h) => h(App),
+  }).$mount('#app')
 
   const alertModule = getModule(AlertModule)
   const userModule = getModule(UserModule)
