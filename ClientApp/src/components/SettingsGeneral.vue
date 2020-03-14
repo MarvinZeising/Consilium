@@ -203,6 +203,7 @@ export default class SettingsGeneral extends Vue {
 
   private toggleEditMode() {
     this.editMode = !this.editMode
+    this.saving = false
 
     if (this.editMode) {
       this.name = this.projectModule.getActiveProject?.name || ''
@@ -237,8 +238,6 @@ export default class SettingsGeneral extends Vue {
 
       // TODO: check that email is correct
       // TODO: maybe by sending an email to verify the new one
-
-      this.saving = false
     }
   }
 

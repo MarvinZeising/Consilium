@@ -125,6 +125,7 @@ export default class PersonalMisc extends Vue {
 
   private toggleEditMode() {
     this.editMode = !this.editMode
+    this.loading = false
 
     if (this.editMode) {
       this.languages = this.personModule.getActivePerson?.languages || ''
@@ -143,7 +144,6 @@ export default class PersonalMisc extends Vue {
         notes: this.notes,
       })
 
-      this.loading = false
       this.toggleEditMode()
     }
   }

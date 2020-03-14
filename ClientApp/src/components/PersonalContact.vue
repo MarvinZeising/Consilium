@@ -152,6 +152,7 @@ export default class PersonalContact extends Vue {
   })
 
   private toggleEditMode() {
+    this.loading = false
     this.editMode = !this.editMode
 
     if (this.editMode) {
@@ -174,7 +175,6 @@ export default class PersonalContact extends Vue {
         phone: this.phone,
       })
 
-      this.loading = false
       this.toggleEditMode()
     }
   }

@@ -27,6 +27,7 @@ namespace Server.Repository
             if (includeParticipations)
             {
                 query = query
+                    .Include(x => x.Congregation)
                     .Include(x => x.Participations).ThenInclude(x => x.Project).ThenInclude(x => x.Topics)
                     .Include(x => x.Participations).ThenInclude(x => x.Role).ThenInclude(x => x.Eligibilities);
             }
