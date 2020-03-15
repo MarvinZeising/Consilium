@@ -2,7 +2,7 @@
   <v-app>
     <Navbar />
     <v-content>
-      <router-view/>
+      <router-view />
     </v-content>
 
     <v-overlay :value="alertModule.loading">
@@ -21,16 +21,16 @@
       :timeout="alertModule.getSnackbar.timeout"
     >
       {{ alertModule.getSnackbar.text }}
-      <v-btn
-        dark
-        text
-        @click.stop="alertModule.getSnackbar.show = false"
-      >
-        Close
-      </v-btn>
+      <v-btn dark text @click.stop="alertModule.getSnackbar.show = false">Close</v-btn>
     </v-snackbar>
   </v-app>
 </template>
+
+<style lang="scss">
+.theme--light .v-content {
+  background-color: #eee;
+}
+</style>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
@@ -40,7 +40,7 @@ import AlertModule from './store/alerts'
 import UserModule from './store/users'
 
 @Component({
-  components: { Navbar }
+  components: { Navbar },
 })
 export default class App extends Vue {
   private alertModule = getModule(AlertModule, this.$store)

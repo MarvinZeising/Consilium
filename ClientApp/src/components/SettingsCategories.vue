@@ -1,24 +1,16 @@
 <template>
-  <v-flex
-    v-if="canView"
-    xs12 sm10 md8 lg6 xl4
-  >
-    <h2 class="headline mb-3">
-      {{ $tc('shift.category.categories', 2) }}
-    </h2>
-    <v-card
-      flat
-      class="ma-2 mb-5"
-      :loading="loading"
-    >
-      <v-card-text
-        class="grey--text"
-        v-t="'shift.category.description'"
-      />
+  <v-flex v-if="canView" xs12 sm10 md8 lg6 xl4>
+    <v-card flat class="ma-2 mb-5" :loading="loading">
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('shift.category.categories', 2) }}</h2>
+        <span class="grey--text" v-t="'shift.category.description'" />
+      </v-card-text>
+
       <v-list v-if="projectModule.getActiveProject">
-        <v-list-item v-if="projectModule.getActiveProject.getCategories.length === 0">
-          {{ $tc('shift.category.categories', 0) }}
-        </v-list-item>
+        <v-list-item
+          v-if="projectModule.getActiveProject.getCategories.length === 0"
+        >{{ $tc('shift.category.categories', 0) }}</v-list-item>
+
         <v-list-item
           v-for="(category, index) in projectModule.getActiveProject.getCategories"
           :key="index"
@@ -31,6 +23,7 @@
           </v-list-item-action>
         </v-list-item>
       </v-list>
+
       <v-card-actions v-if="!loading">
         <v-spacer />
         <CreateCategoryDialog />
@@ -54,7 +47,7 @@ import ParticipantModule from '../store/participants'
   components: {
     CreateCategoryDialog,
     UpdateCategoryDialog,
-  }
+  },
 })
 export default class SettingsCategories extends Vue {
   private personModule = getModule(PersonModule, this.$store)
@@ -95,6 +88,5 @@ export default class SettingsCategories extends Vue {
 
     this.loading = false
   }
-
 }
 </script>

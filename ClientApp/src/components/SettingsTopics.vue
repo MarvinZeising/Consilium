@@ -1,24 +1,14 @@
 <template>
-  <v-flex
-    v-if="canView"
-    xs12 sm10 md8 lg6 xl4
-  >
-    <h2 class="headline mb-3">
-      {{ $tc('project.knowledgeBase.topics', 2) }}
-    </h2>
-    <v-card
-      flat
-      class="ma-2 mb-5"
-      :loading="loading"
-    >
-      <v-card-text
-        class="grey--text"
-        v-t="'project.knowledgeBase.topicsDescription'"
-      />
+  <v-flex v-if="canView" xs12 sm10 md8 lg6 xl4>
+    <v-card flat class="ma-2 mb-5" :loading="loading">
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('project.knowledgeBase.topics', 2) }}</h2>
+        <span class="grey--text" v-t="'project.knowledgeBase.topicsDescription'" />
+      </v-card-text>
       <v-list v-if="projectModule.getActiveProject">
-        <v-list-item v-if="projectModule.getActiveProject.getTopics.length === 0">
-          {{ $tc('project.knowledgeBase.topics', 0) }}
-        </v-list-item>
+        <v-list-item
+          v-if="projectModule.getActiveProject.getTopics.length === 0"
+        >{{ $tc('project.knowledgeBase.topics', 0) }}</v-list-item>
         <v-list-item
           v-for="(topic, index) in projectModule.getActiveProject.getTopics"
           :key="index"
@@ -54,7 +44,7 @@ import UpdateTopicDialog from './dialogs/UpdateTopicDialog.vue'
   components: {
     CreateTopicDialog,
     UpdateTopicDialog,
-  }
+  },
 })
 export default class SettingsTopics extends Vue {
   private personModule = getModule(PersonModule, this.$store)
@@ -94,6 +84,5 @@ export default class SettingsTopics extends Vue {
 
     this.loading = false
   }
-
 }
 </script>

@@ -1,85 +1,48 @@
 <template>
-
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2
-      class="headline mb-3"
-      v-t="'core.general'"
-    />
-    <v-card
-      v-if="personModule.getActivePerson"
-      flat
-      class="ma-2 mb-5"
-    >
-
+    <v-card v-if="personModule.getActivePerson" flat class="ma-2 mb-5">
       <!-- //* READ -->
-      <v-card-text
-        v-if="!editMode"
-        class="text--primary"
-      >
+      <v-card-text v-if="!editMode" class="text--primary">
         <v-layout wrap>
-
           <v-flex xs12>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'core.id'"
-            />
+            <h2 class="headline mb-5" v-t="'core.general'" />
+          </v-flex>
+          <v-flex xs12>
+            <p class="caption mb-0 grey--text" v-t="'core.id'" />
             <p class="subtitle-1 grey--text">{{ personModule.getActivePersonId }}</p>
           </v-flex>
           <v-flex xs12 sm6>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'person.firstname'"
-            />
+            <p class="caption mb-0 grey--text" v-t="'person.firstname'" />
             <p class="subtitle-1">{{ personModule.getActivePerson.firstname }}</p>
           </v-flex>
           <v-flex xs12 sm6>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'person.lastname'"
-            />
+            <p class="caption mb-0 grey--text" v-t="'person.lastname'" />
             <p class="subtitle-1">{{ personModule.getActivePerson.lastname }}</p>
           </v-flex>
           <v-flex xs12>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'person.gender.gender'"
-            />
-            <p
-              class="subtitle-1"
-              v-t="'person.gender.' + personModule.getActivePerson.gender"
-            />
+            <p class="caption mb-0 grey--text" v-t="'person.gender.gender'" />
+            <p class="subtitle-1" v-t="'person.gender.' + personModule.getActivePerson.gender" />
           </v-flex>
 
           <v-flex xs12 sm6>
+            <p class="caption mb-0 grey--text" v-t="'core.createdTime'" />
             <p
-              class="caption mb-0 grey--text"
-              v-t="'core.createdTime'"
-            />
-            <p class="subtitle-1 grey--text">
-              {{ userModule.getUser.formatDateTime(personModule.getActivePerson.createdTime) }}
-            </p>
+              class="subtitle-1 grey--text"
+            >{{ userModule.getUser.formatDateTime(personModule.getActivePerson.createdTime) }}</p>
           </v-flex>
 
           <v-flex xs12 sm6>
+            <p class="caption mb-0 grey--text" v-t="'core.lastUpdatedTime'" />
             <p
-              class="caption mb-0 grey--text"
-              v-t="'core.lastUpdatedTime'"
-            />
-            <p class="subtitle-1 grey--text">
-              {{ userModule.getUser.formatDateTime(personModule.getActivePerson.lastUpdatedTime) }}
-            </p>
+              class="subtitle-1 grey--text"
+            >{{ userModule.getUser.formatDateTime(personModule.getActivePerson.lastUpdatedTime) }}</p>
           </v-flex>
-
         </v-layout>
       </v-card-text>
 
       <!-- //* UPDATE -->
       <v-card-text v-else>
-        <v-form
-          ref="form"
-          v-model="valid"
-        >
-
+        <v-form ref="form" v-model="valid">
           <p v-t="'person.firstnameDescription'" />
           <v-text-field
             v-model="firstname"
@@ -117,25 +80,14 @@
               <span>{{ $t('person.gender.' + item.value) }}</span>
             </template>
           </v-select>
-
         </v-form>
       </v-card-text>
 
       <!-- //* ACTIONS -->
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          v-if="!editMode"
-          text
-          v-t="'core.edit'"
-          @click.stop="toggleEditMode"
-        />
-        <v-btn
-          v-if="editMode"
-          text
-          v-t="'core.cancel'"
-          @click.stop="toggleEditMode"
-        />
+        <v-btn v-if="!editMode" text v-t="'core.edit'" @click.stop="toggleEditMode" />
+        <v-btn v-if="editMode" text v-t="'core.cancel'" @click.stop="toggleEditMode" />
         <v-btn
           v-if="editMode"
           text
@@ -148,7 +100,6 @@
       </v-card-actions>
     </v-card>
   </v-flex>
-
 </template>
 
 <script lang="ts">
@@ -168,7 +119,7 @@ export default class PersonalGeneral extends Vue {
   private editMode = false
   private loading = false
 
-  private firstname: string = this.personModule.getActivePerson?.firstname || ''
+  private firstname: string = this.personModule.getActivePerson?.firstname || ''
   private lastname: string = this.personModule.getActivePerson?.lastname || ''
   private nameRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
@@ -176,7 +127,7 @@ export default class PersonalGeneral extends Vue {
     (v: string) => v.trim().length >= 2 || i18n.t('core.fieldMin', { count: 2 }),
   ]
   private gender: string = this.personModule.getActivePerson?.gender || 'male'
-  private genderValues: any[] = [ 'male', 'female' ].map((value) => {
+  private genderValues: any[] = ['male', 'female'].map((value) => {
     return { value }
   })
 

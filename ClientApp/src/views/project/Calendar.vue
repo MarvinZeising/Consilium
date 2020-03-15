@@ -78,7 +78,7 @@
   </v-container>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .v-event {
   margin-left: 3px;
 }

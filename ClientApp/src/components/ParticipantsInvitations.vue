@@ -1,25 +1,16 @@
 <template>
-  <v-flex
-    v-if="canView"
-    xs12 sm10 md8 lg6 xl4
-  >
-    <h2
-      class="headline mb-3"
-      v-t="'project.invitation.invitations'"
-    />
-    <v-card
-      flat
-      class="ma-2 mb-5"
-      :loading="loading"
-    >
-      <v-card-text
-        class="grey--text"
-        v-t="'project.invitation.description'"
-      />
+  <v-flex v-if="canView" xs12 sm10 md8 lg6 xl4>
+    <v-card flat class="ma-2 mb-5" :loading="loading">
+      <v-card-text class="text--primary">
+        <h2 class="headline" v-t="'project.invitation.invitations'" />
+        <span class="grey--text" v-t="'project.invitation.description'" />
+      </v-card-text>
+
       <v-list v-if="projectModule.getActiveProject">
         <v-list-item v-if="projectModule.getActiveProject.getInvitations.length === 0">
           <span v-t="'project.invitation.noInvitations'" />
         </v-list-item>
+
         <v-list-item
           v-for="(participation, index) in projectModule.getActiveProject.getInvitations"
           :key="index"
@@ -35,6 +26,7 @@
           </v-list-item-action>
         </v-list-item>
       </v-list>
+
       <v-card-actions>
         <v-spacer />
         <CreateInvitationDialog />
@@ -59,7 +51,7 @@ import UpdateInvitationDialog from './dialogs/UpdateInvitationDialog.vue'
   components: {
     CreateInvitationDialog,
     UpdateInvitationDialog,
-  }
+  },
 })
 export default class ParticipantsInvitations extends Vue {
   private userModule = getModule(UserModule, this.$store)
@@ -96,7 +88,7 @@ export default class ParticipantsInvitations extends Vue {
   private async init() {
     this.loading = true
 
-    await this.invitationModule.loadInvitations();
+    await this.invitationModule.loadInvitations()
 
     this.loading = false
   }
@@ -109,11 +101,10 @@ export default class ParticipantsInvitations extends Vue {
     const user = this.userModule.getUser
     if (user) {
       return this.$t('project.invitation.invitedOn', {
-        date: moment(createdTime).format(`${user?.dateFormat}, ${user?.timeFormat}`)
+        date: moment(createdTime).format(`${user?.dateFormat}, ${user?.timeFormat}`),
       })
     }
     return ''
   }
-
 }
 </script>

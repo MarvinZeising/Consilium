@@ -1,10 +1,7 @@
 <template>
   <v-container fluid>
     <v-layout wrap>
-
       <SettingsGeneral />
-
-      <SettingsTopics />
 
       <SettingsRoles />
 
@@ -12,26 +9,16 @@
 
       <SettingsTeams />
 
-      <!--//* Danger Zone -->
-      <v-flex
-        v-if="canView"
-        xs12 sm10 md8 lg6 xl4
-      >
-        <h2
-          class="headline mb-3"
-          v-t="'core.dangerZone'"
-        />
-        <v-card
-          outlined
-          class="ma-2 mb-5"
-          style="border-color:#f00;"
-        >
-          <v-card-text>
+      <SettingsTopics />
+
+      <v-flex v-if="canView" xs12 sm10 md8 lg6 xl4>
+        <v-card outlined class="ma-2 mb-5" style="border-color:#f00;">
+          <v-card-text class="text--primary">
+            <h2 class="headline mb-5" v-t="'core.dangerZone'" />
             <DeleteProjectDialog />
           </v-card-text>
         </v-card>
       </v-flex>
-
     </v-layout>
   </v-container>
 </template>
@@ -58,7 +45,7 @@ import DeleteProjectDialog from '../../components/dialogs/DeleteProjectDialog.vu
     SettingsRoles,
     SettingsCategories,
     SettingsTeams,
-  }
+  },
 })
 export default class Settings extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
@@ -67,6 +54,5 @@ export default class Settings extends Vue {
   private get canView() {
     return this.personModule.getActiveRole?.settingsWrite === true
   }
-
 }
 </script>

@@ -1,10 +1,13 @@
 <template>
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2 class="headline mb-3" v-t="'person.theocratic'" />
     <v-card v-if="personModule.getActivePerson" flat class="ma-2 mb-5">
       <!-- //* READ -->
       <v-card-text v-if="!editMode" class="text--primary">
         <v-layout wrap>
+          <v-flex xs12>
+            <h2 class="headline mb-5" v-t="'person.theocratic'" />
+          </v-flex>
+
           <v-flex xs12 sm6>
             <p class="caption mb-0 grey--text" v-t="'person.privilege.privilege'" />
             <p
@@ -137,11 +140,16 @@ export default class PersonalTheocratic extends Vue {
   })
 
   private assignment?: Assignment
-  private assignmentValues: any[] = ['publisher', 'ministerial', 'elder', 'cobe', 'secretary', 'serviceOverseer'].map(
-    (value) => {
-      return { value }
-    }
-  )
+  private assignmentValues: any[] = [
+    'publisher',
+    'ministerial',
+    'elder',
+    'cobe',
+    'secretary',
+    'serviceOverseer',
+  ].map((value) => {
+    return { value }
+  })
 
   private congregationId?: string
   private congregationValues: any[] = []

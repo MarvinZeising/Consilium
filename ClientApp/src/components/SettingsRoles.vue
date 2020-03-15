@@ -1,35 +1,22 @@
 <template>
-  <v-flex
-    v-if="canView"
-    xs12 sm10 md8 lg6 xl4
-  >
-    <h2 class="headline mb-3">
-      {{ $tc('project.role.roles', 2) }}
-    </h2>
-    <v-card
-      flat
-      class="ma-2 mb-5"
-      :loading="loading"
-    >
-      <v-card-text
-        class="grey--text"
-        v-t="'project.role.description'"
-      />
+  <v-flex v-if="canView" xs12 sm10 md8 lg6 xl4>
+    <v-card flat class="ma-2 mb-5" :loading="loading">
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('project.role.roles', 2) }}</h2>
+        <span class="grey--text" v-t="'project.role.description'" />
+      </v-card-text>
       <v-list v-if="projectModule.getActiveProject">
-        <v-list-item v-if="projectModule.getActiveProject.getRoles.length === 0">
-          {{ $tc('project.role.roles', 0) }}
-        </v-list-item>
         <v-list-item
-          v-for="(role, index) in projectModule.getActiveProject.getRoles"
-          :key="index"
-        >
+          v-if="projectModule.getActiveProject.getRoles.length === 0"
+        >{{ $tc('project.role.roles', 0) }}</v-list-item>
+        <v-list-item v-for="(role, index) in projectModule.getActiveProject.getRoles" :key="index">
           <v-list-item-content>
             <v-list-item-title v-text="role.name" />
             <v-list-item-subtitle>
               {{
-                $tc('project.role.xParticipants', getPermitCount(role.id), {
-                  count: getPermitCount(role.id)
-                })
+              $tc('project.role.xParticipants', getPermitCount(role.id), {
+              count: getPermitCount(role.id)
+              })
               }}
             </v-list-item-subtitle>
           </v-list-item-content>
@@ -65,7 +52,7 @@ import ParticipantModule from '../store/participants'
   components: {
     CreateRoleDialog,
     UpdateRoleDialog,
-  }
+  },
 })
 export default class SettingsRoles extends Vue {
   private personModule = getModule(PersonModule, this.$store)
@@ -113,10 +100,9 @@ export default class SettingsRoles extends Vue {
   }
 
   private getPermitCount(roleId: string) {
-    return this.projectModule.getActiveProject
-      ?.getParticipations
-      ?.filter((x) => x.roleId === roleId).length
+    return this.projectModule.getActiveProject?.getParticipations?.filter(
+      (x) => x.roleId === roleId
+    ).length
   }
-
 }
 </script>

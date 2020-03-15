@@ -1,20 +1,16 @@
 <template>
-  <v-flex
-    v-if="canView"
-    xs12
-  >
-    <h2 class="headline mb-3">
-      {{ $tc('project.congregation.congregations', 2) }}
-    </h2>
-    <v-card
-      flat
-      class="ma-2 mb-5"
-    >
+  <v-flex v-if="canView" xs12>
+    <v-card flat class="ma-2 mb-5">
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('project.congregation.congregations', 2) }}</h2>
+      </v-card-text>
+
       <v-card-actions>
         <FilterCongregationsDialog :filter="filter" />
         <v-spacer />
         <CreateCongregationDialog />
       </v-card-actions>
+
       <v-data-table
         v-if="congregationModule.getCongregations"
         :loading="loading"
@@ -47,7 +43,7 @@ import UpdateCongregationDialog from '../components/dialogs/UpdateCongregationDi
     FilterCongregationsDialog,
     CreateCongregationDialog,
     UpdateCongregationDialog,
-  }
+  },
 })
 export default class CongregationsList extends Vue {
   private personModule = getModule(PersonModule, this.$store)
@@ -94,6 +90,5 @@ export default class CongregationsList extends Vue {
 
     this.loading = false
   }
-
 }
 </script>

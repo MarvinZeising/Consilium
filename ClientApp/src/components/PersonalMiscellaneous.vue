@@ -1,52 +1,31 @@
 <template>
-
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2
-      class="headline mb-3"
-      v-t="'person.miscellaneous'"
-    />
-    <v-card
-      v-if="personModule.getActivePerson"
-      flat
-      class="ma-2 mb-5"
-    >
-
+    <v-card v-if="personModule.getActivePerson" flat class="ma-2 mb-5">
       <!-- //* READ -->
-      <v-card-text
-        v-if="!editMode"
-        class="text--primary"
-      >
+      <v-card-text v-if="!editMode" class="text--primary">
         <v-layout wrap>
+          <v-flex xs12>
+            <h2 class="headline mb-5" v-t="'person.miscellaneous'" />
+          </v-flex>
 
           <v-flex xs12>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'person.languages'"
-            />
+            <p class="caption mb-0 grey--text" v-t="'person.languages'" />
             <p class="subtitle-1">{{ personModule.getActivePerson.languages || $t('core.na') }}</p>
           </v-flex>
 
           <v-flex xs12>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'person.notes'"
-            />
+            <p class="caption mb-0 grey--text" v-t="'person.notes'" />
             <p
               class="subtitle-1"
               v-html="toHtmlBreaks(personModule.getActivePerson.notes) || $t('core.na')"
             />
           </v-flex>
-
         </v-layout>
       </v-card-text>
 
       <!-- //* UPDATE -->
       <v-card-text v-else>
-        <v-form
-          ref="form"
-          v-model="valid"
-        >
-
+        <v-form ref="form" v-model="valid">
           <p v-t="'person.languages'" />
           <v-text-field
             v-model="languages"
@@ -65,25 +44,14 @@
             auto-grow
             filled
           />
-
         </v-form>
       </v-card-text>
 
       <!-- //* ACTIONS -->
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          v-if="!editMode"
-          text
-          v-t="'core.edit'"
-          @click.stop="toggleEditMode"
-        />
-        <v-btn
-          v-if="editMode"
-          text
-          v-t="'core.cancel'"
-          @click.stop="toggleEditMode"
-        />
+        <v-btn v-if="!editMode" text v-t="'core.edit'" @click.stop="toggleEditMode" />
+        <v-btn v-if="editMode" text v-t="'core.cancel'" @click.stop="toggleEditMode" />
         <v-btn
           v-if="editMode"
           text
@@ -96,7 +64,6 @@
       </v-card-actions>
     </v-card>
   </v-flex>
-
 </template>
 
 <script lang="ts">
@@ -114,7 +81,7 @@ export default class PersonalMisc extends Vue {
   private editMode = false
   private loading = false
 
-  private languages: string = this.personModule.getActivePerson?.firstname || ''
+  private languages: string = this.personModule.getActivePerson?.firstname || ''
   private languagesRules: any[] = [
     (v: string) => v.length <= 100 || i18n.t('core.fieldMax', { count: 100 }),
   ]
