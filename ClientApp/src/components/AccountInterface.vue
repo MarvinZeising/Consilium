@@ -1,71 +1,38 @@
 <template>
-
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2
-      class="headline mb-3"
-      v-t="'account.interface'"
-    />
-    <v-card
-      v-if="userModule.getUser"
-      flat
-      class="ma-2 mb-5"
-    >
-
+    <v-card v-if="userModule.getUser" flat class="ma-2 mb-5">
       <!-- //* READ -->
-      <v-card-text
-        v-if="!editMode"
-        class="text--primary"
-      >
+      <v-card-text v-if="!editMode" class="text--primary">
         <v-layout wrap>
-
-          <v-flex xs12 sm6>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'language.language'"
-            />
-            <p
-              class="subtitle-1"
-              v-t="'language.' + userModule.getUser.language"
-            />
+          <v-flex xs12>
+            <h2 class="headline mb-5" v-t="'account.interface'" />
           </v-flex>
 
           <v-flex xs12 sm6>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'account.theme'"
-            />
+            <p class="caption mb-0 grey--text" v-t="'language.language'" />
+            <p class="subtitle-1" v-t="'language.' + userModule.getUser.language" />
+          </v-flex>
+
+          <v-flex xs12 sm6>
+            <p class="caption mb-0 grey--text" v-t="'account.theme'" />
             <p class="subtitle-1">{{ $t(`account.${userModule.getUser.theme}`) }}</p>
           </v-flex>
 
           <v-flex xs12 sm6>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'account.dateFormat'"
-            />
-            <p
-              class="subtitle-1"
-              v-text="getTodayFormatted(userModule.getUser.dateFormat)"
-            />
+            <p class="caption mb-0 grey--text" v-t="'account.dateFormat'" />
+            <p class="subtitle-1" v-text="getTodayFormatted(userModule.getUser.dateFormat)" />
           </v-flex>
 
           <v-flex xs12 sm6>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'account.timeFormat'"
-            />
-            <p
-              class="subtitle-1"
-              v-text="getTodayFormatted(userModule.getUser.timeFormat)"
-            />
+            <p class="caption mb-0 grey--text" v-t="'account.timeFormat'" />
+            <p class="subtitle-1" v-text="getTodayFormatted(userModule.getUser.timeFormat)" />
           </v-flex>
-
         </v-layout>
       </v-card-text>
 
       <!-- //* UPDATE -->
       <v-card-text v-else>
         <v-form ref="form">
-
           <p v-t="'account.languageDescription'" />
           <v-select
             v-model="language"
@@ -86,7 +53,9 @@
           <p class="caption mb-5" style="margin-top:-20px;">
             <i>
               {{ $t('account.translationHelp') }}
-              <a href="mailto:support@consiliumapp.org">support@consiliumapp.org</a>
+              <a
+                href="mailto:support@consiliumapp.org"
+              >support@consiliumapp.org</a>
             </i>
           </p>
 
@@ -143,36 +112,18 @@
               <span v-text="getTodayFormatted(item.value)" />
             </template>
           </v-select>
-
         </v-form>
       </v-card-text>
 
       <!-- //* ACTIONS -->
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          text
-          v-if="!editMode"
-          @click.stop="toggleEditMode"
-          v-t="'core.edit'"
-        />
-        <v-btn
-          text
-          v-if="editMode"
-          @click.stop="toggleEditMode"
-          v-t="'core.cancel'"
-        />
-        <v-btn
-          text
-          v-if="editMode"
-          color="primary"
-          @click.stop="save"
-          v-t="'core.save'"
-        />
+        <v-btn text v-if="!editMode" @click.stop="toggleEditMode" v-t="'core.edit'" />
+        <v-btn text v-if="editMode" @click.stop="toggleEditMode" v-t="'core.cancel'" />
+        <v-btn text v-if="editMode" color="primary" @click.stop="save" v-t="'core.save'" />
       </v-card-actions>
     </v-card>
   </v-flex>
-
 </template>
 
 <script lang="ts">
@@ -217,12 +168,12 @@ export default class AccountInterface extends Vue {
   ].map((value) => {
     return { value }
   })
-  private language: Language = this.userModule.getUser?.language || Language.enUS
+  private language: Language = this.userModule.getUser?.language || Language.enUS
   private languageValues: any[] = i18n.availableLocales.map((value) => {
     return { value }
   })
   private theme: string = this.userModule.getUser?.theme || ''
-  private themeValues: any[] = [ 'light', 'dark' ].map((value) => {
+  private themeValues: any[] = ['light', 'dark'].map((value) => {
     return { value }
   })
 

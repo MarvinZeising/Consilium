@@ -1,17 +1,22 @@
 <template>
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2 class="headline mb-3">{{ $tc('person.persons', 2) }}</h2>
     <v-card flat class="ma-2 mb-5">
-      <v-card-text class="grey--text">{{ $t('person.personsDescription') }}</v-card-text>
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('person.persons', 2) }}</h2>
+        <span class="grey--text">{{ $t('person.personsDescription') }}</span>
+      </v-card-text>
+
       <v-list>
         <v-list-item
           v-if="personModule.getPersons.length === 0"
-          dark
           class="accent"
+          dark
         >{{ $tc('person.persons', 0) }}</v-list-item>
+
         <v-list-item v-for="(person, index) in personModule.getPersons" :key="index">
           <v-list-item-content>
             <v-list-item-title v-text="person.getFullName" />
+            <v-list-item-subtitle v-if="person.congregation" v-text="person.congregation.name" />
           </v-list-item-content>
 
           <v-list-item-action>
@@ -21,6 +26,7 @@
           </v-list-item-action>
         </v-list-item>
       </v-list>
+
       <v-card-actions>
         <v-spacer />
         <CreatePersonDialog />

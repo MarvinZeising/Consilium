@@ -1,26 +1,16 @@
 <template>
   <v-container fluid>
     <v-layout wrap>
-
       <AccountGeneral />
 
       <AccountInterface />
 
-      <!--//* Persons -->
       <AccountPersons />
 
-      <!--//* Danger Zone -->
       <v-flex xs12 sm10 md8 lg6 xl4>
-        <h2
-          class="headline mb-3"
-          v-t="'core.dangerZone'"
-        />
-        <v-card
-          outlined
-          class="ma-2"
-          style="border-color:#f00;"
-        >
-          <v-card-text>
+        <v-card outlined class="ma-2" style="border-color:#f00;">
+          <v-card-text class="text--primary">
+            <h2 class="headline mb-5" v-t="'core.dangerZone'" />
             <v-layout column>
               <UpdatePasswordDialog />
 
@@ -29,7 +19,6 @@
           </v-card-text>
         </v-card>
       </v-flex>
-
     </v-layout>
   </v-container>
 </template>
@@ -52,7 +41,7 @@ import UserModule from '../../store/users'
     DeleteAccountDialog,
     AccountPersons,
     UpdatePasswordDialog,
-  }
+  },
 })
 export default class Account extends Vue {
   private userModule = getModule(UserModule, this.$store)

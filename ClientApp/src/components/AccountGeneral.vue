@@ -1,59 +1,36 @@
 <template>
-
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2
-      class="headline mb-3"
-      v-t="'core.general'"
-    />
-    <v-card
-      v-if="userModule.getUser"
-      flat
-      class="ma-2 mb-5"
-    >
-
+    <v-card v-if="userModule.getUser" flat class="ma-2 mb-5">
       <!-- //* READ -->
-      <v-card-text
-        v-if="!editMode"
-        class="text--primary"
-      >
+      <v-card-text v-if="!editMode" class="text--primary">
         <v-layout wrap>
+          <v-flex xs12>
+            <h2 class="headline mb-5" v-t="'core.general'" />
+          </v-flex>
 
           <v-flex xs12>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'core.id'"
-            />
+            <p class="caption mb-0 grey--text" v-t="'core.id'" />
             <p class="subtitle-1 grey--text">{{ userModule.getUser.id }}</p>
           </v-flex>
 
           <v-flex xs12>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'core.email'"
-            />
+            <p class="caption mb-0 grey--text" v-t="'core.email'" />
             <p class="subtitle-1">{{ userModule.getUser.email }}</p>
           </v-flex>
 
           <v-flex xs12 sm6>
+            <p class="caption mb-0 grey--text" v-t="'core.createdTime'" />
             <p
-              class="caption mb-0 grey--text"
-              v-t="'core.createdTime'"
-            />
-            <p class="subtitle-1 grey--text">
-              {{ userModule.getUser.formatDateTime(userModule.getUser.createdTime) }}
-            </p>
+              class="subtitle-1 grey--text"
+            >{{ userModule.getUser.formatDateTime(userModule.getUser.createdTime) }}</p>
           </v-flex>
 
           <v-flex xs12 sm6>
+            <p class="caption mb-0 grey--text" v-t="'core.lastUpdatedTime'" />
             <p
-              class="caption mb-0 grey--text"
-              v-t="'core.lastUpdatedTime'"
-            />
-            <p class="subtitle-1 grey--text">
-              {{ userModule.getUser.formatDateTime(userModule.getUser.lastUpdatedTime) }}
-            </p>
+              class="subtitle-1 grey--text"
+            >{{ userModule.getUser.formatDateTime(userModule.getUser.lastUpdatedTime) }}</p>
           </v-flex>
-
         </v-layout>
       </v-card-text>
 
@@ -69,53 +46,26 @@
             required
           />
 
-          <v-row
-            no-gutters
-            class="d-flex align-center"
-          >
-            <v-col
-              cols="1"
-              class="flex-grow-0 flex-shrink-1"
-            >
+          <v-row no-gutters class="d-flex align-center">
+            <v-col cols="1" class="flex-grow-0 flex-shrink-1">
               <v-icon color="warning">warning</v-icon>
             </v-col>
-            <v-col
-              cols="11"
-              class="flex-grow-1 flex-shrink-0"
-            >
+            <v-col cols="11" class="flex-grow-1 flex-shrink-0">
               <span v-t="'account.emailChangeDescription'" />
             </v-col>
           </v-row>
-
         </v-form>
       </v-card-text>
 
       <!-- //* ACTIONS -->
       <v-card-actions>
         <v-spacer />
-        <v-btn
-          text
-          v-if="!editMode"
-          @click.stop="toggleEditMode"
-          v-t="'core.edit'"
-        />
-        <v-btn
-          text
-          v-if="editMode"
-          @click.stop="toggleEditMode"
-          v-t="'core.cancel'"
-        />
-        <v-btn
-          text
-          v-if="editMode"
-          color="primary"
-          @click.stop="save"
-          v-t="'core.save'"
-        />
+        <v-btn text v-if="!editMode" @click.stop="toggleEditMode" v-t="'core.edit'" />
+        <v-btn text v-if="editMode" @click.stop="toggleEditMode" v-t="'core.cancel'" />
+        <v-btn text v-if="editMode" color="primary" @click.stop="save" v-t="'core.save'" />
       </v-card-actions>
     </v-card>
   </v-flex>
-
 </template>
 
 <script lang="ts">
@@ -130,7 +80,7 @@ export default class AccountGeneral extends Vue {
 
   private editMode = false
 
-  private id: string = this.userModule.getUser?.id || ''
+  private id: string = this.userModule.getUser?.id || ''
   private email: string = this.userModule.getUser?.email || ''
   private emailRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),

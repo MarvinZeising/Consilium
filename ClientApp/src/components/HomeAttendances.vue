@@ -1,9 +1,10 @@
 <template>
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2 class="headline mb-3">{{ $tc('person.attendance.attendances', 2) }}</h2>
-
     <v-card flat class="ma-2 mb-5" :loading="loading">
-      <v-card-text class="grey--text" v-t="'person.attendance.description'" />
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('person.attendance.attendances', 2) }}</h2>
+        <span class="grey--text" v-t="'person.attendance.description'" />
+      </v-card-text>
 
       <v-list v-if="personModule.getActivePerson" two-line>
         <v-list-item

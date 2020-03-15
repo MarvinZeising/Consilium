@@ -1,15 +1,9 @@
 <template>
-  <v-flex
-    v-if="canView"
-    xs12
-  >
-    <h2 class="headline mb-3">
-      {{ $tc('project.participant.participants', 2) }}
-    </h2>
-    <v-card
-      flat
-      class="ma-2 mb-5"
-    >
+  <v-flex v-if="canView" xs12>
+    <v-card flat class="ma-2 mb-5">
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('project.participant.participants', 2) }}</h2>
+      </v-card-text>
       <v-card-actions>
         <FilterParticipantsDialog :filter="filter" />
       </v-card-actions>
@@ -21,10 +15,7 @@
         :items-per-page="15"
         :search="filter.search"
       >
-        <template
-          v-if="canEdit"
-          v-slot:item.action="{ item }"
-        >
+        <template v-if="canEdit" v-slot:item.action="{ item }">
           <UpdateParticipantDialog :participation="item" />
         </template>
       </v-data-table>
@@ -46,7 +37,7 @@ import { Person, ParticipationStatus, Gender } from '../models'
   components: {
     FilterParticipantsDialog,
     UpdateParticipantDialog,
-  }
+  },
 })
 export default class ParticipantsList extends Vue {
   private personModule = getModule(PersonModule, this.$store)
@@ -98,6 +89,5 @@ export default class ParticipantsList extends Vue {
 
     this.loading = false
   }
-
 }
 </script>

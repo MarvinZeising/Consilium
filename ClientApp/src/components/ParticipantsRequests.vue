@@ -1,24 +1,14 @@
 <template>
-  <v-flex
-    v-if="canView"
-    xs12 sm10 md8 lg6 xl4
-  >
-    <h2 class="headline mb-3">
-      {{ $tc('project.request.requests', 2) }}
-    </h2>
-    <v-card
-      flat
-      class="ma-2 mb-5"
-      :loading="loading"
-    >
-      <v-card-text
-        class="grey--text"
-        v-t="'project.request.description'"
-      />
+  <v-flex v-if="canView" xs12 sm10 md8 lg6 xl4>
+    <v-card flat class="ma-2 mb-5" :loading="loading">
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('project.request.requests', 2) }}</h2>
+        <span class="grey--text" v-t="'project.request.description'" />
+      </v-card-text>
       <v-list v-if="projectModule.getActiveProject.getRequests">
-        <v-list-item v-if="projectModule.getActiveProject.getRequests.length === 0">
-          {{ $tc('project.request.requests', 0) }}
-        </v-list-item>
+        <v-list-item
+          v-if="projectModule.getActiveProject.getRequests.length === 0"
+        >{{ $tc('project.request.requests', 0) }}</v-list-item>
         <v-list-item
           v-for="(participation, index) in projectModule.getActiveProject.getRequests"
           :key="index"
@@ -72,7 +62,7 @@ import HandleJoinRequestDialog from './dialogs/HandleJoinRequestDialog.vue'
 @Component({
   components: {
     HandleJoinRequestDialog,
-  }
+  },
 })
 export default class ParticipantsRequests extends Vue {
   private userModule = getModule(UserModule, this.$store)
@@ -112,7 +102,7 @@ export default class ParticipantsRequests extends Vue {
   private async init() {
     this.loading = true
 
-    await this.requestModule.loadRequests();
+    await this.requestModule.loadRequests()
 
     const project = this.projectModule.getActiveProject
     if (project) {
@@ -127,7 +117,7 @@ export default class ParticipantsRequests extends Vue {
     const user = this.userModule.getUser
     if (user) {
       return this.$t('project.request.requestedOn', {
-        date: moment(createdTime).format(`${user?.dateFormat}, ${user?.timeFormat}`)
+        date: moment(createdTime).format(`${user?.dateFormat}, ${user?.timeFormat}`),
       })
     }
     return ''
@@ -141,6 +131,5 @@ export default class ParticipantsRequests extends Vue {
 
     this.saving = false
   }
-
 }
 </script>

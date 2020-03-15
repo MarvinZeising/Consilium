@@ -1,73 +1,41 @@
 <template>
-
-  <v-flex
-    v-if="canView"
-    xs12 sm10 md8 lg6 xl4
-  >
-    <h2
-      class="headline mb-3"
-      v-t="'core.general'"
-    />
-    <v-card
-      :loading="loading"
-      flat
-      class="ma-2 mb-5"
-    >
-
+  <v-flex v-if="canView" xs12 sm10 md8 lg6 xl4>
+    <v-card :loading="loading" flat class="ma-2 mb-5">
       <!-- //* READ -->
-      <v-card-text
-        v-if="!editMode"
-        class="text--primary"
-      >
-        <v-layout
-          v-if="projectModule.getActiveProject"
-          wrap
-        >
+      <v-card-text v-if="!editMode" class="text--primary">
+        <v-layout v-if="projectModule.getActiveProject" wrap>
+          <v-flex xs12>
+            <h2 class="headline mb-5" v-t="'core.general'" />
+          </v-flex>
 
           <v-flex xs12>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'core.id'"
-            />
+            <p class="caption mb-0 grey--text" v-t="'core.id'" />
             <p class="subtitle-1 grey--text">{{ projectModule.getActiveProject.id }}</p>
           </v-flex>
 
           <v-flex xs12 sm6>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'core.name'"
-            />
+            <p class="caption mb-0 grey--text" v-t="'core.name'" />
             <p class="subtitle-1">{{ projectModule.getActiveProject.name }}</p>
           </v-flex>
 
           <v-flex xs12 sm6>
-            <p
-              class="caption mb-0 grey--text"
-              v-t="'core.email'"
-            />
+            <p class="caption mb-0 grey--text" v-t="'core.email'" />
             <p class="subtitle-1">{{ projectModule.getActiveProject.email }}</p>
           </v-flex>
 
           <v-flex xs12 sm6>
+            <p class="caption mb-0 grey--text" v-t="'core.createdTime'" />
             <p
-              class="caption mb-0 grey--text"
-              v-t="'core.createdTime'"
-            />
-            <p class="subtitle-1 grey--text">
-              {{ userModule.getUser.formatDateTime(projectModule.getActiveProject.createdTime) }}
-            </p>
+              class="subtitle-1 grey--text"
+            >{{ userModule.getUser.formatDateTime(projectModule.getActiveProject.createdTime) }}</p>
           </v-flex>
 
           <v-flex xs12 sm6>
+            <p class="caption mb-0 grey--text" v-t="'core.lastUpdatedTime'" />
             <p
-              class="caption mb-0 grey--text"
-              v-t="'core.lastUpdatedTime'"
-            />
-            <p class="subtitle-1 grey--text">
-              {{ userModule.getUser.formatDateTime(projectModule.getActiveProject.lastUpdatedTime) }}
-            </p>
+              class="subtitle-1 grey--text"
+            >{{ userModule.getUser.formatDateTime(projectModule.getActiveProject.lastUpdatedTime) }}</p>
           </v-flex>
-
         </v-layout>
       </v-card-text>
 
@@ -97,18 +65,8 @@
       <!-- //* ACTIONS -->
       <v-card-actions v-if="canEdit">
         <v-spacer />
-        <v-btn
-          v-if="!editMode"
-          text
-          v-t="'core.edit'"
-          @click.stop="toggleEditMode"
-        />
-        <v-btn
-          v-if="editMode"
-          text
-          v-t="'core.cancel'"
-          @click.stop="toggleEditMode"
-        />
+        <v-btn v-if="!editMode" text v-t="'core.edit'" @click.stop="toggleEditMode" />
+        <v-btn v-if="editMode" text v-t="'core.cancel'" @click.stop="toggleEditMode" />
         <v-btn
           v-if="editMode"
           text
@@ -120,7 +78,6 @@
       </v-card-actions>
     </v-card>
   </v-flex>
-
 </template>
 
 <script lang="ts">
@@ -145,17 +102,17 @@ export default class SettingsGeneral extends Vue {
   private saving = false
   private editMode = false
 
-  private name: string = this.projectModule.getActiveProject?.name || ''
+  private name: string = this.projectModule.getActiveProject?.name || ''
   private nameRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
     (v: string) => v.length >= 3 || i18n.t('core.fieldMin', { count: 3 }),
-    (v: string) => v.charAt(0) === v.charAt(0).toUpperCase() || i18n.t('core.fieldCamelCase')
+    (v: string) => v.charAt(0) === v.charAt(0).toUpperCase() || i18n.t('core.fieldCamelCase'),
   ]
   private email: string = this.projectModule.getActiveProject?.email || ''
   private emailRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid')
+    (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid'),
   ]
 
   private get canView() {
@@ -220,7 +177,7 @@ export default class SettingsGeneral extends Vue {
 
       const response = await this.projectModule.updateProjectGeneral({
         name: this.name,
-        email: this.email
+        email: this.email,
       })
       if (response === Exceptions.ProjectNameUnique) {
         const thisName = this.name
@@ -240,6 +197,5 @@ export default class SettingsGeneral extends Vue {
       // TODO: maybe by sending an email to verify the new one
     }
   }
-
 }
 </script>

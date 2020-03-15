@@ -1,16 +1,14 @@
 <template>
   <v-flex xs12 sm10 md8 lg6 xl4>
-    <h2 class="headline mb-3">
-      {{ $tc('project.projects', 2) }}
-    </h2>
     <v-card flat class="ma-2 mb-5">
-      <v-card-text class="grey--text">
-        {{ $t('project.projectsDescription') }}
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('project.projects', 2) }}</h2>
+        <span class="grey--text">{{ $t('project.projectsDescription') }}</span>
       </v-card-text>
       <v-list>
-        <v-list-item v-if="personModule.getActivePerson.getParticipations.length === 0">
-          {{ $tc('project.projects', 0) }}
-        </v-list-item>
+        <v-list-item
+          v-if="personModule.getActivePerson.getParticipations.length === 0"
+        >{{ $tc('project.projects', 0) }}</v-list-item>
         <v-list-item
           v-for="(participation, index) in personModule.getActivePerson.getParticipations"
           :key="index"
@@ -33,10 +31,7 @@
               v-else-if="isStatusRequested(participation)"
               :participation="participation"
             />
-            <UpdateParticipationDialog
-              v-else
-              :participation="participation"
-            />
+            <UpdateParticipationDialog v-else :participation="participation" />
           </v-list-item-action>
         </v-list-item>
       </v-list>
@@ -70,7 +65,7 @@ import { Project, ParticipationStatus, Participation } from '../models'
     HandleInvitationDialog,
     UpdateParticipationDialog,
     CreateProjectDialog,
-  }
+  },
 })
 export default class PersonalProjects extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
@@ -87,6 +82,5 @@ export default class PersonalProjects extends Vue {
   private isStatusInactive(participation: Participation) {
     return participation.status === ParticipationStatus.Inactive
   }
-
 }
 </script>

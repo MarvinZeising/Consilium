@@ -1,21 +1,13 @@
 <template>
-  <v-flex
-    v-if="canView"
-    xs12 md10 lg8
-  >
-    <h2 class="headline mb-3">
-      {{ $tc('project.knowledgeBase.articles', 2) }}
-    </h2>
-    <v-card
-      v-if="projectModule.getActiveProject"
-      flat
-      class="ma-2 mb-5"
-      :loading="loading"
-    >
+  <v-flex v-if="canView" xs12 md10 lg8>
+    <v-card v-if="projectModule.getActiveProject" flat class="ma-2 mb-5" :loading="loading">
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('project.knowledgeBase.articles', 2) }}</h2>
+      </v-card-text>
       <v-list v-if="knowledgeBaseModule.getActiveTopic">
-        <v-list-item v-if="knowledgeBaseModule.getActiveTopic.getArticles.length === 0">
-          {{ $tc('project.knowledgeBase.articles', 0) }}
-        </v-list-item>
+        <v-list-item
+          v-if="knowledgeBaseModule.getActiveTopic.getArticles.length === 0"
+        >{{ $tc('project.knowledgeBase.articles', 0) }}</v-list-item>
         <v-list-item
           v-for="(article, index) in knowledgeBaseModule.getActiveTopic.getArticles"
           :key="index"
@@ -49,7 +41,7 @@ import CreateArticleDialog from '../components/dialogs/CreateArticleDialog.vue'
 @Component({
   components: {
     CreateArticleDialog,
-  }
+  },
 })
 export default class ParticipantsInvitations extends Vue {
   private userModule = getModule(UserModule, this.$store)
@@ -90,7 +82,7 @@ export default class ParticipantsInvitations extends Vue {
   private async init() {
     this.loading = true
 
-    await this.knowledgeBaseModule.loadArticles();
+    await this.knowledgeBaseModule.loadArticles()
 
     this.loading = false
   }
@@ -109,6 +101,5 @@ export default class ParticipantsInvitations extends Vue {
       },
     }
   }
-
 }
 </script>

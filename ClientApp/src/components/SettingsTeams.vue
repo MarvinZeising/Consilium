@@ -1,29 +1,17 @@
 <template>
-  <v-flex
-    v-if="canView"
-    xs12 sm10 md8 lg6 xl4
-  >
-    <h2 class="headline mb-3">
-      {{ $tc('shift.team.teams', 2) }}
-    </h2>
-    <v-card
-      flat
-      class="ma-2 mb-5"
-      :loading="loading"
-    >
-      <v-card-text
-        class="grey--text"
-        v-t="'shift.team.description'"
-      />
+  <v-flex v-if="canView" xs12 sm10 md8 lg6 xl4>
+    <v-card flat class="ma-2 mb-5" :loading="loading">
+      <v-card-text class="text--primary">
+        <h2 class="headline">{{ $tc('shift.team.teams', 2) }}</h2>
+        <span class="grey--text" v-t="'shift.team.description'" />
+      </v-card-text>
+
       <v-list v-if="projectModule.getActiveProject">
         <!--// TODO: blah -->
-        <v-list-item v-if="projectModule.getActiveProject.getTeams.length === 0">
-          {{ $tc('shift.team.teams', 0) }}
-        </v-list-item>
         <v-list-item
-          v-for="(team, index) in projectModule.getActiveProject.getTeams"
-          :key="index"
-        >
+          v-if="projectModule.getActiveProject.getTeams.length === 0"
+        >{{ $tc('shift.team.teams', 0) }}</v-list-item>
+        <v-list-item v-for="(team, index) in projectModule.getActiveProject.getTeams" :key="index">
           <v-list-item-content>
             <v-list-item-title v-text="team.name" />
           </v-list-item-content>
@@ -55,7 +43,7 @@ import TeamModule from '../store/teams'
   components: {
     CreateTeamDialog,
     UpdateTeamDialog,
-  }
+  },
 })
 export default class SettingsTeams extends Vue {
   private personModule = getModule(PersonModule, this.$store)
@@ -95,6 +83,5 @@ export default class SettingsTeams extends Vue {
 
     this.loading = false
   }
-
 }
 </script>
