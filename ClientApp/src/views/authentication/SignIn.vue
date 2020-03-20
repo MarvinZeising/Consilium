@@ -2,16 +2,8 @@
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
       <v-flex xs12 sm10 md8 lg6 xl4>
-        <v-form
-          ref="form"
-          type="post"
-          v-model="valid"
-        >
-
-          <v-card
-            class="mx-auto elevation-10"
-            max-width="500"
-          >
+        <v-form ref="form" type="post" v-model="valid">
+          <v-card class="mx-auto elevation-10" max-width="500">
             <v-card-title class="title font-weight-regular justify-space-between">
               <span v-t="'account.signInFullTitle'" />
             </v-card-title>
@@ -41,12 +33,9 @@
                 @click:append="passwordShow = !passwordShow"
               />
 
-              <span
-                class="red--text"
-                v-if="authFailed"
-              >
+              <span class="red--text" v-if="authFailed">
                 {{ $t('account.passwordWrong') }}
-                <br>
+                <br />
                 {{ $t('account.passwordCapslock') }}
               </span>
             </v-card-text>
@@ -64,7 +53,6 @@
               </v-btn>
             </v-card-actions>
           </v-card>
-
         </v-form>
       </v-flex>
     </v-layout>
@@ -91,14 +79,12 @@ export default class SignIn extends Vue {
   private email: string = ''
   private emailRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid')
+    (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid'),
   ]
 
   private password: string = ''
   private passwordShow = false
-  private passwordRules: any[] = [
-    (v: string) => !!v || i18n.t('core.fieldRequired'),
-  ]
+  private passwordRules: any[] = [(v: string) => !!v || i18n.t('core.fieldRequired')]
 
   private created() {
     if (this.userModule.getUser) {
@@ -115,7 +101,7 @@ export default class SignIn extends Vue {
     if (form.validate()) {
       const signInSuccessful = await this.userModule.signIn({
         email: this.email,
-        password: this.password
+        password: this.password,
       })
 
       if (signInSuccessful) {
@@ -126,7 +112,7 @@ export default class SignIn extends Vue {
 
           if (location !== undefined) {
             this.$router.push({
-              name: location.resolved.name,
+              name: location.resolved.name ?? undefined, // for some reason it fails otherwise
               params: location.resolved.params,
               query: location.resolved.query,
             })
