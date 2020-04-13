@@ -30,8 +30,7 @@ CREATE TABLE [user]
   PRIMARY KEY ([id]),
   CONSTRAINT [user_email_UNIQUE] UNIQUE  ([email]),
   CONSTRAINT [user_id_UNIQUE] UNIQUE  ([id])
-)
-;
+);
 
 CREATE TABLE congregation
 (
@@ -44,8 +43,7 @@ CREATE TABLE congregation
   CONSTRAINT [congregation_id_UNIQUE] UNIQUE  ([id]),
   CONSTRAINT [congregation_name_UNIQUE] UNIQUE  ([name]),
   CONSTRAINT [congregation_number_UNIQUE] UNIQUE  ([number])
-)
-;
+);
 
 CREATE TABLE person
 (
@@ -69,8 +67,7 @@ CREATE TABLE person
  ,
   CONSTRAINT [fk_person_congregation] FOREIGN KEY ([congregationId]) REFERENCES congregation ([id]) ON DELETE CASCADE,
   CONSTRAINT [fk_person_user] FOREIGN KEY ([userId]) REFERENCES [user] ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-)
-;
+);
 
 CREATE TABLE project
 (
@@ -83,8 +80,7 @@ CREATE TABLE project
   PRIMARY KEY ([id]),
   CONSTRAINT [project_id_UNIQUE] UNIQUE  ([id]),
   CONSTRAINT [name_UNIQUE] UNIQUE  ([name])
-)
-;
+);
 
 CREATE TABLE category
 (
@@ -97,8 +93,7 @@ CREATE TABLE category
   CONSTRAINT [category_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_category_project] FOREIGN KEY ([projectId]) REFERENCES project ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-)
-;
+);
 
 CREATE TABLE shift
 (
@@ -116,8 +111,7 @@ CREATE TABLE shift
   CONSTRAINT [shift_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_shift_category] FOREIGN KEY ([categoryId]) REFERENCES category ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-)
-;
+);
 
 CREATE TABLE team
 (
@@ -132,8 +126,7 @@ CREATE TABLE team
   CONSTRAINT [team_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_task_project] FOREIGN KEY ([projectId]) REFERENCES project ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-)
-;
+);
 
 CREATE TABLE application
 (
@@ -149,8 +142,7 @@ CREATE TABLE application
  ,
   CONSTRAINT [fk_application_person] FOREIGN KEY ([personId]) REFERENCES person ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT [fk_application_shift] FOREIGN KEY ([shiftId]) REFERENCES shift ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-)
-;
+);
 
 CREATE TABLE topic
 (
@@ -163,8 +155,7 @@ CREATE TABLE topic
   CONSTRAINT [topic_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_topic_project] FOREIGN KEY ([projectId]) REFERENCES project ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-)
-;
+);
 
 CREATE TABLE article
 (
@@ -178,8 +169,7 @@ CREATE TABLE article
   CONSTRAINT [article_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_article_topic] FOREIGN KEY ([topicId]) REFERENCES topic ([id])
-)
-;
+);
 
 CREATE TABLE attendee
 (
@@ -202,8 +192,7 @@ CREATE TABLE attendee
   -- TODO: CONSTRAINT [fk_attendee_shift] FOREIGN KEY ([shiftId]) REFERENCES shift ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT [fk_attendee_team] FOREIGN KEY ([teamId]) REFERENCES team ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION
   -- TODO: CONSTRAINT [fk_attendee_team] FOREIGN KEY ([teamId]) REFERENCES team ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-)
-;
+);
 
 CREATE TABLE role
 (
@@ -227,8 +216,7 @@ CREATE TABLE role
   CONSTRAINT [role_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_role_project] FOREIGN KEY ([projectId]) REFERENCES project ([id])
-)
-;
+);
 
 CREATE TABLE eligibility
 (
@@ -246,8 +234,7 @@ CREATE TABLE eligibility
  ,
   CONSTRAINT [fk_eligibility_category] FOREIGN KEY ([categoryId]) REFERENCES category ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT [fk_eligibility_role] FOREIGN KEY ([roleId]) REFERENCES role ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
-)
-;
+);
 
 CREATE TABLE participation
 (
@@ -265,7 +252,6 @@ CREATE TABLE participation
   CONSTRAINT [fk_participation_person] FOREIGN KEY ([personId]) REFERENCES person ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT [fk_participation_project] FOREIGN KEY ([projectId]) REFERENCES project ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT [fk_participation_role] FOREIGN KEY ([roleId]) REFERENCES role ([id])
-)
-;
+);
 
 COMMIT TRANSACTION
