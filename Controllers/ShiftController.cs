@@ -57,8 +57,6 @@ namespace Server.Controllers
                         x.Date <= to)
                     .Include(x => x.Category)
                     .Include(x => x.Applications).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
-                    .Include(x => x.Attendees).ThenInclude(x => x.Team)
-                    .Include(x => x.Attendees).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
                     .ToList();
 
                 var shifts = _mapper.Map<IEnumerable<ShiftDto>>(shiftsFromDb);
@@ -69,7 +67,7 @@ namespace Server.Controllers
                     {
                         if (Enum.Parse<ShiftStatus>(shift.Status, ignoreCase : true) != ShiftStatus.Scheduled)
                         {
-                            shift.Attendees = new List<AttendeeDto>();
+                            // shift.Attendees = new List<AttendeeDto>();
                         }
                         else
                         {
@@ -84,7 +82,7 @@ namespace Server.Controllers
                     if (application != null)
                     {
                         shift.IsApplicant = true;
-                        shift.IsAttendee = shift.Attendees.Any(x => x.ApplicationId == application.Id);
+                        // shift.IsAttendee = shift.Attendees.Any(x => x.ApplicationId == application.Id);
                     }
                 }
 
@@ -205,29 +203,28 @@ namespace Server.Controllers
                 var shift = _db.Shift
                     .FindByCondition(x => x.Id == shiftId)
                     .Include(x => x.Applications)
-                    .Include(x => x.Attendees)
                     .SingleOrDefault();
                 if (shift == null) return BadRequest();
                 if (_db.Participation.GetEligibilityByCategory(personId, projectId, shift.CategoryId)?.ShiftsWrite != true) return Forbid();
 
-                foreach (var attendee in shift.Attendees)
+                foreach (var application in shift.Applications)
                 {
-                    _db.Attendee.Delete(attendee);
+                    _db.Application.Delete(application);
                 }
 
-                foreach (var createAttendeeDto in dto.Attendees)
-                {
-                    var attendee = _mapper.Map<Attendee>(createAttendeeDto);
-                    attendee.ShiftId = shiftId;
+                // // TODO: this has to update now
+                // foreach (var createAttendeeDto in dto.Attendees)
+                // {
+                //     var attendee = _mapper.Map<Application>(createAttendeeDto);
+                //     attendee.ShiftId = shiftId;
 
-                    var application = shift.Applications.SingleOrDefault(x => x.PersonId == attendee.PersonId);
-                    if (application == null) return BadRequest();
-                    attendee.ApplicationId = application.Id;
+                //     var application = shift.Applications.SingleOrDefault(x => x.PersonId == attendee.PersonId);
+                //     if (application == null) return BadRequest();
 
-                    // TODO: check teamId
+                //     // TODO: check teamId
 
-                    _db.Attendee.Create(attendee);
-                }
+                //     _db.Application.Create(attendee);
+                // }
 
                 _db.Save();
 

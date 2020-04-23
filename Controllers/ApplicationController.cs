@@ -52,18 +52,18 @@ namespace Server.Controllers
         }
 
         [HttpGet("attendances")]
-        public ActionResult<IEnumerable<AttendeeDto>> GetAttendances(Guid personId)
+        public ActionResult<IEnumerable<ApplicationDto>> GetAttendances(Guid personId)
         {
             try
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
-                var attendances = _db.Attendee
+                var attendances = _db.Application
                     .FindByCondition(x => x.PersonId == personId)
                     .Include(x => x.Shift).ThenInclude(x => x.Category).ThenInclude(x => x.Project)
                     .ToList();
 
-                return Ok(_mapper.Map<IEnumerable<AttendeeDto>>(attendances));
+                return Ok(_mapper.Map<IEnumerable<ApplicationDto>>(attendances));
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace Server.Controllers
             {
                 if (!_db.Person.BelongsToUser(personId, HttpContext)) return Forbid();
 
-                var attendee = _db.Attendee
+                var attendee = _db.Application
                     .FindByCondition(x => x.ShiftId == shiftId && x.PersonId == personId)
                     .Include(x => x.Shift).ThenInclude(x => x.Category)
                     .SingleOrDefault();
@@ -128,7 +128,7 @@ namespace Server.Controllers
 
                 // TODO: make application have status bailed
 
-                _db.Attendee.Delete(attendee);
+                _db.Application.Delete(attendee);
                 _db.Save();
 
                 return Ok();

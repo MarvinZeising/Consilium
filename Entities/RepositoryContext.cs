@@ -17,7 +17,6 @@ namespace Server.Entities
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<Attendee> Attendees { get; set; }
         public DbSet<Eligibility> Eligibilities { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Article> Articles { get; set; }

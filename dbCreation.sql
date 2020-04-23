@@ -3,7 +3,6 @@ BEGIN TRANSACTION
 DROP TABLE IF EXISTS [participation];
 DROP TABLE IF EXISTS [eligibility];
 DROP TABLE IF EXISTS [role];
-DROP TABLE IF EXISTS [attendee];
 DROP TABLE IF EXISTS [article];
 DROP TABLE IF EXISTS [topic];
 DROP TABLE IF EXISTS [application];
@@ -132,8 +131,11 @@ CREATE TABLE application
 (
   [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [shiftId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
+  [teamId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [personId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
-  [availableAfter] BIT NOT NULL DEFAULT 1,
+  [isCaptain] BIT NOT NULL DEFAULT 0,
+  [status] NVARCHAR(8) NOT NULL DEFAULT 'pending',
+  [availableAfter] BIT NOT NULL DEFAULT 0,
   [notes] NVARCHAR(200) NOT NULL DEFAULT '',
   [createdTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
   [lastUpdatedTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
@@ -141,7 +143,8 @@ CREATE TABLE application
   CONSTRAINT [application_applicant_UNIQUE] UNIQUE  ([shiftId],[personId])
  ,
   CONSTRAINT [fk_application_person] FOREIGN KEY ([personId]) REFERENCES person ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT [fk_application_shift] FOREIGN KEY ([shiftId]) REFERENCES shift ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT [fk_application_shift] FOREIGN KEY ([shiftId]) REFERENCES shift ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT [fk_application_team] FOREIGN KEY ([teamId]) REFERENCES team ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE topic
@@ -169,29 +172,6 @@ CREATE TABLE article
   CONSTRAINT [article_id_UNIQUE] UNIQUE  ([id])
  ,
   CONSTRAINT [fk_article_topic] FOREIGN KEY ([topicId]) REFERENCES topic ([id])
-);
-
-CREATE TABLE attendee
-(
-  [id] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
-  [shiftId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
-  [personId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
-  [teamId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
-  [applicationId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
-  [isCaptain] BIT NOT NULL DEFAULT 0,
-  [createdTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
-  [lastUpdatedTime] DATETIME2(0) NOT NULL DEFAULT GETDATE(),
-  PRIMARY KEY ([id]),
-  CONSTRAINT [attendee_attendee_UNIQUE] UNIQUE  ([shiftId],[personId],[teamId]),
-  CONSTRAINT [attendee_application_UNIQUE] UNIQUE  ([applicationId])
- ,
-  CONSTRAINT [fk_attendee_application] FOREIGN KEY ([applicationId]) REFERENCES application ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT [fk_attendee_person] FOREIGN KEY ([personId]) REFERENCES person ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  -- TODO: CONSTRAINT [fk_attendee_person] FOREIGN KEY ([personId]) REFERENCES person ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT [fk_attendee_shift] FOREIGN KEY ([shiftId]) REFERENCES shift ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  -- TODO: CONSTRAINT [fk_attendee_shift] FOREIGN KEY ([shiftId]) REFERENCES shift ([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT [fk_attendee_team] FOREIGN KEY ([teamId]) REFERENCES team ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION
-  -- TODO: CONSTRAINT [fk_attendee_team] FOREIGN KEY ([teamId]) REFERENCES team ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
 CREATE TABLE role

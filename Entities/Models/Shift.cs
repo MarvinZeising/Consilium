@@ -50,8 +50,6 @@ namespace Server.Entities.Models
 
         public ICollection<Application> Applications { get; set; }
 
-        public ICollection<Attendee> Attendees { get; set; }
-
         public Shift()
         {
             Status = "draft";

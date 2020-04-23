@@ -11,7 +11,6 @@
         IShiftRepository Shift { get; }
         IApplicationRepository Application { get; }
         ITeamRepository Team { get; }
-        IAttendeeRepository Attendee { get; }
         IEligibilityRepository Eligibility { get; }
         ICongregationRepository Congregation { get; }
         ITopicRepository Topic { get; }

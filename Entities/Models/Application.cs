@@ -22,10 +22,18 @@ namespace Server.Entities.Models
         public Person Person { get; set; }
 
         [Required]
+        [ForeignKey(nameof(Team))]
+        public Guid TeamId { get; set; }
+        public Team Team { get; set; }
+
+        [Required]
         public bool AvailableAfter { get; set; }
 
         [MaxLength(200)]
         public string Notes { get; set; }
+
+        [Required]
+        public bool IsCaptain { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedTime { get; set; }

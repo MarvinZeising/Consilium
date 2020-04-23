@@ -19,8 +19,6 @@ namespace Server.Repository
                 .FindByCondition(x => x.Id == shiftId)
                 .Include(x => x.Category)
                 .Include(x => x.Applications).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
-                .Include(x => x.Attendees).ThenInclude(x => x.Team)
-                .Include(x => x.Attendees).ThenInclude(x => x.Person).ThenInclude(x => x.Congregation)
                 .SingleOrDefault();
 
             var shift = mapper.Map<ShiftDto>(shiftFromDb);
@@ -29,7 +27,6 @@ namespace Server.Repository
             if (application != null)
             {
                 shift.IsApplicant = true;
-                shift.IsAttendee = shift.Attendees.Any(x => x.ApplicationId == application.Id);
             }
 
             return shift;
