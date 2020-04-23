@@ -1,33 +1,16 @@
 <template>
-  <v-dialog
-    v-model="deleteAccountDialog"
-    max-width="600px"
-  >
+  <v-dialog v-model="deleteAccountDialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        color="error"
-        v-t="'account.delete'"
-        @click="opened"
-      />
+      <v-btn v-on="on" color="error" v-t="'account.delete'" @click="opened" />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'account.delete'"
-          />
+          <span class="headline" v-t="'account.delete'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'account.deleteDescription'"
-          />
-          <p
-            class="subtitle-1"
-            v-t="'account.deleteHint'"
-          />
+          <p class="subtitle-1" v-t="'account.deleteDescription'" />
+          <p class="subtitle-1" v-t="'account.deleteHint'" />
           <v-text-field
             v-model="email"
             :label="$t('core.email')"
@@ -35,25 +18,18 @@
             filled
             required
           />
-          <p
-            class="subtitle-1 text-uppercase error--text"
-            v-t="'account.deleteWarning'"
-          />
+          <p class="subtitle-1 text-uppercase error--text" v-t="'account.deleteWarning'" />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="deleteAccountDialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="deleteAccountDialog = false" v-t="'core.cancel'" />
           <v-btn
             :disabled="!valid"
             :loading="loading"
             type="submit"
             text
             color="error"
-            @click.stop="deleteAccount"
+            @click.prevent="deleteAccount"
             v-t="'core.delete'"
           />
         </v-card-actions>
@@ -83,7 +59,7 @@ export default class DeleteAccountDialog extends Vue {
     return [
       (v: string) => !!v || i18n.t('core.fieldRequired'),
       (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid'),
-      (v: string) => v === this.accountEmail || i18n.t('account.emailMustEqual')
+      (v: string) => v === this.accountEmail || i18n.t('account.emailMustEqual'),
     ]
   }
 
@@ -102,6 +78,5 @@ export default class DeleteAccountDialog extends Vue {
     this.deleteAccountDialog = false
     this.$router.push({ name: 'home' })
   }
-
 }
 </script>

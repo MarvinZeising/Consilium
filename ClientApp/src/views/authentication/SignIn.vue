@@ -47,7 +47,7 @@
                 :loading="authInProgress"
                 color="primary"
                 type="submit"
-                @click.stop="signIn"
+                @click.prevent="signIn"
               >
                 <span v-t="'account.signIn'" />
               </v-btn>

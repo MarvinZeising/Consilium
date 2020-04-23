@@ -1,27 +1,12 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="600px"
-  >
+  <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        class="mt-2"
-        v-t="'core.edit'"
-        @click="opened"
-      />
+      <v-btn v-on="on" text class="mt-2" v-t="'core.edit'" @click="opened" />
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
+      <v-form v-model="valid" ref="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.invitation.invite'"
-          />
+          <span class="headline" v-t="'project.invitation.invite'" />
         </v-card-title>
         <v-card-text>
           <p v-t="'project.invitation.roleDescription'" />
@@ -40,18 +25,14 @@
         <v-card-actions>
           <DeleteInvitationDialog :participationId="participation.id" />
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.cancel'" />
           <v-btn
             :disabled="!valid || roleId === this.participation.roleId"
             type="submit"
             :loading="loading"
             text
             color="primary"
-            @click.stop="save"
+            @click.prevent="save"
             v-t="'core.save'"
           />
         </v-card-actions>
@@ -73,7 +54,7 @@ import { Participation, Role } from '../../models'
 @Component({
   components: {
     DeleteInvitationDialog,
-  }
+  },
 })
 export default class UpdateInvitationDialog extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
@@ -90,12 +71,10 @@ export default class UpdateInvitationDialog extends Vue {
 
   private roleId: string = ''
   private roleValues: any = []
-  private roleRules: any[] = [
-    (v: string) => !!v || i18n.t('core.fieldRequired'),
-  ]
+  private roleRules: any[] = [(v: string) => !!v || i18n.t('core.fieldRequired')]
 
   private async opened() {
-    await this.roleModule.loadRoles();
+    await this.roleModule.loadRoles()
 
     this.roleValues = this.projectModule.getActiveProject?.getRoles.map((role: Role) => {
       return {
@@ -117,13 +96,12 @@ export default class UpdateInvitationDialog extends Vue {
 
       await this.invitationModule.updateInvitation({
         invitationId: this.participation?.id,
-        roleId: this.roleId
+        roleId: this.roleId,
       })
 
       this.loading = false
       this.dialog = false
     }
   }
-
 }
 </script>

@@ -1,38 +1,18 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="500px"
-  >
+  <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'core.edit'"
-        @click="opened"
-      />
+      <v-btn v-on="on" text v-t="'core.edit'" @click="opened" />
     </template>
     <v-card>
       <v-form v-model="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.knowledgeBase.renameTopic'"
-          />
+          <span class="headline" v-t="'project.knowledgeBase.renameTopic'" />
         </v-card-title>
         <v-card-text>
-          <v-text-field
-            v-model="topicName"
-            :label="$t('core.name')"
-            filled
-            required
-          />
+          <v-text-field v-model="topicName" :label="$t('core.name')" filled required />
         </v-card-text>
         <v-card-actions>
-          <v-btn
-            text
-            v-t="'core.close'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.close'" @click.stop="dialog = false" />
           <v-spacer />
           <DeleteTopicDialog :topic="topic" />
           <v-btn
@@ -40,7 +20,7 @@
             color="primary"
             type="submit"
             v-t="'core.save'"
-            @click.stop="renameTopic"
+            @click.prevent="renameTopic"
             :disabled="topicName == ''"
             :loading="loading"
           />
@@ -61,7 +41,7 @@ import DeleteTopicDialog from './DeleteTopicDialog.vue'
 @Component({
   components: {
     DeleteTopicDialog,
-  }
+  },
 })
 export default class UpdateTopicDialog extends Vue {
   private knowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)

@@ -1,41 +1,22 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="600px"
-  >
+  <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        class="mb-4"
-        v-t="'account.changePassword'"
-      />
+      <v-btn v-on="on" class="mb-4" v-t="'account.changePassword'" />
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
+      <v-form v-model="valid" ref="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'account.changePassword'"
-          />
+          <span class="headline" v-t="'account.changePassword'" />
         </v-card-title>
 
         <v-card-text>
           <p class="subtitle-1">
             {{ $t('account.changePasswordDescription1') }}
-            <br>
+            <br />
             {{ $t('account.changePasswordDescription2') }}
           </p>
-          <p
-            class="subtitle-1"
-            v-t="'account.changePasswordHint'"
-          />
-          <p
-            class="subtitle-1"
-            v-t="'account.currentPasswordHint'"
-          />
+          <p class="subtitle-1" v-t="'account.changePasswordHint'" />
+          <p class="subtitle-1" v-t="'account.currentPasswordHint'" />
           <v-text-field
             v-model="currentPassword"
             :label="$t('account.currentPassword')"
@@ -47,10 +28,7 @@
             filled
             required
           />
-          <p
-            class="subtitle-1"
-            v-t="'account.newPasswordHint'"
-          />
+          <p class="subtitle-1" v-t="'account.newPasswordHint'" />
           <v-text-field
             v-model="newPassword"
             :label="$t('account.newPassword')"
@@ -77,17 +55,13 @@
 
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.cancel'" />
           <v-btn
             :disabled="!valid"
             type="submit"
             text
             color="primary"
-            @click.stop="save"
+            @click.prevent="save"
             v-t="'core.save'"
           />
         </v-card-actions>
@@ -117,7 +91,7 @@ export default class UpdatePasswordDialog extends Vue {
   private newPasswordRepeatShow = false
   private passwordRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => v.length >= 8 || i18n.t('core.fieldMin', { count: 8 })
+    (v: string) => v.length >= 8 || i18n.t('core.fieldMin', { count: 8 }),
   ]
 
   private async save() {
@@ -135,13 +109,14 @@ export default class UpdatePasswordDialog extends Vue {
         this.$router.push({ name: 'home' })
       } catch (e) {
         const thisPassword = this.currentPassword
-        this.passwordRules.push((v: string) => v !== thisPassword || i18n.t('account.passwordWrong'))
+        this.passwordRules.push(
+          (v: string) => v !== thisPassword || i18n.t('account.passwordWrong')
+        )
 
         const form: any = this.$refs.form
         form.validate()
       }
     }
   }
-
 }
 </script>

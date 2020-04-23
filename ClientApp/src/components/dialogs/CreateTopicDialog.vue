@@ -1,44 +1,25 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="500px"
-  >
+  <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'project.knowledgeBase.createTopic'"
-      />
+      <v-btn v-on="on" text v-t="'project.knowledgeBase.createTopic'" />
     </template>
     <v-card>
       <v-form v-model="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.knowledgeBase.createTopic'"
-          />
+          <span class="headline" v-t="'project.knowledgeBase.createTopic'" />
         </v-card-title>
         <v-card-text>
-          <v-text-field
-            v-model="topicName"
-            :label="$t('core.name')"
-            filled
-            required
-          />
+          <v-text-field v-model="topicName" :label="$t('core.name')" filled required />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.close'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.close'" />
           <v-btn
             text
             type="submit"
             color="primary"
             v-t="'core.save'"
-            @click.stop="createTopic"
+            @click.prevent="createTopic"
             :disabled="topicName == ''"
             :loading="loading"
           />

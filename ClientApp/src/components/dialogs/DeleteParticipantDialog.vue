@@ -1,43 +1,25 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="500px"
-  >
+  <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        color="error"
-        v-t="'project.participant.delete'"
-      />
+      <v-btn v-on="on" text color="error" v-t="'project.participant.delete'" />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.participant.delete'"
-          />
+          <span class="headline" v-t="'project.participant.delete'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'project.participant.deleteDescription'"
-          />
+          <p class="subtitle-1" v-t="'project.participant.deleteDescription'" />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.cancel'" />
           <v-btn
             :disabled="!valid"
             type="submit"
             text
             color="error"
-            @click.stop="deleteParticipant"
+            @click.prevent="deleteParticipant"
             v-t="'core.delete'"
           />
         </v-card-actions>
@@ -73,6 +55,5 @@ export default class DeleteRoleDialog extends Vue {
 
     this.dialog = false
   }
-
 }
 </script>

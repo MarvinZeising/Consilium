@@ -48,7 +48,7 @@
             v-t="'core.save'"
             :loading="loading"
             :disabled="!valid"
-            @click.stop="save"
+            @click.prevent="save"
           />
         </v-card-actions>
       </v-form>
@@ -110,7 +110,9 @@ export default class UpdateShiftDialog extends Vue {
       this.loading = true
 
       const oldCategoryId =
-        this.shift.categoryId !== this.categoryModel?.value?.id ? this.shift.categoryId + '' : undefined
+        this.shift.categoryId !== this.categoryModel?.value?.id
+          ? this.shift.categoryId + ''
+          : undefined
 
       this.shift.categoryId = this.categoryModel?.value?.id || ''
       this.shift.date = this.dateModel.value

@@ -41,7 +41,7 @@
             v-t="'core.save'"
             :loading="loading"
             :disabled="!valid"
-            @click.stop="save"
+            @click.prevent="save"
           />
         </v-card-actions>
       </v-form>

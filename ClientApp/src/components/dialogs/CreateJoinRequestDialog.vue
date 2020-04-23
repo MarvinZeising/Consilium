@@ -1,25 +1,12 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="600px"
-  >
+  <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'project.request.create'"
-      />
+      <v-btn v-on="on" text v-t="'project.request.create'" />
     </template>
     <v-card>
-      <v-form
-        ref="form"
-        v-model="form"
-      >
+      <v-form ref="form" v-model="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.request.create'"
-          />
+          <span class="headline" v-t="'project.request.create'" />
         </v-card-title>
         <v-card-text>
           <p v-t="'project.request.createDescription'" />
@@ -33,17 +20,13 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.close'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.close'" />
           <v-btn
             :disabled="projectId == ''"
             :loading="loading"
             text
             color="primary"
-            @click.stop="joinProject"
+            @click.prevent="joinProject"
             v-t="'project.request.createSubmit'"
             type="submit"
           />
@@ -74,10 +57,10 @@ export default class CreateJoinRequestDialog extends Vue {
   private projectRules: any[] = []
 
   private throwValidationError(message: string) {
-      const form: any = this.$refs.form
-      const thisProjectId = this.projectId
-      this.projectRules.push((v: string) => v !== thisProjectId || i18n.t(message))
-      form.validate()
+    const form: any = this.$refs.form
+    const thisProjectId = this.projectId
+    this.projectRules.push((v: string) => v !== thisProjectId || i18n.t(message))
+    form.validate()
   }
 
   private async joinProject() {

@@ -1,42 +1,24 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="400px"
-  >
+  <v-dialog v-model="dialog" max-width="400px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        color="error"
-        v-t="'project.congregation.delete'"
-      />
+      <v-btn v-on="on" text color="error" v-t="'project.congregation.delete'" />
     </template>
     <v-card>
       <v-card-title>
-        <span
-          class="headline"
-          v-t="'project.congregation.delete'"
-        />
+        <span class="headline" v-t="'project.congregation.delete'" />
       </v-card-title>
       <v-card-text>
-        <p
-          class="subtitle-1"
-          v-t="'project.congregation.deleteDescription'"
-        />
+        <p class="subtitle-1" v-t="'project.congregation.deleteDescription'" />
       </v-card-text>
       <v-card-actions>
-        <v-btn
-          text
-          v-t="'core.cancel'"
-          @click.stop="dialog = false"
-        />
+        <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
         <v-spacer />
         <v-btn
           type="submit"
           text
           color="error"
           v-t="'core.delete'"
-          @click.stop="deleteCongregation"
+          @click.prevent="deleteCongregation"
           :loading="loading"
         />
       </v-card-actions>
@@ -71,6 +53,5 @@ export default class DeleteCongregationDialog extends Vue {
     this.loading = false
     this.dialog = false
   }
-
 }
 </script>

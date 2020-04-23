@@ -49,7 +49,7 @@
             v-t="'shift.application.apply'"
             :loading="loading"
             :disabled="!valid"
-            @click.stop="save"
+            @click.prevent="save"
           />
         </v-card-actions>
       </v-form>

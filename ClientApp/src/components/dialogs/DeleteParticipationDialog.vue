@@ -1,30 +1,15 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="500px"
-  >
+  <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        color="error"
-        v-t="'project.participation.delete'"
-        :loading="loading"
-      />
+      <v-btn v-on="on" text color="error" v-t="'project.participation.delete'" :loading="loading" />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.participation.delete'"
-          />
+          <span class="headline" v-t="'project.participation.delete'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'project.participation.deleteDescription'"
-          />
+          <p class="subtitle-1" v-t="'project.participation.deleteDescription'" />
           <p v-t="'project.participation.deleteHint'" />
           <v-text-field
             v-model="enteredName"
@@ -35,17 +20,10 @@
           />
         </v-card-text>
         <v-card-text class="error">
-          <span
-            class="subtitle-1"
-            v-t="'project.participation.deleteWarning'"
-          />
+          <span class="subtitle-1" v-t="'project.participation.deleteWarning'" />
         </v-card-text>
         <v-card-actions>
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.cancel'" />
           <v-spacer />
           <v-btn
             :disabled="!valid"
@@ -53,7 +31,7 @@
             type="submit"
             text
             color="error"
-            @click.stop="deleteParticipation"
+            @click.prevent="deleteParticipation"
             v-t="'project.participation.delete'"
           />
         </v-card-actions>
@@ -98,6 +76,5 @@ export default class DeleteParticipationDialog extends Vue {
     this.loading = false
     this.dialog = false
   }
-
 }
 </script>

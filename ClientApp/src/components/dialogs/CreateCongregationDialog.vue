@@ -1,41 +1,18 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="500px"
-  >
+  <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'project.congregation.create'"
-      />
+      <v-btn v-on="on" text v-t="'project.congregation.create'" />
     </template>
     <v-card>
-      <v-form
-        ref="form"
-        v-model="valid"
-      >
+      <v-form ref="form" v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.congregation.create'"
-          />
+          <span class="headline" v-t="'project.congregation.create'" />
         </v-card-title>
         <v-card-text>
-
-          <p
-            class="subtitle-1"
-            v-t="'project.congregation.createDescription'"
-          />
+          <p class="subtitle-1" v-t="'project.congregation.createDescription'" />
 
           <p v-t="'project.congregation.nameDescription'" />
-          <v-text-field
-            v-model="name"
-            :label="$t('core.name')"
-            :rules="nameRules"
-            filled
-            required
-          />
+          <v-text-field v-model="name" :label="$t('core.name')" :rules="nameRules" filled required />
 
           <p v-t="'project.congregation.numberDescription'" />
           <v-text-field
@@ -45,21 +22,16 @@
             filled
             required
           />
-
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-btn
             text
             type="submit"
             color="primary"
             v-t="'core.save'"
-            @click.stop="create"
+            @click.prevent="create"
             :disabled="!valid"
             :loading="loading"
           />
@@ -90,7 +62,7 @@ export default class CreateCongregationDialog extends Vue {
   private nameRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
-    (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
+    (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 }),
   ]
   private number: string = ''
   private numberRules: any[] = [
@@ -107,12 +79,16 @@ export default class CreateCongregationDialog extends Vue {
     if (response === Exceptions.CongregationNameUnique) {
       const form: any = this.$refs.form
       const thisName = this.name
-      this.nameRules.push((v: string) => v !== thisName || i18n.t('project.congregation.nameUnique'))
+      this.nameRules.push(
+        (v: string) => v !== thisName || i18n.t('project.congregation.nameUnique')
+      )
       form.validate()
     } else if (response === Exceptions.CongregationNumberUnique) {
       const form: any = this.$refs.form
       const thisNumber = this.number
-      this.numberRules.push((v: string) => v !== thisNumber || i18n.t('project.congregation.numberUnique'))
+      this.numberRules.push(
+        (v: string) => v !== thisNumber || i18n.t('project.congregation.numberUnique')
+      )
       form.validate()
     } else if (response) {
       this.dialog = false
@@ -126,6 +102,5 @@ export default class CreateCongregationDialog extends Vue {
 
     this.loading = false
   }
-
 }
 </script>

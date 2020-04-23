@@ -1,38 +1,19 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="400px"
-  >
+  <v-dialog v-model="dialog" max-width="400px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        color="error"
-        :loading="loading"
-        v-t="'shift.delete'"
-      />
+      <v-btn v-on="on" text color="error" :loading="loading" v-t="'shift.delete'" />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'shift.delete'"
-          />
+          <span class="headline" v-t="'shift.delete'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'shift.deleteDescription'"
-          />
+          <p class="subtitle-1" v-t="'shift.deleteDescription'" />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-btn
             text
             type="submit"
@@ -40,7 +21,7 @@
             v-t="'core.delete'"
             :loading="loading"
             :disabled="!valid"
-            @click.stop="deleteShift"
+            @click.prevent="deleteShift"
           />
         </v-card-actions>
       </v-form>
@@ -77,6 +58,5 @@ export default class DeleteShiftDialog extends Vue {
 
     this.dialog = false
   }
-
 }
 </script>

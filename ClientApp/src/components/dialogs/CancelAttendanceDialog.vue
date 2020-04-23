@@ -1,36 +1,18 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="400px"
-  >
+  <v-dialog v-model="dialog" max-width="400px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'shift.attendee.cancel'"
-        :loading="loading"
-      />
+      <v-btn v-on="on" text v-t="'shift.attendee.cancel'" :loading="loading" />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'shift.attendee.cancelAttendance'"
-          />
+          <span class="headline" v-t="'shift.attendee.cancelAttendance'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'shift.attendee.cancelDescription'"
-          />
+          <p class="subtitle-1" v-t="'shift.attendee.cancelDescription'" />
         </v-card-text>
         <v-card-actions>
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-spacer />
           <v-btn
             text
@@ -39,7 +21,7 @@
             v-t="'shift.attendee.cancelAttendance'"
             :loading="loading"
             :disabled="!valid"
-            @click.stop="cancelAttendance"
+            @click.prevent="cancelAttendance"
           />
         </v-card-actions>
       </v-form>
@@ -75,6 +57,5 @@ export default class CancelAttendanceDialog extends Vue {
 
     this.dialog = false
   }
-
 }
 </script>

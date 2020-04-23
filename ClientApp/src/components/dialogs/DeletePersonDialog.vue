@@ -1,33 +1,16 @@
 <template>
-  <v-dialog
-    v-model="deletePersonDialog"
-    max-width="600px"
-  >
+  <v-dialog v-model="deletePersonDialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        color="error"
-        v-t="'person.delete'"
-        @click="opened"
-      />
+      <v-btn v-on="on" color="error" v-t="'person.delete'" @click="opened" />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'person.delete'"
-          />
+          <span class="headline" v-t="'person.delete'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'person.deleteDescription'"
-          />
-          <p
-            class="subtitle-1"
-            v-t="'person.deleteHint'"
-          />
+          <p class="subtitle-1" v-t="'person.deleteDescription'" />
+          <p class="subtitle-1" v-t="'person.deleteHint'" />
           <v-text-field
             v-model="enteredName"
             :label="$t('core.name')"
@@ -38,17 +21,13 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="deletePersonDialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="deletePersonDialog = false" v-t="'core.cancel'" />
           <v-btn
             :disabled="!valid"
             type="submit"
             text
             color="error"
-            @click.stop="deletePerson"
+            @click.prevent="deletePerson"
             v-t="'core.delete'"
           />
         </v-card-actions>
@@ -100,6 +79,5 @@ export default class DeletePersonDialog extends Vue {
       this.$router.push({ name: 'account' })
     }
   }
-
 }
 </script>

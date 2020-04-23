@@ -1,44 +1,26 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="400px"
-  >
+  <v-dialog v-model="dialog" max-width="400px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        color="error"
-        v-t="'core.delete'"
-      />
+      <v-btn v-on="on" text color="error" v-t="'core.delete'" />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.invitation.delete'"
-          />
+          <span class="headline" v-t="'project.invitation.delete'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'project.invitation.deleteDescription'"
-          />
+          <p class="subtitle-1" v-t="'project.invitation.deleteDescription'" />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.cancel'" />
           <v-btn
             :disabled="!valid"
             :loading="loading"
             type="submit"
             text
             color="error"
-            @click.stop="deleteInvitation"
+            @click.prevent="deleteInvitation"
             v-t="'core.delete'"
           />
         </v-card-actions>
@@ -74,6 +56,5 @@ export default class DeleteInvitationDialog extends Vue {
 
     this.dialog = false
   }
-
 }
 </script>

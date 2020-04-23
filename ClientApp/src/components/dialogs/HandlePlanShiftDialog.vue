@@ -1,37 +1,19 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="400px"
-  >
+  <v-dialog v-model="dialog" max-width="400px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        :loading="loading"
-        v-t="'shift.status.planShift'"
-      />
+      <v-btn v-on="on" text :loading="loading" v-t="'shift.status.planShift'" />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'shift.status.planShift'"
-          />
+          <span class="headline" v-t="'shift.status.planShift'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'shift.status.planShiftDescription'"
-          />
+          <p class="subtitle-1" v-t="'shift.status.planShiftDescription'" />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            v-t="'core.no'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.no'" @click.stop="dialog = false" />
           <v-btn
             text
             type="submit"
@@ -39,7 +21,7 @@
             v-t="'core.yes'"
             :loading="loading"
             :disabled="!valid"
-            @click.stop="planShift"
+            @click.prevent="planShift"
           />
         </v-card-actions>
       </v-form>
@@ -72,7 +54,7 @@ export default class HandlePlanShiftDialog extends Vue {
 
       await this.shiftModule.updateShiftStatus({
         shiftId: this.shift.id,
-        status: ShiftStatus.planned
+        status: ShiftStatus.planned,
       })
 
       this.loading = false
@@ -80,6 +62,5 @@ export default class HandlePlanShiftDialog extends Vue {
 
     this.dialog = false
   }
-
 }
 </script>

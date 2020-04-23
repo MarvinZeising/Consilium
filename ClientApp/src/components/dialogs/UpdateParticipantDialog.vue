@@ -1,41 +1,21 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="1000px"
-  >
+  <v-dialog v-model="dialog" max-width="1000px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        icon
-        @click="opened"
-      >
+      <v-btn v-on="on" icon @click="opened">
         <v-icon>edit</v-icon>
       </v-btn>
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
+      <v-form v-model="valid" ref="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.participant.update'"
-          />
+          <span class="headline" v-t="'project.participant.update'" />
         </v-card-title>
         <v-card-text>
-          <span
-            class="subtitle-1"
-            v-t="'project.participant.updateDescription'"
-          />
+          <span class="subtitle-1" v-t="'project.participant.updateDescription'" />
         </v-card-text>
         <v-card-text class="pa-2">
           <v-layout wrap>
-
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
+            <v-flex xs12 sm6 md4 class="pa-2">
               <v-text-field
                 v-model="firstname"
                 :rules="nameRules"
@@ -46,10 +26,7 @@
               />
             </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
+            <v-flex xs12 sm6 md4 class="pa-2">
               <v-text-field
                 v-model="lastname"
                 :rules="nameRules"
@@ -60,10 +37,7 @@
               />
             </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
+            <v-flex xs12 sm6 md4 class="pa-2">
               <v-select
                 v-model="gender"
                 :items="genderValues"
@@ -81,22 +55,11 @@
               </v-select>
             </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
-              <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                :label="$t('core.email')"
-                filled
-              />
+            <v-flex xs12 sm6 md4 class="pa-2">
+              <v-text-field v-model="email" :rules="emailRules" :label="$t('core.email')" filled />
             </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
+            <v-flex xs12 sm6 md4 class="pa-2">
               <v-select
                 v-model="language"
                 :items="languageValues"
@@ -115,22 +78,11 @@
               </v-select>
             </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
-              <v-text-field
-                v-model="phone"
-                :rules="phoneRules"
-                :label="$t('core.phone')"
-                filled
-              />
+            <v-flex xs12 sm6 md4 class="pa-2">
+              <v-text-field v-model="phone" :rules="phoneRules" :label="$t('core.phone')" filled />
             </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
+            <v-flex xs12 sm6 md4 class="pa-2">
               <v-select
                 v-model="privilege"
                 :items="privilegeValues"
@@ -148,10 +100,7 @@
               </v-select>
             </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
+            <v-flex xs12 sm6 md4 class="pa-2">
               <v-select
                 v-model="assignment"
                 :items="assignmentValues"
@@ -169,10 +118,7 @@
               </v-select>
             </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
+            <v-flex xs12 sm6 md4 class="pa-2">
               <v-overflow-btn
                 v-model="congregationId"
                 :items="congregationValues"
@@ -186,10 +132,7 @@
               />
             </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
+            <v-flex xs12 sm6 md4 class="pa-2">
               <v-text-field
                 v-model="languages"
                 :label="$t('person.languages')"
@@ -199,10 +142,7 @@
               />
             </v-flex>
 
-            <v-flex
-              xs12 sm6 md4
-              class="pa-2"
-            >
+            <v-flex xs12 sm6 md4 class="pa-2">
               <v-textarea
                 v-model="notes"
                 :label="$t('person.notes')"
@@ -212,15 +152,10 @@
                 filled
               />
             </v-flex>
-
           </v-layout>
         </v-card-text>
         <v-card-actions>
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-spacer />
           <DeleteParticipantDialog
             v-if="participation.personId !== personModule.getActivePersonId"
@@ -233,7 +168,7 @@
             v-t="'core.save'"
             :loading="loading"
             :disabled="!valid"
-            @click.stop="save"
+            @click.prevent="save"
           />
         </v-card-actions>
       </v-form>
@@ -250,12 +185,20 @@ import CongregationModule from '../../store/congregations'
 import ProjectModule from '../../store/projects'
 import ParticipantModule from '../../store/participants'
 import DeleteParticipantDialog from '../../components/dialogs/DeleteParticipantDialog.vue'
-import { Article, Person, Participation, Gender, Privilege, Assignment, Language } from '../../models'
+import {
+  Article,
+  Person,
+  Participation,
+  Gender,
+  Privilege,
+  Assignment,
+  Language,
+} from '../../models'
 
 @Component({
   components: {
     DeleteParticipantDialog,
-  }
+  },
 })
 export default class UpdateParticipantDialog extends Vue {
   private personModule = getModule(PersonModule, this.$store)
@@ -299,7 +242,7 @@ export default class UpdateParticipantDialog extends Vue {
     (v: string) => v.length <= 1000 || i18n.t('core.fieldMax', { count: 1000 }),
   ]
 
-  private genderValues: any[] = [ 'male', 'female' ].map((value) => {
+  private genderValues: any[] = ['male', 'female'].map((value) => {
     return { value }
   })
   private languageValues: any[] = i18n.availableLocales.map((value) => {
@@ -312,7 +255,7 @@ export default class UpdateParticipantDialog extends Vue {
     'special',
     'circuit',
     'bethelite',
-    'construction'
+    'construction',
   ].map((value) => {
     return { value }
   })
@@ -322,7 +265,7 @@ export default class UpdateParticipantDialog extends Vue {
     'elder',
     'cobe',
     'secretary',
-    'serviceOverseer'
+    'serviceOverseer',
   ].map((value) => {
     return { value }
   })
@@ -377,6 +320,5 @@ export default class UpdateParticipantDialog extends Vue {
       this.dialog = false
     }
   }
-
 }
 </script>

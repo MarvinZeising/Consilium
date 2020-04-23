@@ -1,36 +1,16 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="600px"
-  >
+  <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'project.invitation.invite'"
-        @click="opened"
-      />
+      <v-btn v-on="on" text v-t="'project.invitation.invite'" @click="opened" />
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
+      <v-form v-model="valid" ref="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.invitation.invite'"
-          />
+          <span class="headline" v-t="'project.invitation.invite'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'project.invitation.inviteDescription'"
-          />
-          <p
-            class="subtitle-1"
-            v-t="'project.invitation.idDescription'"
-          />
+          <p class="subtitle-1" v-t="'project.invitation.inviteDescription'" />
+          <p class="subtitle-1" v-t="'project.invitation.idDescription'" />
           <v-text-field
             v-model="personId"
             :rules="personIdRules"
@@ -50,22 +30,17 @@
             filled
             required
           />
-
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.cancel'" />
           <v-btn
             :disabled="!valid"
             type="submit"
             :loading="loading"
             text
             color="primary"
-            @click.stop="save"
+            @click.prevent="save"
             v-t="'core.save'"
           />
         </v-card-actions>
@@ -82,7 +57,7 @@ import ProjectModule from '../../store/projects'
 import InvitationModule from '../../store/invitations'
 import RequestModule from '../../store/requests'
 import RoleModule from '../../store/roles'
-import { Role, Exceptions } from '@/models'
+import { Role, Exceptions } from '../../models'
 
 @Component
 export default class CreateInvitationDialog extends Vue {
@@ -99,16 +74,16 @@ export default class CreateInvitationDialog extends Vue {
   private personId: string = ''
   private personIdRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v) || i18n.t('core.fieldInvalidGuid'),
+    (v: string) =>
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v) ||
+      i18n.t('core.fieldInvalidGuid'),
   ]
   private roleId: string = ''
   private roleValues: any = []
-  private roleRules: any[] = [
-    (v: string) => !!v || i18n.t('core.fieldRequired'),
-  ]
+  private roleRules: any[] = [(v: string) => !!v || i18n.t('core.fieldRequired')]
 
   private async opened() {
-    await this.roleModule.loadRoles();
+    await this.roleModule.loadRoles()
 
     const project = this.projectModule.getActiveProject
     if (project) {
@@ -123,7 +98,10 @@ export default class CreateInvitationDialog extends Vue {
         const invitations = project.getInvitations
         const requests = project.getRequests
         const permanents = project.getParticipations
-        const allParticipantIds = permanents.concat(invitations).concat(requests).map((x) => x.id)
+        const allParticipantIds = permanents
+          .concat(invitations)
+          .concat(requests)
+          .map((x) => x.id)
         return !allParticipantIds?.includes(v) || this.$t('project.invitation.duplicate')
       })
     }
@@ -132,10 +110,10 @@ export default class CreateInvitationDialog extends Vue {
   }
 
   private throwValidationError(message: string) {
-      const form: any = this.$refs.form
-      const thisPersonId = this.personId
-      this.personIdRules.push((v: string) => v !== thisPersonId || i18n.t(message))
-      form.validate()
+    const form: any = this.$refs.form
+    const thisPersonId = this.personId
+    this.personIdRules.push((v: string) => v !== thisPersonId || i18n.t(message))
+    form.validate()
   }
 
   private async save() {
@@ -144,7 +122,7 @@ export default class CreateInvitationDialog extends Vue {
 
     const response = await this.invitationModule.createInvitation({
       personId: this.personId,
-      roleId: this.roleId
+      roleId: this.roleId,
     })
     if (response === Exceptions.PersonNotFound) {
       this.throwValidationError('person.notFound')
@@ -156,6 +134,5 @@ export default class CreateInvitationDialog extends Vue {
 
     this.loading = false
   }
-
 }
 </script>

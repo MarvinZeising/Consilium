@@ -1,33 +1,16 @@
 <template>
-  <v-dialog
-    v-model="deleteProjectDialog"
-    max-width="600px"
-  >
+  <v-dialog v-model="deleteProjectDialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        color="error"
-        v-t="'project.delete'"
-        @click="opened"
-      />
+      <v-btn v-on="on" color="error" v-t="'project.delete'" @click="opened" />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.delete'"
-          />
+          <span class="headline" v-t="'project.delete'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'project.deleteDescription'"
-          />
-          <p
-            class="subtitle-1"
-            v-t="'project.deleteHint'"
-          />
+          <p class="subtitle-1" v-t="'project.deleteDescription'" />
+          <p class="subtitle-1" v-t="'project.deleteHint'" />
           <v-text-field
             v-model="enteredName"
             :label="$t('core.name')"
@@ -35,24 +18,17 @@
             filled
             required
           />
-          <p
-            class="subtitle-1 text-uppercase error--text"
-            v-t="'project.deleteWarning'"
-          />
+          <p class="subtitle-1 text-uppercase error--text" v-t="'project.deleteWarning'" />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="deleteProjectDialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="deleteProjectDialog = false" v-t="'core.cancel'" />
           <v-btn
             :disabled="!valid"
             type="submit"
             text
             color="error"
-            @click.stop="deleteProject"
+            @click.prevent="deleteProject"
             v-t="'core.delete'"
           />
         </v-card-actions>
@@ -99,6 +75,5 @@ export default class DeleteProjectDialog extends Vue {
     this.deleteProjectDialog = false
     this.$router.push({ name: 'home' })
   }
-
 }
 </script>

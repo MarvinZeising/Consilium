@@ -1,43 +1,20 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="600px"
-  >
+  <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        icon
-        @click="opened"
-      >
+      <v-btn v-on="on" icon @click="opened">
         <v-icon>edit</v-icon>
       </v-btn>
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
+      <v-form v-model="valid" ref="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.congregation.update'"
-          />
+          <span class="headline" v-t="'project.congregation.update'" />
         </v-card-title>
         <v-card-text>
-
-          <p
-            class="subtitle-1"
-            v-t="'project.congregation.updateDescription'"
-          />
+          <p class="subtitle-1" v-t="'project.congregation.updateDescription'" />
 
           <p v-t="'project.congregation.nameDescription'" />
-          <v-text-field
-            v-model="name"
-            :label="$t('core.name')"
-            :rules="nameRules"
-            filled
-            required
-          />
+          <v-text-field v-model="name" :label="$t('core.name')" :rules="nameRules" filled required />
 
           <p v-t="'project.congregation.numberDescription'" />
           <v-text-field
@@ -47,18 +24,10 @@
             filled
             required
           />
-
         </v-card-text>
         <v-card-actions>
-          <DeleteCongregationDialog
-            v-if="canBeDeleted"
-            :congregation="congregation"
-          />
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
+          <DeleteCongregationDialog v-if="canBeDeleted" :congregation="congregation" />
+          <v-btn text @click.stop="dialog = false" v-t="'core.cancel'" />
           <v-spacer />
           <v-btn
             :disabled="!valid"
@@ -66,7 +35,7 @@
             :loading="loading"
             text
             color="primary"
-            @click.stop="save"
+            @click.prevent="save"
             v-t="'core.save'"
           />
         </v-card-actions>
@@ -104,7 +73,7 @@ export default class UpdateCongregationDialog extends Vue {
   private nameRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
-    (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 })
+    (v: string) => v.length >= 2 || i18n.t('core.fieldMin', { count: 2 }),
   ]
   private number: string = ''
   private numberRules: any[] = [
@@ -134,12 +103,16 @@ export default class UpdateCongregationDialog extends Vue {
       if (response === Exceptions.CongregationNameUnique) {
         const form: any = this.$refs.form
         const thisName = this.name
-        this.nameRules.push((v: string) => v !== thisName || i18n.t('project.congregation.nameUnique'))
+        this.nameRules.push(
+          (v: string) => v !== thisName || i18n.t('project.congregation.nameUnique')
+        )
         form.validate()
       } else if (response === Exceptions.CongregationNumberUnique) {
         const form: any = this.$refs.form
         const thisNumber = this.number
-        this.numberRules.push((v: string) => v !== thisNumber || i18n.t('project.congregation.numberUnique'))
+        this.numberRules.push(
+          (v: string) => v !== thisNumber || i18n.t('project.congregation.numberUnique')
+        )
         form.validate()
       } else if (response) {
         this.dialog = false
@@ -154,6 +127,5 @@ export default class UpdateCongregationDialog extends Vue {
       this.loading = false
     }
   }
-
 }
 </script>

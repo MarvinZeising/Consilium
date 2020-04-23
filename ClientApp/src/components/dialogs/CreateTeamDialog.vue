@@ -57,7 +57,7 @@
             v-t="'core.save'"
             :loading="loading"
             :disabled="!valid"
-            @click.stop="save"
+            @click.prevent="save"
           />
         </v-card-actions>
       </v-form>
@@ -96,7 +96,9 @@ export default class CreateTeamDialog extends Vue {
   private nameModel = { value: '' }
   private descriptionModel = { value: '' }
   private helpLinkModel = { value: '' }
-  private linkRules = [(v: string) => !v || /^https:\/\/.+\..{2,}$/.test(v) || i18n.t('shift.team.helpLinkFormat')]
+  private linkRules = [
+    (v: string) => !v || /^https:\/\/.+\..{2,}$/.test(v) || i18n.t('shift.team.helpLinkFormat'),
+  ]
 
   private async save() {
     if (this.valid) {

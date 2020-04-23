@@ -1,42 +1,24 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="400px"
-  >
+  <v-dialog v-model="dialog" max-width="400px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        color="error"
-        v-t="'project.knowledgeBase.deleteArticle'"
-      />
+      <v-btn v-on="on" text color="error" v-t="'project.knowledgeBase.deleteArticle'" />
     </template>
     <v-card>
       <v-card-title>
-        <span
-          class="headline"
-          v-t="'project.knowledgeBase.deleteArticle'"
-        />
+        <span class="headline" v-t="'project.knowledgeBase.deleteArticle'" />
       </v-card-title>
       <v-card-text>
-        <p
-          class="subtitle-1"
-          v-t="'project.knowledgeBase.deleteArticleDescription'"
-        />
+        <p class="subtitle-1" v-t="'project.knowledgeBase.deleteArticleDescription'" />
       </v-card-text>
       <v-card-actions>
-        <v-btn
-          text
-          v-t="'core.cancel'"
-          @click.stop="dialog = false"
-        />
+        <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
         <v-spacer />
         <v-btn
           type="submit"
           text
           color="error"
           v-t="'core.delete'"
-          @click.stop="deleteArticle"
+          @click.prevent="deleteArticle"
           :loading="loading"
         />
       </v-card-actions>
@@ -73,6 +55,5 @@ export default class DeleteArticleDialog extends Vue {
     this.loading = false
     this.dialog = false
   }
-
 }
 </script>

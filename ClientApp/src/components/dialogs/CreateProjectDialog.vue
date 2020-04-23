@@ -1,65 +1,45 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="600px"
-  >
+  <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'project.create'"
-      />
+      <v-btn v-on="on" text v-t="'project.create'" />
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
+      <v-form v-model="valid" ref="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.create'"
-          />
+          <span class="headline" v-t="'project.create'" />
         </v-card-title>
         <v-card-text>
-            <p
-              class="subtitle-1"
-              v-t="'project.createDescription'"
-            />
+          <p class="subtitle-1" v-t="'project.createDescription'" />
         </v-card-text>
         <v-card-text>
-            <p v-t="'project.nameDescription'" />
-            <v-text-field
-              v-model="name"
-              :label="$t('core.name')"
-              :rules="nameRules"
-              :counter="name.length >= 30 ? '40' : false"
-              filled
-              required
-            />
-            <p v-t="'project.emailDescription'" />
-            <v-text-field
-              v-model="email"
-              type="email"
-              :label="$t('core.email')"
-              :rules="emailRules"
-              filled
-              required
-            />
+          <p v-t="'project.nameDescription'" />
+          <v-text-field
+            v-model="name"
+            :label="$t('core.name')"
+            :rules="nameRules"
+            :counter="name.length >= 30 ? '40' : false"
+            filled
+            required
+          />
+          <p v-t="'project.emailDescription'" />
+          <v-text-field
+            v-model="email"
+            type="email"
+            :label="$t('core.email')"
+            :rules="emailRules"
+            filled
+            required
+          />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.cancel'" />
           <v-btn
             text
             type="submit"
             color="primary"
             v-t="'core.save'"
-            @click.stop="save"
+            @click.prevent="save"
             :loading="loading"
             :disabled="!valid"
           />
@@ -76,7 +56,7 @@ import i18n from '../../i18n'
 import AlertModule from '../../store/alerts'
 import PersonModule from '../../store/persons'
 import ProjectModule from '../../store/projects'
-import { Exceptions } from '@/models'
+import { Exceptions } from '../../models'
 
 @Component
 export default class CreateProjectDialog extends Vue {
@@ -93,12 +73,12 @@ export default class CreateProjectDialog extends Vue {
     (v: string) => !!v || i18n.t('core.fieldRequired'),
     (v: string) => v.length <= 40 || i18n.t('core.fieldMax', { count: 40 }),
     (v: string) => v.length >= 3 || i18n.t('core.fieldMin', { count: 3 }),
-    (v: string) => v.charAt(0) === v.charAt(0).toUpperCase() || i18n.t('core.fieldCamelCase')
+    (v: string) => v.charAt(0) === v.charAt(0).toUpperCase() || i18n.t('core.fieldCamelCase'),
   ]
   private email: string = ''
   private emailRules: any[] = [
     (v: string) => !!v || i18n.t('core.fieldRequired'),
-    (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid')
+    (v: string) => /.+@.+\..+/.test(v) || i18n.t('core.emailInvalid'),
   ]
 
   private async save() {
@@ -116,7 +96,7 @@ export default class CreateProjectDialog extends Vue {
     } else if (response) {
       this.$router.push({
         name: 'settings',
-        params: { projectId: response.id }
+        params: { projectId: response.id },
       })
     } else {
       this.alertModule.showAlert({
@@ -128,6 +108,5 @@ export default class CreateProjectDialog extends Vue {
 
     this.loading = false
   }
-
 }
 </script>

@@ -1,8 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="500px"
-  >
+  <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
       <v-btn
         v-on="on"
@@ -15,16 +12,10 @@
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.knowledgeBase.deleteTopic'"
-          />
+          <span class="headline" v-t="'project.knowledgeBase.deleteTopic'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'project.knowledgeBase.deleteTopicDescription'"
-          />
+          <p class="subtitle-1" v-t="'project.knowledgeBase.deleteTopicDescription'" />
           <p v-t="'project.knowledgeBase.deleteTopicHint'" />
           <v-text-field
             v-model="enteredName"
@@ -35,18 +26,14 @@
           />
         </v-card-text>
         <v-card-actions>
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-spacer />
           <v-btn
             type="submit"
             text
             color="error"
             v-t="'core.delete'"
-            @click.stop="deleteTopic"
+            @click.prevent="deleteTopic"
             :disabled="!valid"
             :loading="loading"
           />
@@ -99,6 +86,5 @@ export default class DeleteTopicDialog extends Vue {
     this.loading = false
     this.dialog = false
   }
-
 }
 </script>

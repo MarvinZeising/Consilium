@@ -1,25 +1,12 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="1000px"
-  >
+  <v-dialog v-model="dialog" max-width="1000px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        v-t="'project.knowledgeBase.createArticle'"
-      />
+      <v-btn v-on="on" text v-t="'project.knowledgeBase.createArticle'" />
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
+      <v-form v-model="valid" ref="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.knowledgeBase.createArticle'"
-          />
+          <span class="headline" v-t="'project.knowledgeBase.createArticle'" />
         </v-card-title>
         <v-card-text>
           <span class="subtitle-1">
@@ -28,13 +15,10 @@
             <a
               href="https://guides.github.com/features/mastering-markdown"
               target="blank"
-            >
-              guides.github.com/features/mastering-markdown
-            </a>
+            >guides.github.com/features/mastering-markdown</a>
           </span>
         </v-card-text>
         <v-card-text>
-
           <p v-t="'project.knowledgeBase.titleDescription'" />
           <v-text-field
             v-model="title"
@@ -55,21 +39,16 @@
             filled
             required
           />
-
         </v-card-text>
         <v-card-actions>
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.cancel'" />
           <v-spacer />
           <v-btn
             text
             type="submit"
             color="primary"
             v-t="'core.save'"
-            @click.stop="save"
+            @click.prevent="save"
             :loading="loading"
             :disabled="!valid"
           />
@@ -115,6 +94,5 @@ export default class CreateArticleDialog extends Vue {
     this.loading = false
     this.dialog = false
   }
-
 }
 </script>

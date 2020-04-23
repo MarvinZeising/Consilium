@@ -1,38 +1,19 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="400px"
-  >
+  <v-dialog v-model="dialog" max-width="400px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        text
-        color="error"
-        v-t="'core.delete'"
-        :loading="loading"
-      />
+      <v-btn v-on="on" text color="error" v-t="'core.delete'" :loading="loading" />
     </template>
     <v-card>
       <v-form v-model="valid">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'shift.team.delete'"
-          />
+          <span class="headline" v-t="'shift.team.delete'" />
         </v-card-title>
         <v-card-text>
-          <p
-            class="subtitle-1"
-            v-t="'shift.team.deleteDescription'"
-          />
+          <p class="subtitle-1" v-t="'shift.team.deleteDescription'" />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            text
-            v-t="'core.cancel'"
-            @click.stop="dialog = false"
-          />
+          <v-btn text v-t="'core.cancel'" @click.stop="dialog = false" />
           <v-btn
             text
             type="submit"
@@ -40,7 +21,7 @@
             v-t="'core.delete'"
             :loading="loading"
             :disabled="!valid"
-            @click.stop="deleteTeam"
+            @click.prevent="deleteTeam"
           />
         </v-card-actions>
       </v-form>
@@ -77,6 +58,5 @@ export default class DeleteTeamDialog extends Vue {
 
     this.dialog = false
   }
-
 }
 </script>

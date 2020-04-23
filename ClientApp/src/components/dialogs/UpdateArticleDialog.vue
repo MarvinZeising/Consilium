@@ -1,27 +1,14 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="1000px"
-  >
+  <v-dialog v-model="dialog" max-width="1000px">
     <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        icon
-        @click="opened"
-      >
+      <v-btn v-on="on" icon @click="opened">
         <v-icon>edit</v-icon>
       </v-btn>
     </template>
     <v-card>
-      <v-form
-        v-model="valid"
-        ref="form"
-      >
+      <v-form v-model="valid" ref="form">
         <v-card-title>
-          <span
-            class="headline"
-            v-t="'project.knowledgeBase.updateArticle'"
-          />
+          <span class="headline" v-t="'project.knowledgeBase.updateArticle'" />
         </v-card-title>
         <v-card-text>
           <span class="subtitle-1">
@@ -30,9 +17,7 @@
             <a
               href="https://guides.github.com/features/mastering-markdown"
               target="blank"
-            >
-              guides.github.com/features/mastering-markdown
-            </a>
+            >guides.github.com/features/mastering-markdown</a>
           </span>
         </v-card-text>
         <v-card-text>
@@ -57,11 +42,7 @@
           />
         </v-card-text>
         <v-card-actions>
-          <v-btn
-            text
-            @click.stop="dialog = false"
-            v-t="'core.cancel'"
-          />
+          <v-btn text @click.stop="dialog = false" v-t="'core.cancel'" />
           <v-spacer />
           <DeleteArticleDialog
             v-if="knowledgeBaseModule.getActiveArticle"
@@ -72,7 +53,7 @@
             type="submit"
             color="primary"
             v-t="'core.save'"
-            @click.stop="save"
+            @click.prevent="save"
             :loading="loading"
             :disabled="!valid"
           />
@@ -93,7 +74,7 @@ import { Article } from '../../models'
 @Component({
   components: {
     DeleteArticleDialog,
-  }
+  },
 })
 export default class UpdateArticleDialog extends Vue {
   private knowledgeBaseModule = getModule(KnowledgeBaseModule, this.$store)
@@ -137,6 +118,5 @@ export default class UpdateArticleDialog extends Vue {
       this.dialog = false
     }
   }
-
 }
 </script>
