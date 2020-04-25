@@ -23,14 +23,12 @@
 
         <v-divider />
 
-        <v-card-text>
-          <EligibilityControl
-            v-for="(eligibility, index) in category.eligibilities"
-            :key="index"
-            :eligibility="eligibility"
-            :showDescription="showHelp"
-          />
-        </v-card-text>
+        <EligibilityControl
+          v-for="(eligibility, index) in category.eligibilities"
+          :key="index"
+          :eligibility="eligibility"
+          :showDescription="showHelp"
+        />
 
         <v-divider />
 
@@ -58,7 +56,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import i18n from '../../i18n'
 import CategoryModule from '../../store/categories'
-import { Role, Category } from '../../models'
+import { Role, Category, Eligibility } from '../../models'
 import DeleteCategoryDialog from './DeleteCategoryDialog.vue'
 import NameControl from '../controls/NameControl.vue'
 import EligibilityControl from '../controls/EligibilityControl.vue'
@@ -87,7 +85,7 @@ export default class UpdateCategoryDialog extends Vue {
     this.nameModel = { value: this.category?.name || '' }
 
     if (this.category) {
-      this.category.eligibilities.forEach((x) => (x.category = undefined))
+      this.category.eligibilities.forEach(x => (x.category = undefined))
     }
   }
 

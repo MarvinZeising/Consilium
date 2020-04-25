@@ -81,16 +81,18 @@ export default class CreateCategoryDialog extends Vue {
 
   private opened() {
     if (this.projectModule.getActiveProject) {
-      this.category.eligibilities = this.projectModule.getActiveProject.roles.map((role) => {
-        return Eligibility.create({
-          role,
-          roleId: role.id,
-          shiftsRead: true,
-          shiftsWrite: false,
-          isTeamCaptain: true,
-          isSubstituteCaptain: false,
+      this.category.eligibilities = this.projectModule.getActiveProject.roles
+        .filter((role) => role.editable)
+        .map((role) => {
+          return Eligibility.create({
+            role,
+            roleId: role.id,
+            shiftsRead: true,
+            shiftsWrite: false,
+            isTeamCaptain: true,
+            isSubstituteCaptain: false,
+          })
         })
-      })
     }
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="eligibility.role.editable">
     <v-card-text class="pb-0 subtitle-1">
       <span v-if="eligibility.role">{{ eligibility.role.name }}</span>
       <span v-if="eligibility.category">{{ eligibility.category.name }}</span>
@@ -20,7 +20,7 @@
           :description="showDescription ? 'project.role.leadership.description' : ''"
           itemString="project.role.leadership."
           :values="['member','captain','substituteCaptain']"
-          @change="(value) => eligibility.setPermissionModel('shifts', value)"
+          @change="setLeadership"
         />
       </v-layout>
     </v-card-text>
@@ -64,9 +64,23 @@ export default class EligibilityControl extends Vue {
   private leadershipModel = { value: 'member' }
 
   private created() {
+    this.init()
+  }
+
+  private beforeUpdate() {
+    this.init()
+  }
+
+  private init() {
     if (this.eligibility) {
       this.eligibilityModel = this.eligibility.getPermissionModel('shifts')
-      this.leadershipModel = { value: 'member' }
+      this.leadershipModel = {
+        value: this.isTeamCaptain
+          ? 'captain'
+          : this.isSubstituteCaptain
+          ? 'substituteCaptain'
+          : 'member',
+      }
     }
   }
 

@@ -66,10 +66,11 @@ namespace Server.Controllers
                 var category = _mapper.Map<Category>(dto);
                 category.ProjectId = projectId;
 
+                // apply eligibilities for editable role
                 foreach (var eligibility in category.Eligibilities)
                 {
                     var role = _db.Role
-                        .FindByCondition(x => x.Id == eligibility.RoleId && x.ProjectId == projectId)
+                        .FindByCondition(x => x.Id == eligibility.RoleId && x.ProjectId == projectId && x.Editable)
                         .SingleOrDefault();
                     if (role == null) return BadRequest();
 
@@ -77,6 +78,17 @@ namespace Server.Controllers
                     eligibility.IsTeamCaptain = eligibility.IsTeamCaptain && eligibility.ShiftsRead;
                     eligibility.IsSubstituteCaptain = eligibility.IsSubstituteCaptain && eligibility.ShiftsRead && !eligibility.IsTeamCaptain;
                 }
+
+                // apply eligibility for admin role
+                var adminRole = _db.Role.GetAdministratorRole(projectId);
+                category.Eligibilities.Add(new Eligibility {
+                    CategoryId = category.Id,
+                    RoleId = adminRole.Id,
+                    ShiftsRead = true,
+                    ShiftsWrite = true,
+                    IsTeamCaptain = true,
+                    IsSubstituteCaptain = false,
+                });
 
                 _db.Category.Create(category);
                 _db.Save();
@@ -115,9 +127,10 @@ namespace Server.Controllers
                 {
                     var eligibilityFromDb = _db.Eligibility
                         .FindByCondition(x => x.Id == eligibility.Id && x.CategoryId == categoryId)
+                        .Include(x => x.Role)
                         .SingleOrDefault();
 
-                    if (eligibilityFromDb != null)
+                    if (eligibilityFromDb?.Role.Editable == true)
                     {
                         eligibilityFromDb.ShiftsRead = eligibility.ShiftsRead;
                         eligibilityFromDb.ShiftsWrite = eligibility.ShiftsWrite && eligibility.ShiftsRead;
