@@ -8,7 +8,7 @@
     offset-overflow
     :content-class="$vuetify.breakpoint.xsOnly ? 'menu-fullscreen' : ''"
   >
-    <ShiftOverviewMenuDraft v-if="getShift.isDraft" :shift="getShift" />
+    <ShiftOverviewMenuDraft v-if="getShift.isDraft" :shift="getShift" @closed="closeModal" />
     <v-card
       v-else
       min-width="350px"
@@ -22,7 +22,7 @@
           :shift="getShift"
           @saved="model.model = true"
         />
-        <v-btn icon :title="$t('core.close')" @click="model.model = false">
+        <v-btn icon :title="$t('core.close')" @click="closeModal">
           <v-icon>close</v-icon>
         </v-btn>
       </v-toolbar>
@@ -131,7 +131,7 @@ export default class CreateTeamDialog extends Vue {
   private get canEdit() {
     const role = this.personModule.getActiveRole
     if (role && role.calendarWrite) {
-      const eligibility = role.eligibilities.find((x) => x.categoryId === this.getShift?.categoryId)
+      const eligibility = role.eligibilities.find(x => x.categoryId === this.getShift?.categoryId)
       if (eligibility) {
         return eligibility.shiftsWrite
       }
@@ -152,6 +152,12 @@ export default class CreateTeamDialog extends Vue {
       return 'red'
     } else if (this.getShift?.isCalledOff) {
       return 'grey'
+    }
+  }
+
+  private closeModal() {
+    if (this.model) {
+      this.model.model = false
     }
   }
 
