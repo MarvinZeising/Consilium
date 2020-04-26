@@ -78,7 +78,7 @@
   </v-container>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .v-event {
   margin-left: 3px;
 }
@@ -149,7 +149,7 @@ export default class Calendar extends Vue {
   private get canEdit() {
     const role = this.personModule.getActiveRole
     if (role) {
-      return role.calendarWrite === true && role.eligibilities.some((x) => x.shiftsWrite)
+      return role.calendarWrite === true && role.eligibilities.some(x => x.shiftsWrite)
     }
   }
 
@@ -175,8 +175,8 @@ export default class Calendar extends Vue {
       this.shiftOverviewModel.model = false
 
       project.getCategories
-        .filter((x) => this.categoriesModel.selected.find((y) => y.id === x.id))
-        .forEach((x) => {
+        .filter(x => this.categoriesModel.selected.find(y => y.id === x.id))
+        .forEach(x => {
           events = events.concat(x.shifts)
         })
 
