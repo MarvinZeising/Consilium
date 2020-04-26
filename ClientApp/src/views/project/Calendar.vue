@@ -62,7 +62,7 @@
       @click:date="viewDay"
       @click:more="viewDay"
       @click:event="showEvent"
-      @change="loadMonth"
+      @change="updateStartAndEnd"
     >
       <template v-slot:event="{ event }">
         <div class="pl-1">
@@ -139,8 +139,8 @@ export default class Calendar extends Vue {
   private categoriesModel: { selected: Category[] } = { selected: [] }
   private shiftOverviewModel = { model: false, element: null, event: {} }
 
-  private start: any = null
-  private end: any = null
+  private currentStart?: { date: string }
+  private currentEnd?: { date: string }
 
   public get canView() {
     return this.personModule.getActiveRole?.calendarRead === true
@@ -252,6 +252,8 @@ export default class Calendar extends Vue {
 
     this.user = this.userModule.getUser ?? undefined
 
+    await this.loadMonth()
+
     this.loading--
   }
 
@@ -289,13 +291,28 @@ export default class Calendar extends Vue {
     }
   }
 
-  private async loadMonth({ start, end }: { start: { date: string }; end: { date: string } }) {
+  private async updateStartAndEnd({
+    start,
+    end,
+  }: {
+    start: { date: string }
+    end: { date: string }
+  }) {
+    this.currentStart = start
+    this.currentEnd = end
+
+    await this.loadMonth()
+  }
+
+  private async loadMonth() {
     this.loading++
 
-    await this.shiftModule.loadShifts({
-      start: start.date.replace(/-/g, ''),
-      end: end.date.replace(/-/g, ''),
-    })
+    if (this.categoryModel.value && this.currentStart && this.currentEnd) {
+      await this.shiftModule.loadShifts({
+        start: this.currentStart.date.replace(/-/g, ''),
+        end: this.currentEnd.date.replace(/-/g, ''),
+      })
+    }
 
     this.loading--
   }
