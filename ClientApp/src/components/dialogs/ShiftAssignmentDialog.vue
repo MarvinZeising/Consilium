@@ -161,7 +161,7 @@ export default class ShiftAssignmentDialog extends Vue {
   private get canEdit() {
     const role = this.personModule.getActiveRole
     if (role && role.calendarWrite) {
-      const eligibility = role.eligibilities.find((x) => x.categoryId === this.shift?.categoryId)
+      const eligibility = role.eligibilities.find(x => x.categoryId === this.shift?.categoryId)
       if (eligibility) {
         return eligibility.shiftsWrite
       }
@@ -234,8 +234,8 @@ export default class ShiftAssignmentDialog extends Vue {
       this.saving = true
 
       const assignments = Object.keys(this.assignments)
-        .filter((personId) => this.assignments[personId] !== undefined)
-        .map((personId) => {
+        .filter(personId => this.assignments[personId] !== undefined)
+        .map(personId => {
           return {
             personId,
             ...this.assignments[personId],

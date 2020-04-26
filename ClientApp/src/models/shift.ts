@@ -6,7 +6,7 @@ enum ShiftStatus {
   planned = 'planned',
   scheduled = 'scheduled',
   suspended = 'suspended',
-  calledOff = 'calledOff',
+  calledOff = 'calledoff',
 }
 
 enum ShiftMode {
@@ -371,7 +371,13 @@ class Team {
 
 class Category {
   public static create(data: any) {
-    const category = new Category(data.id, data.projectId, data.name, data.createdTime, data.lastUpdatedTime)
+    const category = new Category(
+      data.id,
+      data.projectId,
+      data.name,
+      data.createdTime,
+      data.lastUpdatedTime
+    )
 
     category.project = data.project ? Project.create(data.project) : undefined
 
@@ -393,7 +399,13 @@ class Category {
   public shifts: Shift[] = []
   public eligibilities: Eligibility[] = []
 
-  constructor(id: string, projectId: string, name: string, createdTime: string, lastUpdatedTime: string) {
+  constructor(
+    id: string,
+    projectId: string,
+    name: string,
+    createdTime: string,
+    lastUpdatedTime: string
+  ) {
     this.id = id
     this.projectId = projectId
     this.name = name
