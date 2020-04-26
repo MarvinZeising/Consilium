@@ -7,5 +7,17 @@
   "git.ignoreLimitWarning": true,
   "appService.preDeployTask": "publish-release",
   "appService.deploySubpath": "bin/Release/netcoreapp3.1/publish",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
