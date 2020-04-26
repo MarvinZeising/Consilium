@@ -65,7 +65,10 @@
     "cancel": "Cancel Application",
     "cancelDescription": "Do you really want to cancel your application for this shift?",
     "applied": "You applied for this shift",
-    "appliedBackup": "You're available as backup"
+    "appliedBackup": "You're available as backup",
+    "notes": "Special notes",
+    "notesDescription": "Do you have any special notes for the scheduler?",
+    "availableAfter": "Do you want to be available as backup after a decline?"
   },
   "attendee": {
     "attendees": "No one has been assigned to a team | Attendee | Attendees",

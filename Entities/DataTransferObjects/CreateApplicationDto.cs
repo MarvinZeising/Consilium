@@ -11,7 +11,7 @@ namespace Server.Entities.DataTransferObjects
         [Required]
         public bool AvailableAfter { get; set; }
 
-        [MaxLength (200)]
+        [MaxLength(200)]
         public string Notes { get; set; }
     }
 }

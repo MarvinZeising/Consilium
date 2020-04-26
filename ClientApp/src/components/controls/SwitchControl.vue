@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 sm6 md4 class="pa-2">
+  <div :class="'flex xs12 ' + getSm + getMd + getLg + 'pa-2'">
     <span v-if="description">{{ $t(description) }}</span>
 
     <v-switch
@@ -11,7 +11,7 @@
       :disabled="disabled"
       @change="emitChange"
     />
-  </v-flex>
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,6 +32,21 @@ export default class SwitchControl extends Vue {
 
   @Prop(Boolean)
   private readonly disabled?: boolean
+
+  @Prop(Number)
+  private columns: 1 | 2 | 3 | 4 = 3
+
+  private get getSm() {
+    return this.columns >= 2 ? 'sm6 ' : ''
+  }
+
+  private get getMd() {
+    return this.columns >= 3 ? 'md4 ' : ''
+  }
+
+  private get getLg() {
+    return this.columns >= 4 ? 'lg3 ' : ''
+  }
 
   @Emit('change')
   private emitChange() {

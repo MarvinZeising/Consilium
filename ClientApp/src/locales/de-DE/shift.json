@@ -65,7 +65,10 @@
     "cancel": "Bewerbung zurückziehen",
     "cancelDescription": "Möchtest du diese Bewerbung wirklich zurückziehen?",
     "applied": "Du hast dich beworben",
-    "appliedBackup": "Du stehst als Ersatz bereit"
+    "appliedBackup": "Du stehst als Ersatz bereit",
+    "notes": "Besondere Informationen",
+    "notesDescription": "Hast du besondere Informationen für den Einteiler?",
+    "availableAfter": "Möchtest du nach einer Absage als Backup zur Verfügung stehen?"
   },
   "attendee": {
     "attendees": "Niemand wurde einem Team zugewiesen | Teilnehmer | Teilnehmer",

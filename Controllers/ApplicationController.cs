@@ -91,6 +91,7 @@ namespace Server.Controllers
                 var application = _mapper.Map<Application>(dto);
                 application.PersonId = personId;
                 application.ShiftId = dto.ShiftId;
+                application.TeamId = null;
 
                 _db.Application.Create(application);
                 _db.Save();

@@ -21,9 +21,8 @@ namespace Server.Entities.Models
         public Guid PersonId { get; set; }
         public Person Person { get; set; }
 
-        [Required]
         [ForeignKey(nameof(Team))]
-        public Guid TeamId { get; set; }
+        public Guid? TeamId { get; set; }
         public Team Team { get; set; }
 
         [Required]
