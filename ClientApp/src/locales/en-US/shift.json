@@ -52,7 +52,8 @@
     "descriptionDescription": "Some useful description text for the participants to know what the attendees of this team are meant to do.",
     "helpLink": "Help link",
     "helpLinkDescription": "A link to a page with more detailed information. e.g. a link to one this project's knowledge base articles, to an external video platform, a map, or something else.",
-    "helpLinkFormat": "The link must be a valid URL. It has to start with https://"
+    "helpLinkFormat": "The link must be a valid URL. It has to start with https://",
+    "noTeamsDefined": "No teams defined"
   },
   "application": {
     "applicants": "No applicants | Applicant | Applicants",

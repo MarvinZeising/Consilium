@@ -52,7 +52,8 @@
     "descriptionDescription": "Eine hilfreiche Beschreibung dieses Teams, die den Teilnehmern zu verstehen hilft, was sie als Teilnehmer dieses Teams tun sollen.",
     "helpLink": "Hilfe-Link",
     "helpLinkDescription": "Ein Hilfe-Link zu weiteren Informationen. Kann z.B. zu einer der Hilfeseiten dieses Projektes führen, zu einer externen Video-Plattform, einer Karte oder anderem.",
-    "helpLinkFormat": "Der Link muss eine gültige URL sein. Er muss mit https:// beginnen"
+    "helpLinkFormat": "Der Link muss eine gültige URL sein. Er muss mit https:// beginnen",
+    "noTeamsDefined": "Keine Teams definiert"
   },
   "application": {
     "applicants": "Keine Bewerber | Bewerber | Bewerber",

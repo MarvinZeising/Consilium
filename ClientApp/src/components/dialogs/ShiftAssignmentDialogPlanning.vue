@@ -23,6 +23,10 @@
                 :color="getChipColor(application.personId, team.id)"
                 @click="toggleTeam(application.personId, team.id)"
               />
+              <i
+                v-if="projectModule.getActiveProject.getTeams.length === 0"
+                v-t="'shift.team.noTeamsDefined'"
+              />
             </div>
           </v-list-item-content>
           <v-list-item-action>
@@ -133,8 +137,8 @@ export default class ShiftAssignmentDialogPlanning extends Vue {
       const assignments = this.assignments
 
       return Object.keys(this.assignments)
-        .filter((x) => assignments[x].teamId === teamId)
-        .map((x) => this.shift?.applications.find((y) => y.personId === x)?.person)
+        .filter(x => assignments[x].teamId === teamId)
+        .map(x => this.shift?.applications.find(y => y.personId === x)?.person)
         .sort((a, b) => {
           if (a && b) {
             if (assignments[a.id].isCaptain && !assignments[b.id].isCaptain) {
