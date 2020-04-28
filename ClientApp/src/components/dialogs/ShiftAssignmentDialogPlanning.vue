@@ -30,9 +30,7 @@
             </div>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn icon @click="openPerson()">
-              <v-icon>info</v-icon>
-            </v-btn>
+            <PersonInfoMenu :personId="application.personId" :date="shift.date" />
           </v-list-item-action>
         </v-list-item>
       </v-list>
@@ -104,9 +102,14 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import ProjectModule from '../../store/projects'
+import PersonInfoMenu from './PersonInfoMenu.vue'
 import { Shift } from '../../models'
 
-@Component
+@Component({
+  components: {
+    PersonInfoMenu,
+  },
+})
 export default class ShiftAssignmentDialogPlanning extends Vue {
   private projectModule = getModule(ProjectModule, this.$store)
 

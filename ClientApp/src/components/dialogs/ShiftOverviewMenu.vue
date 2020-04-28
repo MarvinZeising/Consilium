@@ -114,7 +114,7 @@ import { Shift } from '../../models'
     ShiftOverviewMenuActions,
   },
 })
-export default class CreateTeamDialog extends Vue {
+export default class ShiftOverviewMenu extends Vue {
   private userModule = getModule(UserModule, this.$store)
   private personModule = getModule(PersonModule, this.$store)
 
