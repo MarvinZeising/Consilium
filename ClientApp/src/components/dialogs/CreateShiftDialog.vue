@@ -86,6 +86,9 @@ export default class CreateShiftDialog extends Vue {
   @Prop(Object)
   private readonly categoryModel?: { value?: Category }
 
+  @Prop(Function)
+  private readonly onCreated!: () => void
+
   private dialog = false
   private valid: any = null
   private showHelp = false
@@ -113,6 +116,8 @@ export default class CreateShiftDialog extends Vue {
       this.shift.duration = this.durationModel.value
 
       await this.shiftModule.createShift(this.shift)
+
+      this.onCreated()
 
       this.loading = false
       this.dialog = false

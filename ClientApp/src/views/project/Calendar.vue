@@ -45,16 +45,15 @@
       <v-progress-linear :active="loading" :indeterminate="loading" absolute bottom />
     </v-toolbar>
 
-    <!--//* Calendar -->
     <v-calendar
       id="calendar"
+      :key="calendarVersion"
       ref="calendar"
       color="navbar"
       :style="`border-left:0; min-height:${calendarHeight}px;`"
       v-model="focus"
       :events="events"
       :event-color="(event) => event.color"
-      :rawEvents="getEvents"
       :type="calendarTypeModel.type"
       :locale="userModule.getUser.language"
       :weekdays="weekdays"
@@ -74,7 +73,12 @@
 
     <ShiftOverviewMenu :model="shiftOverviewModel" />
 
-    <CreateShiftDialog v-if="canEdit" :date="focus" :categoryModel="categoryModel" />
+    <CreateShiftDialog
+      v-if="canEdit"
+      :date="focus"
+      :categoryModel="categoryModel"
+      :onCreated="calculateEvents"
+    />
   </v-container>
 </template>
 
@@ -110,6 +114,15 @@ import ShiftOverviewMenu from '../../components/dialogs/ShiftOverviewMenu.vue'
 import CategoriesControl from '../../components/controls/CategoriesControl.vue'
 import CalendarTypeControl from '../../components/controls/CalendarTypeControl.vue'
 import { Shift, Category, User } from '../../models'
+import router from '../../router'
+
+interface Event {
+  name: string
+  shift: Shift
+  color: string
+  start: string
+  end: string
+}
 
 @Component({
   components: {
@@ -130,17 +143,18 @@ export default class Calendar extends Vue {
   private loading = 0
   private calendarHeight = 0
   private focus = moment().format('YYYY-MM-DD')
-  private events: any = [{ name: '', start: '1900-01-01' }]
+  private events: Event[] = []
   private weekdays = [1, 2, 3, 4, 5, 6, 0]
   private user?: User
+  private calendarVersion = 0
 
   private calendarTypeModel = { type: 'month' }
   private categoryModel: { value?: Category } = { value: undefined }
   private categoriesModel: { selected: Category[] } = { selected: [] }
   private shiftOverviewModel = { model: false, element: null, event: {} }
 
-  private currentStart?: { date: string }
-  private currentEnd?: { date: string }
+  private currentStart?: string
+  private currentEnd?: string
 
   public get canView() {
     return this.personModule.getActiveRole?.calendarRead === true
@@ -166,54 +180,46 @@ export default class Calendar extends Vue {
     return ''
   }
 
-  private get getEvents() {
-    const project = this.projectModule.getActiveProject
+  private calculateEvents() {
+    const project = this.getProject()
     if (project) {
-      let events: any[] = []
-
       // * when this gets re-evaluated, close any open shift overview menus
       this.shiftOverviewModel.model = false
 
-      project.getCategories
+      this.events = project.getCategories
         .filter(x => this.categoriesModel.selected.find(y => y.id === x.id))
-        .forEach(x => {
-          events = events.concat(x.shifts)
+        .reduce((accumulator: any, currentValue: Category) => {
+          return accumulator.concat(currentValue.shifts)
+        }, [])
+        .map((x: Shift) => {
+          const date = moment(x.date, 'YYYYMMDD').format('YYYY-MM-DD')
+          const time = moment(x.time, 'Hmm').format(' HH:mm')
+          const start = date + time
+          const end = moment(start)
+            .add(moment(x.duration, 'Hmm').format('H'), 'hours')
+            .add(moment(x.duration, 'Hmm').format('mm'), 'minutes')
+            .format('YYYY-MM-DD HH:mm')
+          let color = 'event-draft'
+
+          if (x.isPlanned) {
+            color = 'navbar'
+          } else if (x.isScheduled) {
+            color = 'green darken-3'
+          } else if (x.isSuspended) {
+            color = 'red'
+          } else if (x.isCalledOff) {
+            color = 'grey'
+          }
+
+          return {
+            name: x.category?.name,
+            shift: x,
+            color,
+            start,
+            end,
+          } as Event
         })
-
-      Vue.set(this, 'events', [{ name: 'Loading...', start: '1900-01-01' }])
-
-      events.forEach((x: Shift) => {
-        const date = moment(x.date, 'YYYYMMDD').format('YYYY-MM-DD')
-        const time = moment(x.time, 'Hmm').format(' HH:mm')
-        const start = date + time
-        const end = moment(start)
-          .add(moment(x.duration, 'Hmm').format('H'), 'hours')
-          .add(moment(x.duration, 'Hmm').format('mm'), 'minutes')
-          .format('YYYY-MM-DD HH:mm')
-        let color = 'event-draft'
-
-        if (x.isPlanned) {
-          color = 'navbar'
-        } else if (x.isScheduled) {
-          color = 'green darken-3'
-        } else if (x.isSuspended) {
-          color = 'red'
-        } else if (x.isCalledOff) {
-          color = 'grey'
-        }
-
-        this.events.push({
-          name: x.category?.name,
-          shift: x,
-          color,
-          start,
-          end,
-        })
-      })
-
-      return events
     }
-    return []
   }
 
   @Watch('personModule.getActivePerson')
@@ -245,7 +251,7 @@ export default class Calendar extends Vue {
       await this.teamModule.loadTeams()
     }
 
-    this.categoriesModel.selected = this.projectModule.getActiveProject?.getCategories || []
+    this.categoriesModel.selected = this.getProject()?.getCategories || []
     this.categoryModel.value = this.categoriesModel.selected[0]
 
     this.setCalendarHeight()
@@ -255,6 +261,10 @@ export default class Calendar extends Vue {
     await this.loadMonth()
 
     this.loading--
+  }
+
+  private getProject() {
+    return this.projectModule.getProjects.find(x => x.id === router.currentRoute.params.projectId)
   }
 
   private showEvent({ nativeEvent, event }: { nativeEvent: any; event: any }) {
@@ -291,17 +301,23 @@ export default class Calendar extends Vue {
     }
   }
 
-  private async updateStartAndEnd({
-    start,
-    end,
-  }: {
-    start: { date: string }
-    end: { date: string }
-  }) {
-    this.currentStart = start
-    this.currentEnd = end
+  private async updateStartAndEnd(dates: { start: { date: string }; end: { date: string } }) {
+    // load preceeding month for better pagination
+    const start = moment(dates.start.date)
+      .add(-41, 'days')
+      .format('YYYY-MM-DD')
 
-    await this.loadMonth()
+    // load following month for better pagination
+    const end = moment(dates.end.date)
+      .add(41, 'days')
+      .format('YYYY-MM-DD')
+
+    if (this.currentStart !== start || this.currentEnd !== end) {
+      this.currentStart = start
+      this.currentEnd = end
+
+      await this.loadMonth()
+    }
   }
 
   private async loadMonth() {
@@ -309,9 +325,13 @@ export default class Calendar extends Vue {
 
     if (this.categoryModel.value && this.currentStart && this.currentEnd) {
       await this.shiftModule.loadShifts({
-        start: this.currentStart.date.replace(/-/g, ''),
-        end: this.currentEnd.date.replace(/-/g, ''),
+        start: this.currentStart.replace(/-/g, ''),
+        end: this.currentEnd.replace(/-/g, ''),
       })
+
+      this.calculateEvents()
+
+      this.calendarVersion++
     }
 
     this.loading--
